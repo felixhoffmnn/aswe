@@ -8,10 +8,10 @@
 # advanced_software_engineering
 
 - [advanced_software_engineering](#advanced_software_engineering)
-   - [Introduction](#introduction)
-   - [Getting Started](#getting-started)
-   - [Tips & Tricks](#tips--tricks)
-   - [Known Issues](#known-issues)
+  - [Introduction](#introduction)
+  - [Getting Started](#getting-started)
+  - [Tips & Tricks](#tips--tricks)
+  - [Known Issues](#known-issues)
 
 ## Introduction
 

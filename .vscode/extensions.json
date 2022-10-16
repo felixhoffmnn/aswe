@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-toolsai.jupyter",
+    "esbenp.prettier-vscode",
+    "yzhang.markdown-all-in-one",
+    "seatonjiang.gitmoji-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-german",
+    "gruntfuggly.todo-tree"
+  ]
+}

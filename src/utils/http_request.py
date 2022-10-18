@@ -4,7 +4,7 @@ from loguru import logger
 from typing import Optional
 
 
-def http_request(url: str, timeout: int = 10) -> Optional[str]:
+def http_request(url: str, headers: dict = {}, timeout: int = 10) -> Optional[str]:
     """Send a HTTP request to the given URL and return the response.
 
     Args:
@@ -15,7 +15,7 @@ def http_request(url: str, timeout: int = 10) -> Optional[str]:
         Optional[str]: The response from the API or None if the request failed.
     """
     try:
-        response = requests.get(url, timeout=timeout)
+        response = requests.get(url, timeout=timeout, headers=headers)
         response.raise_for_status()
     except requests.HTTPError as http_err:
         logger.error(f"HTTP error occurred: {http_err}")

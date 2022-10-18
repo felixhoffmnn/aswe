@@ -8,11 +8,13 @@
     "codeql",
     "fontawesome",
     "isort",
+    "jupyter",
     "linkedin",
     "Mkdocs",
     "mkdocstrings",
     "mypy",
     "pytest",
-    "pyupgrade"
+    "pyupgrade",
+    "vvspy"
   ]
 }

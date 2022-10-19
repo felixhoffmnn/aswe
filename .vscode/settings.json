@@ -7,6 +7,12 @@
   "[python]": {
     "editor.defaultFormatter": null
   },
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": true,
   "python.formatting.provider": "black",
+  "python.linting.flake8Enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
   "gitmoji.outputType": "emoji"
 }

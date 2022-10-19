@@ -1,15 +1,16 @@
-from typing import Optional
+from typing import Any, Dict
+
 import requests
 from loguru import logger
-from typing import Optional
 
 
-def http_request(url: str, headers: dict = {}, timeout: int = 10) -> Optional[str]:
+def http_request(url: str, headers: Dict[Any, Any] | None = None, timeout: int = 10) -> str | None:
     """Send a HTTP request to the given URL and return the response.
 
     Args:
         url (str): The URL of the API.
-        timeout (int, optional): The time in seconds to wait for a response. Defaults to 10.
+        timeout (int, optional): The time in seconds to wait for a response.
+        Defaults to 10.
 
     Returns:
         Optional[str]: The response from the API or None if the request failed.
@@ -23,4 +24,6 @@ def http_request(url: str, headers: dict = {}, timeout: int = 10) -> Optional[st
         logger.error(f"Other error occurred: {err}")
     else:
         print("Success!")
-        return response.json()
+        return str(response.json())
+
+    return None

@@ -10,6 +10,7 @@
     "isort",
     "jupyter",
     "linkedin",
+    "loguru",
     "Mkdocs",
     "mkdocstrings",
     "mypy",

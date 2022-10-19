@@ -2,17 +2,18 @@
   "yaml.schemas": {
     "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yaml"
   },
+  "gitmoji.outputType": "emoji",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[python]": {
-    "editor.defaultFormatter": null
-  },
-  "python.linting.mypyEnabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.formatting.provider": "black",
-  "python.linting.flake8Enabled": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "gitmoji.outputType": "emoji"
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "black",
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--disable=missing-module-docstring", "--disable=broad-except"],
+  "python.linting.flake8Enabled": true
 }

@@ -34,7 +34,6 @@ autopep8 = "^1.7.0"
 pre-commit = "^2.20.0"
 pytest-cov = "^4.0.0"
 jupyter = "^1.0.0"
-types-requests = "^2.28.11.2"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = { extras = ["python"], version = "^1.4.0" }
@@ -42,10 +41,12 @@ mkdocs-material = "^8.5.6"
 mkdocstrings = { extras = ["python"], version = "^0.19.0" }
 mkdocs-autorefs = "^0.4.1"
 
-
 [tool.poetry.group.speech.dependencies]
 SpeechRecognition = "^3.8.1"
 pyttsx3 = "^2.90"
+
+[tool.poetry.group.types.dependencies]
+types-requests = "^2.28.11.2"
 
 [tool.mypy]
 mypy_path = 'src'
@@ -63,6 +64,8 @@ no_implicit_reexport = true
 
 [tool.black]
 line-length = 120
+target-version = ['py310']
+include = '\.pyi?$'
 exclude = '''
 /(
     \.git

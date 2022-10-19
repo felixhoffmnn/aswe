@@ -5,11 +5,13 @@
   "gitmoji.outputType": "emoji",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": true,
+      "source.fixAll.unusedImports": false
+    }
   },
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,

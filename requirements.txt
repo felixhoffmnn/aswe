@@ -77,6 +77,9 @@ contourpy==1.0.5 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:f670686d99c867d0f24b28ce8c6f02429c6eef5e2674aab287850d0ee2d20437 \
     --hash=sha256:f856652f9b533c6cd2b9ad6836a7fc0e43917d7ff15be46c5baf1350f8cdc5d9 \
     --hash=sha256:fb0458d74726937ead9e2effc91144aea5a58ecee9754242f8539a782bed685a
+currencyconverter==0.17.2 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:2d0ce2ccfd76168a4ce687f244e6c3ae6811e86120f5cd049a14e3c8048ee984 \
+    --hash=sha256:3f15a1fa82efbeeb6adeb87ac55824a8ed904ae2522940621f69c4b67c5bd0f4
 cycler==0.11.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3 \
     --hash=sha256:9c87405839a19696e837b3b818fed3f5f69f16f1eec1a1ad77e043dcea9c772f

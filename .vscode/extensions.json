@@ -7,6 +7,7 @@
     "streetsidesoftware.code-spell-checker",
     "streetsidesoftware.code-spell-checker-german",
     "gruntfuggly.todo-tree",
-    "donjayamanne.python-extension-pack"
+    "donjayamanne.python-extension-pack",
+    "ms-python.black-formatter"
   ]
 }

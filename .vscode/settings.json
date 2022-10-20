@@ -1,7 +1,4 @@
 {
-  "yaml.schemas": {
-    "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yaml"
-  },
   "gitmoji.outputType": "emoji",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

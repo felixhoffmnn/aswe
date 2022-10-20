@@ -23,13 +23,14 @@ repos:
         stages: [commit, push]
         types: [python3, jupyter]
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
-    hooks:
-      - id: check-yaml
-        name: check yaml (check-yaml)
-        stages: [commit, push]
-        types: [yaml]
+  # FIXME: This hook is not working properly
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.3.0
+  #   hooks:
+  #     - id: check-yaml
+  #       name: check yaml (check-yaml)
+  #       stages: [commit, push]
+  #       types: [yaml]
 
   - repo: https://github.com/psf/black
     rev: 22.8.0

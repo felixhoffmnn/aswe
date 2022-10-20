@@ -86,6 +86,8 @@ cycler==0.11.0 ; python_version >= "3.10" and python_version < "4.0" \
 fonttools==4.37.4 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:86918c150c6412798e15a0de6c3e0d061ddefddd00f97b4f7b43dfa867ad315e \
     --hash=sha256:afae1b39555f9c3f0ad1f0f1daf678e5ad157e38c8842ecb567951bf1a9b9fd7
+googlemaps==4.6.0 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:2cc88cdf206deccc18e7fdfd23a0ed244209a08b2f0561fd8739c4c277325241
 idna==3.4 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2

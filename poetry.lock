@@ -419,6 +419,17 @@ python-dateutil = ">=2.8.1"
 dev = ["flake8", "markdown", "twine", "wheel"]
 
 [[package]]
+name = "googlemaps"
+version = "4.6.0"
+description = "Python client library for Google Maps Platform"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+requests = ">=2.20.0,<3.0"
+
+[[package]]
 name = "griffe"
 version = "0.22.2"
 description = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
@@ -458,7 +469,7 @@ python-versions = "*"
 
 [[package]]
 name = "ipykernel"
-version = "6.16.0"
+version = "6.16.1"
 description = "IPython Kernel for Jupyter"
 category = "dev"
 optional = false
@@ -478,7 +489,8 @@ tornado = ">=6.1"
 traitlets = ">=5.1.0"
 
 [package.extras]
-test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=6.0)", "pytest-cov", "pytest-timeout"]
+docs = ["myst-parser", "pydata-sphinx-theme", "sphinx", "sphinxcontrib-github-alt"]
+test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=7.0)", "pytest-cov", "pytest-timeout"]
 
 [[package]]
 name = "ipython"
@@ -618,7 +630,7 @@ qtconsole = "*"
 
 [[package]]
 name = "jupyter-client"
-version = "7.4.2"
+version = "7.4.3"
 description = "Jupyter protocol implementation and client libraries"
 category = "dev"
 optional = false
@@ -635,7 +647,7 @@ traitlets = "*"
 
 [package.extras]
 doc = ["ipykernel", "myst-parser", "sphinx (>=1.3.6)", "sphinx-rtd-theme", "sphinxcontrib-github-alt"]
-test = ["codecov", "coverage", "ipykernel (>=6.5)", "ipython", "mypy", "pre-commit", "pytest", "pytest-asyncio (>=0.18)", "pytest-cov", "pytest-timeout"]
+test = ["codecov", "coverage", "ipykernel (>=6.12)", "ipython", "mypy", "pre-commit", "pytest", "pytest-asyncio (>=0.18)", "pytest-cov", "pytest-timeout"]
 
 [[package]]
 name = "jupyter-console"
@@ -657,7 +669,7 @@ test = ["pexpect"]
 
 [[package]]
 name = "jupyter-core"
-version = "4.11.1"
+version = "4.11.2"
 description = "Jupyter core package. A base package on which Jupyter projects rely."
 category = "dev"
 optional = false
@@ -993,7 +1005,7 @@ test = ["black", "check-manifest", "flake8", "ipykernel", "ipython", "ipywidgets
 
 [[package]]
 name = "nbconvert"
-version = "7.2.1"
+version = "7.2.2"
 description = "Converting Jupyter Notebooks"
 category = "dev"
 optional = false
@@ -3780,7 +3792,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "996f6ba5d615e89b69b4d8f71ecfa0f6b7b3b37a1e98111cacede3ad392bcdaa"
+content-hash = "a61c1bb3438cd4e5c41d517afa3c6473ab0419f8a0d4d111f68c83b2c09a0272"
 
 [metadata.files]
 anyio = [
@@ -4154,6 +4166,9 @@ ghp-import = [
     {file = "ghp-import-2.1.0.tar.gz", hash = "sha256:9c535c4c61193c2df8871222567d7fd7e5014d835f97dc7b7439069e2413d343"},
     {file = "ghp_import-2.1.0-py3-none-any.whl", hash = "sha256:8337dd7b50877f163d4c0289bc1f1c7f127550241988d568c1db512c4324a619"},
 ]
+googlemaps = [
+    {file = "googlemaps-4.6.0.tar.gz", hash = "sha256:2cc88cdf206deccc18e7fdfd23a0ed244209a08b2f0561fd8739c4c277325241"},
+]
 griffe = [
     {file = "griffe-0.22.2-py3-none-any.whl", hash = "sha256:cea5415ac6a92f4a22638e3f1f2e661402bac09fb8e8266936d67185a7e0d0fb"},
     {file = "griffe-0.22.2.tar.gz", hash = "sha256:1408e336a4155392bbd81eed9f2f44bf144e71b9c664e905630affe83bbc088e"},
@@ -4171,8 +4186,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 ipykernel = [
-    {file = "ipykernel-6.16.0-py3-none-any.whl", hash = "sha256:d3d95241cd4dd302fea9d5747b00509b58997356d1f6333c9a074c3eccb78cb3"},
-    {file = "ipykernel-6.16.0.tar.gz", hash = "sha256:7fe42c0d58435e971dc15fd42189f20d66bf35f3056bda4f6554271bc1fa3d0d"},
+    {file = "ipykernel-6.16.1-py3-none-any.whl", hash = "sha256:32eb7bdc5af57185e9a42b0dcef66413ef91a0490b378eae46cbdf0d4e0b5912"},
+    {file = "ipykernel-6.16.1.tar.gz", hash = "sha256:3a27a550c1d682e7825f0f7732b0142b79ef1b21cd2e713cacac0c9847535f13"},
 ]
 ipython = [
     {file = "ipython-8.5.0-py3-none-any.whl", hash = "sha256:6f090e29ab8ef8643e521763a4f1f39dc3914db643122b1e9d3328ff2e43ada2"},
@@ -4208,16 +4223,16 @@ jupyter = [
     {file = "jupyter-1.0.0.zip", hash = "sha256:3e1f86076bbb7c8c207829390305a2b1fe836d471ed54be66a3b8c41e7f46cc7"},
 ]
 jupyter-client = [
-    {file = "jupyter_client-7.4.2-py3-none-any.whl", hash = "sha256:f8929321204d3f0b446401cfadc04ed8226e77002a9e379416df8c252607f695"},
-    {file = "jupyter_client-7.4.2.tar.gz", hash = "sha256:b91a9a7b91ac69adf170d98c87917320f6b466e1c5e89b300226ef4047193376"},
+    {file = "jupyter_client-7.4.3-py3-none-any.whl", hash = "sha256:8845e3f5a339734b1ecc21d2100638aa1c7a145e356a31845f155cda5b624b1c"},
+    {file = "jupyter_client-7.4.3.tar.gz", hash = "sha256:4fa2514cdb54dd9fbdcf7d7e4c5c3c8a973028168a8b4fc097b6aef625be13b0"},
 ]
 jupyter-console = [
     {file = "jupyter_console-6.4.4-py3-none-any.whl", hash = "sha256:756df7f4f60c986e7bc0172e4493d3830a7e6e75c08750bbe59c0a5403ad6dee"},
     {file = "jupyter_console-6.4.4.tar.gz", hash = "sha256:172f5335e31d600df61613a97b7f0352f2c8250bbd1092ef2d658f77249f89fb"},
 ]
 jupyter-core = [
-    {file = "jupyter_core-4.11.1-py3-none-any.whl", hash = "sha256:715e22bb6cc7db3718fddfac1f69f1c7e899ca00e42bdfd4bf3705452b9fd84a"},
-    {file = "jupyter_core-4.11.1.tar.gz", hash = "sha256:2e5f244d44894c4154d06aeae3419dd7f1b0ef4494dc5584929b398c61cfd314"},
+    {file = "jupyter_core-4.11.2-py3-none-any.whl", hash = "sha256:3815e80ec5272c0c19aad087a0d2775df2852cfca8f5a17069e99c9350cecff8"},
+    {file = "jupyter_core-4.11.2.tar.gz", hash = "sha256:c2909b9bc7dca75560a6c5ae78c34fd305ede31cd864da3c0d0bb2ed89aa9337"},
 ]
 jupyter-server = [
     {file = "jupyter_server-1.21.0-py3-none-any.whl", hash = "sha256:992531008544d77e05a16251cdfbd0bdff1b1efa14760c79b9cc776ac9214cf1"},
@@ -4512,8 +4527,8 @@ nbclient = [
     {file = "nbclient-0.7.0.tar.gz", hash = "sha256:a1d844efd6da9bc39d2209bf996dbd8e07bf0f36b796edfabaa8f8a9ab77c3aa"},
 ]
 nbconvert = [
-    {file = "nbconvert-7.2.1-py3-none-any.whl", hash = "sha256:50a54366ab53da20e82668818b7b2f3f7b85c0bcd46ec8e18836f12b39180dfa"},
-    {file = "nbconvert-7.2.1.tar.gz", hash = "sha256:1e180801205ad831b6e2480c5a03307dfb6327fa5b2f9b156d6fed45f9700686"},
+    {file = "nbconvert-7.2.2-py3-none-any.whl", hash = "sha256:fc7a3787c927cbd45a52e088e934fbbaab39afe61767522168a724b7483992be"},
+    {file = "nbconvert-7.2.2.tar.gz", hash = "sha256:24acfaa466d2c9b7eb524800e4a45afbed862c5d058cfb30fc7aa24d448c95eb"},
 ]
 nbformat = [
     {file = "nbformat-5.7.0-py3-none-any.whl", hash = "sha256:1b05ec2c552c2f1adc745f4eddce1eac8ca9ffd59bb9fd859e827eaa031319f9"},

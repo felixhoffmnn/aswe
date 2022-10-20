@@ -4,6 +4,7 @@ site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
 repo_name: advanced_software_engineering
 repo_url: https://github.com/felixhoffmnn/advanced_software_engineering
+watch: ["src", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
 
 # Navigation
 nav:
@@ -15,7 +16,20 @@ nav:
 plugins:
   - search
   - autorefs
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://mkdocstrings.github.io/objects.inv
+            - https://mkdocstrings.github.io/griffe/objects.inv
+          options:
+            filters: ["!^__"]
+            docstring_style: google
+            show_root_heading: true
+            show_source: yes
+            show_root_full_path: no
 
 # Theme
 theme:
@@ -40,18 +54,24 @@ theme:
     - navigation.tabs
 
     # Will expand the navigation tree on the sidebar
-    - navigation.expand
+    # - navigation.expand
 
     # TODO: Add description
-    # - navigation.tracking
+    - navigation.tracking
 
     # Adds a button to get back to the top of the page
     - navigation.top
+
+    # Shows files and navigation items on the left side
+    - toc.integrate
 
     # TODO: Add description
     - search.suggest
     - search.highlight
     - content.tabs.link
+
+  icon:
+    logo: logo
 
   language: en
 
@@ -61,3 +81,13 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/felix-emmanuel-hoffmann/
       name: Felix Hoffmann
+
+# Markdown extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.magiclink
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg

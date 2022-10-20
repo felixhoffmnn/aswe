@@ -3,7 +3,7 @@ from loguru import logger
 from src.utils.http_request import http_request
 
 
-def test_valid_request():
+def test_valid_request() -> None:
     """Test the `http_request` function with a valid URL.
 
     Assert:
@@ -13,7 +13,7 @@ def test_valid_request():
     assert http_request("https://google.com") is not None
 
 
-def test_invalid_request():
+def test_invalid_request() -> None:
     """Test the `http_request` function with an invalid URL.
 
     Assert:

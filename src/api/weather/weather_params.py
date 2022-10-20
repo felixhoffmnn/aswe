@@ -278,7 +278,7 @@ class DynamicPeriod(str, Enum):
     @classmethod
     def last_weekday(cls: Type[DynamicPeriodT], weekday: str) -> str:
         """the last occurrence of the named day of week before today’s day. For example lastsaturday"""
-        if weekday not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
+        if weekday.lower() not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             raise Exception(f"Given weekday is invalid: {weekday}")
 
         return f"last{weekday.lower()}"
@@ -286,7 +286,7 @@ class DynamicPeriod(str, Enum):
     @classmethod
     def next_weekday(cls: Type[DynamicPeriodT], weekday: str) -> str:
         """the next occurrence of the named day of week after today’s day. For example nextsaturday"""
-        if weekday not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
+        if weekday.lower() not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             raise Exception(f"Given weekday is invalid: {weekday}")
         return f"next{weekday.lower()}"
 
@@ -295,7 +295,7 @@ class DynamicPeriod(str, Enum):
         """the period including and after today’s date with a length on the number of days specified.
         For example next7days or next21days."""
         if days_count <= 0:
-            raise Exception(f"Give day count is invalid: {days_count} <= 0")
+            raise Exception(f"Given day count is invalid: {days_count} <= 0")
 
         return f"next{days_count}days"
 
@@ -304,7 +304,7 @@ class DynamicPeriod(str, Enum):
         """the period before today’s date with a length on the number of days specified.
         For example last7days or last21days."""
         if days_count <= 0:
-            raise Exception(f"Give day count is invalid: {days_count} <= 0")
+            raise Exception(f"Given day count is invalid: {days_count} <= 0")
 
         return f"last{days_count}days"
 

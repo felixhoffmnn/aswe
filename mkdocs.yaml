@@ -1,5 +1,5 @@
 # Metadata
-site_name: advanced_software_engineering
+site_name: Advanced Software Engineering
 site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do.
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
 repo_name: advanced_software_engineering
@@ -8,14 +8,18 @@ watch: ["src", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
 
 # Navigation
 nav:
-  - Getting started: index.md
-  - Documentation:
-      - documentation/hello_world.md
+  - Overview: index.md
+  - Utilities: utilities.md
 
 # Plugins
 plugins:
   - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
   - autorefs
+  - mkdocs-jupyter:
+      include: ["*.ipynb"]
+      kernel_name: python3
   - mkdocstrings:
       handlers:
         python:
@@ -26,7 +30,9 @@ plugins:
             - https://mkdocstrings.github.io/griffe/objects.inv
           options:
             filters: ["!^__"]
-            docstring_style: google
+            docstring_style: numpy
+            docstring_section_style: table
+            merge_init_into_class: true
             show_root_heading: true
             show_source: yes
             show_root_full_path: no
@@ -72,6 +78,7 @@ theme:
 
   icon:
     logo: logo
+    repo: fontawesome/brands/github
 
   language: en
 

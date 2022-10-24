@@ -110,6 +110,17 @@ pycodestyle = ">=2.9.1"
 toml = "*"
 
 [[package]]
+name = "Babel"
+version = "2.10.3"
+description = "Internationalization utilities"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+pytz = ">=2015.7"
+
+[[package]]
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
@@ -232,7 +243,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 name = "comtypes"
 version = "1.1.14"
 description = "Pure Python COM package"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -310,11 +321,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "dill"
-version = "0.3.5.1"
+version = "0.3.6"
 description = "serialize all of python"
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
+python-versions = ">=3.7"
 
 [package.extras]
 graph = ["objgraph (>=1.7.2)"]
@@ -384,7 +395,7 @@ pyflakes = ">=2.5.0,<2.6.0"
 
 [[package]]
 name = "fonttools"
-version = "4.37.4"
+version = "4.38.0"
 description = "Tools to manipulate font files"
 category = "main"
 optional = false
@@ -417,6 +428,28 @@ python-dateutil = ">=2.8.1"
 
 [package.extras]
 dev = ["flake8", "markdown", "twine", "wheel"]
+
+[[package]]
+name = "gitdb"
+version = "4.0.9"
+description = "Git Object Database"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+smmap = ">=3.0.1,<6"
+
+[[package]]
+name = "GitPython"
+version = "3.1.29"
+description = "GitPython is a python library used to interact with Git repositories"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+gitdb = ">=4.0.1,<5"
 
 [[package]]
 name = "googlemaps"
@@ -728,6 +761,25 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "jupytext"
+version = "1.14.1"
+description = "Jupyter notebooks as Markdown documents, Julia, Python or R scripts"
+category = "dev"
+optional = false
+python-versions = "~=3.6"
+
+[package.dependencies]
+markdown-it-py = ">=1.0.0,<3.0.0"
+mdit-py-plugins = "*"
+nbformat = "*"
+pyyaml = "*"
+toml = "*"
+
+[package.extras]
+rst2md = ["sphinx-gallery (>=0.7.0,<0.8.0)"]
+toml = ["toml"]
+
+[[package]]
 name = "kiwisolver"
 version = "1.4.4"
 description = "A fast implementation of the Cassowary constraint solver"
@@ -759,6 +811,20 @@ win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
 dev = ["Sphinx (>=4.1.1)", "black (>=19.10b0)", "colorama (>=0.3.4)", "docutils (==0.16)", "flake8 (>=3.7.7)", "isort (>=5.1.1)", "pytest (>=4.6.2)", "pytest-cov (>=2.7.1)", "sphinx-autobuild (>=0.7.1)", "sphinx-rtd-theme (>=0.4.3)", "tox (>=3.9.0)"]
 
 [[package]]
+name = "lxml"
+version = "4.9.1"
+description = "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API."
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, != 3.4.*"
+
+[package.extras]
+cssselect = ["cssselect (>=0.7)"]
+html5 = ["html5lib"]
+htmlsoup = ["BeautifulSoup4"]
+source = ["Cython (>=0.29.7)"]
+
+[[package]]
 name = "Markdown"
 version = "3.3.7"
 description = "Python implementation of Markdown."
@@ -768,6 +834,27 @@ python-versions = ">=3.6"
 
 [package.extras]
 testing = ["coverage", "pyyaml"]
+
+[[package]]
+name = "markdown-it-py"
+version = "2.1.0"
+description = "Python port of markdown-it. Markdown parsing, done right!"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+mdurl = ">=0.1,<1.0"
+
+[package.extras]
+benchmarking = ["psutil", "pytest", "pytest-benchmark (>=3.2,<4.0)"]
+code_style = ["pre-commit (==2.6)"]
+compare = ["commonmark (>=0.9.1,<0.10.0)", "markdown (>=3.3.6,<3.4.0)", "mistletoe (>=0.8.1,<0.9.0)", "mistune (>=2.0.2,<2.1.0)", "panflute (>=2.1.3,<2.2.0)"]
+linkify = ["linkify-it-py (>=1.0,<2.0)"]
+plugins = ["mdit-py-plugins"]
+profiling = ["gprof2dot"]
+rtd = ["attrs", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
+testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
 
 [[package]]
 name = "MarkupSafe"
@@ -817,6 +904,30 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "mdit-py-plugins"
+version = "0.3.1"
+description = "Collection of plugins for markdown-it-py"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+markdown-it-py = ">=1.0.0,<3.0.0"
+
+[package.extras]
+code_style = ["pre-commit"]
+rtd = ["attrs", "myst-parser (>=0.16.1,<0.17.0)", "sphinx-book-theme (>=0.1.0,<0.2.0)"]
+testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
+
+[[package]]
+name = "mdurl"
+version = "0.1.2"
+description = "Markdown URL utilities"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "mergedeep"
 version = "1.3.4"
 description = "A deep merge function for 🐍."
@@ -826,8 +937,8 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "mistune"
-version = "2.0.4"
-description = "A sane Markdown parser with useful plugins and renderers"
+version = "0.8.4"
+description = "The fastest markdown parser in pure Python"
 category = "dev"
 optional = false
 python-versions = "*"
@@ -869,8 +980,36 @@ Markdown = ">=3.3"
 mkdocs = ">=1.1"
 
 [[package]]
+name = "mkdocs-git-revision-date-localized-plugin"
+version = "1.1.0"
+description = "Mkdocs plugin that enables displaying the localized date of the last git modification of a markdown file."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+babel = ">=2.7.0"
+GitPython = "*"
+mkdocs = ">=1.0"
+
+[[package]]
+name = "mkdocs-jupyter"
+version = "0.22.0"
+description = "Use Jupyter in mkdocs websites"
+category = "dev"
+optional = false
+python-versions = ">=3.7.1,<4"
+
+[package.dependencies]
+jupytext = ">=1.13.8,<2.0.0"
+mkdocs = ">=1.2.3,<2.0.0"
+mkdocs-material = ">=8.0.0,<9.0.0"
+nbconvert = ">=6.2.0,<7.0.0"
+Pygments = ">=2.12.0,<3.0.0"
+
+[[package]]
 name = "mkdocs-material"
-version = "8.5.6"
+version = "8.5.7"
 description = "Documentation that simply works"
 category = "dev"
 optional = false
@@ -887,11 +1026,11 @@ requests = ">=2.26"
 
 [[package]]
 name = "mkdocs-material-extensions"
-version = "1.0.3"
-description = "Extension pack for Python Markdown."
+version = "1.1"
+description = "Extension pack for Python Markdown and MkDocs Material."
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [[package]]
 name = "mkdocstrings"
@@ -1005,7 +1144,7 @@ test = ["black", "check-manifest", "flake8", "ipykernel", "ipython", "ipywidgets
 
 [[package]]
 name = "nbconvert"
-version = "7.2.2"
+version = "6.5.4"
 description = "Converting Jupyter Notebooks"
 category = "dev"
 optional = false
@@ -1015,11 +1154,13 @@ python-versions = ">=3.7"
 beautifulsoup4 = "*"
 bleach = "*"
 defusedxml = "*"
+entrypoints = ">=0.2.2"
 jinja2 = ">=3.0"
 jupyter-core = ">=4.7"
 jupyterlab-pygments = "*"
-markupsafe = ">=2.0"
-mistune = ">=2.0.3,<3"
+lxml = "*"
+MarkupSafe = ">=2.0"
+mistune = ">=0.8.1,<2"
 nbclient = ">=0.5.0"
 nbformat = ">=5.1"
 packaging = "*"
@@ -1029,10 +1170,8 @@ tinycss2 = "*"
 traitlets = ">=5.0"
 
 [package.extras]
-all = ["ipykernel", "ipython", "ipywidgets (>=7)", "myst-parser", "nbsphinx (>=0.2.12)", "pre-commit", "pyppeteer (>=1,<1.1)", "pyqtwebengine (>=5.15)", "pytest", "pytest-cov", "pytest-dependency", "sphinx (==5.0.2)", "sphinx-rtd-theme", "tornado (>=6.1)"]
-docs = ["ipython", "myst-parser", "nbsphinx (>=0.2.12)", "sphinx (==5.0.2)", "sphinx-rtd-theme"]
-qtpdf = ["pyqtwebengine (>=5.15)"]
-qtpng = ["pyqtwebengine (>=5.15)"]
+all = ["ipykernel", "ipython", "ipywidgets (>=7)", "nbsphinx (>=0.2.12)", "pre-commit", "pyppeteer (>=1,<1.1)", "pytest", "pytest-cov", "pytest-dependency", "sphinx (>=1.5.1)", "sphinx-rtd-theme", "tornado (>=6.1)"]
+docs = ["ipython", "nbsphinx (>=0.2.12)", "sphinx (>=1.5.1)", "sphinx-rtd-theme"]
 serve = ["tornado (>=6.1)"]
 test = ["ipykernel", "ipywidgets (>=7)", "pre-commit", "pyppeteer (>=1,<1.1)", "pytest", "pytest-cov", "pytest-dependency"]
 webpdf = ["pyppeteer (>=1,<1.1)"]
@@ -1360,14 +1499,14 @@ plugins = ["importlib-metadata"]
 
 [[package]]
 name = "pylint"
-version = "2.15.4"
+version = "2.15.5"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 
 [package.dependencies]
-astroid = ">=2.12.11,<=2.14.0-dev0"
+astroid = ">=2.12.12,<=2.14.0-dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = ">=0.2"
 isort = ">=4.2.5,<6"
@@ -1382,7 +1521,7 @@ testutils = ["gitpython (>3)"]
 
 [[package]]
 name = "pymdown-extensions"
-version = "9.6"
+version = "9.7"
 description = "Extension pack for Python Markdown."
 category = "dev"
 optional = false
@@ -1395,7 +1534,7 @@ markdown = ">=3.2"
 name = "pyobjc"
 version = "8.5.1"
 description = "Python<->ObjC Interoperability Module"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1548,7 +1687,7 @@ allbindings = ["pyobjc-core (==8.5.1)", "pyobjc-framework-AVFoundation (==8.5.1)
 name = "pyobjc-core"
 version = "8.5.1"
 description = "Python<->ObjC Interoperability Module"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1556,7 +1695,7 @@ python-versions = ">=3.6"
 name = "pyobjc-framework-Accessibility"
 version = "8.5.1"
 description = "Wrappers for the framework Accessibility on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1569,7 +1708,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-Accounts"
 version = "8.5.1"
 description = "Wrappers for the framework Accounts on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1581,7 +1720,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AddressBook"
 version = "8.5.1"
 description = "Wrappers for the framework AddressBook on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1593,7 +1732,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AdServices"
 version = "8.5.1"
 description = "Wrappers for the framework AdServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1605,7 +1744,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AdSupport"
 version = "8.5.1"
 description = "Wrappers for the framework AdSupport on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1617,7 +1756,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AppleScriptKit"
 version = "8.5.1"
 description = "Wrappers for the framework AppleScriptKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1629,7 +1768,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AppleScriptObjC"
 version = "8.5.1"
 description = "Wrappers for the framework AppleScriptObjC on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1641,7 +1780,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ApplicationServices"
 version = "8.5.1"
 description = "Wrappers for the framework ApplicationServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1654,7 +1793,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-AppTrackingTransparency"
 version = "8.5.1"
 description = "Wrappers for the framework AppTrackingTransparency on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1666,7 +1805,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AudioVideoBridging"
 version = "8.5.1"
 description = "Wrappers for the framework AudioVideoBridging on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1678,7 +1817,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AuthenticationServices"
 version = "8.5.1"
 description = "Wrappers for the framework AuthenticationServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1690,7 +1829,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AutomaticAssessmentConfiguration"
 version = "8.5.1"
 description = "Wrappers for the framework AutomaticAssessmentConfiguration on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1702,7 +1841,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Automator"
 version = "8.5.1"
 description = "Wrappers for the framework Automator on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1714,7 +1853,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-AVFoundation"
 version = "8.5.1"
 description = "Wrappers for the framework AVFoundation on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1729,7 +1868,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-AVKit"
 version = "8.5.1"
 description = "Wrappers for the framework AVKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1742,7 +1881,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-BusinessChat"
 version = "8.5.1"
 description = "Wrappers for the framework BusinessChat on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1754,7 +1893,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CalendarStore"
 version = "8.5.1"
 description = "Wrappers for the framework CalendarStore on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1766,7 +1905,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CallKit"
 version = "8.5.1"
 description = "Wrappers for the framework CallKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1778,7 +1917,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CFNetwork"
 version = "8.5.1"
 description = "Wrappers for the framework CFNetwork on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1790,7 +1929,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ClassKit"
 version = "8.5.1"
 description = "Wrappers for the framework ClassKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1802,7 +1941,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CloudKit"
 version = "8.5.1"
 description = "Wrappers for the framework CloudKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1817,7 +1956,7 @@ pyobjc-framework-CoreLocation = ">=8.5.1"
 name = "pyobjc-framework-Cocoa"
 version = "8.5.1"
 description = "Wrappers for the Cocoa frameworks on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1828,7 +1967,7 @@ pyobjc-core = ">=8.5.1"
 name = "pyobjc-framework-Collaboration"
 version = "8.5.1"
 description = "Wrappers for the framework Collaboration on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1840,7 +1979,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ColorSync"
 version = "8.5.1"
 description = "Wrappers for the framework ColorSync on Mac OS X"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1852,7 +1991,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Contacts"
 version = "8.5.1"
 description = "Wrappers for the framework Contacts on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1864,7 +2003,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ContactsUI"
 version = "8.5.1"
 description = "Wrappers for the framework ContactsUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1877,7 +2016,7 @@ pyobjc-framework-Contacts = ">=8.5.1"
 name = "pyobjc-framework-CoreAudio"
 version = "8.5.1"
 description = "Wrappers for the framework CoreAudio on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1889,7 +2028,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreAudioKit"
 version = "8.5.1"
 description = "Wrappers for the framework CoreAudioKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1902,7 +2041,7 @@ pyobjc-framework-CoreAudio = ">=8.5.1"
 name = "pyobjc-framework-CoreBluetooth"
 version = "8.5.1"
 description = "Wrappers for the framework CoreBluetooth on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1914,7 +2053,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreData"
 version = "8.5.1"
 description = "Wrappers for the framework CoreData on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1926,7 +2065,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreHaptics"
 version = "8.5.1"
 description = "Wrappers for the framework CoreHaptics on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1938,7 +2077,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreLocation"
 version = "8.5.1"
 description = "Wrappers for the framework CoreLocation on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1950,7 +2089,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreMedia"
 version = "8.5.1"
 description = "Wrappers for the framework CoreMedia on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1962,7 +2101,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreMediaIO"
 version = "8.5.1"
 description = "Wrappers for the framework CoreMediaIO on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1974,7 +2113,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreMIDI"
 version = "8.5.1"
 description = "Wrappers for the framework CoreMIDI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1986,7 +2125,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreML"
 version = "8.5.1"
 description = "Wrappers for the framework CoreML on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1998,7 +2137,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreMotion"
 version = "8.5.1"
 description = "Wrappers for the framework CoreMotion on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2010,7 +2149,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreServices"
 version = "8.5.1"
 description = "Wrappers for the framework CoreServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2022,7 +2161,7 @@ pyobjc-framework-FSEvents = ">=8.5.1"
 name = "pyobjc-framework-CoreSpotlight"
 version = "8.5.1"
 description = "Wrappers for the framework CoreSpotlight on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2034,7 +2173,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CoreText"
 version = "8.5.1"
 description = "Wrappers for the framework CoreText on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2047,7 +2186,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-CoreWLAN"
 version = "8.5.1"
 description = "Wrappers for the framework CoreWLAN on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2059,7 +2198,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-CryptoTokenKit"
 version = "8.5.1"
 description = "Wrappers for the framework CryptoTokenKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2071,7 +2210,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-DataDetection"
 version = "8.5.1"
 description = "Wrappers for the framework DataDetection on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2083,7 +2222,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-DeviceCheck"
 version = "8.5.1"
 description = "Wrappers for the framework DeviceCheck on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2095,7 +2234,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-DictionaryServices"
 version = "8.5.1"
 description = "Wrappers for the framework DictionaryServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2107,7 +2246,7 @@ pyobjc-framework-CoreServices = ">=8.5.1"
 name = "pyobjc-framework-DiscRecording"
 version = "8.5.1"
 description = "Wrappers for the framework DiscRecording on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2119,7 +2258,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-DiscRecordingUI"
 version = "8.5.1"
 description = "Wrappers for the framework DiscRecordingUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2132,7 +2271,7 @@ pyobjc-framework-DiscRecording = ">=8.5.1"
 name = "pyobjc-framework-DiskArbitration"
 version = "8.5.1"
 description = "Wrappers for the framework DiskArbitration on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2144,7 +2283,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-DVDPlayback"
 version = "8.5.1"
 description = "Wrappers for the framework DVDPlayback on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2156,7 +2295,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-EventKit"
 version = "8.5.1"
 description = "Wrappers for the framework Accounts on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2168,7 +2307,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ExceptionHandling"
 version = "8.5.1"
 description = "Wrappers for the framework ExceptionHandling on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2180,7 +2319,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ExecutionPolicy"
 version = "8.5.1"
 description = "Wrappers for the framework ExecutionPolicy on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2192,7 +2331,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ExternalAccessory"
 version = "8.5.1"
 description = "Wrappers for the framework ExternalAccessory on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2204,7 +2343,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-FileProvider"
 version = "8.5.1"
 description = "Wrappers for the framework FileProvider on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2216,7 +2355,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-FileProviderUI"
 version = "8.5.1"
 description = "Wrappers for the framework FileProviderUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2228,7 +2367,7 @@ pyobjc-framework-FileProvider = ">=8.5.1"
 name = "pyobjc-framework-FinderSync"
 version = "8.5.1"
 description = "Wrappers for the framework FinderSync on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2240,7 +2379,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-FSEvents"
 version = "8.5.1"
 description = "Wrappers for the framework FSEvents on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2252,7 +2391,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-GameCenter"
 version = "8.5.1"
 description = "Wrappers for the framework GameCenter on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2264,7 +2403,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-GameController"
 version = "8.5.1"
 description = "Wrappers for the framework GameController on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2276,7 +2415,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-GameKit"
 version = "8.5.1"
 description = "Wrappers for the framework GameKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2289,7 +2428,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-GameplayKit"
 version = "8.5.1"
 description = "Wrappers for the framework GameplayKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2302,7 +2441,7 @@ pyobjc-framework-SpriteKit = ">=8.5.1"
 name = "pyobjc-framework-ImageCaptureCore"
 version = "8.5.1"
 description = "Wrappers for the framework ImageCaptureCore on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2314,7 +2453,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-IMServicePlugIn"
 version = "8.5.1"
 description = "Wrappers for the framework IMServicePlugIn on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2326,7 +2465,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-InputMethodKit"
 version = "8.5.1"
 description = "Wrappers for the framework InputMethodKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2338,7 +2477,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-InstallerPlugins"
 version = "8.5.1"
 description = "Wrappers for the framework InstallerPlugins on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2350,7 +2489,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-InstantMessage"
 version = "8.5.1"
 description = "Wrappers for the framework InstantMessage on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2363,7 +2502,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-Intents"
 version = "8.5.1"
 description = "Wrappers for the framework Intents on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2375,7 +2514,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-IntentsUI"
 version = "8.5.1"
 description = "Wrappers for the framework Intents on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2387,7 +2526,7 @@ pyobjc-framework-Intents = ">=8.5.1"
 name = "pyobjc-framework-IOSurface"
 version = "8.5.1"
 description = "Wrappers for the framework IOSurface on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2399,7 +2538,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-iTunesLibrary"
 version = "8.5.1"
 description = "Wrappers for the framework iTunesLibrary on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2411,7 +2550,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-KernelManagement"
 version = "8.5.1"
 description = "Wrappers for the framework KernelManagement on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2423,7 +2562,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-LatentSemanticMapping"
 version = "8.5.1"
 description = "Wrappers for the framework LatentSemanticMapping on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2435,7 +2574,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-LaunchServices"
 version = "8.5.1"
 description = "Wrappers for the framework LaunchServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2447,7 +2586,7 @@ pyobjc-framework-CoreServices = ">=8.5.1"
 name = "pyobjc-framework-libdispatch"
 version = "8.5.1"
 description = "Wrappers for libdispatch on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2458,7 +2597,7 @@ pyobjc-core = ">=8.5.1"
 name = "pyobjc-framework-LinkPresentation"
 version = "8.5.1"
 description = "Wrappers for the framework LinkPresentation on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2471,7 +2610,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-LocalAuthentication"
 version = "8.5.1"
 description = "Wrappers for the framework LocalAuthentication on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2484,7 +2623,7 @@ pyobjc-framework-Security = ">=8.5.1"
 name = "pyobjc-framework-LocalAuthenticationEmbeddedUI"
 version = "8.5.1"
 description = "Wrappers for the framework LocalAuthenticationEmbeddedUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2497,7 +2636,7 @@ pyobjc-framework-LocalAuthentication = ">=8.5.1"
 name = "pyobjc-framework-MailKit"
 version = "8.5.1"
 description = "Wrappers for the framework MailKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2509,7 +2648,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-MapKit"
 version = "8.5.1"
 description = "Wrappers for the framework MapKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2523,7 +2662,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-MediaAccessibility"
 version = "8.5.1"
 description = "Wrappers for the framework MediaAccessibility on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2535,7 +2674,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-MediaLibrary"
 version = "8.5.1"
 description = "Wrappers for the framework MediaLibrary on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2548,7 +2687,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-MediaPlayer"
 version = "8.5.1"
 description = "Wrappers for the framework MediaPlayer on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2560,7 +2699,7 @@ pyobjc-framework-AVFoundation = ">=8.5.1"
 name = "pyobjc-framework-MediaToolbox"
 version = "8.5.1"
 description = "Wrappers for the framework MediaToolbox on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2572,7 +2711,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Message"
 version = "8.5.1"
 description = "Wrappers for the framework Message on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2584,7 +2723,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Metal"
 version = "8.5.1"
 description = "Wrappers for the framework Metal on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2596,7 +2735,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-MetalKit"
 version = "8.5.1"
 description = "Wrappers for the framework MetalKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2609,7 +2748,7 @@ pyobjc-framework-Metal = ">=8.5.1"
 name = "pyobjc-framework-MetalPerformanceShaders"
 version = "8.5.1"
 description = "Wrappers for the framework MetalPerformanceShaders on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2621,7 +2760,7 @@ pyobjc-framework-Metal = ">=8.5.1"
 name = "pyobjc-framework-MetalPerformanceShadersGraph"
 version = "8.5.1"
 description = "Wrappers for the framework MetalPerformanceShadersGraph on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2633,7 +2772,7 @@ pyobjc-framework-MetalPerformanceShaders = ">=8.5.1"
 name = "pyobjc-framework-MetricKit"
 version = "8.5.1"
 description = "Wrappers for the framework MetricKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2645,7 +2784,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-MLCompute"
 version = "8.5.1"
 description = "Wrappers for the framework MLCompute on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2657,7 +2796,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ModelIO"
 version = "8.5.1"
 description = "Wrappers for the framework ModelIO on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2670,7 +2809,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-MultipeerConnectivity"
 version = "8.5.1"
 description = "Wrappers for the framework MultipeerConnectivity on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2682,7 +2821,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-NaturalLanguage"
 version = "8.5.1"
 description = "Wrappers for the framework NaturalLanguage on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2694,7 +2833,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-NetFS"
 version = "8.5.1"
 description = "Wrappers for the framework NetFS on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2706,7 +2845,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Network"
 version = "8.5.1"
 description = "Wrappers for the framework Network on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2718,7 +2857,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-NetworkExtension"
 version = "8.5.1"
 description = "Wrappers for the framework NetworkExtension on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2730,7 +2869,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-NotificationCenter"
 version = "8.5.1"
 description = "Wrappers for the framework NotificationCenter on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2742,7 +2881,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-OpenDirectory"
 version = "8.5.1"
 description = "Wrappers for the framework OpenDirectory on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2754,7 +2893,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-OSAKit"
 version = "8.5.1"
 description = "Wrappers for the framework OSAKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2766,7 +2905,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-OSLog"
 version = "8.5.1"
 description = "Wrappers for the framework OSLog on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2780,7 +2919,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-PassKit"
 version = "8.5.1"
 description = "Wrappers for the framework PassKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2792,7 +2931,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-PencilKit"
 version = "8.5.1"
 description = "Wrappers for the framework PencilKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2804,7 +2943,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Photos"
 version = "8.5.1"
 description = "Wrappers for the framework Photos on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2816,7 +2955,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-PhotosUI"
 version = "8.5.1"
 description = "Wrappers for the framework PhotosUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2828,7 +2967,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-PreferencePanes"
 version = "8.5.1"
 description = "Wrappers for the framework PreferencePanes on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2840,7 +2979,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-PubSub"
 version = "8.5.1"
 description = "Wrappers for the framework PubSub on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2852,7 +2991,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-PushKit"
 version = "8.5.1"
 description = "Wrappers for the framework PushKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2864,7 +3003,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Quartz"
 version = "8.5.1"
 description = "Wrappers for the Quartz frameworks on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2876,7 +3015,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-QuickLookThumbnailing"
 version = "8.5.1"
 description = "Wrappers for the framework QuickLookThumbnailing on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2889,7 +3028,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-ReplayKit"
 version = "8.5.1"
 description = "Wrappers for the framework ReplayKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2901,7 +3040,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SafariServices"
 version = "8.5.1"
 description = "Wrappers for the framework SafariServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2913,7 +3052,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SceneKit"
 version = "8.5.1"
 description = "Wrappers for the framework SceneKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2926,7 +3065,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-ScreenCaptureKit"
 version = "8.5.1"
 description = "Wrappers for the framework ScreenCaptureKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2938,7 +3077,7 @@ pyobjc-framework-CoreMedia = ">=8.5.1"
 name = "pyobjc-framework-ScreenSaver"
 version = "8.5.1"
 description = "Wrappers for the framework ScreenSaver on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2950,7 +3089,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ScreenTime"
 version = "8.5.1"
 description = "Wrappers for the framework ScreenTime on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2962,7 +3101,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ScriptingBridge"
 version = "8.5.1"
 description = "Wrappers for the framework ScriptingBridge on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2974,7 +3113,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SearchKit"
 version = "8.5.1"
 description = "Wrappers for the framework SearchKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2986,7 +3125,7 @@ pyobjc-framework-CoreServices = ">=8.5.1"
 name = "pyobjc-framework-Security"
 version = "8.5.1"
 description = "Wrappers for the framework Security on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -2998,7 +3137,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SecurityFoundation"
 version = "8.5.1"
 description = "Wrappers for the framework SecurityFoundation on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3011,7 +3150,7 @@ pyobjc-framework-Security = ">=8.5.1"
 name = "pyobjc-framework-SecurityInterface"
 version = "8.5.1"
 description = "Wrappers for the framework SecurityInterface on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3024,7 +3163,7 @@ pyobjc-framework-Security = ">=8.5.1"
 name = "pyobjc-framework-ServerNotification"
 version = "8.5.1"
 description = "Wrappers for the framework ServerNotification on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3036,7 +3175,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ServiceManagement"
 version = "8.5.1"
 description = "Wrappers for the framework ServiceManagement on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3048,7 +3187,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-ShazamKit"
 version = "8.5.1"
 description = "Wrappers for the framework ShazamKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3060,7 +3199,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Social"
 version = "8.5.1"
 description = "Wrappers for the framework Social on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3072,7 +3211,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SoundAnalysis"
 version = "8.5.1"
 description = "Wrappers for the framework SoundAnalysis on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3084,7 +3223,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Speech"
 version = "8.5.1"
 description = "Wrappers for the framework Speech on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3096,7 +3235,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SpriteKit"
 version = "8.5.1"
 description = "Wrappers for the framework SpriteKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3109,7 +3248,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-StoreKit"
 version = "8.5.1"
 description = "Wrappers for the framework StoreKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3121,7 +3260,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SyncServices"
 version = "8.5.1"
 description = "Wrappers for the framework SyncServices on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3134,7 +3273,7 @@ pyobjc-framework-CoreData = ">=8.5.1"
 name = "pyobjc-framework-SystemConfiguration"
 version = "8.5.1"
 description = "Wrappers for the framework SystemConfiguration on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3146,7 +3285,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-SystemExtensions"
 version = "8.5.1"
 description = "Wrappers for the framework SystemExtensions on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3158,7 +3297,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-UniformTypeIdentifiers"
 version = "8.5.1"
 description = "Wrappers for the framework UniformTypeIdentifiers on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3170,7 +3309,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-UserNotifications"
 version = "8.5.1"
 description = "Wrappers for the framework UserNotifications on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3182,7 +3321,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-UserNotificationsUI"
 version = "8.5.1"
 description = "Wrappers for the framework UserNotificationsUI on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3195,7 +3334,7 @@ pyobjc-framework-UserNotifications = ">=8.5.1"
 name = "pyobjc-framework-VideoSubscriberAccount"
 version = "8.5.1"
 description = "Wrappers for the framework VideoSubscriberAccount on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3207,7 +3346,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-VideoToolbox"
 version = "8.5.1"
 description = "Wrappers for the framework VideoToolbox on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3221,7 +3360,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-Virtualization"
 version = "8.5.1"
 description = "Wrappers for the framework Virtualization on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3233,7 +3372,7 @@ pyobjc-framework-Cocoa = ">=8.5.1"
 name = "pyobjc-framework-Vision"
 version = "8.5.1"
 description = "Wrappers for the framework Vision on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3247,7 +3386,7 @@ pyobjc-framework-Quartz = ">=8.5.1"
 name = "pyobjc-framework-WebKit"
 version = "8.5.1"
 description = "Wrappers for the framework WebKit on macOS"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -3270,7 +3409,7 @@ diagrams = ["jinja2", "railroad-diagrams"]
 name = "pypiwin32"
 version = "223"
 description = ""
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -3335,7 +3474,7 @@ six = ">=1.5"
 name = "pyttsx3"
 version = "2.90"
 description = "Text to Speech (TTS) library for Python 2 and 3. Works without internet connection or delay. Supports multiple TTS engines, including Sapi5, nsss, and espeak."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -3357,7 +3496,7 @@ python-versions = "*"
 name = "pywin32"
 version = "304"
 description = "Python for Window Extensions"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -3523,6 +3662,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "smmap"
+version = "5.0.0"
+description = "A pure Python implementation of a sliding window memory map manager"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "sniffio"
 version = "1.3.0"
 description = "Sniff out which async library your code is running under"
@@ -3542,7 +3689,7 @@ python-versions = ">=3.6"
 name = "SpeechRecognition"
 version = "3.8.1"
 description = "Library for performing speech recognition, with support for several engines and APIs, online and offline."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -3792,7 +3939,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a61c1bb3438cd4e5c41d517afa3c6473ab0419f8a0d4d111f68c83b2c09a0272"
+content-hash = "307e2486cf04303b88223bcecb62f53bfc901610f8ffe61d2794c253989beda4"
 
 [metadata.files]
 anyio = [
@@ -3845,6 +3992,10 @@ attrs = [
 autopep8 = [
     {file = "autopep8-1.7.0-py2.py3-none-any.whl", hash = "sha256:6f09e90a2be784317e84dc1add17ebfc7abe3924239957a37e5040e27d812087"},
     {file = "autopep8-1.7.0.tar.gz", hash = "sha256:ca9b1a83e53a7fad65d731dc7a2a2d50aa48f43850407c59f6a1a306c4201142"},
+]
+Babel = [
+    {file = "Babel-2.10.3-py3-none-any.whl", hash = "sha256:ff56f4892c1c4bf0d814575ea23471c230d544203c7748e8c68f0089478d48eb"},
+    {file = "Babel-2.10.3.tar.gz", hash = "sha256:7614553711ee97490f732126dc077f8d0ae084ebc6a96e23db1482afabdb2c51"},
 ]
 backcall = [
     {file = "backcall-0.2.0-py2.py3-none-any.whl", hash = "sha256:fbbce6a29f263178a1f7915c1940bde0ec2b2a967566fe1c65c1dfb7422bd255"},
@@ -4131,8 +4282,8 @@ defusedxml = [
     {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
 ]
 dill = [
-    {file = "dill-0.3.5.1-py2.py3-none-any.whl", hash = "sha256:33501d03270bbe410c72639b350e941882a8b0fd55357580fbc873fba0c59302"},
-    {file = "dill-0.3.5.1.tar.gz", hash = "sha256:d75e41f3eff1eee599d738e76ba8f4ad98ea229db8b085318aa2b3333a208c86"},
+    {file = "dill-0.3.6-py3-none-any.whl", hash = "sha256:a07ffd2351b8c678dfc4a856a3005f8067aea51d6ba6c700796a4d9e280f39f0"},
+    {file = "dill-0.3.6.tar.gz", hash = "sha256:e5db55f3687856d8fbdab002ed78544e1c4559a130302693d839dfe8f93f2373"},
 ]
 distlib = [
     {file = "distlib-0.3.6-py2.py3-none-any.whl", hash = "sha256:f35c4b692542ca110de7ef0bea44d73981caeb34ca0b9b6b2e6d7790dda8f80e"},
@@ -4159,12 +4310,20 @@ flake8 = [
     {file = "flake8-5.0.4.tar.gz", hash = "sha256:6fbe320aad8d6b95cec8b8e47bc933004678dc63095be98528b7bdd2a9f510db"},
 ]
 fonttools = [
-    {file = "fonttools-4.37.4-py3-none-any.whl", hash = "sha256:afae1b39555f9c3f0ad1f0f1daf678e5ad157e38c8842ecb567951bf1a9b9fd7"},
-    {file = "fonttools-4.37.4.zip", hash = "sha256:86918c150c6412798e15a0de6c3e0d061ddefddd00f97b4f7b43dfa867ad315e"},
+    {file = "fonttools-4.38.0-py3-none-any.whl", hash = "sha256:820466f43c8be8c3009aef8b87e785014133508f0de64ec469e4efb643ae54fb"},
+    {file = "fonttools-4.38.0.zip", hash = "sha256:2bb244009f9bf3fa100fc3ead6aeb99febe5985fa20afbfbaa2f8946c2fbdaf1"},
 ]
 ghp-import = [
     {file = "ghp-import-2.1.0.tar.gz", hash = "sha256:9c535c4c61193c2df8871222567d7fd7e5014d835f97dc7b7439069e2413d343"},
     {file = "ghp_import-2.1.0-py3-none-any.whl", hash = "sha256:8337dd7b50877f163d4c0289bc1f1c7f127550241988d568c1db512c4324a619"},
+]
+gitdb = [
+    {file = "gitdb-4.0.9-py3-none-any.whl", hash = "sha256:8033ad4e853066ba6ca92050b9df2f89301b8fc8bf7e9324d412a63f8bf1a8fd"},
+    {file = "gitdb-4.0.9.tar.gz", hash = "sha256:bac2fd45c0a1c9cf619e63a90d62bdc63892ef92387424b855792a6cabe789aa"},
+]
+GitPython = [
+    {file = "GitPython-3.1.29-py3-none-any.whl", hash = "sha256:41eea0deec2deea139b459ac03656f0dd28fc4a3387240ec1d3c259a2c47850f"},
+    {file = "GitPython-3.1.29.tar.gz", hash = "sha256:cc36bfc4a3f913e66805a28e84703e419d9c264c1077e537b54f0e1af85dbefd"},
 ]
 googlemaps = [
     {file = "googlemaps-4.6.0.tar.gz", hash = "sha256:2cc88cdf206deccc18e7fdfd23a0ed244209a08b2f0561fd8739c4c277325241"},
@@ -4245,6 +4404,10 @@ jupyterlab-pygments = [
 jupyterlab-widgets = [
     {file = "jupyterlab_widgets-3.0.3-py3-none-any.whl", hash = "sha256:6aa1bc0045470d54d76b9c0b7609a8f8f0087573bae25700a370c11f82cb38c8"},
     {file = "jupyterlab_widgets-3.0.3.tar.gz", hash = "sha256:c767181399b4ca8b647befe2d913b1260f51bf9d8ef9b7a14632d4c1a7b536bd"},
+]
+jupytext = [
+    {file = "jupytext-1.14.1-py3-none-any.whl", hash = "sha256:216bddba8bbb9355831ba17fd8d45cfe5d1355e7152bc8980f39175fc2584875"},
+    {file = "jupytext-1.14.1.tar.gz", hash = "sha256:314fa0e732b1d14764271843b676938ef8a7b9d53c3575ade636b45d13f341c8"},
 ]
 kiwisolver = [
     {file = "kiwisolver-1.4.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:2f5e60fabb7343a836360c4f0919b8cd0d6dbf08ad2ca6b9cf90bf0c76a3c4f6"},
@@ -4359,9 +4522,85 @@ loguru = [
     {file = "loguru-0.6.0-py3-none-any.whl", hash = "sha256:4e2414d534a2ab57573365b3e6d0234dfb1d84b68b7f3b948e6fb743860a77c3"},
     {file = "loguru-0.6.0.tar.gz", hash = "sha256:066bd06758d0a513e9836fd9c6b5a75bfb3fd36841f4b996bc60b547a309d41c"},
 ]
+lxml = [
+    {file = "lxml-4.9.1-cp27-cp27m-macosx_10_15_x86_64.whl", hash = "sha256:98cafc618614d72b02185ac583c6f7796202062c41d2eeecdf07820bad3295ed"},
+    {file = "lxml-4.9.1-cp27-cp27m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:c62e8dd9754b7debda0c5ba59d34509c4688f853588d75b53c3791983faa96fc"},
+    {file = "lxml-4.9.1-cp27-cp27m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:21fb3d24ab430fc538a96e9fbb9b150029914805d551deeac7d7822f64631dfc"},
+    {file = "lxml-4.9.1-cp27-cp27m-win32.whl", hash = "sha256:86e92728ef3fc842c50a5cb1d5ba2bc66db7da08a7af53fb3da79e202d1b2cd3"},
+    {file = "lxml-4.9.1-cp27-cp27m-win_amd64.whl", hash = "sha256:4cfbe42c686f33944e12f45a27d25a492cc0e43e1dc1da5d6a87cbcaf2e95627"},
+    {file = "lxml-4.9.1-cp27-cp27mu-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:dad7b164905d3e534883281c050180afcf1e230c3d4a54e8038aa5cfcf312b84"},
+    {file = "lxml-4.9.1-cp27-cp27mu-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:a614e4afed58c14254e67862456d212c4dcceebab2eaa44d627c2ca04bf86837"},
+    {file = "lxml-4.9.1-cp310-cp310-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:f9ced82717c7ec65a67667bb05865ffe38af0e835cdd78728f1209c8fffe0cad"},
+    {file = "lxml-4.9.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:d9fc0bf3ff86c17348dfc5d322f627d78273eba545db865c3cd14b3f19e57fa5"},
+    {file = "lxml-4.9.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:e5f66bdf0976ec667fc4594d2812a00b07ed14d1b44259d19a41ae3fff99f2b8"},
+    {file = "lxml-4.9.1-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:fe17d10b97fdf58155f858606bddb4e037b805a60ae023c009f760d8361a4eb8"},
+    {file = "lxml-4.9.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:8caf4d16b31961e964c62194ea3e26a0e9561cdf72eecb1781458b67ec83423d"},
+    {file = "lxml-4.9.1-cp310-cp310-win32.whl", hash = "sha256:4780677767dd52b99f0af1f123bc2c22873d30b474aa0e2fc3fe5e02217687c7"},
+    {file = "lxml-4.9.1-cp310-cp310-win_amd64.whl", hash = "sha256:b122a188cd292c4d2fcd78d04f863b789ef43aa129b233d7c9004de08693728b"},
+    {file = "lxml-4.9.1-cp311-cp311-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:be9eb06489bc975c38706902cbc6888f39e946b81383abc2838d186f0e8b6a9d"},
+    {file = "lxml-4.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:f1be258c4d3dc609e654a1dc59d37b17d7fef05df912c01fc2e15eb43a9735f3"},
+    {file = "lxml-4.9.1-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:927a9dd016d6033bc12e0bf5dee1dde140235fc8d0d51099353c76081c03dc29"},
+    {file = "lxml-4.9.1-cp35-cp35m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:9232b09f5efee6a495a99ae6824881940d6447debe272ea400c02e3b68aad85d"},
+    {file = "lxml-4.9.1-cp35-cp35m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:04da965dfebb5dac2619cb90fcf93efdb35b3c6994fea58a157a834f2f94b318"},
+    {file = "lxml-4.9.1-cp35-cp35m-win32.whl", hash = "sha256:4d5bae0a37af799207140652a700f21a85946f107a199bcb06720b13a4f1f0b7"},
+    {file = "lxml-4.9.1-cp35-cp35m-win_amd64.whl", hash = "sha256:4878e667ebabe9b65e785ac8da4d48886fe81193a84bbe49f12acff8f7a383a4"},
+    {file = "lxml-4.9.1-cp36-cp36m-macosx_10_15_x86_64.whl", hash = "sha256:1355755b62c28950f9ce123c7a41460ed9743c699905cbe664a5bcc5c9c7c7fb"},
+    {file = "lxml-4.9.1-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:bcaa1c495ce623966d9fc8a187da80082334236a2a1c7e141763ffaf7a405067"},
+    {file = "lxml-4.9.1-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6eafc048ea3f1b3c136c71a86db393be36b5b3d9c87b1c25204e7d397cee9536"},
+    {file = "lxml-4.9.1-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:13c90064b224e10c14dcdf8086688d3f0e612db53766e7478d7754703295c7c8"},
+    {file = "lxml-4.9.1-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:206a51077773c6c5d2ce1991327cda719063a47adc02bd703c56a662cdb6c58b"},
+    {file = "lxml-4.9.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:e8f0c9d65da595cfe91713bc1222af9ecabd37971762cb830dea2fc3b3bb2acf"},
+    {file = "lxml-4.9.1-cp36-cp36m-musllinux_1_1_aarch64.whl", hash = "sha256:8f0a4d179c9a941eb80c3a63cdb495e539e064f8054230844dcf2fcb812b71d3"},
+    {file = "lxml-4.9.1-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:830c88747dce8a3e7525defa68afd742b4580df6aa2fdd6f0855481e3994d391"},
+    {file = "lxml-4.9.1-cp36-cp36m-win32.whl", hash = "sha256:1e1cf47774373777936c5aabad489fef7b1c087dcd1f426b621fda9dcc12994e"},
+    {file = "lxml-4.9.1-cp36-cp36m-win_amd64.whl", hash = "sha256:5974895115737a74a00b321e339b9c3f45c20275d226398ae79ac008d908bff7"},
+    {file = "lxml-4.9.1-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:1423631e3d51008871299525b541413c9b6c6423593e89f9c4cfbe8460afc0a2"},
+    {file = "lxml-4.9.1-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:2aaf6a0a6465d39b5ca69688fce82d20088c1838534982996ec46633dc7ad6cc"},
+    {file = "lxml-4.9.1-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:9f36de4cd0c262dd9927886cc2305aa3f2210db437aa4fed3fb4940b8bf4592c"},
+    {file = "lxml-4.9.1-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:ae06c1e4bc60ee076292e582a7512f304abdf6c70db59b56745cca1684f875a4"},
+    {file = "lxml-4.9.1-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:57e4d637258703d14171b54203fd6822fda218c6c2658a7d30816b10995f29f3"},
+    {file = "lxml-4.9.1-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:6d279033bf614953c3fc4a0aa9ac33a21e8044ca72d4fa8b9273fe75359d5cca"},
+    {file = "lxml-4.9.1-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:a60f90bba4c37962cbf210f0188ecca87daafdf60271f4c6948606e4dabf8785"},
+    {file = "lxml-4.9.1-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:6ca2264f341dd81e41f3fffecec6e446aa2121e0b8d026fb5130e02de1402785"},
+    {file = "lxml-4.9.1-cp37-cp37m-win32.whl", hash = "sha256:27e590352c76156f50f538dbcebd1925317a0f70540f7dc8c97d2931c595783a"},
+    {file = "lxml-4.9.1-cp37-cp37m-win_amd64.whl", hash = "sha256:eea5d6443b093e1545ad0210e6cf27f920482bfcf5c77cdc8596aec73523bb7e"},
+    {file = "lxml-4.9.1-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:f05251bbc2145349b8d0b77c0d4e5f3b228418807b1ee27cefb11f69ed3d233b"},
+    {file = "lxml-4.9.1-cp38-cp38-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:487c8e61d7acc50b8be82bda8c8d21d20e133c3cbf41bd8ad7eb1aaeb3f07c97"},
+    {file = "lxml-4.9.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:8d1a92d8e90b286d491e5626af53afef2ba04da33e82e30744795c71880eaa21"},
+    {file = "lxml-4.9.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:b570da8cd0012f4af9fa76a5635cd31f707473e65a5a335b186069d5c7121ff2"},
+    {file = "lxml-4.9.1-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:5ef87fca280fb15342726bd5f980f6faf8b84a5287fcc2d4962ea8af88b35130"},
+    {file = "lxml-4.9.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:93e414e3206779ef41e5ff2448067213febf260ba747fc65389a3ddaa3fb8715"},
+    {file = "lxml-4.9.1-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:6653071f4f9bac46fbc30f3c7838b0e9063ee335908c5d61fb7a4a86c8fd2036"},
+    {file = "lxml-4.9.1-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:32a73c53783becdb7eaf75a2a1525ea8e49379fb7248c3eeefb9412123536387"},
+    {file = "lxml-4.9.1-cp38-cp38-win32.whl", hash = "sha256:1a7c59c6ffd6ef5db362b798f350e24ab2cfa5700d53ac6681918f314a4d3b94"},
+    {file = "lxml-4.9.1-cp38-cp38-win_amd64.whl", hash = "sha256:1436cf0063bba7888e43f1ba8d58824f085410ea2025befe81150aceb123e345"},
+    {file = "lxml-4.9.1-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:4beea0f31491bc086991b97517b9683e5cfb369205dac0148ef685ac12a20a67"},
+    {file = "lxml-4.9.1-cp39-cp39-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:41fb58868b816c202e8881fd0f179a4644ce6e7cbbb248ef0283a34b73ec73bb"},
+    {file = "lxml-4.9.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:bd34f6d1810d9354dc7e35158aa6cc33456be7706df4420819af6ed966e85448"},
+    {file = "lxml-4.9.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:edffbe3c510d8f4bf8640e02ca019e48a9b72357318383ca60e3330c23aaffc7"},
+    {file = "lxml-4.9.1-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:6d949f53ad4fc7cf02c44d6678e7ff05ec5f5552b235b9e136bd52e9bf730b91"},
+    {file = "lxml-4.9.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:079b68f197c796e42aa80b1f739f058dcee796dc725cc9a1be0cdb08fc45b000"},
+    {file = "lxml-4.9.1-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:9c3a88d20e4fe4a2a4a84bf439a5ac9c9aba400b85244c63a1ab7088f85d9d25"},
+    {file = "lxml-4.9.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:4e285b5f2bf321fc0857b491b5028c5f276ec0c873b985d58d7748ece1d770dd"},
+    {file = "lxml-4.9.1-cp39-cp39-win32.whl", hash = "sha256:ef72013e20dd5ba86a8ae1aed7f56f31d3374189aa8b433e7b12ad182c0d2dfb"},
+    {file = "lxml-4.9.1-cp39-cp39-win_amd64.whl", hash = "sha256:10d2017f9150248563bb579cd0d07c61c58da85c922b780060dcc9a3aa9f432d"},
+    {file = "lxml-4.9.1-pp37-pypy37_pp73-macosx_10_15_x86_64.whl", hash = "sha256:0538747a9d7827ce3e16a8fdd201a99e661c7dee3c96c885d8ecba3c35d1032c"},
+    {file = "lxml-4.9.1-pp37-pypy37_pp73-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:0645e934e940107e2fdbe7c5b6fb8ec6232444260752598bc4d09511bd056c0b"},
+    {file = "lxml-4.9.1-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:6daa662aba22ef3258934105be2dd9afa5bb45748f4f702a3b39a5bf53a1f4dc"},
+    {file = "lxml-4.9.1-pp38-pypy38_pp73-macosx_10_15_x86_64.whl", hash = "sha256:603a464c2e67d8a546ddaa206d98e3246e5db05594b97db844c2f0a1af37cf5b"},
+    {file = "lxml-4.9.1-pp38-pypy38_pp73-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:c4b2e0559b68455c085fb0f6178e9752c4be3bba104d6e881eb5573b399d1eb2"},
+    {file = "lxml-4.9.1-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:0f3f0059891d3254c7b5fb935330d6db38d6519ecd238ca4fce93c234b4a0f73"},
+    {file = "lxml-4.9.1-pp39-pypy39_pp73-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_24_i686.whl", hash = "sha256:c852b1530083a620cb0de5f3cd6826f19862bafeaf77586f1aef326e49d95f0c"},
+    {file = "lxml-4.9.1-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:287605bede6bd36e930577c5925fcea17cb30453d96a7b4c63c14a257118dbb9"},
+    {file = "lxml-4.9.1.tar.gz", hash = "sha256:fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"},
+]
 Markdown = [
     {file = "Markdown-3.3.7-py3-none-any.whl", hash = "sha256:f5da449a6e1c989a4cea2631aa8ee67caa5a2ef855d551c88f9e309f4634c621"},
     {file = "Markdown-3.3.7.tar.gz", hash = "sha256:cbb516f16218e643d8e0a95b309f77eb118cb138d39a4f27851e6a63581db874"},
+]
+markdown-it-py = [
+    {file = "markdown-it-py-2.1.0.tar.gz", hash = "sha256:cf7e59fed14b5ae17c0006eff14a2d9a00ed5f3a846148153899a0224e2c07da"},
+    {file = "markdown_it_py-2.1.0-py3-none-any.whl", hash = "sha256:93de681e5c021a432c63147656fe21790bc01231e0cd2da73626f1aa3ac0fe27"},
 ]
 MarkupSafe = [
     {file = "MarkupSafe-2.1.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:86b1f75c4e7c2ac2ccdaec2b9022845dbb81880ca318bb7a0a01fbf7813e3812"},
@@ -4456,13 +4695,21 @@ mccabe = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
 ]
+mdit-py-plugins = [
+    {file = "mdit-py-plugins-0.3.1.tar.gz", hash = "sha256:3fc13298497d6e04fe96efdd41281bfe7622152f9caa1815ea99b5c893de9441"},
+    {file = "mdit_py_plugins-0.3.1-py3-none-any.whl", hash = "sha256:606a7f29cf56dbdfaf914acb21709b8f8ee29d857e8f29dcc33d8cb84c57bfa1"},
+]
+mdurl = [
+    {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
+    {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
+]
 mergedeep = [
     {file = "mergedeep-1.3.4-py3-none-any.whl", hash = "sha256:70775750742b25c0d8f36c55aed03d24c3384d17c951b3175d898bd778ef0307"},
     {file = "mergedeep-1.3.4.tar.gz", hash = "sha256:0096d52e9dad9939c3d975a774666af186eda617e6ca84df4c94dec30004f2a8"},
 ]
 mistune = [
-    {file = "mistune-2.0.4-py2.py3-none-any.whl", hash = "sha256:182cc5ee6f8ed1b807de6b7bb50155df7b66495412836b9a74c8fbdfc75fe36d"},
-    {file = "mistune-2.0.4.tar.gz", hash = "sha256:9ee0a66053e2267aba772c71e06891fa8f1af6d4b01d5e84e267b4570d4d9808"},
+    {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},
+    {file = "mistune-0.8.4.tar.gz", hash = "sha256:59a3429db53c50b5c6bcc8a07f8848cb00d7dc8bdb431a4ab41920d201d4756e"},
 ]
 mkdocs = [
     {file = "mkdocs-1.4.1-py3-none-any.whl", hash = "sha256:2b7845c2775396214cd408753e4cfb01af3cfed36acc141a84bce2ceec9d705d"},
@@ -4472,13 +4719,20 @@ mkdocs-autorefs = [
     {file = "mkdocs-autorefs-0.4.1.tar.gz", hash = "sha256:70748a7bd025f9ecd6d6feeba8ba63f8e891a1af55f48e366d6d6e78493aba84"},
     {file = "mkdocs_autorefs-0.4.1-py3-none-any.whl", hash = "sha256:a2248a9501b29dc0cc8ba4c09f4f47ff121945f6ce33d760f145d6f89d313f5b"},
 ]
+mkdocs-git-revision-date-localized-plugin = [
+    {file = "mkdocs-git-revision-date-localized-plugin-1.1.0.tar.gz", hash = "sha256:38517e2084229da1a1b9460e846c2748d238c2d79efd405d1b9174a87bd81d79"},
+    {file = "mkdocs_git_revision_date_localized_plugin-1.1.0-py3-none-any.whl", hash = "sha256:4ba0e49abea3e9f6ee26e2623ff7283873da657471c61f1d0cfbb986f403316d"},
+]
+mkdocs-jupyter = [
+    {file = "mkdocs-jupyter-0.22.0.tar.gz", hash = "sha256:585cc69bea4cb9faf6898131978dc9a9b225091ed4b6084f5ab65652a5e12185"},
+]
 mkdocs-material = [
-    {file = "mkdocs_material-8.5.6-py3-none-any.whl", hash = "sha256:b473162c800321b9760453f301a91f7cb40a120a85a9d0464e1e484e74b76bb2"},
-    {file = "mkdocs_material-8.5.6.tar.gz", hash = "sha256:38a21d817265d0c203ab3dad64996e45859c983f72180f6937bd5540a4eb84e4"},
+    {file = "mkdocs_material-8.5.7-py3-none-any.whl", hash = "sha256:07fc70dfa325a8019b99a124751c43e4c1c2a739ed1b0b82c00f823f31c9a1e2"},
+    {file = "mkdocs_material-8.5.7.tar.gz", hash = "sha256:ff4c7851b2e5f9a6cfa0a8b247e973ebae753b9836a53bd68742827541ab73e5"},
 ]
 mkdocs-material-extensions = [
-    {file = "mkdocs-material-extensions-1.0.3.tar.gz", hash = "sha256:bfd24dfdef7b41c312ede42648f9eb83476ea168ec163b613f9abd12bbfddba2"},
-    {file = "mkdocs_material_extensions-1.0.3-py3-none-any.whl", hash = "sha256:a82b70e533ce060b2a5d9eb2bc2e1be201cf61f901f93704b4acf6e3d5983a44"},
+    {file = "mkdocs_material_extensions-1.1-py3-none-any.whl", hash = "sha256:bcc2e5fc70c0ec50e59703ee6e639d87c7e664c0c441c014ea84461a90f1e902"},
+    {file = "mkdocs_material_extensions-1.1.tar.gz", hash = "sha256:96ca979dae66d65c2099eefe189b49d5ac62f76afb59c38e069ffc7cf3c131ec"},
 ]
 mkdocstrings = [
     {file = "mkdocstrings-0.19.0-py3-none-any.whl", hash = "sha256:3217d510d385c961f69385a670b2677e68e07b5fea4a504d86bf54c006c87c7d"},
@@ -4527,8 +4781,8 @@ nbclient = [
     {file = "nbclient-0.7.0.tar.gz", hash = "sha256:a1d844efd6da9bc39d2209bf996dbd8e07bf0f36b796edfabaa8f8a9ab77c3aa"},
 ]
 nbconvert = [
-    {file = "nbconvert-7.2.2-py3-none-any.whl", hash = "sha256:fc7a3787c927cbd45a52e088e934fbbaab39afe61767522168a724b7483992be"},
-    {file = "nbconvert-7.2.2.tar.gz", hash = "sha256:24acfaa466d2c9b7eb524800e4a45afbed862c5d058cfb30fc7aa24d448c95eb"},
+    {file = "nbconvert-6.5.4-py3-none-any.whl", hash = "sha256:d679a947f849a966cbbd0bf6e7fedcfdb64be3b20ce7cef11ad55c13f5820e19"},
+    {file = "nbconvert-6.5.4.tar.gz", hash = "sha256:9e3c7c6d491374cbdd5f35d268c05809357716d346f4573186bbeab32ee50bc1"},
 ]
 nbformat = [
     {file = "nbformat-5.7.0-py3-none-any.whl", hash = "sha256:1b05ec2c552c2f1adc745f4eddce1eac8ca9ffd59bb9fd859e827eaa031319f9"},
@@ -4791,12 +5045,12 @@ Pygments = [
     {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},
 ]
 pylint = [
-    {file = "pylint-2.15.4-py3-none-any.whl", hash = "sha256:629cf1dbdfb6609d7e7a45815a8bb59300e34aa35783b5ac563acaca2c4022e9"},
-    {file = "pylint-2.15.4.tar.gz", hash = "sha256:5441e9294335d354b7bad57c1044e5bd7cce25c433475d76b440e53452fa5cb8"},
+    {file = "pylint-2.15.5-py3-none-any.whl", hash = "sha256:c2108037eb074334d9e874dc3c783752cc03d0796c88c9a9af282d0f161a1004"},
+    {file = "pylint-2.15.5.tar.gz", hash = "sha256:3b120505e5af1d06a5ad76b55d8660d44bf0f2fc3c59c2bdd94e39188ee3a4df"},
 ]
 pymdown-extensions = [
-    {file = "pymdown_extensions-9.6-py3-none-any.whl", hash = "sha256:1e36490adc7bfcef1fdb21bb0306e93af99cff8ec2db199bd17e3bf009768c11"},
-    {file = "pymdown_extensions-9.6.tar.gz", hash = "sha256:b956b806439bbff10f726103a941266beb03fbe99f897c7d5e774d7170339ad9"},
+    {file = "pymdown_extensions-9.7-py3-none-any.whl", hash = "sha256:767d07d9dead0f52f5135545c01f4ed627f9a7918ee86c646d893e24c59db87d"},
+    {file = "pymdown_extensions-9.7.tar.gz", hash = "sha256:651b0107bc9ee790aedea3673cb88832c0af27d2569cf45c2de06f1d65292e96"},
 ]
 pyobjc = [
     {file = "pyobjc-8.5.1-py3-none-any.whl", hash = "sha256:b708e115e7eb952d266c1648a0a38575a77a6dbfe4ad2442d3cfb56ef4a6c529"},
@@ -5804,6 +6058,10 @@ setuptools-scm = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+smmap = [
+    {file = "smmap-5.0.0-py3-none-any.whl", hash = "sha256:2aba19d6a040e78d8b09de5c57e96207b09ed71d8e55ce0959eeee6c8e190d94"},
+    {file = "smmap-5.0.0.tar.gz", hash = "sha256:c840e62059cd3be204b0c9c9f74be2c09d5648eddd4580d9314c3ecde0b30936"},
 ]
 sniffio = [
     {file = "sniffio-1.3.0-py3-none-any.whl", hash = "sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384"},

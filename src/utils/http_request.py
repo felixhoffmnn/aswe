@@ -28,6 +28,6 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
     except Exception as err:
         logger.error(f"Other error occurred: {err}")
         return None
-    else:
-        logger.success(f"Successfully fetched data from {url}")
-        return response
+
+    logger.success(f"Successfully fetched data from {url}")
+    return response

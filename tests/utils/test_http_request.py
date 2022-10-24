@@ -1,5 +1,3 @@
-from loguru import logger
-
 from src.utils.http_request import http_request
 
 
@@ -9,7 +7,6 @@ def test_valid_request() -> None:
     Assert:
         The function should return a response object because the URL is valid.
     """
-    logger.info(http_request("https://google.com"))
     assert http_request("https://google.com") is not None
 
 

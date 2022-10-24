@@ -69,6 +69,7 @@ repos:
         name: check types (mypy)
         stages: [commit, push]
         require_serial: true
+        additional_dependencies: ["types-requests"]
         types: [python]
 
   - repo: local

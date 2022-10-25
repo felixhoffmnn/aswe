@@ -30,7 +30,7 @@ class WeatherApi:
 
     def _validate_api_key(self) -> None:
         if self._API_KEY == "":
-            raise Exception("Key was not loaded into system")
+            raise Exception("WEATHER_API_KEY was not loaded into system")
 
     def _validate_api_params(
         self, include: list[Include] | None = None, elements: list[Elements] | None = None
@@ -38,30 +38,33 @@ class WeatherApi:
         if include is not None:
             for param in include:
                 if not Include.has_value(param):
-                    raise Exception(f"Include value is invalid: {param}")
+                    logger.error(f"Include value is invalid: {param}")
+                    return False
 
         if elements is not None:
             for param in elements:
                 if not Elements.has_value(param):
-                    raise Exception(f"Element value is invalid: {param}")
+                    logger.error(f"Element value is invalid: {param}")
+                    return False
 
-        return False
+        return True
 
     def _validate_location(self, location: str) -> bool:
         try:
-            _, country = location.split(",")
+            city, country = location.split(",")
 
-            if len(country) > 2:
-                logger.error(f"Country code of location is invalid: {location}")
+            if city != "" and len(country) == 2:
+                return True
 
-            return True
+            logger.error(f"Country code of location is invalid: {location}")
+
         except Exception:
             logger.error(f"Location seems to be invalid: {location}")
 
         return False
 
     def _append_api_params(
-        self, url: str, include: list[Include] | None = None, elements: list[Elements] | None = None
+        self, url: str, elements: list[Elements] | None = None, include: list[Include] | None = None
     ) -> str:
         if elements is not None:
             url += f"""&elements={",".join(elements)}"""
@@ -97,7 +100,9 @@ class WeatherApi:
         """
 
         location = location.replace(" ", "")
-        self._validate_location(location)
+
+        if not self._validate_location(location):
+            raise Exception("Given location is invalid")
 
         if not validate_date(start_date):
             raise Exception("Given start_date is invalid")
@@ -113,11 +118,12 @@ class WeatherApi:
         if today <= end_date:
             raise Exception("end_date must be less than current date")
 
-        self._validate_api_params(include, elements)
+        if not self._validate_api_params(include, elements):
+            raise Exception("Given API params are invalid")
 
         url = f"""{self._BASE_URL}/{location}/{start_date}/{end_date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
 
-        url = self._append_api_params(url, include, elements)
+        url = self._append_api_params(url, elements, include)
 
         response = http_request(url)
 
@@ -150,7 +156,9 @@ class WeatherApi:
             from the API. Refer to `weather_params.py`. Defaults to None.
         """
         location = location.replace(" ", "")
-        self._validate_location(location)
+
+        if not self._validate_location(location):
+            raise Exception("Given location is invalid")
 
         if not validate_date(date):
             raise Exception("Given date is invalid")
@@ -158,13 +166,14 @@ class WeatherApi:
         today = datetime.today().strftime("%Y-%m-%d")
 
         if today <= date:
-            raise Exception("end_date must be less than current date")
+            raise Exception("Given day must be less than current date")
 
-        self._validate_api_params(include, elements)
+        if not self._validate_api_params(include, elements):
+            raise Exception("Given API params are invalid")
 
         url = f"""{self._BASE_URL}/{location}/{date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
 
-        url = self._append_api_params(url, include, elements)
+        url = self._append_api_params(url, elements, include)
 
         response = http_request(url)
 
@@ -179,6 +188,7 @@ class WeatherApi:
 
         return None
 
+    # TODO next_x_days is inclusive with today, adapt docstring
     def dynamic_range(
         self,
         location: str,
@@ -200,14 +210,21 @@ class WeatherApi:
             include (list[Include] | None, optional): List of possible information that should be retrieved
             from the API. Refer to `weather_params.py`. Defaults to None.
         """
-        location = location.replace(" ", "")
-        self._validate_location(location)
 
-        self._validate_api_params(include, elements)
+        location = location.replace(" ", "")
+
+        if not self._validate_location(location):
+            raise Exception("Given location is invalid")
+
+        if not DynamicPeriod.has_value(dynamic_period):
+            raise Exception("Given DynamicPeriod is invalid")
+
+        if not self._validate_api_params(include, elements):
+            raise Exception("Given API params are invalid")
 
         url = f"""{self._BASE_URL}/{location}/{dynamic_period}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
 
-        url = self._append_api_params(url, include, elements)
+        url = self._append_api_params(url, elements, include)
 
         response = http_request(url)
 
@@ -239,13 +256,16 @@ class WeatherApi:
         """
 
         location = location.replace(" ", "")
-        self._validate_location(location)
 
-        self._validate_api_params(include, elements)
+        if not self._validate_location(location):
+            raise Exception("Given location is invalid")
+
+        if not self._validate_api_params(include, elements):
+            raise Exception("Given API params are invalid")
 
         url = f"""{self._BASE_URL}/{location}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
 
-        url = self._append_api_params(url, include, elements)
+        url = self._append_api_params(url, elements, include)
 
         response = http_request(url)
 

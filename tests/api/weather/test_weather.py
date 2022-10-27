@@ -8,7 +8,7 @@ from pytest_mock import MockFixture
 from requests.models import Response
 
 from src.api.weather.weather import WeatherApi
-from src.api.weather.weather_params import DynamicPeriod, Elements, Include
+from src.api.weather.weather_params import WeatherApiParams
 
 
 @pytest.fixture(scope="function")
@@ -38,7 +38,10 @@ def test_validate_api_params(weather_api_instance: WeatherApi) -> None:
 
     assert weather_api_instance._validate_api_params(["lorem"]) is False
     assert weather_api_instance._validate_api_params(None, ["lorem"]) is False
-    assert weather_api_instance._validate_api_params([Include.ALERTS], [Elements.CAPE]) is True
+    assert (
+        weather_api_instance._validate_api_params([WeatherApiParams.INCLUDE.ALERTS], [WeatherApiParams.ELEMENTS.CAPE])
+        is True
+    )
 
 
 def test_validate_location(weather_api_instance: WeatherApi) -> None:
@@ -57,15 +60,21 @@ def test_append_api_params(weather_api_instance: WeatherApi) -> None:
     base_url = "lorem.ipsum.com"
     assert weather_api_instance._append_api_params(base_url, None, None) == base_url
     assert (
-        weather_api_instance._append_api_params(base_url, None, [Include.ALERTS, Include.CURRENT])
+        weather_api_instance._append_api_params(
+            base_url, None, [WeatherApiParams.INCLUDE.ALERTS, WeatherApiParams.INCLUDE.CURRENT]
+        )
         == f"{base_url}&include=alerts,current"
     )
     assert (
-        weather_api_instance._append_api_params(base_url, [Elements.CAPE, Elements.CIN], None)
+        weather_api_instance._append_api_params(
+            base_url, [WeatherApiParams.ELEMENTS.CAPE, WeatherApiParams.ELEMENTS.CIN], None
+        )
         == f"{base_url}&elements=cape,cin"
     )
     assert (
-        weather_api_instance._append_api_params(base_url, [Elements.CAPE], [Include.ALERTS])
+        weather_api_instance._append_api_params(
+            base_url, [WeatherApiParams.ELEMENTS.CAPE], [WeatherApiParams.INCLUDE.ALERTS]
+        )
         == f"{base_url}&elements=cape&include=alerts"
     )
 
@@ -174,11 +183,11 @@ def test_dynamic_range_invalid_params(weather_api_instance: WeatherApi) -> None:
     with pytest.raises(Exception, match="Given location is invalid"):
         weather_api_instance.dynamic_range("Lorem,Ipsum", "")
 
-    with pytest.raises(Exception, match="Given DynamicPeriod is invalid"):
+    with pytest.raises(Exception, match="Given WeatherApiParams.DYNAMIC_PERIOD is invalid"):
         weather_api_instance.dynamic_range("Lorem,Ip", "lorem")
 
     with pytest.raises(Exception, match="Given API params are invalid"):
-        weather_api_instance.dynamic_range("Lorem,Ip", DynamicPeriod.TODAY, ["lorem"], ["ipsum"])
+        weather_api_instance.dynamic_range("Lorem,Ip", WeatherApiParams.DYNAMIC_PERIOD.TODAY, ["lorem"], ["ipsum"])
 
 
 def test_dynamic_range_valid_params(weather_api_instance: WeatherApi, mocker: MockFixture) -> None:
@@ -192,7 +201,7 @@ def test_dynamic_range_valid_params(weather_api_instance: WeatherApi, mocker: Mo
     valid_response = Response()
     valid_response._content = b'{"lorem": "ipsum"}'
     mocker.patch(http_import_path, return_value=valid_response)
-    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", DynamicPeriod.TODAY)
+    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", WeatherApiParams.DYNAMIC_PERIOD.TODAY)
 
     assert {"lorem": "ipsum"} == actual_response
 
@@ -200,13 +209,13 @@ def test_dynamic_range_valid_params(weather_api_instance: WeatherApi, mocker: Mo
     invalid_response = Response()
     invalid_response._content = b'{"lorem": "ipsum}'
     mocker.patch(http_import_path, return_value=invalid_response)
-    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", DynamicPeriod.TODAY)
+    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", WeatherApiParams.DYNAMIC_PERIOD.TODAY)
 
     assert actual_response is None
 
     # * Mock other Exception
     mocker.patch(http_import_path, return_value=False)
-    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", DynamicPeriod.TODAY)
+    actual_response = weather_api_instance.dynamic_range("Lorem,Ip", WeatherApiParams.DYNAMIC_PERIOD.TODAY)
 
     assert actual_response is None
 

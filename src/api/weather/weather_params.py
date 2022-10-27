@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import ClassVar, TypeVar
 
-IncludeT = TypeVar("IncludeT", bound="Include")
-ElementsT = TypeVar("ElementsT", bound="Elements")
-DynamicPeriodT = TypeVar("DynamicPeriodT", bound="DynamicPeriod")
+_IncludeT = TypeVar("_IncludeT", bound="_Include")
+_ElementsT = TypeVar("_ElementsT", bound="_Elements")
+_DynamicPeriodT = TypeVar("_DynamicPeriodT", bound="_DynamicPeriod")
 
 
-class Include(str, Enum):
+class _Include(str, Enum):
     """Enum of possible include parameters for weather API"""
 
     DAYS = "days"
@@ -42,13 +42,13 @@ class Include(str, Enum):
     Permits hourly statistical forecast."""
 
     @classmethod
-    def has_value(cls: type[IncludeT], value: str) -> bool:
+    def has_value(cls: type[_IncludeT], value: str) -> bool:
         """Checks if value exists in enum"""
 
         return value in cls._value2member_map_
 
 
-class Elements(str, Enum):
+class _Elements(str, Enum):
     """Enum of possible element parameters for weather API"""
 
     CLOUDCOVER = "cloudcover"
@@ -234,12 +234,12 @@ class Elements(str, Enum):
     parameter. For example, elements=datetime,tempmax,tempmin,degreedays,accdegreedays."""
 
     @classmethod
-    def has_value(cls: type[ElementsT], value: str) -> bool:
+    def has_value(cls: type[_ElementsT], value: str) -> bool:
         """Checks if value exists in enum"""
         return value in cls._value2member_map_
 
 
-class DynamicPeriod(str, Enum):
+class _DynamicPeriod(str, Enum):
     """Enum of possible dynamic periods for weather API"""
 
     TODAY = "today"
@@ -271,12 +271,12 @@ class DynamicPeriod(str, Enum):
     Please let us know if you would like additional weekend definitions added."""
 
     @classmethod
-    def has_value(cls: type[DynamicPeriodT], value: str) -> bool:
+    def has_value(cls: type[_DynamicPeriodT], value: str) -> bool:
         """Checks if value exists in enum"""
         return value in cls._value2member_map_
 
     @classmethod
-    def last_weekday(cls: type[DynamicPeriodT], weekday: str) -> str:
+    def last_weekday(cls: type[_DynamicPeriodT], weekday: str) -> str:
         """the last occurrence of the named day of week before today’s day. For example lastsaturday"""
         if weekday.lower() not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             raise Exception(f"Given weekday is invalid: {weekday}")
@@ -284,14 +284,14 @@ class DynamicPeriod(str, Enum):
         return f"last{weekday.lower()}"
 
     @classmethod
-    def next_weekday(cls: type[DynamicPeriodT], weekday: str) -> str:
+    def next_weekday(cls: type[_DynamicPeriodT], weekday: str) -> str:
         """the next occurrence of the named day of week after today’s day. For example nextsaturday"""
         if weekday.lower() not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             raise Exception(f"Given weekday is invalid: {weekday}")
         return f"next{weekday.lower()}"
 
     @classmethod
-    def next_x_days(cls: type[DynamicPeriodT], days_count: int) -> str:
+    def next_x_days(cls: type[_DynamicPeriodT], days_count: int) -> str:
         """the period including and after today’s date with a length on the number of days specified.
         For example next7days or next21days."""
         if days_count <= 0:
@@ -300,7 +300,7 @@ class DynamicPeriod(str, Enum):
         return f"next{days_count}days"
 
     @classmethod
-    def last_x_days(cls: type[DynamicPeriodT], days_count: int) -> str:
+    def last_x_days(cls: type[_DynamicPeriodT], days_count: int) -> str:
         """the period before today’s date with a length on the number of days specified.
         For example last7days or last21days."""
         if days_count <= 0:
@@ -313,6 +313,6 @@ class DynamicPeriod(str, Enum):
 class WeatherApiParams:
     """Defines dataclass for possible API request options"""
 
-    INCLUDE: ClassVar[type[Include]] = Include
-    ELEMENTS: ClassVar[type[Elements]] = Elements
-    DYNAMIC_PERIOD: ClassVar[type[DynamicPeriod]] = DynamicPeriod
+    INCLUDE: ClassVar[type[_Include]] = _Include
+    ELEMENTS: ClassVar[type[_Elements]] = _Elements
+    DYNAMIC_PERIOD: ClassVar[type[_DynamicPeriod]] = _DynamicPeriod

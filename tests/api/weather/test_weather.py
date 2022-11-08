@@ -7,8 +7,8 @@ import pytest
 from pytest_mock import MockFixture
 from requests.models import Response
 
-from src.api.weather.weather import WeatherApi
-from src.api.weather.weather_params import WeatherApiParams
+from aswe.api.weather.weather import WeatherApi
+from aswe.api.weather.weather_params import WeatherApiParams
 
 
 @pytest.fixture(scope="function")
@@ -106,7 +106,7 @@ def test_historic_range_valid_params(weather_api_instance: WeatherApi, mocker: M
     Mocked functions:
         - `http_request`"""
 
-    http_import_path = "src.api.weather.weather.http_request"
+    http_import_path = "aswe.api.weather.weather.http_request"
 
     # * Mock valid response
     valid_response = Response()
@@ -152,7 +152,7 @@ def test_historic_day_valid_params(weather_api_instance: WeatherApi, mocker: Moc
     Mocked functions:
         - `http_request`"""
 
-    http_import_path = "src.api.weather.weather.http_request"
+    http_import_path = "aswe.api.weather.weather.http_request"
 
     # * Mock valid response
     valid_response = Response()
@@ -195,7 +195,7 @@ def test_dynamic_range_valid_params(weather_api_instance: WeatherApi, mocker: Mo
     Mocked functions:
         - `http_request`"""
 
-    http_import_path = "src.api.weather.weather.http_request"
+    http_import_path = "aswe.api.weather.weather.http_request"
 
     # * Mock valid response
     valid_response = Response()
@@ -235,7 +235,7 @@ def test_forecast_valid_params(weather_api_instance: WeatherApi, mocker: MockFix
     Mocked functions:
         - `http_request`"""
 
-    http_import_path = "src.api.weather.weather.http_request"
+    http_import_path = "aswe.api.weather.weather.http_request"
 
     # * Mock valid response
     valid_response = Response()

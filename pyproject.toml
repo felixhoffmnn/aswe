@@ -1,5 +1,6 @@
+# TODO: Stephan needs to add his email address
 [tool.poetry]
-name = "advanced_software_engineering"
+name = "aswe"
 version = "0.1.0"
 description = "Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do."
 authors = [
@@ -11,9 +12,6 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-packages = [
-  { include = "src"}
-]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -29,6 +27,7 @@ currencyconverter = "^0.17.2"
 googlemaps = "^4.6.0"
 SpeechRecognition = "^3.8.1"
 pyttsx3 = "^2.90"
+whisper = {git = "https://github.com/openai/whisper.git"}
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["jupyter"], version = "^22.8.0" }
@@ -53,7 +52,7 @@ mkdocs-git-revision-date-localized-plugin = "^1.1.0"
 mkdocs-jupyter = "^0.22.0"
 
 [tool.mypy]
-mypy_path = 'src'
+mypy_path = 'aswe'
 check_untyped_defs = true
 disallow_any_generics = true
 ignore_missing_imports = true

@@ -10,10 +10,14 @@ repos:
         name: lock poetry (poetry-lock)
         always_run: true
 
-      # TODO: Split dependencies into dev and prod
       - id: poetry-export
-        name: export poetry normal and dev (poetry-export)
-        args: ["--with=dev", "-f", "requirements.txt", "-o", "requirements.txt"]
+        name: export default dependencies (poetry-export)
+        args: ["-f", "requirements.txt", "-o", "requirements.txt"]
+        files: "poetry.lock"
+
+      - id: poetry-export
+        name: export dev dependencies (poetry-export)
+        args: ["--only=dev", "-f", "requirements.txt", "-o", "requirements_dev.txt"]
         files: "poetry.lock"
 
       - id: poetry-export

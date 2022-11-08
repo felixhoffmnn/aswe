@@ -1,4 +1,3 @@
-from loguru import logger
 from pytest_mock import MockerFixture
 from requests.models import Response
 
@@ -24,7 +23,7 @@ def test_invalid_request() -> None:
 
 
 def test_exception(mocker: MockerFixture) -> None:
-    """Test the `http_request` function with invalid status code from reponse.
+    """Test the `http_request` function with invalid status code from response.
 
     Mocked functions:
         - `requests.get`

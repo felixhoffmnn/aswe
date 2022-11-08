@@ -1,6 +1,6 @@
 import pytest
 
-from src.api.weather.weather_params import _DynamicPeriod, _Elements, _Include
+from aswe.api.weather.weather_params import _DynamicPeriod, _Elements, _Include
 
 
 def test_include_enum_values() -> None:

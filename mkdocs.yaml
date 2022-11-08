@@ -2,9 +2,9 @@
 site_name: Advanced Software Engineering
 site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do.
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
-repo_name: advanced_software_engineering
-repo_url: https://github.com/felixhoffmnn/advanced_software_engineering
-watch: ["src", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
+repo_name: aswe
+repo_url: https://github.com/felixhoffmnn/aswe
+watch: ["aswe", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
 
 # Navigation
 nav:
@@ -23,7 +23,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [src]
+          paths: [aswe]
           import:
             - https://docs.python.org/3/objects.inv
             - https://mkdocstrings.github.io/objects.inv

@@ -5,9 +5,9 @@ from typing import Any, Final
 from loguru import logger
 from requests import JSONDecodeError
 
-from src.api.weather.weather_params import WeatherApiParams
-from src.utils.http_request import http_request
-from src.utils.validate_date import validate_date
+from aswe.api.weather.weather_params import WeatherApiParams
+from aswe.utils.http_request import http_request
+from aswe.utils.validate_date import validate_date
 
 
 class WeatherApi:

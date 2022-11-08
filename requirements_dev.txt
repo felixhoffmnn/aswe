@@ -799,12 +799,12 @@ tornado==6.2 ; python_version >= "3.10" and python_version < "4.0" \
 traitlets==5.5.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1201b2c9f76097195989cdf7f65db9897593b0dfd69e4ac96016661bb6f0d30f \
     --hash=sha256:b122f9ff2f2f6c1709dab289a05555be011c87828e911c0cf4074b85cb780a79
-types-requests==2.28.11.2 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:14941f8023a80b16441b3b46caffcbfce5265fd14555844d6029697824b5a2ef \
-    --hash=sha256:fdcd7bd148139fb8eef72cf4a41ac7273872cad9e6ada14b11ff5dfdeee60ed3
-types-urllib3==1.26.25.1 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:a948584944b2412c9a74b9cf64f6c48caf8652cb88b38361316f6d15d8a184cd \
-    --hash=sha256:f6422596cc9ee5fdf68f9d547f541096a20c2dcfd587e37c804c9ea720bf5cb2
+types-requests==2.28.11.3 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:b39c23011f389ce842e7d025b8386854fefdaa2f8ce628d7a8f1ea486f158acf \
+    --hash=sha256:be9007affb17f0a09bb48e77db18bb6e0be9f82609c78f1dae6db30259d721d6
+types-urllib3==1.26.25.2 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:7b78e4304b4534a010cfef97d1a3f3ebff0fa7119b205d08a355266d7c4e8e22 \
+    --hash=sha256:a3a510db609b363670cc62edb76598b8270bd34d4eb2f6c9f088d0e7d8196d6b
 typing-extensions==4.4.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa \
     --hash=sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e

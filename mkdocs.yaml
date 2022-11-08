@@ -4,12 +4,14 @@ site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
 repo_name: aswe
 repo_url: https://github.com/felixhoffmnn/aswe
-watch: ["aswe", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
+watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
 
 # Navigation
 nav:
   - Overview: index.md
-  - Utilities: utilities.md
+  - Documentation:
+      - Core: core.md
+      - Utilities: utils.md
 
 # Plugins
 plugins:

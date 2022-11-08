@@ -1,25 +1,38 @@
-<!-- TODO: Add codecov badge -->
+<h1 align="center">
+  Advanced Software Engineering
+</h1>
 
-| [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) | [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) | [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/) | [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/felixhoffmnn/python_template/main.svg)](https://results.pre-commit.ci/latest/github/felixhoffmnn/python_template/main) |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+<h4 align="center">
+  Excepteur ea eiusmod adipisicing dolor do qui mollit tempor.
+</h4>
 
----
-
-# advanced_software_engineering
-
-- [advanced_software_engineering](#advanced_software_engineering)
-  - [Introduction](#introduction)
-  - [Getting Started](#getting-started)
-  - [Tips & Tricks](#tips--tricks)
-  - [Known Issues](#known-issues)
-
-## Introduction
+<div align="center">
+  <a href="https://github.com/felixhoffmnn/python_template">
+    <img src="https://img.shields.io/github/license/felixhoffmnn/python_template"
+      alt="License: MIT" />
+  </a>
+  <a href="https://www.python.org/downloads/release/python-3100/">
+    <img src="https://img.shields.io/badge/python-3.10-blue.svg"
+      alt="Python 3.10" />
+  </a>
+  <a href="https://github.com/prettier/prettier">
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      alt="Codestyle: Prettier" />
+  </a>
+  <a href="https://github.com/pre-commit/pre-commit">
+    <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"
+      alt="pre-commit" />
+  </a>
+</div>
+<br>
 
 <!-- TODO: Edit paragraph -->
 
 Excepteur ea eiusmod adipisicing dolor do qui mollit tempor. Tempor sit cillum ipsum aliquip excepteur eiusmod ut laboris consectetur veniam. Ipsum ad ad officia voluptate amet. Tempor anim Lorem excepteur sit est magna ad ex in labore consequat est. Aute aliqua nisi labore elit eiusmod aute excepteur cillum. Consectetur do fugiat reprehenderit irure commodo anim eu et non id enim excepteur irure. Occaecat aliquip eiusmod sit officia do et quis ut duis duis cillum eiusmod.
 
-## Getting Started
+## :handshake: Requirements
+
+> :arrow_up: Python 3.10 required.
 
 1. Install [Poetry](https://python-poetry.org/docs/#installation)
    - Poetry is a dependency manager for Python used in this project
@@ -27,15 +40,15 @@ Excepteur ea eiusmod adipisicing dolor do qui mollit tempor. Tempor sit cillum i
    - Afterwards, run `poetry shell` to activate the virtual environment
 3. Install the pre-commit hooks with `poetry run pre-commit install`
 
-## Tips & Tricks
+## :bulb: Tips & Tricks
 
-<!-- TODO: Add GitHub instructions for branch protection, versioning, and templates -->
+In nisi mollit proident ullamco in consectetur. Proident aute dolore labore commodo cillum velit qui qui mollit irure labore. Magna ipsum tempor ea eiusmod eu ex consectetur. Aliquip occaecat cupidatat reprehenderit elit excepteur labore voluptate exercitation cupidatat nostrud.
 
-<!-- TODO: Instruction on codecov, pre-commit, and codeql -->
+## :warning: Known Issues
 
-<!-- TODO: Deployment methods for Mkdocs -->
+1. Poetry environment is not shown in VSCode
+   - See https://crapts.org/2020/05/11/use-poetry-for-python-dependency-management-with-visual-studio-code/ for a solution
 
-## Known Issues
+## :memo: License
 
-1. Poetry virtual environment is not shown in VSCode
-   - Visit https://crapts.org/2020/05/11/use-poetry-for-python-dependency-management-with-visual-studio-code/ for a solution
+This project is licensed under MIT.

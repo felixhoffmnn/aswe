@@ -7,12 +7,25 @@
     "codecov",
     "codeql",
     "fontawesome",
+    "Fritzsch",
+    "github",
+    "gmaps",
+    "ipynb",
     "isort",
+    "jupyter",
     "linkedin",
+    "loguru",
+    "magiclink",
+    "materialx",
+    "mkdocs",
     "Mkdocs",
     "mkdocstrings",
     "mypy",
+    "numpy",
+    "pymdownx",
+    "pyproject",
     "pytest",
-    "pyupgrade"
+    "pyupgrade",
+    "vvspy"
   ]
 }

@@ -7,6 +7,7 @@
     "autorefs",
     "codecov",
     "codeql",
+    "espeak",
     "fontawesome",
     "Fritzsch",
     "github",
@@ -15,6 +16,7 @@
     "isort",
     "jupyter",
     "linkedin",
+    "linux",
     "loguru",
     "magiclink",
     "materialx",
@@ -26,6 +28,7 @@
     "pymdownx",
     "pyproject",
     "pytest",
+    "pyttsx",
     "pyupgrade",
     "vvspy"
   ]

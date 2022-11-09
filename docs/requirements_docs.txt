@@ -120,9 +120,9 @@ jsonschema==4.17.0 ; python_version >= "3.10" and python_version < "4.0" \
 jupyter-client==7.4.4 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:1c1d418ef32a45a1fae0b243e6f01cc9bf65fa8ddbd491a034b9ba6ac6502951 \
     --hash=sha256:5616db609ac720422e6a4b893d6572b8d655ff41e058367f4459a0d2c0726832
-jupyter-core==4.11.2 ; python_version >= "3.10" and python_version < "4" \
-    --hash=sha256:3815e80ec5272c0c19aad087a0d2775df2852cfca8f5a17069e99c9350cecff8 \
-    --hash=sha256:c2909b9bc7dca75560a6c5ae78c34fd305ede31cd864da3c0d0bb2ed89aa9337
+jupyter-core==5.0.0 ; python_version >= "3.10" and python_version < "4" \
+    --hash=sha256:4ed68b7c606197c7e344a24b7195eef57898157075a69655a886074b6beb7043 \
+    --hash=sha256:6da1fae48190da8551e1b5dbbb19d51d00b079d59a073c7030407ecaf96dbb1e
 jupyterlab-pygments==0.2.2 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:2405800db07c9f770863bcf8049a529c3dd4d3e28536638bd7c1c01d2748309f \
     --hash=sha256:7405d7fde60819d905a9fa8ce89e4cd830e318cdad22a0030f7a901da705585d
@@ -306,6 +306,9 @@ packaging==21.3 ; python_version >= "3.10" and python_version < "4.0" \
 pandocfilters==1.5.0 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:0b679503337d233b4339a817bfc8c50064e2eff681314376a47cb582305a7a38 \
     --hash=sha256:33aae3f25fd1a026079f5d27bdd52496f0e0803b3469282162bafdcbdf6ef14f
+platformdirs==2.5.3 ; python_version >= "3.10" and python_version < "4" \
+    --hash=sha256:0cb405749187a194f444c25c82ef7225232f11564721eabffc6ec70df83b11cb \
+    --hash=sha256:6e52c21afff35cb659c6e52d8b4d61b9bd544557180440538f255d9382c8cbe0
 py==1.11.0 ; python_version >= "3.10" and python_version < "4" and implementation_name == "pypy" \
     --hash=sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719 \
     --hash=sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378

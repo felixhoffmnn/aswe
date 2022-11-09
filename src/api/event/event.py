@@ -1,5 +1,11 @@
 import os
-from typing import Final
+from typing import Any, Final
+
+from loguru import logger
+from requests import JSONDecodeError
+
+from src.api.event.event_params import EventApiClassificationParams, EventApiEventParams
+from src.utils.http_request import http_request
 
 
 class EventApi:
@@ -16,19 +22,48 @@ class EventApi:
         if self._API_KEY == "":
             raise Exception("EVENT_API_KEY was not loaded into system")
 
-    def events(self) -> str:
-        # TODO fix return type
+    def events(self, query_params: EventApiEventParams) -> dict[Any, Any] | None:
+        """Retrieves Events that fulfil given query parameters
 
-        url = f"{self._BASE_URL}/events?apikey={self._API_KEY}"
+        Args:
+            query_params (`EventApiEventParams`): Query Parameters API should filter for.
+        """
+        if not query_params.validate_fields():
+            raise Exception("Given Event Api Event Params are invalid.")
 
-        return url
+        url = f"{self._BASE_URL}events?apikey={self._API_KEY}&{query_params.concat_to_query()}"
 
-        # response = http_request(url)
-        # try:
-        #     response_json = dict(response.json())
+        response = http_request(url)
 
-        #     return response_json
-        # except JSONDecodeError as err:
-        #     logger.error(f"Event API returned invalid JSON: {err}")
-        # except Exception as err:
-        #     logger.error(f"Something went wrong: {err}")
+        try:
+            response_json = dict(response.json())
+            return response_json
+        except JSONDecodeError as err:
+            logger.error(f"Event API returned invalid Json: {err}")
+        except Exception as err:
+            logger.error(f"Something went wrong: {err}")
+
+        return None
+
+    def classifications(self, query_params: EventApiClassificationParams) -> dict[Any, Any] | None:
+        """Retrieves Classifications that fulfil given query parameters.
+
+        Args:
+            query_params (`EventApiClassificationParams`): Query Parameters API should filter for.
+        """
+        if not query_params.validate_fields():
+            raise Exception("Given Event Api Classification Params are invalid.")
+
+        url = f"{self._BASE_URL}classifications?apikey={self._API_KEY}&{query_params.concat_to_query()}"
+
+        response = http_request(url)
+
+        try:
+            response_json = dict(response.json())
+            return response_json
+        except JSONDecodeError as err:
+            logger.error(f"Event API returned invalid Json: {err}")
+        except Exception as err:
+            logger.error(f"Something went wrong: {err}")
+
+        return None

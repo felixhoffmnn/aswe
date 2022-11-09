@@ -13,7 +13,7 @@ def test_invalid_date() -> None:
 
 def test_valid_datetime() -> None:
     """Test the ``validate_date function with an valid datetime"""
-    assert validate_date("2022-09-09T22:00:00") is True
+    assert validate_date("2022-09-09T22:00:00Z") is True
 
 
 def test_invalid_datetime() -> None:

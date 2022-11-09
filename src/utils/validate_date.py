@@ -3,26 +3,28 @@ from datetime import datetime
 from loguru import logger
 
 
-def validate_date(date: str) -> bool:
-    """Validates Time format for either "YYYY-MM-DD" or "YYYY-MM-DDThh:mm:ss"
+def validate_date(date: str, include_time: bool | None = None) -> bool:
+    """Validates Time format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`
 
     Args:
         date (str): Date as type string that should be checked
+        include_time (bool | None, optional): Whether date should include time.
+        If None methods tries finding correct type. Defaults to None.
 
     Returns:
         bool: Whether date is valid.
     """
-    if "T" in date:
+    if ("T" in date and include_time is None) or include_time is True:
         try:
-            datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
+            datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
         except ValueError:
-            logger.error(f"Incorrect date format, required: YYYY-MM-DDThh:mm:ss, given: {date}")
+            logger.error(f"Incorrect date format, required: `YYYY-MM-DDThh:mm:ssZ`, given: {date}")
             return False
     else:
         try:
             datetime.strptime(date, "%Y-%m-%d")
         except ValueError:
-            logger.error(f"Incorrect date format, required: YYYY-MM-DD, given: {date}")
+            logger.error(f"Incorrect date format, required: `YYYY-MM-DD`, given: {date}")
             return False
 
     return True

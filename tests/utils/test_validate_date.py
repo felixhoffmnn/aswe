@@ -1,4 +1,4 @@
-from src.utils.validate_date import validate_date
+from aswe.utils.validate_date import validate_date
 
 
 def test_valid_date() -> None:

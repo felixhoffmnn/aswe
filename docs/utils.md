@@ -1,3 +1,3 @@
 # Utilities
 
-::: src.utils.http_request
+::: aswe.utils.http_request

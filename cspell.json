@@ -2,6 +2,7 @@
   "language": "en, de-de, lorem-ipsum, python",
   "ignorePaths": [".git", ".vscode"],
   "words": [
+    "aswe",
     "autofix",
     "autorefs",
     "codecov",

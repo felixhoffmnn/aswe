@@ -1,8 +1,7 @@
-from loguru import logger
 from pytest_mock import MockerFixture
 from requests.models import Response
 
-from src.utils.http_request import http_request
+from aswe.utils.http_request import http_request
 
 
 def test_valid_request() -> None:
@@ -24,7 +23,7 @@ def test_invalid_request() -> None:
 
 
 def test_exception(mocker: MockerFixture) -> None:
-    """Test the `http_request` function with invalid status code from reponse.
+    """Test the `http_request` function with invalid status code from response.
 
     Mocked functions:
         - `requests.get`
@@ -33,13 +32,13 @@ def test_exception(mocker: MockerFixture) -> None:
     # * HTTPError
     mock_response = Response()
     mock_response.status_code = 401
-    mocker.patch("src.utils.http_request.requests.get", return_value=mock_response)
+    mocker.patch("aswe.utils.http_request.requests.get", return_value=mock_response)
 
     assert http_request("lorem") is None
 
     # * Other Exception
     mock_response = Response()
     mock_response.status_code = 202
-    mocker.patch("src.utils.http_request.requests.get", return_value=mock_response)
+    mocker.patch("aswe.utils.http_request.requests.get", return_value=mock_response)
 
     assert http_request("lorem") is None

@@ -4,8 +4,11 @@ from typing import Any, Final
 from loguru import logger
 from requests import JSONDecodeError
 
-from src.api.event.event_params import EventApiClassificationParams, EventApiEventParams
-from src.utils.http_request import http_request
+from aswe.api.event.event_params import (
+    EventApiClassificationParams,
+    EventApiEventParams,
+)
+from aswe.utils.http_request import http_request
 
 
 class EventApi:

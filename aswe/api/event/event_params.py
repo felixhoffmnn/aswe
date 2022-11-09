@@ -6,7 +6,7 @@ from typing import ClassVar
 
 from loguru import logger
 
-from src.utils.validate_date import validate_date
+from aswe.utils.validate_date import validate_date
 
 
 class _UnitEnum(str, Enum):
@@ -89,9 +89,6 @@ class EventApiEventParams:
     country_code: str | None = None
     """Filter by country code"""
 
-    state_code: str | None = None
-    """Filter by state code"""
-
     classification_name: list[str] | None = None
     """Filter by classification name: name of any segment, genre, sub-genre, type, sub-type.
     Negative filtering is supported by using the following format '-'.
@@ -112,7 +109,7 @@ class EventApiEventParams:
         """Validates fields"""
         is_valid = True
 
-        if self.radius and self.radius <= 0:
+        if self.radius is not None and self.radius <= 0:
             logger.error(f"Radius cannot be below or equal to 0. {self.radius} was given.")
             is_valid = False
 
@@ -128,28 +125,33 @@ class EventApiEventParams:
                     logger.error(f"Given local element is invalid: locale_elmnt: {locale_elmnt}")
                     is_valid = False
 
-        if self.start_date_time and validate_date(self.start_date_time, True) is False:
+        if self.start_date_time is not None and validate_date(self.start_date_time, True) is False:
             logger.error(f"Given start_date_time is invalid: {self.start_date_time}")
             is_valid = False
 
-        if self.end_date_time and validate_date(self.end_date_time, True) is False:
+        if self.end_date_time is not None and validate_date(self.end_date_time, True) is False:
             logger.error(f"Given end_date_time is invalid: {self.end_date_time}")
             is_valid = False
 
-        if self.start_date_time and self.end_date_time and self.end_date_time <= self.start_date_time:
+        if (
+            self.start_date_time is not None
+            and self.end_date_time is not None
+            and self.end_date_time <= self.start_date_time
+        ):
             logger.error(
                 f"start_date_time ({self.start_date_time}) must be before end_date_time ({self.end_date_time})."
             )
+            is_valid = False
 
-        if self.size and self.size <= 0:
+        if self.size is not None and self.size <= 0:
             logger.error(f"Size cannot be below or equal to 0. {self.size} was given.")
             is_valid = False
 
-        if self.page and self.page <= 0:
+        if self.page is not None and self.page <= 0:
             logger.error(f"Page cannot be below or equal to 0. {self.page} was given.")
             is_valid = False
 
-        if self.country_code and len(self.country_code) != 2:
+        if self.country_code is not None and len(self.country_code) != 2:
             logger.error(f"Country Code seems to be invaid: {self.country_code}. Should be of length 2.")
             is_valid = False
 
@@ -192,13 +194,11 @@ class EventApiEventParams:
             query += f"""city={",".join(self.city)}&"""
         if self.country_code:
             query += f"countryCode={self.country_code}&"
-        if self.state_code:
-            query += f"stateCode={self.state_code}&"
         if self.classification_name:
             query += f"""classificationName={",".join(self.classification_name)}&"""
         if self.classification_id:
             query += f"""classificationId={",".join(self.classification_id)}&"""
-        if self.include_family:
+        if self.include_family is not None:
             query += f"includeFamily={self.include_family}&"
         if self.geo_point:
             query += f"geoPoint={self.geo_point}&"
@@ -229,7 +229,7 @@ class EventApiClassificationParams:
 
         is_valid = True
 
-        if self.size and self.size <= 0:
+        if self.size is not None and self.size <= 0:
             logger.error(f"Size cannot be below or equal to 0. {self.size} was given.")
             is_valid = False
 

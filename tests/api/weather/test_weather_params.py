@@ -109,10 +109,14 @@ def test_dynamic_period_enum_values() -> None:
 def test_dynamic_period_has_value() -> None:
     """Test `has_value` function of `_DynamicPeriod` Class"""
 
-    valid_value = "today"
+    valid_value_1 = "today"
+    valid_value_2 = "next0days"
+    valid_value_3 = "nextmonday"
     invalid_value = "lorem ipsum"
 
-    assert _DynamicPeriod.has_value(valid_value) is True
+    assert _DynamicPeriod.has_value(valid_value_1) is True
+    assert _DynamicPeriod.has_value(valid_value_2) is True
+    assert _DynamicPeriod.has_value(valid_value_3) is True
     assert _DynamicPeriod.has_value(invalid_value) is False
 
 

@@ -273,7 +273,17 @@ class _DynamicPeriod(str, Enum):
     @classmethod
     def has_value(cls: type[_DynamicPeriodT], value: str) -> bool:
         """Checks if value exists in enum"""
-        return value in cls._value2member_map_
+
+        is_static = value in cls._value2member_map_
+
+        if is_static:
+            return True
+        if ("next" in value or "last" in value) and (
+            "days" in value
+            or value[4:] in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        ):
+            return True
+        return False
 
     @classmethod
     def last_weekday(cls: type[_DynamicPeriodT], weekday: str) -> str:
@@ -292,7 +302,7 @@ class _DynamicPeriod(str, Enum):
 
     @classmethod
     def next_x_days(cls: type[_DynamicPeriodT], days_count: int) -> str:
-        """the period including and after today’s date with a length on the number of days specified.
+        """the period after and including today’s date with a length on the number of days specified.
         For example next7days or next21days."""
         if days_count <= 0:
             raise Exception(f"Given day count is invalid: {days_count} <= 0")

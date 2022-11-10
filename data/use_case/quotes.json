@@ -1,0 +1,22 @@
+{
+  "morning briefing": {
+    "1": ["whats going on"],
+    "2": ["morning briefing"]
+  },
+  "events": {
+    "1": ["events"]
+  },
+  "transportation": {
+    "1": ["train"],
+    "2": ["bus"],
+    "3": ["car"],
+    "4": ["bike"]
+  },
+  "general": {
+    "time": ["time", "what time is it"],
+    "well_being": ["how are you"],
+    "love": ["i love you"],
+    "name": ["what is your name", "what's your name"],
+    "exit": ["exit", "quit", "goodbye"]
+  }
+}

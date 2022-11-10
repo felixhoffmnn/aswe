@@ -1,55 +1,46 @@
+from datetime import datetime
+
 from loguru import logger
 
+# def uc_morning_briefing(parsed_text: str, quotes: dict[str, list[str]]) -> None:
+#     """Lorem Ipsum
 
-class UseCases:
-    """Lorem Ipsum"""
-
-    def __init__(self) -> None:
-        logger.debug("UseCases initialized")
-        logger.error("UseCases not implemented yet")
-
-    def _morning_briefing(self) -> None:
-        """Lorem Ipsum
-
-        * TODO: Implement api (News, Weather, Sport, Stocks, Calendar, etc.)
-        """
-
-    def _events(self) -> None:
-        """Lorem Ipsum
-
-        * TODO: Implement api (Calendar, Weather, Events, etc.)
-        """
-
-    def _transportation(self) -> None:
-        """Lorem Ipsum
-
-        * TODO: Implement api (Weather, Navigation, Calendar etc.)
-        """
-
-    def evaluate_use_case(self, text: str) -> None:
-        """Lorem Ipsum
-
-        * TODO: Implement
-        """
-        print(text)
+#     * TODO: Implement
+#     """
 
 
-def morning_briefing() -> None:
-    """Lorem Ipsum
+# def uc_events(parsed_text: str, quotes: dict[str, list[str]]) -> None:
+#     """Lorem Ipsum
 
-    * TODO: Implement
+#     * TODO: Implement
+#     """
+
+
+# def uc_transportation(parsed_text: str, quotes: dict[str, list[str]]) -> None:
+#     """Lorem Ipsum
+
+#     * TODO: Implement
+#     """
+
+
+def uc_general(parsed_text: str, quotes: dict[str, list[str]]) -> str | None:
+    """UseCase for general questions
+
+    Parameters
+    ----------
+    parsed_text : str
+        The voice input of the user parsed to lower case string
+    quotes : dict[str, list[str]]
+        The dictionary of quotes regarding the general use case
+
+    Returns
+    -------
+    str | None
+        The response as a string or None if the request is not implemented
     """
+    if parsed_text in quotes["time"]:
+        logger.debug(f"uc_general({parsed_text}, {quotes}).time")
+        current_time = datetime.now().strftime("%H:%M")
+        return f"The current time is {current_time}"
 
-
-def events() -> None:
-    """Lorem Ipsum
-
-    * TODO: Implement
-    """
-
-
-def transportation() -> None:
-    """Lorem Ipsum
-
-    * TODO: Implement
-    """
+    return None

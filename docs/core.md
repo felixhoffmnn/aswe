@@ -1,8 +1,8 @@
 # Core Modules
 
-## Speech to Text Parser
+## Agent
 
-::: aswe.core.speech_to_text
+::: aswe.core.agent.Agent
 
 ## Wrapper for all use cases
 

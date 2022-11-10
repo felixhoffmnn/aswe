@@ -13,10 +13,16 @@
     "4": ["bike"]
   },
   "general": {
-    "time": ["time", "what time is it"],
-    "well_being": ["how are you"],
+    "time": ["time", "what time is it", "what's the time", "what is the time"],
+    "well_being": [
+      "how are you",
+      "how are you doing",
+      "how are you feeling",
+      "how are you doing today",
+      "how are you feeling today"
+    ],
     "love": ["i love you"],
     "name": ["what is your name", "what's your name"],
-    "exit": ["exit", "quit", "goodbye"]
+    "exit": ["exit", "quit", "goodbye", "bye"]
   }
 }

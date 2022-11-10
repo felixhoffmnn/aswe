@@ -2,18 +2,15 @@ import datetime
 import json
 import os
 import sys
-import time
 from dataclasses import dataclass
 from itertools import chain
 from pathlib import Path
 from sys import platform
 
-import pyttsx3
-import speech_recognition as sr
 from loguru import logger
 
-from aswe.core.use_case import uc_general
-from aswe.utils.speech_text import speech_to_text, text_to_speech
+from aswe.core.speech_text import SpeechToText, TextToSpeech
+from aswe.core.use_case import GeneralUseCase
 
 
 def clear_shell() -> None:
@@ -26,17 +23,37 @@ def clear_shell() -> None:
 
 @dataclass
 class User:
-    """Dataclass supposed to store the user data"""
+    """Dataclass supposed to store the user data
 
-    name: str
-    age: int
-    street: str
-    city: str
-    county: str
+    Parameters
+    ----------
+    name : str | None
+        The name of the user. _By default `None`_.
+    age : int | None
+        The age of the user. _By default `None`_.
+    street : str | None
+        The street of the user. _By default `None`_.
+    city : str | None
+        The city of the user. _By default `None`_.
+    zip_code : int | None
+        The zip code of the user. _By default `None`_.
+    country : str | None
+        The country of the user. _By default `None`_.
+    """
+
+    name: str | None = None
+    age: int | None = None
+    street: str | None = None
+    city: str | None = None
+    zip_code: int | None = None
+    county: str | None = None
 
 
 class Agent:
-    """Class to handle speech to text conversion and text to speech conversion"""
+    """Class to handle speech to text conversion and text to speech conversion
+
+    * TODO: Reevaluate naming for `self.tts.convert_text` and `self.stt.convert_speech`
+    """
 
     def __init__(self) -> None:
         try:
@@ -46,12 +63,13 @@ class Agent:
             logger.error("Could not open file. Please check if the file exists.")
             sys.exit(1)
 
-        self.engine = pyttsx3.init()
-        self.recognizer = sr.Recognizer()
-        self.use_case = UseCases(self.engine, self.recognizer)
+        self.stt = SpeechToText()
+        self.tts = TextToSpeech()
+
+        self.uc_general = GeneralUseCase(self.stt, self.tts, self.quotes["general"])
 
         self.assistant_name = "Marcell J'Avais"
-        self.user_name = "User"
+        self.user = User()
 
     def _greeting(self) -> None:
         """Function to greet the user
@@ -61,43 +79,49 @@ class Agent:
         hour = datetime.datetime.now().hour
 
         if 4 <= hour < 12:
-            text_to_speech("Good Morning!", self.engine)
+            greeting_text = "Good Morning."
         elif 12 <= hour < 18:
-            text_to_speech("Good Afternoon!", self.engine)
+            greeting_text = "Good Afternoon."
         else:
-            text_to_speech("Good Evening!", self.engine)
+            greeting_text = "Good Evening."
 
-        text_to_speech(f"I am your Assistant {self.assistant_name}", self.engine)
+        self.tts.convert_text(greeting_text)
+        self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
 
-    def _username(self) -> None:
+    def _get_user(self) -> None:
         """Asks for the name of the user
 
         * TODO: Discuss if this should be moved to the UseCases class
         """
-        text_to_speech("What should i call you sir", self.engine)
+        self.tts.convert_text("What should i call you?")
 
-        temp = speech_to_text(self.recognizer)
-        self.user_name = temp if temp else "User"
-        text_to_speech(f"Hello {self.user_name}", self.engine)
+        username = None
+        while username is None:
+            print("")
+            username = self.stt.get_speech()
+            if username is None:
+                self.tts.convert_text("Sorry, I didn't get that. Please say that again.")
 
-        print("\n#####################\n")
-        print(f"Hello {self.user_name}")
-        print("\n#####################\n")
+        self.user.name = username  # type: ignore
+        self.tts.convert_text(f"Hello {self.user.name}")
+        self.tts.convert_text("How can I help you?")
 
-        text_to_speech("How can i Help you!", self.engine)
-
-    def hi_buddy(self) -> None:
+    def agent(self) -> None:
         """Main function to interact with the user"""
         clear_shell()
         self._greeting()
-        self._username()
+        self._get_user()
 
         while True:
-            query = speech_to_text(self.recognizer)
-
-            if query:
-                parsed_text = query.lower()
-                self.use_case.evaluate_use_case(parsed_text)
+            print("")
+            query = self.stt.get_speech()
+            if not query:
+                self.tts.convert_text(
+                    "Sorry, I was not able to parse anything. If you said something, please try again."
+                )
+                continue
+            parsed_text = query.lower()
+            self.evaluate_use_case(parsed_text)
 
     def evaluate_use_case(self, text: str) -> None:
         """Evaluates the parsed text to trigger the correct use case
@@ -109,146 +133,136 @@ class Agent:
         text : str
             The voice input of the user parsed to lower case string
         """
-        logger.debug(f"UseCases.evaluate_use_case({text})")
+        logger.debug(f"Evaluating the parsed text: {text}")
 
-        response: str | None = None
-        if text in list(chain.from_iterable(self.quotes["general"].values())):
-            response = uc_general(text, self.quotes["general"])
-        if response:
-            text_to_speech(response, self.engine)
-
-
-class UseCases:
-    """Lorem Ipsum"""
-
-    def __init__(self, engine: pyttsx3.Engine, recognizer: sr.Recognizer) -> None:
-        self.engine = engine
-        self.recognizer = recognizer
-
-    def evaluate_use_case(self, parsed_text: str) -> None:
-        """Lorem Ipsum"""
-        # All the commands said by user will be
-        # stored here in 'query' and will be
-        # converted to lower case for easily
-        # recognition of command
-        # if "wikipedia" in query:
-        #     speak("Searching Wikipedia...")
-        #     query = query.replace("wikipedia", "")
-        #     results = wikipedia.summary(query, sentences=3)
-        #     speak("According to Wikipedia")
-        #     print(results)
-        #     speak(results)
-
-        if "how are you" in parsed_text:
-            text_to_speech("I am fine, Thank you", self.engine)
-            text_to_speech("How are you, Sir", self.engine)
-
-        elif "change name" in parsed_text:
-            text_to_speech("What would you like to call me, Sir ", self.engine)
-
-            temp = speech_to_text(self.recognizer)
-            if temp is None:
-                logger.warning("No name was given")
-            if temp:
-                self.assistant_name = temp
-
-            text_to_speech("Thanks for naming me", self.engine)
-
-        elif "what's your name" in parsed_text or "What is your name" in parsed_text:
-            text_to_speech("My friends call me", self.engine)
-            text_to_speech(self.assistant_name, self.engine)
-            print("My friends call me", self.assistant_name)
-
-        elif "exit" in parsed_text:
-            text_to_speech("Thanks for giving me your time", self.engine)
-            exit()
-
-        # elif "joke" in query:
-        #     speak(pyjokes.get_joke())
-
-        # elif "calculate" in query:
-
-        #     app_id = "Wolframalpha api id"
-        #     client = wolframalpha.Client(app_id)
-        #     indx = query.lower().split().index("calculate")
-        #     query = query.split()[indx + 1 :]
-        #     res = client.query(" ".join(query))
-        #     answer = next(res.results).text
-        #     print("The answer is " + answer)
-        #     speak("The answer is " + answer)
-
-        # elif "who i am" in parsed_text:
-        #     text_to_speech("If you talk then definitely your human.", self.engine)
-
-        elif "is love" in parsed_text:
-            text_to_speech("It is 7th sense that destroy all other senses", self.engine)
-
-        # elif "who are you" in parsed_text:
-        #     text_to_speech("I am your virtual assistant", self.engine)
-
-        elif "don't listen" in parsed_text or "stop listening" in parsed_text:
-            text_to_speech(
-                f"for how much time you want to stop {self.assistant_name} from listening commands", self.engine
+        if any(
+            text.strip() in element.strip() for element in list(chain.from_iterable(self.quotes["general"].values()))
+        ):
+            self.uc_general.evaluate_text(text)
+        else:
+            self.tts.convert_text(
+                "I was not able to map your input to a use case. Maybe the request is not implemented yet."
             )
 
-            temp = speech_to_text(self.recognizer)
-            a = int(temp if temp is not None else 60)
-            time.sleep(a)
-            print(a)
 
-        # elif "jarvis" in parsed_text:
-        #     text_to_speech(f"{self.assistant_name} in your service Mister", self.engine)
+# class UseCases:
+#     """Lorem Ipsum"""
 
-        # elif "weather" in parsed_text:
+#     def evaluate_use_case(self, parsed_text: str) -> None:
+#         """Lorem Ipsum"""
+# All the commands said by user will be
+# stored here in 'query' and will be
+# converted to lower case for easily
+# recognition of command
+# if "wikipedia" in query:
+#     speak("Searching Wikipedia...")
+#     query = query.replace("wikipedia", "")
+#     results = wikipedia.summary(query, sentences=3)
+#     speak("According to Wikipedia")
+#     print(results)
+#     speak(results)
 
-        #     # Google Open weather website
-        #     # to get API of Open weather
-        #     api_key = "Api key"
-        #     base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
-        #     speak(" City name ")
-        #     print("City name : ")
-        #     city_name = speech_to_text()
-        #     complete_url = base_url + "appid =" + api_key + "&q =" + city_name
-        #     response = requests.get(complete_url)
-        #     x = response.json()
+# if "how are you" in parsed_text:
+#     self.tts.convert_text("I am fine, Thank you")
+#     self.tts.convert_text("How are you?")
 
-        #     if x["code"] != "404":
-        #         y = x["main"]
-        #         current_temperature = y["temp"]
-        #         current_pressure = y["pressure"]
-        #         current_humidiy = y["humidity"]
-        #         z = x["weather"]
-        #         weather_description = z[0]["description"]
-        #         print(
-        #             " Temperature (in kelvin unit) = "
-        #             + str(current_temperature)
-        #             + "\n atmospheric pressure (in hPa unit) ="
-        #             + str(current_pressure)
-        #             + "\n humidity (in percentage) = "
-        #             + str(current_humidiy)
-        #             + "\n description = "
-        #             + str(weather_description)
-        #         )
+# elif "change name" in parsed_text:
+#     self.tts.convert_text("What would you like to call me? ")
 
-        #     else:
-        #         speak(" City Not Found ")
+#     temp = self.stt.convert_speech()
+#     if temp is None:
+#         logger.warning("No name was given")
+#     if temp:
+#         self.assistant_name = temp
 
-        # elif "Good Morning" in parsed_text:
-        #     text_to_speech("A warm" + parsed_text, self.engine)
-        #     text_to_speech("How are you Mister", self.engine)
-        #     text_to_speech(self.assistant_name, self.engine)
+#     self.tts.convert_text("Thanks for naming me")
 
-        # most asked question from google Assistant
-        # elif "will you be my gf" in parsed_text or "will you be my bf" in parsed_text:
-        #     text_to_speech("I'm not sure about, may be you should give me some time", self.engine)
+# elif "what's your name" in parsed_text or "What is your name" in parsed_text:
+#     self.tts.convert_text("My friends call me")
+#     self.tts.convert_text(self.assistant_name)
+#     print("My friends call me", self.assistant_name)
 
-        # elif "how are you" in parsed_text:
-        #     text_to_speech("I'm fine, glad you me that", self.engine)
+# elif "joke" in query:
+#     speak(pyjokes.get_joke())
 
-        # elif "i love you" in parsed_text:
-        #     text_to_speech("It's hard to understand", self.engine)
+# elif "calculate" in query:
+
+#     app_id = "Wolframalpha api id"
+#     client = wolframalpha.Client(app_id)
+#     indx = query.lower().split().index("calculate")
+#     query = query.split()[indx + 1 :]
+#     res = client.query(" ".join(query))
+#     answer = next(res.results).text
+#     print("The answer is " + answer)
+#     speak("The answer is " + answer)
+
+# elif "who i am" in parsed_text:
+#     self.tts.convert_text("If you talk then definitely your human.")
+
+# elif "who are you" in parsed_text:
+#     self.tts.convert_text("I am your virtual assistant")
+
+# elif "don't listen" in parsed_text or "stop listening" in parsed_text:
+#     self.tts.convert_text(f"for how much time you want to stop {self.assistant_name} from listening commands")
+
+#     temp = self.stt.convert_speech()
+#     a = int(temp if temp is not None else 60)
+#     time.sleep(a)
+#     print(a)
+
+# elif "jarvis" in parsed_text:
+#     self.tts.convert_text(f"{self.assistant_name} in your service Mister")
+
+# elif "weather" in parsed_text:
+
+#     # Google Open weather website
+#     # to get API of Open weather
+#     api_key = "Api key"
+#     base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
+#     speak(" City name ")
+#     print("City name : ")
+#     city_name = self.stt.convert_speech()
+#     complete_url = base_url + "appid =" + api_key + "&q =" + city_name
+#     response = requests.get(complete_url)
+#     x = response.json()
+
+#     if x["code"] != "404":
+#         y = x["main"]
+#         current_temperature = y["temp"]
+#         current_pressure = y["pressure"]
+#         current_humidiy = y["humidity"]
+#         z = x["weather"]
+#         weather_description = z[0]["description"]
+#         print(
+#             " Temperature (in kelvin unit) = "
+#             + str(current_temperature)
+#             + "\n atmospheric pressure (in hPa unit) ="
+#             + str(current_pressure)
+#             + "\n humidity (in percentage) = "
+#             + str(current_humidiy)
+#             + "\n description = "
+#             + str(weather_description)
+#         )
+
+#     else:
+#         speak(" City Not Found ")
+
+# elif "Good Morning" in parsed_text:
+#     self.tts.convert_text("A warm" + parsed_text)
+#     self.tts.convert_text("How are you Mister")
+#     self.tts.convert_text(self.assistant_name)
+
+# most asked question from google Assistant
+# elif "will you be my gf" in parsed_text or "will you be my bf" in parsed_text:
+#     self.tts.convert_text("I'm not sure about, may be you should give me some time")
+
+# elif "how are you" in parsed_text:
+#     self.tts.convert_text("I'm fine, glad you me that")
+
+# elif "i love you" in parsed_text:
+#     self.tts.convert_text("It's hard to understand")
 
 
 if __name__ == "__main__":
     agent = Agent()
-    agent.hi_buddy()
+    agent.agent()

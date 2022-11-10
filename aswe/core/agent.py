@@ -9,8 +9,8 @@ from sys import platform
 
 from loguru import logger
 
-from aswe.core.speech_text import SpeechToText, TextToSpeech
 from aswe.core.use_case import GeneralUseCase
+from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 
 def clear_shell() -> None:
@@ -98,7 +98,7 @@ class Agent:
         username = None
         while username is None:
             print("")
-            username = self.stt.get_speech()
+            username = self.stt.convert_speech()
             if username is None:
                 self.tts.convert_text("Sorry, I didn't get that. Please say that again.")
 
@@ -114,7 +114,7 @@ class Agent:
 
         while True:
             print("")
-            query = self.stt.get_speech()
+            query = self.stt.convert_speech()
             if not query:
                 self.tts.convert_text(
                     "Sorry, I was not able to parse anything. If you said something, please try again."

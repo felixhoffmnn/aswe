@@ -27,6 +27,7 @@
     "mkdocstrings",
     "mypy",
     "numpy",
+    "pydub",
     "pymdownx",
     "pyproject",
     "pytest",

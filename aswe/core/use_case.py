@@ -4,7 +4,7 @@ from datetime import datetime
 
 from loguru import logger
 
-from aswe.core.speech_text import SpeechToText, TextToSpeech
+from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 
 class AbstractUseCase(ABC):
@@ -54,8 +54,8 @@ class GeneralUseCase(AbstractUseCase):
             logger.debug(f"General Use Case: {parsed_text}, {self.quotes}, {self.quotes['time']}")
             current_time = datetime.now().strftime("%H:%M")
             self.tts.convert_text(f"The current time is {current_time}")
+        elif parsed_text in self.quotes["well_being"]:
+            self.tts.convert_text("I am fine, Thank you")
         elif parsed_text in self.quotes["exit"]:
             self.tts.convert_text("Thanks for using me, have a nice day.")
             sys.exit()
-        elif parsed_text in self.quotes["well_being"]:
-            self.tts.convert_text("I am fine, Thank you")

@@ -12,6 +12,7 @@ nav:
   - Documentation:
       - Core: core.md
       - Utilities: utils.md
+  - License: license.md
 
 # Plugins
 plugins:

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="3HhG7I_mzAMFmd8NVGH1" name="Layerd Architecture">
-        <mxGraphModel dx="1007" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="870" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -131,7 +131,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="8g5US7hoYx1NNWP3I0Zd" name="Agent">
-        <mxGraphModel dx="1460" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="870" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="yO3P8DGXqeODH8aHeIGx-0"/>
                 <mxCell id="yO3P8DGXqeODH8aHeIGx-1" parent="yO3P8DGXqeODH8aHeIGx-0"/>

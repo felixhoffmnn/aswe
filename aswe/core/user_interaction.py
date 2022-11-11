@@ -9,26 +9,26 @@ from loguru import logger
 class SpeechToText:
     """Class to convert speech to text."""
 
-    def __init__(self, microphone_index: int | None = None) -> None:
+    def __init__(self, get_mic_index: bool) -> None:
         """Initializes the speech to text class.
 
         * TODO: Think about a better way to handle the case that the `microphone_index` is not required
 
         Parameters
         ----------
-        microphone_index : int | None, optional
-            The index of the microphone to use for speech recognition. _By default `None`_.
+        get_mic_index : bool
+            If the speech to text class should first get the microphone index.
         """
         self.recognizer = sr.Recognizer()
 
-        if microphone_index is None:
+        if get_mic_index:
             print("At first, please select the microphone you want to use.\n")
             time.sleep(1)
             list_of_microphones = sr.Microphone.list_microphone_names()
             for index, name in enumerate(list_of_microphones):
                 print(f"Microphone with name <<{name}>> found for `Microphone(device_index={index})`")
             print("\nPlease enter the index of the microphone you want to use.")
-        self.microphone_index = microphone_index if microphone_index else int(input())
+        self.microphone_index = int(input("Microphone index: ")) if get_mic_index else None
 
     def convert_audio_file(self, audio_file: str | Path) -> str | None:
         """Converts an audio file to text.

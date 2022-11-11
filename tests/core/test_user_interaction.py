@@ -9,7 +9,7 @@ from aswe.core.user_interaction import SpeechToText, TextToSpeech
 def test_convert_file() -> None:
     """Test if the speech is parsed correctly"""
     audio_path = Path("data/test_user_interaction.wav")
-    stt = SpeechToText(microphone_index=-1)
+    stt = SpeechToText(get_mic_index=False)
     assert isinstance(stt, SpeechToText)
     assert isinstance(stt.recognizer, sr.Recognizer)
 

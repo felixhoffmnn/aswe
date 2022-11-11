@@ -1,5 +1,5 @@
 {
-  "morning briefing": {
+  "morningBriefing": {
     "1": ["whats going on"],
     "2": ["morning briefing"]
   },
@@ -14,7 +14,7 @@
   },
   "general": {
     "time": ["time", "what time is it", "what's the time", "what is the time"],
-    "well_being": [
+    "wellBeing": [
       "how are you",
       "how are you doing",
       "how are you feeling",

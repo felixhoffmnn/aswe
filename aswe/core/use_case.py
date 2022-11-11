@@ -10,10 +10,9 @@ from aswe.core.user_interaction import SpeechToText, TextToSpeech
 class AbstractUseCase(ABC):
     """Abstract class for use cases"""
 
-    def __init__(self, stt: SpeechToText, tts: TextToSpeech, quotes: dict[str, list[str]]) -> None:
+    def __init__(self, stt: SpeechToText, tts: TextToSpeech) -> None:
         self.stt = stt
         self.tts = tts
-        self.quotes = quotes
 
 
 # def uc_morning_briefing(parsed_text: str, quotes: dict[str, list[str]]) -> None:
@@ -40,22 +39,23 @@ class AbstractUseCase(ABC):
 class GeneralUseCase(AbstractUseCase):
     """Class for managing the general use case"""
 
-    def evaluate_text(self, parsed_text: str) -> None:
+    def evaluate_text(self, choice: str) -> None:
         """UseCase for general questions
 
         Parameters
         ----------
-        parsed_text : str
-            The voice input of the user parsed to lower case string.
-        quotes : dict[str, list[str]]
-            The dictionary of quotes regarding the general use case.
+        choice : str
+            The best matching choice for the given user input.
         """
-        if parsed_text in self.quotes["time"]:
-            logger.debug(f"General Use Case: {parsed_text}, {self.quotes}, {self.quotes['time']}")
+        if choice == "time":
+            logger.debug(f"General Use Case: {choice}")
             current_time = datetime.now().strftime("%H:%M")
             self.tts.convert_text(f"The current time is {current_time}")
-        elif parsed_text in self.quotes["well_being"]:
+        elif choice == "wellBeing":
             self.tts.convert_text("I am fine, Thank you")
-        elif parsed_text in self.quotes["exit"]:
-            self.tts.convert_text("Thanks for using me, have a nice day.")
-            sys.exit()
+        elif choice == "exit":
+            self.tts.convert_text("Do you really want to exit?")
+            response = self.stt.convert_speech()
+            if response in ["yes", "yeah", "yep", "sure", "ok"]:
+                self.tts.convert_text("Thanks for using me, have a nice day.")
+                sys.exit()

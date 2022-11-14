@@ -36,9 +36,12 @@ Excepteur ea eiusmod adipisicing dolor do qui mollit tempor. Tempor sit cillum i
 
 1. Install [Poetry](https://python-poetry.org/docs/#installation)
    - Poetry is a dependency manager for Python used in this project
-2. Run `poetry install` to install all dependencies
+2. Install `portaudio` for speech recognition:
+   - On macOS: `brew install portaudio`
+   - On Linux: `sudo apt install python-pyaudio python3-pyaudio`
+3. Run `poetry install` to install all dependencies
    - Afterwards, run `poetry shell` to activate the virtual environment
-3. Install the pre-commit hooks with `poetry run pre-commit install`
+4. Install the pre-commit hooks with `poetry run pre-commit install`
 
 ## :bulb: Tips & Tricks
 

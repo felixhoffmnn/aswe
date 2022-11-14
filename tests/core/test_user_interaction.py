@@ -15,7 +15,9 @@ def test_convert_file() -> None:
 
     parsed_text = stt.convert_audio_file(audio_path)
     assert isinstance(parsed_text, str)
-    assert parsed_text == "this is a test for the text to speech conversion"
+    assert parsed_text == (
+        "this is a test for the text to speech conversion" or "this is a test for the text-to-speech conversion"
+    )
 
 
 def test_convert_text() -> None:

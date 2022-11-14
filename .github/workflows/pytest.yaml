@@ -7,13 +7,13 @@ on:
     # The branches below must be a subset of the branches above
     branches: ["main"]
 
-# TODO: Fix core tests requiring portaudio
+# TODO: Add windows as testing platform
 jobs:
   pytest:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest] # windows-latest,
         python: ["3.10"]
 
     steps:

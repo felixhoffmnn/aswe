@@ -10,13 +10,18 @@ watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
 nav:
   - Overview: index.md
   - Documentation:
-      - Core: core.md
-      - Utilities: utils.md
+      - ASWE: aswe/index.md
+      - Core: aswe/core.md
+      - Utilities: aswe/utils.md
   - License: license.md
 
 # Plugins
 plugins:
   - search
+  - mermaid2:
+      arguments:
+        theme: |
+          ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
   - git-revision-date-localized:
       fallback_to_build_date: true
   - autorefs
@@ -58,6 +63,13 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
 
+  # https://facelessuser.github.io/pymdown-extensions/extensions/superfences/
+  pymdownx.superfences:
+    custom_fences:
+      - name: mermaid
+        class: mermaid
+        format: !!python/name:mermaid2.fence_mermaid
+
   features:
     # Enable the tabs on the top of the page (the level 1 folder will be displayed as a tab)
     - navigation.tabs
@@ -86,11 +98,11 @@ theme:
   language: en
 
 # Extras
-extra:
-  social:
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/in/felix-emmanuel-hoffmann/
-      name: Felix Hoffmann
+# extra:
+#   social:
+#     - icon: fontawesome/brands/linkedin
+#       link: https://www.linkedin.com/in/felix-emmanuel-hoffmann/
+#       name: Felix Hoffmann
 
 # Markdown extensions
 markdown_extensions:
@@ -101,3 +113,6 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+
+extra_javascript:
+  - extra/refresh_on_toggle_dark_light.js

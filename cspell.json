@@ -29,12 +29,14 @@
     "mkdocstrings",
     "mypy",
     "numpy",
+    "pipx",
     "pydub",
     "pymdownx",
     "pyproject",
     "pytest",
     "pyttsx",
     "pyupgrade",
+    "superfences",
     "vvspy"
   ]
 }

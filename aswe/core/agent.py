@@ -8,6 +8,7 @@ from pathlib import Path
 from sys import platform
 
 import pandas as pd
+from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
@@ -81,8 +82,10 @@ class Agent:
 
         self.uc_general = GeneralUseCase(self.stt, self.tts)
 
-        self.assistant_name = "Marcell J'Avais"
         self.user = User()
+        self.assistant_name = "Marcell J'Avais"
+
+        print(self.user.name)
 
     def _greeting(self) -> None:
         """Function to greet the user."""
@@ -342,6 +345,4 @@ class Agent:
 
 
 if __name__ == "__main__":
-    # TODO: Add args
-    agent = Agent()
-    agent.agent()
+    Fire(Agent)  # , command="agent"

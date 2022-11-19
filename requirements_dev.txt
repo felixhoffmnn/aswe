@@ -246,9 +246,9 @@ filelock==3.8.0 ; python_version >= "3.10" and python_version < "4.0" \
 flake8==5.0.4 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:6fbe320aad8d6b95cec8b8e47bc933004678dc63095be98528b7bdd2a9f510db \
     --hash=sha256:7a1cf6b73744f5806ab95e526f6f0d8c01c66d7bbe349562d22dfca20610b248
-identify==2.5.8 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:48b7925fe122720088aeb7a6c34f17b27e706b72c61070f27fe3789094233440 \
-    --hash=sha256:7a214a10313b9489a0d61467db2856ae8d0b8306fc923e03a9effa53d8aedc58
+identify==2.5.9 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:906036344ca769539610436e40a684e170c3648b552194980bb7b617a8daeb9f \
+    --hash=sha256:a390fb696e164dbddb047a0db26e57972ae52fbd037ae68797e5ae2f4492485d
 idna==3.4 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2

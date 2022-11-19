@@ -1,21 +1,21 @@
 import pytest
 
-from aswe.api.weather.weather_params import _DynamicPeriod, _Elements, _Include
+from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
 
 
 def test_include_enum_values() -> None:
     """Test values of `Include` Enum Class"""
 
-    assert _Include.DAYS == "days"
-    assert _Include.HOURS == "hours"
-    assert _Include.ALERTS == "alerts"
-    assert _Include.CURRENT == "current"
-    assert _Include.EVENTS == "events"
-    assert _Include.OBS == "obs"
-    assert _Include.REMOTE == "remote"
-    assert _Include.FORECAST == "fcst"
-    assert _Include.STATS == "stats"
-    assert _Include.STATS_FORECAST == "statsfcst"
+    assert IncludeEnum.DAYS.value == "days"
+    assert IncludeEnum.HOURS.value == "hours"
+    assert IncludeEnum.ALERTS.value == "alerts"
+    assert IncludeEnum.CURRENT.value == "current"
+    assert IncludeEnum.EVENTS.value == "events"
+    assert IncludeEnum.OBS.value == "obs"
+    assert IncludeEnum.REMOTE.value == "remote"
+    assert IncludeEnum.FORECAST.value == "fcst"
+    assert IncludeEnum.STATS.value == "stats"
+    assert IncludeEnum.STATS_FORECAST.value == "statsfcst"
 
 
 def test_include_has_value() -> None:
@@ -24,63 +24,63 @@ def test_include_has_value() -> None:
     valid_value = "days"
     invalid_value = "lorem ipsum"
 
-    assert _Include.has_value(valid_value) is True
-    assert _Include.has_value(invalid_value) is False
+    assert IncludeEnum.has_value(valid_value) is True
+    assert IncludeEnum.has_value(invalid_value) is False
 
 
 def test_elements_enum_values() -> None:
     """Test values of `Elements` Enum Class"""
 
-    assert _Elements.CLOUDCOVER == "cloudcover"
-    assert _Elements.CONDITIONS == "conditions"
-    assert _Elements.DESCRIPTION == "description"
-    assert _Elements.DATETIME == "datetime"
-    assert _Elements.DATETIME_EPOCH == "datetimeEpoch"
-    assert _Elements.TZOFFSET == "tzoffset"
-    assert _Elements.DEW == "dew"
-    assert _Elements.FEELSLIKE == "feelslike"
-    assert _Elements.FEELSLIKE_MAX == "feelslikemax"
-    assert _Elements.FEELSLIKE_MIN == "feelslikemin"
-    assert _Elements.HOURS == "hours"
-    assert _Elements.HUMIDITY == "humidity"
-    assert _Elements.ICON == "icon"
-    assert _Elements.MOON_PHASE == "moonphase"
-    assert _Elements.NORMAL == "normal"
-    assert _Elements.OFFSET_SECONDS == "offsetseconds"
-    assert _Elements.PRECIP == "precip"
-    assert _Elements.PRECIP_COVER == "precipcover"
-    assert _Elements.PRECIP_PROB == "precipprob"
-    assert _Elements.PRECIP_TYPE == "preciptype"
-    assert _Elements.PRESSURE == "pressure"
-    assert _Elements.SNOW == "snow"
-    assert _Elements.SNOW_DEPTH == "snowdepth"
-    assert _Elements.SOURCE == "source"
-    assert _Elements.STATIONS == "stations"
-    assert _Elements.SUNRISE == "sunrise"
-    assert _Elements.SUNRISE_EPOCH == "sunriseEpoch"
-    assert _Elements.SUNSET == "sunset"
-    assert _Elements.SUNSET_EPOCH == "sunsetEpoch"
-    assert _Elements.MOONRISE == "moonrise"
-    assert _Elements.MOORISE_EPOCH == "moonriseEpoch"
-    assert _Elements.MOONSET == "moonset"
-    assert _Elements.MOONSET_EPOCH == "moonsetEpoch"
-    assert _Elements.TEMP == "temp"
-    assert _Elements.TEMP_MAX == "tempmax"
-    assert _Elements.TEMP_MIN == "tempmin"
-    assert _Elements.UV_INDEX == "uvindex"
-    assert _Elements.VISIBILITY == "visibility"
-    assert _Elements.WIND_DIR == "winddir"
-    assert _Elements.WIND_GUST == "windgust"
-    assert _Elements.WIND_SPEED == "windspeed"
-    assert _Elements.WIND_SPEED_MAX == "windspeedmax"
-    assert _Elements.WIND_SPEED_MEAN == "windspeedmean"
-    assert _Elements.WIND_SPEED_MIN == "windspeedmin"
-    assert _Elements.SOLAR_RADIATION == "solarradiation"
-    assert _Elements.SOLAR_ENERGY == "solarenergy"
-    assert _Elements.SEVERE_RISK == "severerisk"
-    assert _Elements.CAPE == "cape"
-    assert _Elements.CIN == "cin"
-    assert _Elements.DEGREE_DAYS == "degreedays"
+    assert ElementsEnum.CLOUDCOVER.value == "cloudcover"
+    assert ElementsEnum.CONDITIONS.value == "conditions"
+    assert ElementsEnum.DESCRIPTION.value == "description"
+    assert ElementsEnum.DATETIME.value == "datetime"
+    assert ElementsEnum.DATETIME_EPOCH.value == "datetimeEpoch"
+    assert ElementsEnum.TZOFFSET.value == "tzoffset"
+    assert ElementsEnum.DEW.value == "dew"
+    assert ElementsEnum.FEELSLIKE.value == "feelslike"
+    assert ElementsEnum.FEELSLIKE_MAX.value == "feelslikemax"
+    assert ElementsEnum.FEELSLIKE_MIN.value == "feelslikemin"
+    assert ElementsEnum.HOURS.value == "hours"
+    assert ElementsEnum.HUMIDITY.value == "humidity"
+    assert ElementsEnum.ICON.value == "icon"
+    assert ElementsEnum.MOON_PHASE.value == "moonphase"
+    assert ElementsEnum.NORMAL.value == "normal"
+    assert ElementsEnum.OFFSET_SECONDS.value == "offsetseconds"
+    assert ElementsEnum.PRECIP.value == "precip"
+    assert ElementsEnum.PRECIP_COVER.value == "precipcover"
+    assert ElementsEnum.PRECIP_PROB.value == "precipprob"
+    assert ElementsEnum.PRECIP_TYPE.value == "preciptype"
+    assert ElementsEnum.PRESSURE.value == "pressure"
+    assert ElementsEnum.SNOW.value == "snow"
+    assert ElementsEnum.SNOW_DEPTH.value == "snowdepth"
+    assert ElementsEnum.SOURCE.value == "source"
+    assert ElementsEnum.STATIONS.value == "stations"
+    assert ElementsEnum.SUNRISE.value == "sunrise"
+    assert ElementsEnum.SUNRISE_EPOCH.value == "sunriseEpoch"
+    assert ElementsEnum.SUNSET.value == "sunset"
+    assert ElementsEnum.SUNSET_EPOCH.value == "sunsetEpoch"
+    assert ElementsEnum.MOONRISE.value == "moonrise"
+    assert ElementsEnum.MOORISE_EPOCH.value == "moonriseEpoch"
+    assert ElementsEnum.MOONSET.value == "moonset"
+    assert ElementsEnum.MOONSET_EPOCH.value == "moonsetEpoch"
+    assert ElementsEnum.TEMP.value == "temp"
+    assert ElementsEnum.TEMP_MAX.value == "tempmax"
+    assert ElementsEnum.TEMP_MIN.value == "tempmin"
+    assert ElementsEnum.UV_INDEX.value == "uvindex"
+    assert ElementsEnum.VISIBILITY.value == "visibility"
+    assert ElementsEnum.WIND_DIR.value == "winddir"
+    assert ElementsEnum.WIND_GUST.value == "windgust"
+    assert ElementsEnum.WIND_SPEED.value == "windspeed"
+    assert ElementsEnum.WIND_SPEED_MAX.value == "windspeedmax"
+    assert ElementsEnum.WIND_SPEED_MEAN.value == "windspeedmean"
+    assert ElementsEnum.WIND_SPEED_MIN.value == "windspeedmin"
+    assert ElementsEnum.SOLAR_RADIATION.value == "solarradiation"
+    assert ElementsEnum.SOLAR_ENERGY.value == "solarenergy"
+    assert ElementsEnum.SEVERE_RISK.value == "severerisk"
+    assert ElementsEnum.CAPE.value == "cape"
+    assert ElementsEnum.CIN.value == "cin"
+    assert ElementsEnum.DEGREE_DAYS.value == "degreedays"
 
 
 def test_elements_has_value() -> None:
@@ -89,21 +89,21 @@ def test_elements_has_value() -> None:
     valid_value = "cloudcover"
     invalid_value = "lorem ipsum"
 
-    assert _Elements.has_value(valid_value) is True
-    assert _Elements.has_value(invalid_value) is False
+    assert ElementsEnum.has_value(valid_value) is True
+    assert ElementsEnum.has_value(invalid_value) is False
 
 
 def test_dynamic_period_enum_values() -> None:
     """Test values of `_DynamicPeriod` Enum Class"""
 
-    assert _DynamicPeriod.TODAY == "today"
-    assert _DynamicPeriod.YESTERDAY == "yesterday"
-    assert _DynamicPeriod.YEART_TO_DATE == "yeartodate"
-    assert _DynamicPeriod.MONTH_TO_DATE == "monthtodate"
-    assert _DynamicPeriod.LAST_YEAR == "lastyear"
-    assert _DynamicPeriod.LAST_24_HOURS == "last24hours"
-    assert _DynamicPeriod.NEXT_WEEKEND == "nextweekend"
-    assert _DynamicPeriod.LAST_WEEKEND == "lastweekend"
+    assert DynamicPeriodEnum.TODAY.value == "today"
+    assert DynamicPeriodEnum.YESTERDAY.value == "yesterday"
+    assert DynamicPeriodEnum.YEART_TO_DATE.value == "yeartodate"
+    assert DynamicPeriodEnum.MONTH_TO_DATE.value == "monthtodate"
+    assert DynamicPeriodEnum.LAST_YEAR.value == "lastyear"
+    assert DynamicPeriodEnum.LAST_24_HOURS.value == "last24hours"
+    assert DynamicPeriodEnum.NEXT_WEEKEND.value == "nextweekend"
+    assert DynamicPeriodEnum.LAST_WEEKEND.value == "lastweekend"
 
 
 def test_dynamic_period_has_value() -> None:
@@ -112,8 +112,8 @@ def test_dynamic_period_has_value() -> None:
     valid_value = "today"
     invalid_value = "lorem ipsum"
 
-    assert _DynamicPeriod.has_value(valid_value) is True
-    assert _DynamicPeriod.has_value(invalid_value) is False
+    assert DynamicPeriodEnum.has_value(valid_value) is True
+    assert DynamicPeriodEnum.has_value(invalid_value) is False
 
 
 def test_dynamic_period_last_weekday() -> None:
@@ -122,11 +122,11 @@ def test_dynamic_period_last_weekday() -> None:
     weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
     for weekday in weekdays:
-        assert _DynamicPeriod.last_weekday(weekday) == f"last{weekday}"
-        assert _DynamicPeriod.last_weekday(weekday.upper()) == f"last{weekday}"
+        assert DynamicPeriodEnum.last_weekday(weekday) == f"last{weekday}"
+        assert DynamicPeriodEnum.last_weekday(weekday.upper()) == f"last{weekday}"
 
     with pytest.raises(Exception, match="Given weekday is invalid: lorem ipsum"):
-        _DynamicPeriod.last_weekday("lorem ipsum")
+        DynamicPeriodEnum.last_weekday("lorem ipsum")
 
 
 def test_dynamic_period_next_weekday() -> None:
@@ -135,32 +135,32 @@ def test_dynamic_period_next_weekday() -> None:
     weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
     for weekday in weekdays:
-        assert _DynamicPeriod.next_weekday(weekday) == f"next{weekday}"
-        assert _DynamicPeriod.next_weekday(weekday.upper()) == f"next{weekday}"
+        assert DynamicPeriodEnum.next_weekday(weekday) == f"next{weekday}"
+        assert DynamicPeriodEnum.next_weekday(weekday.upper()) == f"next{weekday}"
 
     with pytest.raises(Exception, match="Given weekday is invalid: lorem ipsum"):
-        _DynamicPeriod.next_weekday("lorem ipsum")
+        DynamicPeriodEnum.next_weekday("lorem ipsum")
 
 
 def test_dynamic_period_last_x_days() -> None:
     """Test `last_x_days` function of `_DynamicPeriod` Class"""
 
-    assert _DynamicPeriod.last_x_days(10) == "last10days"
+    assert DynamicPeriodEnum.last_x_days(10) == "last10days"
 
     with pytest.raises(Exception, match="Given day count is invalid: 0 <= 0"):
-        _DynamicPeriod.last_x_days(0)
+        DynamicPeriodEnum.last_x_days(0)
 
     with pytest.raises(Exception, match="Given day count is invalid: -1 <= 0"):
-        _DynamicPeriod.last_x_days(-1)
+        DynamicPeriodEnum.last_x_days(-1)
 
 
 def test_dynamic_period_next_x_days() -> None:
     """Test `next_x_days` function of `_DynamicPeriod` Class"""
 
-    assert _DynamicPeriod.next_x_days(10) == "next10days"
+    assert DynamicPeriodEnum.next_x_days(10) == "next10days"
 
     with pytest.raises(Exception, match="Given day count is invalid: 0 <= 0"):
-        _DynamicPeriod.next_x_days(0)
+        DynamicPeriodEnum.next_x_days(0)
 
     with pytest.raises(Exception, match="Given day count is invalid: -1 <= 0"):
-        _DynamicPeriod.next_x_days(-1)
+        DynamicPeriodEnum.next_x_days(-1)

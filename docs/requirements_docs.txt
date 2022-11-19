@@ -108,9 +108,9 @@ gitdb==4.0.9 ; python_version >= "3.10" and python_version < "4.0" \
 gitpython==3.1.29 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:41eea0deec2deea139b459ac03656f0dd28fc4a3387240ec1d3c259a2c47850f \
     --hash=sha256:cc36bfc4a3f913e66805a28e84703e419d9c264c1077e537b54f0e1af85dbefd
-griffe==0.24.0 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:6c6b64716155f27ef63377e2b04749079c359f06d9a6e638bb2f885cbe463360 \
-    --hash=sha256:afa92aeb8c5a4f2501693ffd607f820d7ade3ac2a36e34c43d39ee3486cec392
+griffe==0.24.1 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:acc7e6aac2495ffbfd70b2cdd801fff1299ec3e5efaaad23ccd316b711f1d11d \
+    --hash=sha256:cfd17f61f3815be5a83f27303cd3db6e9fd9328d4070e4824cd5573763a28961
 idna==3.4 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2

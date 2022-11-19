@@ -21,11 +21,6 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
     -------
     Response | None
         The response from the API or None if the request failed.
-
-    Raises
-    ------
-    Exception
-        _description_
     """
     try:
         response = requests.get(url, timeout=timeout, headers=headers)

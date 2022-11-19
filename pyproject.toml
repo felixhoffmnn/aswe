@@ -30,6 +30,7 @@ pyttsx3 = "^2.90"
 python-dotenv = "^0.21.0"
 poetry-dotenv-plugin = "^0.1.0"
 fire = "^0.4.0"
+pyjokes = "^0.6.0"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["jupyter"], version = "^22.8.0" }

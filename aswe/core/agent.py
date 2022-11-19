@@ -28,19 +28,21 @@ def clear_shell() -> None:
 class User:
     """Dataclass supposed to store the user data
 
+    * TODO: Add more attributes and evaluate the existing ones
+
     Parameters
     ----------
-    name : str | None
+    name : str | None, optional
         The name of the user. _By default `None`_.
-    age : int | None
+    age : int | None, optional
         The age of the user. _By default `None`_.
-    street : str | None
+    street : str | None, optional
         The street of the user. _By default `None`_.
-    city : str | None
+    city : str | None, optional
         The city of the user. _By default `None`_.
-    zip_code : int | None
+    zip_code : int | None, optional
         The zip code of the user. _By default `None`_.
-    country : str | None
+    country : str | None, optional
         The country of the user. _By default `None`_.
     """
 
@@ -49,16 +51,25 @@ class User:
     street: str | None = None
     city: str | None = None
     zip_code: int | None = None
-    county: str | None = None
+    country: str | None = None
 
 
 class Agent:
-    """Class to handle speech to text conversion and text to speech conversion
+    """Class to handle speech to text conversion and text to speech conversion"""
 
-    * TODO: Reevaluate naming for `self.tts.convert_text` and `self.stt.convert_speech`
-    """
+    def __init__(self, get_mic: bool = False, get_user: bool = False) -> None:
+        """Initialize the agent which handles all the core functionality like speech to text and text to
+        speech conversion but also the calculation of the best matching use case for the parsed text.
 
-    def __init__(self, get_mic_index: bool = False) -> None:
+        * TODO: Reevaluate naming for `self.tts.convert_text` and `self.stt.convert_speech`
+
+        Parameters
+        ----------
+        get_mic : bool, optional
+            Boolean if the speech to text class should first ask for the microphone to use. _By default `False`_.
+        get_user : bool, optional
+            Boolean if the default user should be used. _By default `False`_.
+        """
         try:
             with open(Path("data/quotes.json"), encoding="utf-8") as file:
                 self.quotes = (
@@ -77,13 +88,18 @@ class Agent:
             logger.error("Could not open file. Please check if the file exists.")
             sys.exit(1)
 
-        self.stt = SpeechToText(get_mic_index)
+        self.stt = SpeechToText(get_mic)
         self.tts = TextToSpeech()
 
-        self.uc_general = GeneralUseCase(self.stt, self.tts)
-
-        self.user = User()
         self.assistant_name = "Marcell J'Avais"
+        if get_user:
+            self.user = self._get_user()
+        else:
+            self.user = User(
+                name="Marcell", age=23, street="Hauptstraße 1", city="Berlin", zip_code=12345, country="Germany"
+            )
+
+        self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name)
 
         print(self.user.name)
 
@@ -101,8 +117,11 @@ class Agent:
         self.tts.convert_text(greeting_text)
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
 
-    def _get_user(self) -> None:
-        """Asks for the name of the user."""
+    def _get_user(self) -> User:
+        """Asks for the name of the user.
+
+        * TODO: Refactor into a util function
+        """
         self.tts.convert_text("What should i call you?")
 
         username = None
@@ -112,24 +131,23 @@ class Agent:
             if username is None:
                 self.tts.convert_text("Sorry, I didn't get that. Please say that again.")
 
-        self.user.name = username  # type: ignore
-        self.tts.convert_text(f"Hello {self.user.name}")
+        self.tts.convert_text(f"Hello {username}")  # type: ignore
         self.tts.convert_text("How can I help you?")
 
-    def _get_best_match(self, text: str) -> tuple[str, str] | None:
-        """Find the best match for the parsed text
+        return User(name=username)
 
-        * TODO: Switch from text to speech input for multiple use cases
+    def get_best_match(self, text: str) -> tuple[str, str] | None:
+        """Find the best match for the parsed text
 
         Parameters
         ----------
         text : str
-            _description_
+            The parsed text which should be matched to a use case
 
         Returns
         -------
         tuple[str, str]
-            _description_
+            Returns a tuple with the use case and the selected endpoint within the use case (choice)
         """
         logger.debug(f"Finding the best match for the parsed text: {text}")
         logger.debug(f"The data frame contains {len(self.quotes)} rows")
@@ -147,10 +165,7 @@ class Agent:
         except ValueError:
             logger.warning("Could not find a match for the parsed text meeting the requirements.")
             return None
-        except KeyError:
-            logger.error("The data frame does not match the required schema.")
-            return None
-        except IndexingError:
+        except (KeyError, IndexingError):
             logger.error("The data frame does not match the required schema.")
             return None
 
@@ -207,18 +222,20 @@ class Agent:
         """
         logger.debug(f"Evaluating the parsed text: {text}")
 
-        df_best_match = self._get_best_match(text)
+        df_best_match = self.get_best_match(text)
         if df_best_match is None:
             self.tts.convert_text("Sorry, I didn't find a match for your request.")
             return None
 
         if df_best_match[0] == "general":
-            self.uc_general.evaluate_text(df_best_match[1])
+            self.uc_general.trigger_assistant(df_best_match[1])
         elif df_best_match[0] == "morningBriefing":
             raise NotImplementedError
         elif df_best_match[0] == "events":
             raise NotImplementedError
         elif df_best_match[0] == "transportation":
+            raise NotImplementedError
+        elif df_best_match[0] == "sport":
             raise NotImplementedError
         else:
             self.tts.convert_text(
@@ -226,123 +243,5 @@ class Agent:
             )
 
 
-# class UseCases:
-#     """Lorem Ipsum"""
-
-#     def evaluate_use_case(self, parsed_text: str) -> None:
-#         """Lorem Ipsum"""
-# All the commands said by user will be
-# stored here in 'query' and will be
-# converted to lower case for easily
-# recognition of command
-# if "wikipedia" in query:
-#     speak("Searching Wikipedia...")
-#     query = query.replace("wikipedia", "")
-#     results = wikipedia.summary(query, sentences=3)
-#     speak("According to Wikipedia")
-#     print(results)
-#     speak(results)
-
-# if "how are you" in parsed_text:
-#     self.tts.convert_text("I am fine, Thank you")
-#     self.tts.convert_text("How are you?")
-
-# elif "change name" in parsed_text:
-#     self.tts.convert_text("What would you like to call me? ")
-
-#     temp = self.stt.convert_speech()
-#     if temp is None:
-#         logger.warning("No name was given")
-#     if temp:
-#         self.assistant_name = temp
-
-#     self.tts.convert_text("Thanks for naming me")
-
-# elif "what's your name" in parsed_text or "What is your name" in parsed_text:
-#     self.tts.convert_text("My friends call me")
-#     self.tts.convert_text(self.assistant_name)
-#     print("My friends call me", self.assistant_name)
-
-# elif "joke" in query:
-#     speak(pyjokes.get_joke())
-
-# elif "calculate" in query:
-
-#     app_id = "Wolframalpha api id"
-#     client = wolframalpha.Client(app_id)
-#     indx = query.lower().split().index("calculate")
-#     query = query.split()[indx + 1 :]
-#     res = client.query(" ".join(query))
-#     answer = next(res.results).text
-#     print("The answer is " + answer)
-#     speak("The answer is " + answer)
-
-# elif "who i am" in parsed_text:
-#     self.tts.convert_text("If you talk then definitely your human.")
-
-# elif "who are you" in parsed_text:
-#     self.tts.convert_text("I am your virtual assistant")
-
-# elif "don't listen" in parsed_text or "stop listening" in parsed_text:
-#     self.tts.convert_text(f"for how much time you want to stop {self.assistant_name} from listening commands")
-
-#     temp = self.stt.convert_speech()
-#     a = int(temp if temp is not None else 60)
-#     time.sleep(a)
-#     print(a)
-
-# elif "jarvis" in parsed_text:
-#     self.tts.convert_text(f"{self.assistant_name} in your service Mister")
-
-# elif "weather" in parsed_text:
-
-#     # Google Open weather website
-#     # to get API of Open weather
-#     api_key = "Api key"
-#     base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
-#     speak(" City name ")
-#     print("City name : ")
-#     city_name = self.stt.convert_speech()
-#     complete_url = base_url + "appid =" + api_key + "&q =" + city_name
-#     response = requests.get(complete_url)
-#     x = response.json()
-
-#     if x["code"] != "404":
-#         y = x["main"]
-#         current_temperature = y["temp"]
-#         current_pressure = y["pressure"]
-#         current_humidiy = y["humidity"]
-#         z = x["weather"]
-#         weather_description = z[0]["description"]
-#         print(
-#             " Temperature (in kelvin unit) = "
-#             + str(current_temperature)
-#             + "\n atmospheric pressure (in hPa unit) ="
-#             + str(current_pressure)
-#             + "\n humidity (in percentage) = "
-#             + str(current_humidiy)
-#             + "\n description = "
-#             + str(weather_description)
-#         )
-
-#     else:
-#         speak(" City Not Found ")
-
-# elif "Good Morning" in parsed_text:
-#     self.tts.convert_text("A warm" + parsed_text)
-#     self.tts.convert_text("How are you Mister")
-#     self.tts.convert_text(self.assistant_name)
-
-# most asked question from google Assistant
-# elif "will you be my gf" in parsed_text or "will you be my bf" in parsed_text:
-#     self.tts.convert_text("I'm not sure about, may be you should give me some time")
-
-# elif "how are you" in parsed_text:
-#     self.tts.convert_text("I'm fine, glad you me that")
-
-# elif "i love you" in parsed_text:
-#     self.tts.convert_text("It's hard to understand")
-
-
 if __name__ == "__main__":
-    Fire(Agent)  # , command="agent"
+    Fire(Agent)

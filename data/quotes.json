@@ -1,28 +1,27 @@
 {
   "morningBriefing": {
-    "1": ["whats going on"],
-    "2": ["morning briefing"]
+    "newsSummary": ["whats going on", "morning briefing", "good morning"]
   },
   "events": {
-    "1": ["events"]
+    "eventSummary": ["what is going on", "event summary"]
   },
   "transportation": {
-    "1": ["train"],
-    "2": ["bus"],
-    "3": ["car"],
-    "4": ["bike"]
+    "dhbw": ["dhbw", "i need to get to the dhbw"],
+    "hpe": ["hpe", "i need to get to the hpe"],
+    "ibm": ["ibm", "i need to get to the ibm"]
+  },
+  "sport": {
+    "sportSummary": ["sport summary"]
   },
   "general": {
-    "time": ["time", "what time is it", "what's the time", "what is the time"],
-    "wellBeing": [
-      "how are you",
-      "how are you doing",
-      "how are you feeling",
-      "how are you doing today",
-      "how are you feeling today"
-    ],
-    "love": ["i love you"],
-    "name": ["what is your name", "what's your name"],
+    "time": ["time", "what time is it"],
+    "wellBeing": ["how are you", "are you fine", "well being"],
+    "love": ["i love you", "love"],
+    "name": ["what is your name", "who are you", "name"],
+    "joke": ["tell me a joke", "joke", "something funny"],
+    "stopListening": ["stop listening", "don't listen", "pause"],
+    "marryMe": ["marry me", "will you marry me", "will you be my wife", "will you be my husband"],
+    "boyGirlFriend": ["will you be my boyfriend", "will you be my girlfriend"],
     "exit": ["exit", "quit", "goodbye", "bye"]
   }
 }

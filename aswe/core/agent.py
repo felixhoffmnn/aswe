@@ -1,11 +1,9 @@
 import datetime
 import json
-import os
 import sys
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from pathlib import Path
-from sys import platform
 
 import pandas as pd
 from fire import Fire
@@ -14,14 +12,7 @@ from pandas.errors import IndexingError
 
 from aswe.core.use_case import GeneralUseCase
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
-
-
-def clear_shell() -> None:
-    """Clears any previous text in the shell"""
-    if platform == "linux" or platform == "linux2" or platform == "darwin":
-        os.system("clear")
-    elif platform == "win32":
-        os.system("cls")
+from aswe.utils.general import clear_shell
 
 
 @dataclass
@@ -29,6 +20,7 @@ class User:
     """Dataclass supposed to store the user data
 
     * TODO: Add more attributes and evaluate the existing ones
+    * TODO: User has a car?
 
     Parameters
     ----------
@@ -70,6 +62,8 @@ class Agent:
         get_user : bool, optional
             Boolean if the default user should be used. _By default `False`_.
         """
+        self.assistant_name = "HiBuddy"
+
         try:
             with open(Path("data/quotes.json"), encoding="utf-8") as file:
                 self.quotes = (
@@ -91,50 +85,44 @@ class Agent:
         self.stt = SpeechToText(get_mic)
         self.tts = TextToSpeech()
 
-        self.assistant_name = "Marcell J'Avais"
         if get_user:
+            clear_shell()
             self.user = self._get_user()
         else:
-            self.user = User(
-                name="Marcell", age=23, street="Hauptstraße 1", city="Berlin", zip_code=12345, country="Germany"
-            )
+            self.user = User(name="Felix", age=22)
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name)
-
-        print(self.user.name)
 
     def _greeting(self) -> None:
         """Function to greet the user."""
         hour = datetime.datetime.now().hour
 
         if 4 <= hour < 12:
-            greeting_text = "Good Morning."
+            greeting_text = f"Good Morning {self.user.name}."
         elif 12 <= hour < 18:
-            greeting_text = "Good Afternoon."
+            greeting_text = f"Good Afternoon {self.user.name}."
         else:
-            greeting_text = "Good Evening."
+            greeting_text = f"Good Evening {self.user.name}."
 
         self.tts.convert_text(greeting_text)
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
+        self.tts.convert_text("How can I help you?")
 
     def _get_user(self) -> User:
         """Asks for the name of the user.
 
         * TODO: Refactor into a util function
         """
-        self.tts.convert_text("What should i call you?")
+        name = input("What is your name? ")
 
-        username = None
-        while username is None:
-            print("")
-            username = self.stt.convert_speech()
-            if username is None:
-                self.tts.convert_text("Sorry, I didn't get that. Please say that again.")
+        age = None
+        while age is None:
+            try:
+                age = int(input("What is your age? "))
+            except ValueError:
+                print("Please enter a valid age.")
 
-        self.tts.convert_text(f"Hello {username}")  # type: ignore
-        self.tts.convert_text("How can I help you?")
-
-        return User(name=username)
+        return User(name=name)  # type: ignore
 
     def get_best_match(self, text: str) -> tuple[str, str] | None:
         """Find the best match for the parsed text
@@ -178,7 +166,7 @@ class Agent:
             self.tts.convert_text("I got multiple matches. Please choose one.")
             print("")
             for index, row in temp_df.iterrows():
-                print(f"{index + 1}: {row['use_case']}, {row['choice']}")  # type: ignore
+                print(f"{index}: {row['use_case']}, {row['choice']}")
             print("")
             while choice == 0:
                 try:
@@ -189,6 +177,10 @@ class Agent:
         selected_row = temp_df.iloc[choice - 1 if len(temp_df) > 1 else 0]
         return (selected_row["use_case"], selected_row["choice"])
 
+    # TODO: Implement proactivity
+    # def check_proactivity(self) -> None:
+    # Call use_case_1.proactive()
+
     def agent(self) -> None:
         """Main function to interact with the user
 
@@ -196,10 +188,14 @@ class Agent:
         """
         clear_shell()
         self._greeting()
-        self._get_user()
 
         while True:
             print("")
+
+            # TODO: Implement proactivity
+            # if time % x == 0:
+            # Call `self.check_proactivity`
+
             query = self.stt.convert_speech()
             if not query:
                 self.tts.convert_text(
@@ -227,20 +223,23 @@ class Agent:
             self.tts.convert_text("Sorry, I didn't find a match for your request.")
             return None
 
-        if df_best_match[0] == "general":
-            self.uc_general.trigger_assistant(df_best_match[1])
-        elif df_best_match[0] == "morningBriefing":
-            raise NotImplementedError
-        elif df_best_match[0] == "events":
-            raise NotImplementedError
-        elif df_best_match[0] == "transportation":
-            raise NotImplementedError
-        elif df_best_match[0] == "sport":
-            raise NotImplementedError
-        else:
-            self.tts.convert_text(
-                "I was not able to map your input to a use case. Maybe the request is not implemented yet."
-            )
+        try:
+            if df_best_match[0] == "general":
+                self.uc_general.trigger_assistant(df_best_match[1])
+            elif df_best_match[0] == "morningBriefing":
+                raise NotImplementedError
+            elif df_best_match[0] == "events":
+                raise NotImplementedError
+            elif df_best_match[0] == "transportation":
+                raise NotImplementedError
+            elif df_best_match[0] == "sport":
+                raise NotImplementedError
+            else:
+                self.tts.convert_text(
+                    "I was not able to map your input to a use case. Maybe the request is not implemented yet."
+                )
+        except NotImplementedError:
+            self.tts.convert_text("Sorry, the requested function is not implemented yet.")
 
 
 if __name__ == "__main__":

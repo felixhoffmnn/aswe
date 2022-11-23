@@ -45,6 +45,9 @@ class MorningBriefingUseCase(AbstractUseCase):
         if quotes_key == "newsSummary":
             raise NotImplementedError
 
+        else:
+            raise NotImplementedError
+
 
 class SportUseCase(AbstractUseCase):
     """ "Use case for sports"""
@@ -62,6 +65,9 @@ class SportUseCase(AbstractUseCase):
         if quotes_key == "newsSummary":
             raise NotImplementedError
 
+        else:
+            raise NotImplementedError
+
 
 class EventUseCase(AbstractUseCase):
     """Use case to handle events"""
@@ -77,6 +83,9 @@ class EventUseCase(AbstractUseCase):
             The best matching key for the given user input.
         """
         if quotes_key == "eventSummary":
+            raise NotImplementedError
+
+        else:
             raise NotImplementedError
 
 
@@ -100,6 +109,9 @@ class TransportationUseCase(AbstractUseCase):
             raise NotImplementedError
 
         elif quotes_key == "ibm":
+            raise NotImplementedError
+
+        else:
             raise NotImplementedError
 
 
@@ -154,3 +166,6 @@ class GeneralUseCase(AbstractUseCase):
             if response in ["yes", "yeah", "yep", "sure", "ok"]:
                 self.tts.convert_text("Thanks for using me, have a nice day.")
                 sys.exit()
+
+        else:
+            raise NotImplementedError

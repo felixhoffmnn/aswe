@@ -15,6 +15,7 @@ class WeatherApi:
 
     * TODO: Fix the wired typing and errors
     * TODO: Add docstrings
+    * TODO: Move base url, api key, and unit group to `__init__`
     """
 
     _BASE_URL: Final[str] = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
@@ -36,15 +37,15 @@ class WeatherApi:
         elements: list[ElementsEnum] | None = None,
     ) -> bool:
         if include is not None:
-            for param in include:
-                if not IncludeEnum.has_value(param.value):
-                    logger.error(f"IncludeEnum value is invalid: {param}")
+            for inc_param in include:
+                if not IncludeEnum.has_value(inc_param.value):
+                    logger.error(f"IncludeEnum value is invalid: {inc_param}")
                     return False
 
         if elements is not None:
-            for param in elements:  # type: ignore
-                if not ElementsEnum.has_value(param.value):
-                    logger.error(f"Element value is invalid: {param}")
+            for ele_param in elements:
+                if not ElementsEnum.has_value(ele_param.value):
+                    logger.error(f"Element value is invalid: {ele_param}")
                     return False
 
         return True
@@ -109,11 +110,12 @@ class WeatherApi:
         end_date : str
             Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
         elements : list[ElementsEnum] | None, optional
-            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible properties in a day or hourly data object that should be retrieved from the API.
+            Refer to `weather_params.py`. _By default `None`_.
         include : list[IncludeEnum] | None, optional
-            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`.
+            _By default `None`_.
         """
-
         location = location.replace(" ", "")
 
         if not self._validate_location(location):
@@ -167,9 +169,11 @@ class WeatherApi:
         date : str
             Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
         elements : list[ElementsEnum] | None, optional
-            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible properties in a day or hourly data object that should be retrieved from the API.
+            Refer to `weather_params.py`. _By default `None`_.
         include : list[IncludeEnum] | None, optional
-            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`.
+            _By default `None`_.
         """
         location = location.replace(" ", "")
 
@@ -219,11 +223,12 @@ class WeatherApi:
         dynamic_period : DynamicPeriodEnum
             Dynamic Period. Refer to `weather_params.py`.
         elements : list[ElementsEnum] | None, optional
-            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible properties in a day or hourly data object that should be retrieved from the API.
+            Refer to `weather_params.py`. _By default `None`_.
         include : list[IncludeEnum] | None, optional
-            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`.
+            _By default `None`_.
         """
-
         location = location.replace(" ", "")
 
         if not self._validate_location(location):
@@ -263,11 +268,12 @@ class WeatherApi:
         location : str
             Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
         elements : list[ElementsEnum] | None, optional
-            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible properties in a day or hourly data object that should be retrieved from the API.
+            Refer to `weather_params.py`. _By default `None`_.
         include : list[IncludeEnum] | None, optional
-            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`.
+            _By default `None`_.
         """
-
         location = location.replace(" ", "")
 
         if not self._validate_location(location):
@@ -277,9 +283,7 @@ class WeatherApi:
         #     raise Exception("Given API params are invalid")
 
         url = f"{self._BASE_URL}/{location}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
-
         url = self._append_api_params(url, include, elements)
-
         response = http_request(url)
 
         if response is not None:

@@ -5,6 +5,8 @@ import pyttsx3
 import speech_recognition as sr
 from loguru import logger
 
+from aswe.utils.general import clear_shell
+
 
 class SpeechToText:
     """Class to convert speech to text."""
@@ -22,6 +24,8 @@ class SpeechToText:
         self.recognizer = sr.Recognizer()
 
         if get_mic_index:
+            clear_shell()
+
             print("At first, please select the microphone you want to use.\n")
             time.sleep(1)
             list_of_microphones = sr.Microphone.list_microphone_names()
@@ -61,6 +65,8 @@ class SpeechToText:
     def convert_speech(self) -> str | None:
         """First records an audio file an then pareses it to text.
 
+        When the function does not detect any speech for `60` seconds it will timeout and return `None`.
+
         * TODO: Check `adjust_for_ambient_noise`
 
         Returns
@@ -68,29 +74,35 @@ class SpeechToText:
         str | None
             The parsed text or None if no text could be parsed.
         """
+        audio: sr.AudioData | None = None
+
         with sr.Microphone(self.microphone_index) as source:
             # self.recognizer.adjust_for_ambient_noise(source, duration=1)
             self.recognizer.energy_threshold = 2500
             self.recognizer.pause_threshold = 1
 
             print("Listening...")
-            audio = self.recognizer.listen(source)
+            try:
+                audio = self.recognizer.listen(source, timeout=60)
+            except sr.WaitTimeoutError:
+                logger.warning("The speech recognition timed out.")
 
-        try:
-            print("Recognizing...")
-            parsed_text = self.recognizer.recognize_google(audio, language="en-US")
+        if audio is not None:
+            try:
+                print("Recognizing...")
+                parsed_text = self.recognizer.recognize_google(audio, language="en-US")
 
-            if isinstance(parsed_text, str):
-                print(f"User: {parsed_text}")
-                return parsed_text
-        except sr.UnknownValueError:
-            logger.warning(
-                "The speech recognition was not able to understand anything. Did you say something? If so, please try again."
-            )
-        except sr.RequestError:
-            logger.error(
-                "The speech recognition operation failed, maybe due to a invalid API key or no internet connection."
-            )
+                if isinstance(parsed_text, str):
+                    print(f"User: {parsed_text}")
+                    return parsed_text
+            except sr.UnknownValueError:
+                logger.warning(
+                    "The speech recognition was not able to understand anything. Did you say something? If so, please try again."
+                )
+            except sr.RequestError:
+                logger.error(
+                    "The speech recognition operation failed, maybe due to a invalid API key or no internet connection."
+                )
 
         return None
 
@@ -107,12 +119,12 @@ class TextToSpeech:
 
         Parameters
         ----------
-        audio : str
+        text : str
             The Text which should be converted to speech.
         """
         logger.debug(f"Converting text to speech: {text.strip()}")
 
-        print(f"HiBuddy: {text.strip()}")
+        print(f"Bot: {text.strip()}")
         try:
             self.engine.say(text)
             self.engine.runAndWait()

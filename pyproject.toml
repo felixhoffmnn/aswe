@@ -27,7 +27,10 @@ currencyconverter = "^0.17.2"
 googlemaps = "^4.6.0"
 SpeechRecognition = "^3.8.1"
 pyttsx3 = "^2.90"
-whisper = {git = "https://github.com/openai/whisper.git"}
+python-dotenv = "^0.21.0"
+poetry-dotenv-plugin = "^0.1.0"
+fire = "^0.4.0"
+pyjokes = "^0.6.0"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["jupyter"], version = "^22.8.0" }
@@ -50,6 +53,8 @@ mkdocstrings = { extras = ["python"], version = "^0.19.0" }
 mkdocs-autorefs = "^0.4.1"
 mkdocs-git-revision-date-localized-plugin = "^1.1.0"
 mkdocs-jupyter = "^0.22.0"
+pymdown-extensions = "^9.8"
+mkdocs-mermaid2-plugin = "^0.6.0"
 
 [tool.mypy]
 mypy_path = 'aswe'

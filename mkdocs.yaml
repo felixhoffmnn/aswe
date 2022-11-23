@@ -1,19 +1,33 @@
 # Metadata
-site_name: Advanced Software Engineering
+site_name: Marcell J'Arvis
 site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do.
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
-repo_name: aswe
+repo_name: felixhoffmnn/aswe
 repo_url: https://github.com/felixhoffmnn/aswe
-watch: ["aswe", "docs", "tests", "mkdocs.yaml", "pyproject.toml", "README.md"]
+watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
 
 # Navigation
 nav:
-  - Overview: index.md
-  - Utilities: utilities.md
+  - Overview:
+      Readme: index.md
+      License: license.md
+  - Documentation:
+      Core:
+        - Agent: core/agent.md
+        - User Interaction: core/user_interaction.md
+        - Use Cases: core/use_cases.md
+      API:
+        - Weather: api/weather.md
+        - Events: api/events.md
+      Utilities: utils/utils.md
 
 # Plugins
 plugins:
   - search
+  - mermaid2:
+      arguments:
+        theme: |
+          ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
   - git-revision-date-localized:
       fallback_to_build_date: true
   - autorefs
@@ -33,8 +47,9 @@ plugins:
             docstring_style: numpy
             docstring_section_style: table
             merge_init_into_class: true
-            show_root_heading: true
-            show_source: yes
+            show_root_heading: no
+            show_root_toc_entry: no
+            show_source: no
             show_root_full_path: no
 
 # Theme
@@ -60,7 +75,7 @@ theme:
     - navigation.tabs
 
     # Will expand the navigation tree on the sidebar
-    # - navigation.expand
+    - navigation.expand
 
     # TODO: Add description
     - navigation.tracking
@@ -69,7 +84,8 @@ theme:
     - navigation.top
 
     # Shows files and navigation items on the left side
-    - toc.integrate
+    # - toc.integrate
+    - toc.follow
 
     # TODO: Add description
     - search.suggest
@@ -82,19 +98,20 @@ theme:
 
   language: en
 
-# Extras
-extra:
-  social:
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/in/felix-emmanuel-hoffmann/
-      name: Felix Hoffmann
-
 # Markdown extensions
 markdown_extensions:
   - attr_list
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.magiclink
   - pymdownx.snippets:
       check_paths: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

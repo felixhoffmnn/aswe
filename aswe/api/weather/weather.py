@@ -5,18 +5,21 @@ from typing import Any, Final
 from loguru import logger
 from requests import JSONDecodeError
 
-from aswe.api.weather.weather_params import WeatherApiParams
-from aswe.utils.http_request import http_request
-from aswe.utils.validate_date import validate_date
+from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
+from aswe.utils.request import http_request
+from aswe.utils.validate import validate_date
 
 
 class WeatherApi:
-    """Crawler Class retrieves data from the [Visual Crossing API](https://www.visualcrossing.com/)"""
+    """Crawler Class retrieves data from the [Visual Crossing API](https://www.visualcrossing.com/)
+
+    * TODO: Fix the wired typing and errors
+    * TODO: Add docstrings
+    """
 
     _BASE_URL: Final[str] = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
-    _API_KEY: Final[str] = os.getenv("WEATHER_API_KEY", "")
+    _API_KEY: str = os.getenv("WEATHER_API_KEY", "")
 
-    PARAMS: Final[WeatherApiParams] = WeatherApiParams()
     UNIT_GROUP: Final[str] = "metric"
     'Defines unit system data is converted to. "metric" or "us". Defaults to "metric"'
 
@@ -29,18 +32,18 @@ class WeatherApi:
 
     def _validate_api_params(
         self,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> bool:
         if include is not None:
             for param in include:
-                if not WeatherApiParams.INCLUDE.has_value(param):
-                    logger.error(f"WeatherApiParams.INCLUDE value is invalid: {param}")
+                if not IncludeEnum.has_value(param.value):
+                    logger.error(f"IncludeEnum value is invalid: {param}")
                     return False
 
         if elements is not None:
-            for param in elements:
-                if not WeatherApiParams.ELEMENTS.has_value(param):
+            for param in elements:  # type: ignore
+                if not ElementsEnum.has_value(param.value):
                     logger.error(f"Element value is invalid: {param}")
                     return False
 
@@ -52,25 +55,38 @@ class WeatherApi:
 
             if city != "" and len(country) == 2:
                 return True
-
+        except ValueError:
             logger.error(f"Country code of location is invalid: {location}")
-
-        except Exception:
-            logger.error(f"Location seems to be invalid: {location}")
 
         return False
 
     def _append_api_params(
         self,
         url: str,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> str:
+        """Appends API params to URL
+
+        Parameters
+        ----------
+        url : str
+            The URL to append the params to.
+        include : list[IncludeEnum] | None, optional
+            The list of IncludeEnum values to append to the URL. _By default `None`_.
+        elements : list[ElementsEnum] | None, optional
+            The list of ElementsEnum values to append to the URL. _By default `None`_.
+
+        Returns
+        -------
+        str
+            The URL with the appended params.
+        """
         if elements is not None:
-            url += f"""&elements={",".join(elements)}"""
+            url += f"&elements={','.join([elements.value for elements in elements])}"
 
         if include is not None:
-            url += f"""&include={",".join(include)}"""
+            url += f"&include={','.join([include.value for include in include])}"
 
         return url
 
@@ -79,25 +95,23 @@ class WeatherApi:
         location: str,
         start_date: str,
         end_date: str,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
         """Retrieves historic data between two given dates.
 
-        Args:
-            location (str): Location format: "city, country" Country needs to be in\
-            [Alpha-2](https://www.iban.com/country-codes) Code.
-
-            start_date (str): Date format: "YYYY-MM-DD", Optional: "YYYY-MM-DDThhmm:ss".
-
-            end_date (str): Date format: "YYYY-MM-DD", Optional: "YYYY-MM-DDThhmm:ss".
-
-            elements (list[WeatherApiParams.ELEMENTS] | None, optional): List of possible properties in a
-            day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
-
-            include (list[WeatherApiParams.INCLUDE] | None, optional): List of possible information that
-            should be retrieved from the API. Refer to `weather_params.py`. Defaults to None.
+        Parameters
+        ----------
+        location : str
+            Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
+        start_date : str
+            Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
+        end_date : str
+            Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
+        elements : list[ElementsEnum] | None, optional
+            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+        include : list[IncludeEnum] | None, optional
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
         """
 
         location = location.replace(" ", "")
@@ -114,7 +128,7 @@ class WeatherApi:
         if end_date < start_date:
             raise Exception("end_date must be greater than start_date")
 
-        today = datetime.today().strftime("%Y-%m-%d")
+        today = datetime.today().strftime("%Y-%m-%d")  # type: ignore
 
         if today <= end_date:
             raise Exception("end_date must be less than current date")
@@ -122,20 +136,18 @@ class WeatherApi:
         if not self._validate_api_params(include, elements):
             raise Exception("Given API params are invalid")
 
-        url = f"""{self._BASE_URL}/{location}/{start_date}/{end_date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
+        url = f"{self._BASE_URL}/{location}/{start_date}/{end_date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
-        url = self._append_api_params(url, elements, include)
+        url = self._append_api_params(url, include, elements)
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-
-        except JSONDecodeError as err:
-            logger.error(f"Weather API returned invalid Json: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response is not None:
+            try:
+                response_json: dict[str, Any] = response.json()
+                return response_json
+            except (AttributeError, JSONDecodeError):
+                logger.error("Weather API returned invalid JSON")
 
         return None
 
@@ -143,23 +155,21 @@ class WeatherApi:
         self,
         location: str,
         date: str,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
         """Retrieves historic data from a specific day.
 
-        Args:
-            location (str): Location format: "city, country" Country needs to be in\
-            [Alpha-2](https://www.iban.com/country-codes) Code.
-
-            date (str): Date format: "YYYY-MM-DD", Optional: "YYYY-MM-DDThhmm:ss".
-
-            elements (list[WeatherApiParams.ELEMENTS] | None, optional): List of possible properties
-            in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
-
-            include (list[WeatherApiParams.INCLUDE] | None, optional): List of possible information
-            that should be retrieved from the API. Refer to `weather_params.py`. Defaults to None.
+        Parameters
+        ----------
+        location : str
+            Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
+        date : str
+            Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
+        elements : list[ElementsEnum] | None, optional
+            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+        include : list[IncludeEnum] | None, optional
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
         """
         location = location.replace(" ", "")
 
@@ -174,23 +184,21 @@ class WeatherApi:
         if today <= date:
             raise Exception("Given day must be less than current date")
 
-        if not self._validate_api_params(include, elements):
-            raise Exception("Given API params are invalid")
+        # if not self._validate_api_params(include, elements):
+        #     raise Exception("Given API params are invalid")
 
-        url = f"""{self._BASE_URL}/{location}/{date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
+        url = f"{self._BASE_URL}/{location}/{date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
-        url = self._append_api_params(url, elements, include)
+        url = self._append_api_params(url, include, elements)
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-
-        except JSONDecodeError as err:
-            logger.error(f"Weather API returned invalid Json: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response is not None:
+            try:
+                response_json: dict[str, Any] = response.json()
+                return response_json
+            except (AttributeError, JSONDecodeError):
+                logger.error("Weather API returned invalid JSON")
 
         return None
 
@@ -198,25 +206,22 @@ class WeatherApi:
     def dynamic_range(
         self,
         location: str,
-        dynamic_period: WeatherApiParams.DYNAMIC_PERIOD,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
+        dynamic_period: DynamicPeriodEnum,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
         """Retrieves dynamic data relative to current date
 
-        Args:
-            location (str): Location format: "city, country" Country needs to be in\
-            [Alpha-2](https://www.iban.com/country-codes) Code.
-
-            dynamic_period (WeatherApiParams.DYNAMIC_PERIOD): Dynamic Period. Refer to `weather_params.py`.
-
-            elements (list[WeatherApiParams.ELEMENTS] | None, optional): List of possible properties in a day
-            or hourly data object that should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
-
-            include (list[WeatherApiParams.INCLUDE] | None, optional): List of possible information that
-            should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
+        Parameters
+        ----------
+        location : str
+            Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
+        dynamic_period : DynamicPeriodEnum
+            Dynamic Period. Refer to `weather_params.py`.
+        elements : list[ElementsEnum] | None, optional
+            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+        include : list[IncludeEnum] | None, optional
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
         """
 
         location = location.replace(" ", "")
@@ -224,48 +229,43 @@ class WeatherApi:
         if not self._validate_location(location):
             raise Exception("Given location is invalid")
 
-        if not WeatherApiParams.DYNAMIC_PERIOD.has_value(dynamic_period):
-            raise Exception("Given WeatherApiParams.DYNAMIC_PERIOD is invalid")
+        if not DynamicPeriodEnum.has_value(dynamic_period.value):
+            raise Exception("Given DynamicPeriodEnum is invalid")
 
-        if not self._validate_api_params(include, elements):
-            raise Exception("Given API params are invalid")
+        # if not self._validate_api_params(include, elements):
+        #     raise Exception("Given API params are invalid")
 
-        url = f"""{self._BASE_URL}/{location}/{dynamic_period}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
+        url = f"{self._BASE_URL}/{location}/{dynamic_period}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
-        url = self._append_api_params(url, elements, include)
+        url = self._append_api_params(url, include, elements)
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-
-        except JSONDecodeError as err:
-            logger.error(f"Weather API returned invalid Json: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response is not None:
+            try:
+                response_json: dict[str, Any] = response.json()
+                return response_json
+            except (AttributeError, JSONDecodeError):
+                logger.error("Weather API returned invalid JSON")
 
         return None
 
     def forecast(
         self,
         location: str,
-        elements: list[WeatherApiParams.ELEMENTS] | None = None,
-        include: list[WeatherApiParams.INCLUDE] | None = None,
+        include: list[IncludeEnum] | None = None,
+        elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
         """Retrieves 15-day weather forecast of given location
 
-        Args:
-            location (str): Location format: "city, country" Country needs to be in\
-            [Alpha-2](https://www.iban.com/country-codes) Code.
-
-            elements (list[WeatherApiParams.ELEMENTS] | None, optional): List of possible properties in
-            a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
-
-            include (list[WeatherApiParams.INCLUDE] | None, optional): List of possible information that
-            should be retrieved from the API. Refer to `weather_params.py`.
-            Defaults to None.
+        Parameters
+        ----------
+        location : str
+            Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
+        elements : list[ElementsEnum] | None, optional
+            List of possible properties in a day or hourly data object that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
+        include : list[IncludeEnum] | None, optional
+            List of possible information that should be retrieved from the API. Refer to `weather_params.py`. _By default `None`_.
         """
 
         location = location.replace(" ", "")
@@ -273,22 +273,20 @@ class WeatherApi:
         if not self._validate_location(location):
             raise Exception("Given location is invalid")
 
-        if not self._validate_api_params(include, elements):
-            raise Exception("Given API params are invalid")
+        # if not self._validate_api_params(include, elements):
+        #     raise Exception("Given API params are invalid")
 
-        url = f"""{self._BASE_URL}/{location}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"""
+        url = f"{self._BASE_URL}/{location}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
-        url = self._append_api_params(url, elements, include)
+        url = self._append_api_params(url, include, elements)
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-
-        except JSONDecodeError as err:
-            logger.error(f"Weather API returned invalid JSON: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response is not None:
+            try:
+                response_json: dict[str, Any] = response.json()
+                return response_json
+            except (AttributeError, JSONDecodeError):
+                logger.error("Weather API returned invalid JSON")
 
         return None

@@ -4,5 +4,13 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": false,
-  "printWidth": 120
+  "printWidth": 120,
+  "overrides": [
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
 }

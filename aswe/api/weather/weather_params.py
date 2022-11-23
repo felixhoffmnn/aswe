@@ -1,14 +1,17 @@
-from dataclasses import dataclass
 from enum import Enum
-from typing import ClassVar, TypeVar
+from typing import TypeVar
 
-_IncludeT = TypeVar("_IncludeT", bound="_Include")
-_ElementsT = TypeVar("_ElementsT", bound="_Elements")
-_DynamicPeriodT = TypeVar("_DynamicPeriodT", bound="_DynamicPeriod")
+_IncludeT = TypeVar("_IncludeT", bound="IncludeEnum")
+_ElementsT = TypeVar("_ElementsT", bound="ElementsEnum")
+_DynamicPeriodT = TypeVar("_DynamicPeriodT", bound="DynamicPeriodEnum")
 
 
-class _Include(str, Enum):
-    """Enum of possible include parameters for weather API"""
+class IncludeEnum(Enum):
+    """Enum of possible include parameters for weather API
+
+    * TODO: Fix the wired typing and errors
+    * TODO: Why is there a need for `has_value` method?
+    """
 
     DAYS = "days"
     "daily data"
@@ -48,8 +51,12 @@ class _Include(str, Enum):
         return value in cls._value2member_map_
 
 
-class _Elements(str, Enum):
-    """Enum of possible element parameters for weather API"""
+class ElementsEnum(Enum):
+    """Enum of possible element parameters for weather API
+
+    * TODO: Fix the wired typing and errors
+    * TODO: Why is there a need for `has_value` method?
+    """
 
     CLOUDCOVER = "cloudcover"
     "how much of the sky is covered in cloud ranging from 0-100%"
@@ -101,12 +108,12 @@ class _Elements(str, Enum):
     (the full moon) and back to 1 (the next new moon)"""
 
     NORMAL = "normal"
-    """array of normal weather data values – Each weather data normal is an array of three values representing,
+    """array of normal weather data values - Each weather data normal is an array of three values representing,
     in order, the minimum value over the statistical period, the mean value, and the maximum value over the
     statistical period."""
 
     OFFSET_SECONDS = "offsetseconds"
-    """(hourly only) time zone offset for this weather data object in seconds – This value may change for
+    """(hourly only) time zone offset for this weather data object in seconds - This value may change for
     a location based on daylight saving time observation."""
 
     PRECIP = "precip"
@@ -133,7 +140,7 @@ class _Elements(str, Enum):
     "the depth of snow on the ground"
 
     SOURCE = "source"
-    """the type of weather data used for this weather object. – Values include historical observation (“obs”), forecast
+    """the type of weather data used for this weather object. - Values include historical observation (“obs”), forecast
     (“fcst”), historical forecast (“histfcst”) or statistical forecast (“stats”). If multiple types are used in the
     same day, “comb” is used. Today a combination of historical observations and forecast data."""
 
@@ -186,7 +193,7 @@ class _Elements(str, Enum):
     "direction from which the wind is blowing"
 
     WIND_GUST = "windgust"
-    """instantaneous wind speed at a location – May be empty if it is not significantly higher than the wind speed.
+    """instantaneous wind speed at a location - May be empty if it is not significantly higher than the wind speed.
     Daily values are the maximum hourly value for the day."""
 
     WIND_SPEED = "windspeed"
@@ -239,14 +246,18 @@ class _Elements(str, Enum):
         return value in cls._value2member_map_
 
 
-class _DynamicPeriod(str, Enum):
-    """Enum of possible dynamic periods for weather API"""
+class DynamicPeriodEnum(Enum):
+    """Enum of possible dynamic periods for weather API
+
+    * TODO: Fix the wired typing and errors
+    * TODO: Why is there a need for `has_value` method?
+    """
 
     TODAY = "today"
     "from midnight to the current time at the requested location."
 
     YESTERDAY = "yesterday"
-    "from midnight to midnight on yesterday’s date."
+    "from midnight to midnight on yesterday's date."
 
     YEART_TO_DATE = "yeartodate"
     "from midnight of January 1st of the current year until the current date time."
@@ -255,18 +266,18 @@ class _DynamicPeriod(str, Enum):
     "from midnight on the 1st of the current month until the current date time."
 
     LAST_YEAR = "lastyear"
-    "the one year period ending on yesterday’s date."
+    "the one year period ending on yesterday's date."
 
     LAST_24_HOURS = "last24hours"
     "the 24 hour period ending at the current time (rounded to the currenthour)."
 
     NEXT_WEEKEND = "nextweekend"
-    """the next occurrence of the weekend after today’s day.
+    """the next occurrence of the weekend after today's day.
     Weekend is defined as Saturday and Sunday.
     Please let us know if you would like additional weekend definitions added."""
 
     LAST_WEEKEND = "lastweekend"
-    """the last occurrence of the weekend before today’s day.
+    """the last occurrence of the weekend before today's day.
     Weekend is defined as Saturday and Sunday.
     Please let us know if you would like additional weekend definitions added."""
 
@@ -295,7 +306,7 @@ class _DynamicPeriod(str, Enum):
 
     @classmethod
     def next_weekday(cls: type[_DynamicPeriodT], weekday: str) -> str:
-        """the next occurrence of the named day of week after today’s day. For example nextsaturday"""
+        """the next occurrence of the named day of week after today's day. For example nextsaturday"""
         if weekday.lower() not in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             raise Exception(f"Given weekday is invalid: {weekday}")
         return f"next{weekday.lower()}"
@@ -311,18 +322,9 @@ class _DynamicPeriod(str, Enum):
 
     @classmethod
     def last_x_days(cls: type[_DynamicPeriodT], days_count: int) -> str:
-        """the period before today’s date with a length on the number of days specified.
+        """the period before today's date with a length on the number of days specified.
         For example last7days or last21days."""
         if days_count <= 0:
             raise Exception(f"Given day count is invalid: {days_count} <= 0")
 
         return f"last{days_count}days"
-
-
-@dataclass
-class WeatherApiParams:
-    """Defines dataclass for possible API request options"""
-
-    INCLUDE: ClassVar[type[_Include]] = _Include
-    ELEMENTS: ClassVar[type[_Elements]] = _Elements
-    DYNAMIC_PERIOD: ClassVar[type[_DynamicPeriod]] = _DynamicPeriod

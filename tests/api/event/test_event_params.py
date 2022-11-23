@@ -1,27 +1,27 @@
 from aswe.api.event.event_params import (
     EventApiClassificationParams,
     EventApiEventParams,
-    _SortEnum,
-    _UnitEnum,
+    SortEnum,
+    UnitEnum,
 )
 
 
 def test_unit_enum_values() -> None:
-    """Test values of `_UnitEnum` Enum Class"""
+    """Test values of `UnitEnum` Enum Class"""
 
-    assert _UnitEnum.MILES == "miles"
-    assert _UnitEnum.KILOMETER == "km"
+    assert UnitEnum.MILES.value == "miles"
+    assert UnitEnum.KILOMETER.value == "km"
 
 
 def test_sort_enum_values() -> None:
-    """Test values of `_SortEnum` Enum Class"""
+    """Test values of `SortEnum` Enum Class"""
 
-    assert _SortEnum.NAME_ASC == "name,asc"
-    assert _SortEnum.NAME_DESC == "name,desc"
-    assert _SortEnum.RELEVANCE_ASC == "relevance,asc"
-    assert _SortEnum.RELEVANCE_DESC == "relevance,desc"
-    assert _SortEnum.DISTANCE_ASC == "distance,asc"
-    assert _SortEnum.DISTANCE_DESC == "distance,desc"
+    assert SortEnum.NAME_ASC.value == "name,asc"
+    assert SortEnum.NAME_DESC.value == "name,desc"
+    assert SortEnum.RELEVANCE_ASC.value == "relevance,asc"
+    assert SortEnum.RELEVANCE_DESC.value == "relevance,desc"
+    assert SortEnum.DISTANCE_ASC.value == "distance,asc"
+    assert SortEnum.DISTANCE_DESC.value == "distance,desc"
 
 
 def test_event_params_validate_fields() -> None:
@@ -70,13 +70,13 @@ def test_event_params_concat_to_query() -> None:
         venue_id="venue_id",
         postal_code="postal_code",
         radius=10,
-        unit=_UnitEnum.KILOMETER,
+        unit=UnitEnum.KILOMETER,
         locale=["de", "en"],
         start_date_time="2020-12-12",
         end_date_time="2021-12-12",
         size=10,
         page=10,
-        sort=_SortEnum.DISTANCE_ASC,
+        sort=SortEnum.DISTANCE_ASC,
         city=["Stuttgart", "Berlin"],
         country_code="DE",
         classification_name=["comedy"],
@@ -110,6 +110,6 @@ def test_classification_params_validate_fields() -> None:
 def test_classification_params_concnt_to_query() -> None:
     """Test `aswe.api.event.event_params.EventApiClassificationParams.concat_to_query` method"""
 
-    full_query = EventApiClassificationParams(id="id", keyword="keyword", size=10, sort=_SortEnum.DISTANCE_ASC)
+    full_query = EventApiClassificationParams(id="id", keyword="keyword", size=10, sort=SortEnum.DISTANCE_ASC)
 
     assert full_query.concat_to_query() == "id=id&keyword=keyword&size=10&sort=distance,asc"

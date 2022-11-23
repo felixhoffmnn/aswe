@@ -8,13 +8,19 @@ from requests import Response
 def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int = 10) -> Response | None:
     """Send a HTTP request to the given URL and return the response.
 
-    Args:
-        url (str): The URL of the API.
-        headers (Dict[Any, Any] | None, optional): The headers to send with the request.
-        timeout (int, optional): The time in seconds to wait for a response. Defaults to 10.
+    Parameters
+    ----------
+    url : str
+        The URL of the API.
+    headers : dict[Any, Any] | None, optional
+        The headers to send with the request. _By default `None`._
+    timeout : int, optional
+        The time in seconds to wait for a response. _By default `10`.
 
-    Returns:
-        Response | None: The response from the API or None if the request failed.
+    Returns
+    -------
+    Response | None
+        The response from the API or None if the request failed.
     """
     try:
         response = requests.get(url, timeout=timeout, headers=headers)

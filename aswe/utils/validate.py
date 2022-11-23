@@ -11,8 +11,10 @@ def validate_date(date: str, include_time: bool | None = None) -> bool:
         include_time (bool | None, optional): Whether date should include time.
         If None methods tries finding correct type. Defaults to None.
 
-    Returns:
-        bool: Whether date is valid.
+    Returns
+    -------
+    bool:
+        Whether date is valid.
     """
     if ("T" in date and include_time is None) or include_time is True:
         try:

@@ -2,21 +2,20 @@
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import ClassVar
 
 from loguru import logger
 
-from aswe.utils.validate_date import validate_date
+from aswe.utils.validate import validate_date
 
 
-class _UnitEnum(str, Enum):
+class UnitEnum(str, Enum):
     """Enum of possible radius values for Event API Params"""
 
     MILES = "miles"
     KILOMETER = "km"
 
 
-class _SortEnum(str, Enum):
+class SortEnum(str, Enum):
     """Enum of possible sort by values"""
 
     NAME_ASC = "name,asc"
@@ -27,17 +26,18 @@ class _SortEnum(str, Enum):
     DISTANCE_DESC = "distance,desc"
 
 
-@dataclass
-class EventApiEnums:
-    """Defines dataclass for possible EventApi request query enums"""
+# TODO: Dont see the reason for wrapping enums in a class
+# @dataclass
+# class EventApiEnums:
+#     """Defines dataclass for possible EventApi request query enums"""
 
-    UNIT: ClassVar[type[_UnitEnum]] = _UnitEnum
-    SORT: ClassVar[type[_SortEnum]] = _SortEnum
+#     UNIT: ClassVar[type[UnitEnum]] = UnitEnum
+#     SORT: ClassVar[type[SortEnum]] = SortEnum
 
 
 @dataclass
 class EventApiEventParams:
-    """Query Params Dataclass for Event API Event requests"""
+    """Query Params Dataclass for Event API requests"""
 
     id: str | None = None
     """Filter entities by its id"""
@@ -57,7 +57,7 @@ class EventApiEventParams:
     radius: int | None = None
     """Radius of the area in which we want to search for events."""
 
-    unit: _UnitEnum = _UnitEnum.KILOMETER
+    unit: UnitEnum = UnitEnum.KILOMETER
     """Unit of the radius. Defaults to \"km\""""
 
     locale: list[str] = field(default_factory=lambda: ["de"])
@@ -78,7 +78,7 @@ class EventApiEventParams:
     page: int | None = None
     """Page number. Defaults to 0."""
 
-    sort: _SortEnum | None = None
+    sort: SortEnum | None = None
     """Sorting order of the search result. Allowable Values: \"name,asc\", \"name,desc\", \"relevance,asc\",
     \"relevance,desc\", \"distance,asc\", \"distance,desc\", \"random\".
     Defaults to \"relevance,desc\""""
@@ -88,6 +88,9 @@ class EventApiEventParams:
 
     country_code: str | None = None
     """Filter by country code"""
+
+    state_code: str | None = None
+    """Filter by state code"""
 
     classification_name: list[str] | None = None
     """Filter by classification name: name of any segment, genre, sub-genre, type, sub-type.
@@ -219,7 +222,7 @@ class EventApiClassificationParams:
     size: int | None = None
     """Page size of the response. Defaults to 20."""
 
-    sort: _SortEnum | None = None
+    sort: SortEnum | None = None
     """Sorting order of the search result. Allowable Values: \"name,asc\", \"name,desc\", \"relevance,asc\",
     \"relevance,desc\", \"distance,asc\", \"distance,desc\", \"random\".
     Defaults to \"relevance,desc\""""

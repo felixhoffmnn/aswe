@@ -8,7 +8,7 @@ from aswe.api.event.event_params import (
     EventApiClassificationParams,
     EventApiEventParams,
 )
-from aswe.utils.http_request import http_request
+from aswe.utils.request import http_request
 
 
 class EventApi:
@@ -38,13 +38,14 @@ class EventApi:
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-        except JSONDecodeError as err:
-            logger.error(f"Event API returned invalid Json: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response:
+            try:
+                response_json = dict(response.json())
+                return response_json
+            except JSONDecodeError as err:
+                logger.error(f"Event API returned invalid Json: {err}")
+            except Exception as err:
+                logger.error(f"Something went wrong: {err}")
 
         return None
 
@@ -61,12 +62,13 @@ class EventApi:
 
         response = http_request(url)
 
-        try:
-            response_json = dict(response.json())
-            return response_json
-        except JSONDecodeError as err:
-            logger.error(f"Event API returned invalid Json: {err}")
-        except Exception as err:
-            logger.error(f"Something went wrong: {err}")
+        if response:
+            try:
+                response_json = dict(response.json())
+                return response_json
+            except JSONDecodeError as err:
+                logger.error(f"Event API returned invalid Json: {err}")
+            except Exception as err:
+                logger.error(f"Something went wrong: {err}")
 
         return None

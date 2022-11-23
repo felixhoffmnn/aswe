@@ -2,7 +2,7 @@ name: Run Pytest
 
 on:
   push:
-    branches: ["*"]
+    branches: ["main"]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: ["main"]
@@ -22,7 +22,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-            sudo apt install python3-pyaudio espeak -y
+            sudo apt install libasound-dev python3-pyaudio espeak -y
           elif [ "$RUNNER_OS" == "macOS" ]; then
             brew install portaudio
           fi

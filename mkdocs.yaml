@@ -9,17 +9,17 @@ watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
 # Navigation
 nav:
   - Overview:
-      Readme: index.md
-      License: license.md
+      - Readme: index.md
+      - License: license.md
   - Documentation:
-      Core:
-        - Agent: core/agent.md
-        - User Interaction: core/user_interaction.md
-        - Use Cases: core/use_cases.md
-      API:
-        - Weather: api/weather.md
-        - Events: api/events.md
-      Utilities: utils/utils.md
+      - Core:
+          - Agent: core/agent.md
+          - User Interaction: core/user_interaction.md
+          - Use Cases: core/use_cases.md
+      - API:
+          - Weather: api/weather.md
+          - Events: api/events.md
+      - Utilities: utils/utils.md
 
 # Plugins
 plugins:
@@ -101,6 +101,7 @@ theme:
 # Markdown extensions
 markdown_extensions:
   - attr_list
+  - md_in_html
   - def_list
   - pymdownx.tasklist:
       custom_checkbox: true

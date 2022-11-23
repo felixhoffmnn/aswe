@@ -1,0 +1,117 @@
+# Metadata
+site_name: Marcell J'Arvis
+site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do.
+site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
+repo_name: felixhoffmnn/aswe
+repo_url: https://github.com/felixhoffmnn/aswe
+watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
+
+# Navigation
+nav:
+  - Overview:
+      Readme: index.md
+      License: license.md
+  - Documentation:
+      Core:
+        - Agent: core/agent.md
+        - User Interaction: core/user_interaction.md
+        - Use Cases: core/use_cases.md
+      API:
+        - Weather: api/weather.md
+        - Events: api/events.md
+      Utilities: utils/utils.md
+
+# Plugins
+plugins:
+  - search
+  - mermaid2:
+      arguments:
+        theme: |
+          ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+  - autorefs
+  - mkdocs-jupyter:
+      include: ["*.ipynb"]
+      kernel_name: python3
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [aswe]
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://mkdocstrings.github.io/objects.inv
+            - https://mkdocstrings.github.io/griffe/objects.inv
+          options:
+            filters: ["!^__"]
+            docstring_style: numpy
+            docstring_section_style: table
+            merge_init_into_class: true
+            show_root_heading: no
+            show_root_toc_entry: no
+            show_source: no
+            show_root_full_path: no
+
+# Theme
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+  features:
+    # Enable the tabs on the top of the page (the level 1 folder will be displayed as a tab)
+    - navigation.tabs
+
+    # Will expand the navigation tree on the sidebar
+    - navigation.expand
+
+    # TODO: Add description
+    - navigation.tracking
+
+    # Adds a button to get back to the top of the page
+    - navigation.top
+
+    # Shows files and navigation items on the left side
+    # - toc.integrate
+    - toc.follow
+
+    # TODO: Add description
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+
+  icon:
+    logo: logo
+    repo: fontawesome/brands/github
+
+  language: en
+
+# Markdown extensions
+markdown_extensions:
+  - attr_list
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.magiclink
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

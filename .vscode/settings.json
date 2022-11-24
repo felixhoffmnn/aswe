@@ -10,6 +10,9 @@
       "source.fixAll.unusedImports": false
     }
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "python.linting.pylintEnabled": true,

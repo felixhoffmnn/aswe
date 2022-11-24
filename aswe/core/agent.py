@@ -210,6 +210,7 @@ class Agent:
 
         * TODO: Implement more use cases
         * TODO: Add method for calculating the similarity between the parsed text and the use case
+        * TODO: Add option to pass the parsed text to the use case
 
         Parameters
         ----------

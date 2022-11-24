@@ -15,6 +15,7 @@ class SpeechToText:
         """Initializes the speech to text class.
 
         * TODO: Think about a better way to handle the case that the `microphone_index` is not required
+        * TODO: Add Attributes section
 
         Parameters
         ----------
@@ -111,7 +112,12 @@ class TextToSpeech:
     """Class to convert text to speech."""
 
     def __init__(self) -> None:
+        """Initializes the text to speech class.
+
+        * TODO: Add Attributes section
+        """
         self.engine: pyttsx3.Engine = pyttsx3.init()
+        self.engine.setProperty("rate", 175)
         self.engine.setProperty("voice", "english")
 
     def convert_text(self, text: str) -> None:

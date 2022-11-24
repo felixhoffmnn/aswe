@@ -16,6 +16,7 @@ nav:
           - Agent: core/agent.md
           - User Interaction: core/user_interaction.md
           - Use Cases: core/use_cases.md
+          - Data: core/data.md
       - API:
           - Weather: api/weather.md
           - Events: api/events.md
@@ -100,6 +101,8 @@ theme:
 
 # Markdown extensions
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - attr_list
   - md_in_html
   - def_list

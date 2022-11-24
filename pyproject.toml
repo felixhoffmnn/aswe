@@ -1,4 +1,3 @@
-# TODO: Stephan needs to add his email address
 [tool.poetry]
 name = "Advanced Software Engineering"
 version = "0.1.0"
@@ -8,7 +7,7 @@ authors = [
   "Nick Schroeder <nick.b.schroeder@outlook.de>",
   "Leopold Fuchs <kontakt@leopold-fuchs.de>",
   "Maxime Fritzsch <mfritzsch89@gmail.com>",
-  "Stephan auf der Landwehr <test@test.de>",
+  "Stephan Auf der Landwehr <steadl@gmx.de>",
 ]
 license = "MIT"
 readme = "README.md"
@@ -34,6 +33,7 @@ python-dotenv = "^0.21.0"
 poetry-dotenv-plugin = "^0.1.0"
 fire = "^0.4.0"
 pyjokes = "^0.6.0"
+google-api-python-client = "^2.66.0"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["jupyter"], version = "^22.8.0" }

@@ -1,8 +1,8 @@
 # TODO: Stephan needs to add his email address
 [tool.poetry]
-name = "aswe"
+name = "Advanced Software Engineering"
 version = "0.1.0"
-description = "Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do."
+description = "A speech bot for your daily needs build during advanced software engineering at DHBW Stuttgart."
 authors = [
   "Felix Hoffmann <felix.emmanuel.hoffmann@gmail.com>",
   "Nick Schroeder <nick.b.schroeder@outlook.de>",
@@ -12,6 +12,9 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
+packages = [
+  { include = "aswe" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"

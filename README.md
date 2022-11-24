@@ -1,5 +1,5 @@
 <h1 align="center">
- Marcell J'Arvis
+ HiBuddy
 </h1>
 
 <h4 align="center">
@@ -40,19 +40,13 @@ This project was built by a team of 5 students during the advanced software engi
 Following dependencies are listed which are required to either run or contribute to this project.
 
 1. Install `portaudio` for speech recognition:
-
--   On macOS: `brew install portaudio`
--   On Linux: `sudo apt install python-pyaudio python3-pyaudio`
-
+    - On macOS: `brew install portaudio`
+    - On Linux: `sudo apt install python-pyaudio python3-pyaudio`
 2. Install [Poetry](https://python-poetry.org/docs/#installation)
-
--   Poetry is a dependency manager for Python used in this project
--   (Optional) Setup poetry to use the local `.venv` folder by running `poetry config virtualenvs.in-project true`
-
+    - Poetry is a dependency manager for Python used in this project
+    - (Optional) Setup poetry to use the local `.venv` folder by running `poetry config virtualenvs.in-project true`
 3. Run `poetry install` to install all dependencies
-
--   Afterwards, run `poetry shell` to activate the virtual environment
-
+    - Afterwards, run `poetry shell` to activate the virtual environment
 4. Install the pre-commit hooks with `poetry run pre-commit install`
 
 <br>
@@ -60,7 +54,7 @@ Following dependencies are listed which are required to either run or contribute
 After the setup is complete, use the **following commands** to run the agent. Note that you need to be in the **root directory** of the project.
 
 ```bash
-poetry run python aswe/core/agent.py --get_mic --get_user agent
+poetry run python aswe/core/agent.py agent --get_mic --get_user
 ```
 
 ## :speech_balloon: Concept

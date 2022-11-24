@@ -1,6 +1,6 @@
 import sys
 import time
-from abc import ABC
+from abc import ABC, abstractmethod
 from datetime import datetime
 
 import pyjokes
@@ -27,6 +27,16 @@ class AbstractUseCase(ABC):
         self.stt = stt
         self.tts = tts
         self.assistant_name = assistant_name
+
+    @abstractmethod
+    def trigger_assistant(self, quotes_key: str) -> None:
+        """UseCase for morning briefing
+
+        Parameters
+        ----------
+        quotes_key : str
+            The best matching key for the given user input.
+        """
 
 
 class MorningBriefingUseCase(AbstractUseCase):

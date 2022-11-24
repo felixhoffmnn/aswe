@@ -4,12 +4,14 @@ from loguru import logger
 
 
 def validate_date(date: str, include_time: bool | None = None) -> bool:
-    """Validates Time format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`
+    """Validates Time format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ss`
 
-    Args:
-        date (str): Date as type string that should be checked
-        include_time (bool | None, optional): Whether date should include time.
-        If None methods tries finding correct type. Defaults to None.
+    Parameters
+    ----------
+    date : str
+        Date as type string that should be checked
+    include_time : bool | None, optional
+        Whether date should include time. If None methods tries finding correct type. _By default `None`._
 
     Returns
     -------

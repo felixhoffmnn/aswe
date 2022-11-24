@@ -74,8 +74,8 @@ class Agent:
             logger.error("Could not open file. Please check if the file exists.")
             sys.exit(1)
 
-        self.stt = SpeechToText(get_mic)
-        self.tts = TextToSpeech()
+        self.stt = SpeechToText(get_mic, is_test)
+        self.tts = TextToSpeech(is_test)
 
         if get_user:
             clear_shell()

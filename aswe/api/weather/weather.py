@@ -13,9 +13,9 @@ from aswe.utils.validate import validate_date
 class WeatherApi:
     """Crawler Class retrieves data from the [Visual Crossing API](https://www.visualcrossing.com/)
 
-    * TODO: Fix the wired typing and errors
     * TODO: Add docstrings
     * TODO: Move base url, api key, and unit group to `__init__`
+    * TODO: Add Attributes section
     """
 
     _BASE_URL: Final[str] = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
@@ -100,6 +100,8 @@ class WeatherApi:
         elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
         """Retrieves historic data between two given dates.
+
+        * TODO: Check if format is correct (`YYYY-MM-DDThh:mm:ss` or `YYYY-MM-DDThh:mm:ssZ`)
 
         Parameters
         ----------

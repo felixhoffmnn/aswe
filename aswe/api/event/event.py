@@ -13,7 +13,10 @@ from aswe.utils.request import http_request
 
 class EventApi:
     """Crawler Class retrieves data from
-    [ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/)"""
+    [ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/)
+
+    * TODO: Add Attributes section
+    """
 
     _BASE_URL: Final[str] = "https://app.ticketmaster.com/discovery/v2/"
     _API_KEY: Final[str] = os.getenv("EVENT_API_KEY", "")

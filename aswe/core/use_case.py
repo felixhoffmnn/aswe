@@ -15,6 +15,8 @@ class AbstractUseCase(ABC):
     def __init__(self, stt: SpeechToText, tts: TextToSpeech, assistant_name: str) -> None:
         """Use case constructor to provide objects from the parent agent class
 
+        * TODO: Add Attributes section
+
         Parameters
         ----------
         stt : SpeechToText

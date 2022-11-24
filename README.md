@@ -29,7 +29,7 @@
 </div>
 <br>
 
-<!-- TODO: Edit paragraph -->
+<!-- TODO: Review paragraph -->
 
 This project was built by a team of 5 students during the advanced software engineering course at [DHBW Stuttgart](https://www.dhbw-stuttgart.de/). The goal was to create a bot that can interact using speech-to-text and text-to-speech with the user and perform tasks like a morning briefing, a helper for planning trips and events, and also to provide information about current sports events.
 

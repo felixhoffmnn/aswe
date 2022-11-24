@@ -9,14 +9,20 @@ from aswe.utils.validate import validate_date
 
 
 class UnitEnum(str, Enum):
-    """Enum of possible radius values for Event API Params"""
+    """Enum of possible radius values for Event API Params
+
+    * TODO: Add documentation for the different units
+    """
 
     MILES = "miles"
     KILOMETER = "km"
 
 
 class SortEnum(str, Enum):
-    """Enum of possible sort by values"""
+    """Enum of possible sort by values
+
+    * TODO: Add documentation for the different sort by values
+    """
 
     NAME_ASC = "name,asc"
     NAME_DESC = "name,desc"
@@ -24,15 +30,6 @@ class SortEnum(str, Enum):
     RELEVANCE_DESC = "relevance,desc"
     DISTANCE_ASC = "distance,asc"
     DISTANCE_DESC = "distance,desc"
-
-
-# TODO: Dont see the reason for wrapping enums in a class
-# @dataclass
-# class EventApiEnums:
-#     """Defines dataclass for possible EventApi request query enums"""
-
-#     UNIT: ClassVar[type[UnitEnum]] = UnitEnum
-#     SORT: ClassVar[type[SortEnum]] = SortEnum
 
 
 @dataclass
@@ -58,13 +55,13 @@ class EventApiEventParams:
     """Radius of the area in which we want to search for events."""
 
     unit: UnitEnum = UnitEnum.KILOMETER
-    """Unit of the radius. Defaults to \"km\""""
+    """Unit of the radius. Defaults to `km`"""
 
     locale: list[str] = field(default_factory=lambda: ["de"])
     """The locale in ISO code format. Multiple comma-separated values can be provided.
-    When omitting the country part of the code (e.g. only \"en\" or \"fr\") then the first matching locale is used.
-    When using a \"*\" it matches all locales. \"*\" can only be used at the end (e.g. \"en-us,en,*\").
-    Defaults to `[\"de\"]`."""
+    When omitting the country part of the code (e.g. only `en` or `fr`) then the first matching locale is used.
+    When using a `*` it matches all locales. `*` can only be used at the end (e.g. `en-us,en,*`).
+    Defaults to `["de"]`."""
 
     start_date_time: str | None = None
     """Filter with a start date after this date"""
@@ -79,9 +76,9 @@ class EventApiEventParams:
     """Page number. Defaults to 0."""
 
     sort: SortEnum | None = None
-    """Sorting order of the search result. Allowable Values: \"name,asc\", \"name,desc\", \"relevance,asc\",
-    \"relevance,desc\", \"distance,asc\", \"distance,desc\", \"random\".
-    Defaults to \"relevance,desc\""""
+    """Sorting order of the search result. Allowable Values: `name,asc`, `name,desc`, `relevance,asc`,
+    `relevance,desc`, `distance,asc`, `distance,desc`, `random`.
+    Defaults to `relevance,desc`"""
 
     city: list[str] | None = None
     """Filter by city"""
@@ -223,9 +220,9 @@ class EventApiClassificationParams:
     """Page size of the response. Defaults to 20."""
 
     sort: SortEnum | None = None
-    """Sorting order of the search result. Allowable Values: \"name,asc\", \"name,desc\", \"relevance,asc\",
-    \"relevance,desc\", \"distance,asc\", \"distance,desc\", \"random\".
-    Defaults to \"relevance,desc\""""
+    """Sorting order of the search result. Allowable Values: `name,asc`, `name,desc`, `relevance,asc`,
+    `relevance,desc`, `distance,asc`, `distance,desc`, `random`.
+    Defaults to `relevance,desc`"""
 
     def validate_fields(self) -> bool:
         """Validates fields"""

@@ -120,7 +120,8 @@ class Agent:
         """Find the best match for the parsed text
 
         Function calculates the similarity between the parsed text and the use cases.
-        Then
+
+        * TODO: Add tokenization and stop words
 
         ??? example "`self.quotes` DataFrame"
 
@@ -258,6 +259,8 @@ class Agent:
             self.tts.convert_text("Sorry, I didn't find a match for your request.")
             return None
 
+        logger.info(best_match)
+
         try:
             match best_match.use_case:
                 case "general":
@@ -276,6 +279,8 @@ class Agent:
                     )
         except NotImplementedError:
             self.tts.convert_text("Sorry, the requested function is not implemented yet.")
+
+        return None
 
 
 if __name__ == "__main__":

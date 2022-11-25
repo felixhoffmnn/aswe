@@ -10,6 +10,8 @@ from loguru import logger
 
 from aswe.api.calendar.data import Event
 
+# TODO: Replace with path
+# TODO: Add credentials file
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 CREDENTIALS_FILE = "calendar_credentials.json"
 PICKLE_FILE = "calendar_token.pickle"

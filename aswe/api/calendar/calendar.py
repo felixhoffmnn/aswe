@@ -11,8 +11,8 @@ from loguru import logger
 from aswe.api.calendar.data import Event
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
-CREDENTIALS_FILE = "../../../calendar_credentials.json"
-PICKLE_FILE = "../../../calendar_token.pickle"
+CREDENTIALS_FILE = "calendar_credentials.json"
+PICKLE_FILE = "calendar_token.pickle"
 
 
 def get_calendar_service() -> Any:
@@ -61,7 +61,7 @@ def get_events_by_timeframe(min_timestamp: str, max_timestamp: str) -> list[Even
 
     calendars = service.calendarList().list().execute().get("items", [])  # pylint: disable=no-member
     event_array = []
-    for i in enumerate(calendars):
+    for i, _ in enumerate(calendars):
         current_calendar = calendars[i].get("id", "")
         if current_calendar != "":
 
@@ -121,7 +121,7 @@ def get_next_event_today() -> Event | None:
 
     for event in events:
         if not event.full_day:
-            start_time = datetime.strptime(event.startTime, "%Y-%m-%dT%H:%M:%S+01:00")
+            start_time = datetime.strptime(event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
             if datetime.now() < start_time:
                 return event
     return None
@@ -146,10 +146,10 @@ def create_event(event_info: Event) -> None:
         "description": event_info.description,
         "start": {"date": event_info.date}
         if event_info.full_day
-        else {"dateTime": event_info.startTime, "timeZone": "Europe/Berlin"},
+        else {"dateTime": event_info.start_time, "timeZone": "Europe/Berlin"},
         "end": {"date": end_date}
         if event_info.full_day
-        else {"dateTime": event_info.endTime, "timeZone": "Europe/Berlin"},
+        else {"dateTime": event_info.end_time, "timeZone": "Europe/Berlin"},
     }
 
     service = get_calendar_service()

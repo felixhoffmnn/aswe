@@ -11,8 +11,8 @@ from loguru import logger
 from aswe.api.calendar.data import Event
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
-CREDENTIALS_FILE = "../../../../credentials.json"
-PICKLE_FILE = "../../../../token.pickle"
+CREDENTIALS_FILE = "../../../calendar_credentials.json"
+PICKLE_FILE = "../../../calendar_token.pickle"
 
 
 def get_calendar_service() -> Any:
@@ -59,14 +59,14 @@ def get_events_by_timeframe(min_timestamp: str, max_timestamp: str) -> list[Even
     """
     service = get_calendar_service()
 
-    calendars = service.calendarList().list().execute().get("items", [])  # type: ignore
+    calendars = service.calendarList().list().execute().get("items", [])  # pylint: disable=no-member
     event_array = []
     for i in enumerate(calendars):
         current_calendar = calendars[i].get("id", "")
         if current_calendar != "":
 
             events_result = (
-                service.events()
+                service.events()  # pylint: disable=no-member
                 .list(
                     calendarId=current_calendar,
                     timeMin=min_timestamp,
@@ -153,6 +153,6 @@ def create_event(event_info: Event) -> None:
     }
 
     service = get_calendar_service()
-    service.events().insert(calendarId="primary", body=event).execute()
+    service.events().insert(calendarId="primary", body=event).execute()  # pylint: disable=no-member
 
     logger.success(f"Created Event: {event}")

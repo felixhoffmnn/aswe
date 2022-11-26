@@ -10,7 +10,7 @@ from loguru import logger
 from pandas.errors import IndexingError
 
 from aswe.core.data import BestMatch, User
-from aswe.core.use_case import GeneralUseCase
+from aswe.core.use_case import GeneralUseCase, TransportationUseCase
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.utils.general import clear_shell
 
@@ -84,6 +84,7 @@ class Agent:
             self.user = User(name="Felix", age=22)
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name)
+        self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name)
 
     def _greeting(self) -> None:
         """Function to greet the user."""
@@ -270,7 +271,7 @@ class Agent:
                 case "events":
                     raise NotImplementedError
                 case "transportation":
-                    raise NotImplementedError
+                    self.uc_transportation.trigger_assistant(best_match)
                 case "sport":
                     raise NotImplementedError
                 case _:

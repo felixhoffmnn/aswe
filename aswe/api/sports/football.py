@@ -1,6 +1,10 @@
 import os
 
+from dotenv import load_dotenv
+
 from aswe.utils.request import http_request
+
+load_dotenv()
 
 API_key = os.getenv("SOCCER_API_key")
 headers = {"X-Auth-Token": API_key}
@@ -263,9 +267,12 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
     if request is None:
         return None
     team_list = request.json()
+    team_id = ""
     for team in team_list["teams"]:
         if team["name"] == team_name or team["shortName"] == team_name:
             team_id = team["id"]
+    if team_id == "":
+        return None
     request = http_request(
         f"https://api.football-data.org/v4/teams/{team_id}/matches?status=SCHEDULED", headers=headers
     )
@@ -311,12 +318,13 @@ def get_current_team_match(league: str, team_name: str) -> list[str] | None:
     if request is None:
         return None
     team_list = request.json()
+    team_id = ""
     for team in team_list["teams"]:
         if team["name"] == team_name or team["shortName"] == team_name:
             team_id = team["id"]
-    request = http_request(
-        f"https://api.football-data.org/v4/teams/{team_id}/matches?status=IN_PLAY", headers=headers
-    )
+    if team_id == "":
+        return None
+    request = http_request(f"https://api.football-data.org/v4/teams/{team_id}/matches?status=IN_PLAY", headers=headers)
     if request is None:
         return None
     results = request.json()

@@ -47,10 +47,8 @@ def get_results_next_round() -> list[str] | None:
     response = dict(request.json())
 
     if response["MRData"]["total"] == "0":
-        return None
+        return []
 
-    if response["MRData"]["total"] == "0":
-        return None
     result = [
         f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\
             {driver['Constructor']['name']} - {driver['position']}"
@@ -74,7 +72,7 @@ def get_results_last_round() -> list[str] | None:
     response = dict(request.json())
 
     if response["MRData"]["total"] == "0":
-        return None
+        return []
 
     result = [
         f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\

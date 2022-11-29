@@ -1,7 +1,11 @@
 import os
 from datetime import date
 
+from dotenv import load_dotenv
+
 from aswe.utils.request import http_request
+
+load_dotenv()
 
 headers = {"x-rapidapi-key": os.getenv("Sports_API_key"), "x-rapidapi-host": "v1.basketball.api-sports.io"}
 
@@ -25,7 +29,6 @@ def get_nba_standings() -> list[list[str]] | None:
         if team["group"]["name"] == "Eastern Conference" or team["group"]["name"] == "Western Conference":
             if team["group"]["name"] not in conferences:
                 conferences.append(team["group"]["name"])
-                print(conferences[-1])
             if team["group"]["name"] == "Eastern Conference":
                 ec_standings.append(
                     f"{team['position']}. {team['team']['name']} wins: \
@@ -101,3 +104,5 @@ def get_team_game_today(team_name: str) -> list[str] | None:
                 {game['scores']['away']['total']} {game['teams']['away']['name']}"
         )
     return games
+
+print(get_team_id("Denver Nuggets"))

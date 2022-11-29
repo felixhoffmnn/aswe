@@ -104,5 +104,3 @@ def get_team_game_today(team_name: str) -> list[str] | None:
                 {game['scores']['away']['total']} {game['teams']['away']['name']}"
         )
     return games
-
-print(get_team_id("Denver Nuggets"))

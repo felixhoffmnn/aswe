@@ -1,3 +1,4 @@
+import datetime
 import os
 from typing import Any, Final
 
@@ -40,10 +41,16 @@ class EventApi:
                 # ! -----------------------------------------------------------
 
                 try:
+                    utc_start_datetime = datetime.datetime.strptime(
+                        event["dates"]["start"]["dateTime"], "%Y-%m-%dT%H:%M:%SZ"
+                    )
+                    berlin_tz_start_datetime = utc_start_datetime + datetime.timedelta(hours=1)
+                    berlin_tz_start_as_string = berlin_tz_start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
+
                     single_event = {
                         "id": event["id"],
                         "name": event["name"],
-                        "start": event["dates"]["start"]["dateTime"],
+                        "start": berlin_tz_start_as_string,
                         "status": event["dates"]["status"]["code"],
                         "location": {
                             "name": event["_embedded"]["venues"][0]["name"],
@@ -55,6 +62,7 @@ class EventApi:
                     reduced_events.append(single_event)
                 except Exception as err:
                     logger.error(err)
+
             return reduced_events
 
         return []

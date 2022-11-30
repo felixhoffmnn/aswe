@@ -16,7 +16,7 @@ def test_get_team_game_today() -> None:
     """Test `aswe.api.sports.basketball.get_team_game_today`"""
     game = get_team_game_today("Boston Celtics")
 
-    assert isinstance(game, list) and len(game) == 1
+    assert isinstance(game, list)
 
 
 def test_get_team_id() -> None:

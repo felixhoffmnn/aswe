@@ -95,7 +95,7 @@ def get_team_game_today(team_name: str) -> list[str] | None:
     data = request.json()
 
     if data["response"] == []:
-        return None
+        return []
 
     games = []
     for game in data["response"]:

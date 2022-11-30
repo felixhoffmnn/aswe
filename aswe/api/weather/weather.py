@@ -260,31 +260,61 @@ class WeatherApi:
     def forecast(
         self,
         location: str,
+        start_date: str | None = None,
+        end_date: str | None = None,
         include: list[IncludeEnum] | None = None,
         elements: list[ElementsEnum] | None = None,
     ) -> dict[Any, Any] | None:
-        """Retrieves 15-day weather forecast of given location
-
+        """Retrieves weather forecast of given location.
         Parameters
         ----------
         location : str
             Location format: "city, country" Country needs to be in [Alpha-2](https://www.iban.com/country-codes) Code.
-        elements : list[ElementsEnum] | None, optional
-            List of possible properties in a day or hourly data object that should be retrieved from the API.
-            Refer to `weather_params.py`. _By default `None`_.
+        start_date : str | None, optional
+            Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
+        end_date : str | None, optional
+            Date format: `YYYY-MM-DD`, Optional: `YYYY-MM-DDThh:mm:ss`.
         include : list[IncludeEnum] | None, optional
             List of possible information that should be retrieved from the API. Refer to `weather_params.py`.
             _By default `None`_.
+        elements : list[ElementsEnum] | None, optional
+            List of possible properties in a day or hourly data object that should be retrieved from the API.
+            Refer to `weather_params.py`. _By default `None`_.
         """
         location = location.replace(" ", "")
 
         if not self._validate_location(location):
             raise Exception("Given location is invalid")
 
-        # if not self._validate_api_params(include, elements):
-        #     raise Exception("Given API params are invalid")
+        url = f"{self._BASE_URL}/{location}"
 
-        url = f"{self._BASE_URL}/{location}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
+        if not self._validate_api_params(include, elements):
+            raise Exception("Given API params are invalid")
+
+        if start_date:
+            if not validate_date(start_date):
+                raise Exception("Given start_date is invalid")
+
+            today = datetime.today().strftime("%Y-%m-%d")
+
+            if today > start_date:
+                raise Exception("start_date cannot be before today")
+
+            url = f"{url}/{start_date}"
+
+            if end_date:
+                if not validate_date(end_date):
+                    raise Exception("Given end_date is invalid")
+
+                if end_date < start_date:
+                    raise Exception("end_date must be greater than start_date")
+
+                url = f"{url}/{end_date}"
+        else:
+            if end_date:
+                raise Exception("if end_date is defined, start_date has to be defined as well.")
+
+        url = f"{url}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
         url = self._append_api_params(url, include, elements)
         response = http_request(url)
 

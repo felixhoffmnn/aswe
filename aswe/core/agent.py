@@ -10,7 +10,12 @@ from loguru import logger
 from pandas.errors import IndexingError
 
 from aswe.core.data import BestMatch, User
-from aswe.core.use_cases import EventUseCase, GeneralUseCase, TransportationUseCase
+from aswe.core.use_cases import (
+    EventUseCase,
+    GeneralUseCase,
+    SportUseCase,
+    TransportationUseCase,
+)
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.utils.shell import clear_shell
 
@@ -88,6 +93,7 @@ class Agent:
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_event = EventUseCase(self.stt, self.tts, self.assistant_name, self.user)
+        self.uc_sport = SportUseCase(self.stt, self.tts, self.assistant_name, self.user)
 
     def _greeting(self) -> None:
         """Function to greet the user."""
@@ -276,7 +282,7 @@ class Agent:
                 case "transportation":
                     self.uc_transportation.trigger_assistant(best_match)
                 case "sport":
-                    raise NotImplementedError
+                    self.uc_sport.trigger_assistant(best_match)
                 case _:
                     self.tts.convert_text(
                         "I was not able to map your input to a use case. Maybe the request is not implemented yet."

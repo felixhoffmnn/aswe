@@ -13,7 +13,7 @@ def test_get_nba_standings() -> None:
     """Test `aswe.api.sport.basketball.get_nba_standings`"""
     standings = get_nba_standings()
 
-    assert len(standings) == 2 and len(standings[0]) == 15 and len(standings[1]) == 15
+    assert isinstance(standings, list) and len(standings) == 2 and len(standings[0]) == 15 and len(standings[1]) == 15
 
 
 @pytest.mark.xfail(raises=ApiLimitReached)

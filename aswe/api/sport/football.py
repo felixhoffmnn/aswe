@@ -64,7 +64,7 @@ def convert_league_name(name: str) -> str | None:
     elif name == "FIFA World Cup" or name == "World Cup":
         return "WC"
     elif name == "UEFA Champions League" or name == "Champions League":
-        return "Cl"
+        return "CL"
     elif name == "Eredivisie" or name == "Dutch League":
         return "DED"
     elif name == "Campeonato Brasileiro Série A" or name == "Brazilian League":
@@ -91,11 +91,11 @@ def get_league_standings(league: str) -> list[str] | None:
     list[str] | None
         Return list of the standings
     """
-    valid = {"WC", "CL", "BL1", "DED", "BSA", "PD", "FL1", "ELC", "PPL", "EC", "SA", "PL"}
+    league_id = convert_league_name(league)
     standings = []
-    if league not in valid:
+    if league_id is None:
         return None
-    request = http_request(f"https://api.football-data.org/v4/competitions/{league}/standings", headers=headers)
+    request = http_request(f"https://api.football-data.org/v4/competitions/{league_id}/standings", headers=headers)
     if request is None:
         return None
     results = request.json()
@@ -119,12 +119,12 @@ def get_matchday_matches(league: str, matchday: int) -> list[str] | None:
     list[str] | None
         Return list of the matches on that matchday
     """
-    valid = {"WC", "CL", "BL1", "DED", "BSA", "PD", "FL1", "ELC", "PPL", "EC", "SA", "PL"}
+    league_id = convert_league_name(league)
     matches = []
-    if league not in valid:
+    if league_id is None:
         return None
     request = http_request(
-        f"https://api.football-data.org/v4/competitions/{league}/matches?matchday={matchday}", headers=headers
+        f"https://api.football-data.org/v4/competitions/{league_id}/matches?matchday={matchday}", headers=headers
     )
     if request is None:
         return None
@@ -162,7 +162,7 @@ def get_matchday_matches(league: str, matchday: int) -> list[str] | None:
                 + match["homeTeam"]["name"]
                 + " "
                 + str(match["score"]["fullTime"]["home"])
-                + " : "
+                + " to "
                 + str(match["score"]["fullTime"]["away"])
                 + " "
                 + match["awayTeam"]["name"]
@@ -183,16 +183,16 @@ def get_ongoing_matches(league: str = "") -> list[str] | None:
     list[str] | None
         List of the ongoing matches in the specified league
     """
-    valid = {"WC", "CL", "BL1", "DED", "BSA", "PD", "FL1", "ELC", "PPL", "EC", "SA", "PL", ""}
+    league_id = convert_league_name(league)
     matches = []
-    if league not in valid:
+    if league_id is None:
         return None
     request = http_request("https://api.football-data.org/v4/matches?status=IN_PLAY", headers=headers)
     if request is None:
         return None
     results = request.json()
     for match in results["matches"]:
-        if match["competition"]["code"] == league or league == "":
+        if match["competition"]["code"] == league_id:
             matches.append(
                 match["homeTeam"]["name"]
                 + " "
@@ -223,16 +223,16 @@ def get_matches_today(league: str = "") -> list[str] | None:
     list[str] | None
         List of the matches on the current day in the specified league
     """
-    valid = {"WC", "CL", "BL1", "DED", "BSA", "PD", "FL1", "ELC", "PPL", "EC", "SA", "PL", ""}
+    league_id = convert_league_name(league)
     matches = []
-    if league not in valid:
+    if league_id is None:
         return None
     request = http_request("https://api.football-data.org/v4/matches?status=SCHEDULED", headers=headers)
     if request is None:
         return None
     results = request.json()
     for match in results["matches"]:
-        if match["competition"]["code"] == league or league == "":
+        if match["competition"]["code"] == league_id:
             matches.append(
                 "playing at "
                 + str(int(match["utcDate"][-9:-7]) + 1)
@@ -264,7 +264,10 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
     list[str] | None
        Return list of the upcoming matches of the specified team
     """
-    request = http_request(f"https://api.football-data.org/v4/competitions/{league}/teams", headers=headers)
+    league_id = convert_league_name(league)
+    if league_id is None:
+        return None
+    request = http_request(f"https://api.football-data.org/v4/competitions/{league_id}/teams", headers=headers)
     if request is None:
         return None
     team_list = request.json()
@@ -315,7 +318,10 @@ def get_current_team_match(league: str, team_name: str) -> list[str] | None:
     list[str] | None
         Return list of the current match of the specified team
     """
-    request = http_request(f"https://api.football-data.org/v4/competitions/{league}/teams", headers=headers)
+    league_id = convert_league_name(league)
+    if league_id is None:
+        return None
+    request = http_request(f"https://api.football-data.org/v4/competitions/{league_id}/teams", headers=headers)
     if request is None:
         return None
     team_list = request.json()
@@ -343,3 +349,29 @@ def get_current_team_match(league: str, team_name: str) -> list[str] | None:
             + match["competition"]["name"]
         )
     return matches
+
+
+def get_teams(league: str) -> list[str] | None:
+    """Get the teams of the specified league
+
+    Parameters
+    ----------
+    league : str
+        Name of the league
+
+    Returns
+    -------
+    list[str] | None
+        Return list of the teams of the specified league
+    """
+    league_id = convert_league_name(league)
+    if league_id is None:
+        return None
+    request = http_request(f"https://api.football-data.org/v4/competitions/{league_id}/teams", headers=headers)
+    if request is None:
+        return None
+    results = request.json()
+    teams = []
+    for team in results["teams"]:
+        teams.append(team["name"])
+    return teams

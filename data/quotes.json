@@ -16,7 +16,21 @@
     "ibm": ["ibm", "i need to get to the ibm"]
   },
   "sport": {
-    "sportSummary": ["sport summary"]
+    "footballStandings": ["football standings", "soccer standings"],
+    "footballMatchdayMatches": ["football matchday matches", "soccer matchday matches"],
+    "footballOngoingMatches": ["football ongoing matches", "soccer ongoing matches"],
+    "footballUpcomingMatches": [
+      "football upcoming matches",
+      "soccer upcoming matches",
+      "football upcoming team matches",
+      "soccer upcoming team matches"
+    ],
+    "footballCurrentMatch": [
+      "football current match",
+      "soccer current match",
+      "football current team match",
+      "soccer current team match"
+    ]
   },
   "general": {
     "time": ["time", "what time is it"],

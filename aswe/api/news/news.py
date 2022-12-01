@@ -6,7 +6,7 @@ from aswe.utils.request import http_request
 
 load_dotenv()
 
-API_key = os.getenv("NEWS_API_key")
+API_key = os.getenv("NEWS_API_KEY")
 
 
 def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str] | None:

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from aswe.utils.request import http_request
 
 load_dotenv()
-headers = {"x-rapidapi-key": os.getenv("Sports_API_key"), "x-rapidapi-host": "v1.handball.api-sports.io"}
+headers = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
 
 
 def get_league_id(league_name: str) -> int | None:

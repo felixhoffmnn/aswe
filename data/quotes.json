@@ -3,7 +3,12 @@
     "newsSummary": ["whats going on", "morning briefing", "good morning"]
   },
   "events": {
-    "eventSummary": ["what is going on", "event summary"]
+    "eventSummary": ["what is going on", "event summary"],
+    "thisWeekend": [
+      "what events are there this weekend",
+      "what are the events this weekend",
+      "what events are on this weekend"
+    ]
   },
   "transportation": {
     "dhbw": ["dhbw", "i need to get to the dhbw"],

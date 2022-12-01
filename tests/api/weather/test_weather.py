@@ -220,11 +220,11 @@ def test_forecast_invalid_params(weather_api: WeatherApi) -> None:
 
     # TODO: Correct typing should already prevent this behavior
     with pytest.raises(AttributeError):
-        weather_api.forecast("Lorem,Ip", ["lorem"], ["ipsum"])  # type: ignore
+        weather_api.forecast("Lorem,Ip", include=["lorem"], elements=["ipsum"])  # type: ignore
 
 
 def test_forecast_valid_params(weather_api: WeatherApi, mocker: MockFixture) -> None:
-    """Test `forecast` class method. Call function with valid params.
+    """Test `forecast` class method. Call function with valid params.\n
     Mocked functions:
         - `http_request`"""
 

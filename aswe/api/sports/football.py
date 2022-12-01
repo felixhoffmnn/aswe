@@ -6,7 +6,7 @@ from aswe.utils.request import http_request
 
 load_dotenv()
 
-API_key = os.getenv("SOCCER_API_key")
+API_key = os.getenv("SOCCER_API_KEY")
 headers = {"X-Auth-Token": API_key}
 
 

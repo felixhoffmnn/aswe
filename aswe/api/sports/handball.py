@@ -3,14 +3,16 @@ from datetime import date
 
 from dotenv import load_dotenv
 
+from aswe.utils.error import ApiLimitReached
 from aswe.utils.request import http_request
+from aswe.utils.validate import validate_api
 
 load_dotenv()
 headers = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
 
 
 def get_league_id(league_name: str) -> int | None:
-    """_summary_
+    """Get league id from league name
 
     Parameters
     ----------
@@ -25,6 +27,8 @@ def get_league_id(league_name: str) -> int | None:
     request = http_request("https://v1.handball.api-sports.io/leagues", headers=headers)
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     for league in data["response"]:
         if league["name"] == league_name:
@@ -33,7 +37,7 @@ def get_league_id(league_name: str) -> int | None:
 
 
 def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
-    """_summary_
+    """Get the league table of a league
 
     Parameters
     ----------
@@ -53,6 +57,8 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     )
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     standings = request.json()
     table = []
     for position in standings["response"][0]:
@@ -61,7 +67,7 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
 
 
 def get_team_id(team_name: str) -> int | None:
-    """_summary_
+    """Get team id from team name
 
     Parameters
     ----------
@@ -77,6 +83,8 @@ def get_team_id(team_name: str) -> int | None:
     request = http_request(f"https://v1.handball.api-sports.io/teams?name={team_name}", headers=headers)
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 
     if data["response"] == []:
@@ -86,7 +94,7 @@ def get_team_id(team_name: str) -> int | None:
 
 
 def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list[str] | None:
-    """_summary_
+    """Get the game of a team today
 
     Parameters
     ----------
@@ -115,6 +123,8 @@ def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list
     )
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     if data["response"] == []:
         return []

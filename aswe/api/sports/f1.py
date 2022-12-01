@@ -2,7 +2,7 @@ from aswe.utils.request import http_request
 
 
 def get_results_by_round(year: int, round_num: str) -> list[str] | None:
-    """_summary_
+    """Get f1 results by round
 
     Parameters
     ----------
@@ -33,7 +33,7 @@ def get_results_by_round(year: int, round_num: str) -> list[str] | None:
 
 
 def get_results_next_round() -> list[str] | None:
-    """_summary_
+    """Get information about the next round
 
     Returns
     -------
@@ -58,7 +58,7 @@ def get_results_next_round() -> list[str] | None:
 
 
 def get_results_last_round() -> list[str] | None:
-    """_summary_
+    """Get results of last round
 
     Returns
     -------

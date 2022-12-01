@@ -11,7 +11,7 @@ headers = {"X-Auth-Token": API_key}
 
 
 def convert_league_name(name: str) -> str | None:
-    """_summary_
+    """Converts the name of the league to the code used by the API
 
     Parameters
     ----------
@@ -79,7 +79,7 @@ def convert_league_name(name: str) -> str | None:
 
 
 def get_league_standings(league: str) -> list[str] | None:
-    """_summary_
+    """Get the standings of the league
 
     Parameters
     ----------
@@ -105,7 +105,7 @@ def get_league_standings(league: str) -> list[str] | None:
 
 
 def get_matchday_matches(league: str, matchday: int) -> list[str] | None:
-    """_summary_
+    """Get the matches of the specified matchday
 
     Parameters
     ----------
@@ -171,7 +171,7 @@ def get_matchday_matches(league: str, matchday: int) -> list[str] | None:
 
 
 def get_ongoing_matches(league: str = "") -> list[str] | None:
-    """_summary_
+    """Get the ongoing matches in the specified league
 
     Parameters
     ----------
@@ -204,13 +204,14 @@ def get_ongoing_matches(league: str = "") -> list[str] | None:
                 + " in "
                 + match["competition"]["name"]
             )
-    if matches is []:
+
+    if not matches:
         matches = ["No matches are currently being played."]
     return matches
 
 
 def get_matches_today(league: str = "") -> list[str] | None:
-    """_summary_
+    """Get the matches that are being played today
 
     Parameters
     ----------
@@ -247,7 +248,7 @@ def get_matches_today(league: str = "") -> list[str] | None:
 
 
 def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3) -> list[str] | None:
-    """_summary_
+    """Get the upcoming matches of the specified team
 
     Parameters
     ----------
@@ -300,7 +301,7 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
 
 
 def get_current_team_match(league: str, team_name: str) -> list[str] | None:
-    """_summary_
+    """Get the current match of the specified team
 
     Parameters
     ----------

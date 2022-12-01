@@ -35,5 +35,5 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
         logger.error(f"Other error occurred: {err}")
         return None
 
-    logger.success(f"Successfully fetched data from {url}")
+    logger.success(f"Successfully fetched data from {url} with status code {response.status_code}")
     return response

@@ -10,7 +10,7 @@ from loguru import logger
 from pandas.errors import IndexingError
 
 from aswe.core.data import BestMatch, User
-from aswe.core.use_case import EventUseCase, GeneralUseCase, TransportationUseCase
+from aswe.core.use_cases import EventUseCase, GeneralUseCase, TransportationUseCase
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.utils.general import clear_shell
 

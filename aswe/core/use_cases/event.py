@@ -10,8 +10,8 @@ from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.weather.weather import WeatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
 from aswe.core.data import BestMatch
-from aswe.utils.classes import AbstractUseCase
-from aswe.utils.general import get_next_saturday
+from aswe.utils.abstract import AbstractUseCase
+from aswe.utils.date import get_next_saturday
 
 
 class EventUseCase(AbstractUseCase):

@@ -5,7 +5,7 @@ import pyttsx3
 import speech_recognition as sr
 from loguru import logger
 
-from aswe.utils.general import clear_shell
+from aswe.utils.shell import clear_shell
 
 
 class SpeechToText:
@@ -120,6 +120,7 @@ class TextToSpeech:
 
         * TODO: Add Attributes section
         * TODO: Add test method
+        * TODO: Replace with `gTTS`
 
         Parameters
         ----------

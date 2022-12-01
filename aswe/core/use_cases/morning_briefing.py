@@ -1,9 +1,9 @@
 from aswe.core.data import BestMatch
-from aswe.utils.classes import AbstractUseCase
+from aswe.utils.abstract import AbstractUseCase
 
 
 class MorningBriefingUseCase(AbstractUseCase):
-    """ "Use case for the morning briefing"""
+    """Use case for the morning briefing"""
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for morning briefing

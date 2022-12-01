@@ -1,5 +1,5 @@
 from aswe.core.data import BestMatch
-from aswe.utils.classes import AbstractUseCase
+from aswe.utils.abstract import AbstractUseCase
 
 
 class SportUseCase(AbstractUseCase):

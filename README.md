@@ -41,7 +41,7 @@ Following dependencies are listed which are required to either run or contribute
 
 1. Install `portaudio` for speech recognition:
     - On macOS: `brew install portaudio`
-    - On Linux: `sudo apt install python-pyaudio python3-pyaudio`
+    - On Linux: `sudo apt install python3-pyaudio`
 2. Install [Poetry](https://python-poetry.org/docs/#installation)
     - Poetry is a dependency manager for Python used in this project
     - (Optional) Setup poetry to use the local `.venv` folder by running `poetry config virtualenvs.in-project true`

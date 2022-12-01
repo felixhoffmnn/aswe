@@ -3,6 +3,7 @@
   "ignorePaths": [".git", ".vscode"],
   "words": [
     "aswe",
+    "attendable",
     "autofix",
     "autorefs",
     "codecov",
@@ -44,8 +45,11 @@
     "pytest",
     "pyttsx",
     "pyupgrade",
+    "saturday",
+    "sunday",
     "superfences",
     "tasklist",
+    "timeframe",
     "twemoji",
     "venv",
     "vvspy"

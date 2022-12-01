@@ -15,12 +15,26 @@ nav:
       - Core:
           - Agent: core/agent.md
           - User Interaction: core/user_interaction.md
-          - Use Cases: core/use_cases.md
+          - Use Cases:
+              - General: core/use_cases/general.md
+              - Event: core/use_cases/event.md
+              - Morning Briefing: core/use_cases/morning_briefing.md
+              - Sport: core/use_cases/sport.md
+              - Transportation: core/use_cases/transportation.md
           - Data: core/data.md
       - API:
+          - Calendar: api/calendar.md
+          - Event: api/event.md
+          - News: api/news.md
+          - Sport: api/sport.md
           - Weather: api/weather.md
-          - Events: api/events.md
-      - Utilities: utils/utils.md
+      - Utilities:
+          - Abstract Classes: utils/abstract.md
+          - Date: utils/date.md
+          - Error: utils/error.md
+          - Request: utils/request.md
+          - Shell: utils/shell.md
+          - Validate: utils/validate.md
 
 # Plugins
 plugins:
@@ -76,7 +90,7 @@ theme:
     - navigation.tabs
 
     # Will expand the navigation tree on the sidebar
-    - navigation.expand
+    # - navigation.expand
 
     # TODO: Add description
     - navigation.tracking

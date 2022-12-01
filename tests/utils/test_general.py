@@ -1,6 +1,6 @@
 import datetime
 
-from aswe.utils.general import get_next_saturday
+from aswe.utils.date import get_next_saturday
 
 
 def test_get_next_saturday() -> None:

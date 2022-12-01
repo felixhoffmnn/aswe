@@ -5,7 +5,7 @@ from datetime import datetime
 import pyjokes
 
 from aswe.core.data import BestMatch
-from aswe.utils.classes import AbstractUseCase
+from aswe.utils.abstract import AbstractUseCase
 
 
 class GeneralUseCase(AbstractUseCase):
@@ -17,6 +17,8 @@ class GeneralUseCase(AbstractUseCase):
         The general use case aims to answer general questions like the most popular
         ones asked Google assistant. This use case also includes the option to exit
         the assistant.
+
+        * TODO: Exit confirmation does not work
 
         Parameters
         ----------
@@ -57,7 +59,6 @@ class GeneralUseCase(AbstractUseCase):
             case "boyGirlFriend":
                 self.tts.convert_text("I am sorry, I am not interested in any relationship with my customers.")
             case "exit":
-                # TODO exit confirmation does not work
                 self.tts.convert_text("Do you really want to exit?")
                 response = self.stt.convert_speech()
                 if response in ["yes", "yeah", "yep", "sure", "ok"]:

@@ -14,7 +14,7 @@ from aswe.api.calendar.data import Event
 # TODO: Add credentials file
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 CREDENTIALS_FILE = "calendar_credentials.json"
-PICKLE_FILE = "calendar_token.pickle"
+PICKLE_FILE = "calendar_token.txt"
 
 
 def get_calendar_service() -> Any:

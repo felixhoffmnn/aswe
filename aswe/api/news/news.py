@@ -10,7 +10,7 @@ API_key = os.getenv("NEWS_API_key")
 
 
 def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str] | None:
-    """_summary_
+    """Get the top headlines of a country
 
     Parameters
     ----------
@@ -32,12 +32,17 @@ def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str]
     if max_results > len(headline_request["articles"]):
         max_results = len(headline_request["articles"])
     for i in range(max_results):
-        result.append(headline_request["articles"][i]["title"] + ": " + headline_request["articles"][i]["description"])
+        if headline_request["articles"][i]["description"] is None:
+            result.append(headline_request["articles"][i]["title"])
+        else:
+            result.append(
+                headline_request["articles"][i]["title"] + ": " + headline_request["articles"][i]["description"]
+            )
     return result
 
 
 def keyword_search(keyword: str, max_results: int = 3) -> list[str] | None:
-    """_summary_
+    """Get the top headlines for a keyword
 
     Parameters
     ----------

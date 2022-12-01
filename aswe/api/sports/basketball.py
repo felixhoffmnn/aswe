@@ -3,7 +3,9 @@ from datetime import date
 
 from dotenv import load_dotenv
 
+from aswe.utils.error import ApiLimitReached
 from aswe.utils.request import http_request
+from aswe.utils.validate import validate_api
 
 load_dotenv()
 
@@ -11,7 +13,7 @@ headers = {"x-rapidapi-key": os.getenv("Sports_API_key"), "x-rapidapi-host": "v1
 
 
 def get_nba_standings() -> list[list[str]] | None:
-    """_summary_
+    """Get the current standings of the NBA
 
     Returns
     -------
@@ -21,6 +23,8 @@ def get_nba_standings() -> list[list[str]] | None:
     request = http_request("https://v1.basketball.api-sports.io/standings?league=12&season=2022-2023", headers=headers)
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     wc_standings = []
     ec_standings = []
@@ -43,7 +47,7 @@ def get_nba_standings() -> list[list[str]] | None:
 
 
 def get_team_id(team_name: str) -> int | None:
-    """_summary_
+    """Get the id of a team
 
     Parameters
     ----------
@@ -59,6 +63,10 @@ def get_team_id(team_name: str) -> int | None:
     request = http_request(f"https://v1.basketball.api-sports.io/teams?name={team_name}", headers=headers)
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 
     if data["response"] == []:
@@ -68,7 +76,7 @@ def get_team_id(team_name: str) -> int | None:
 
 
 def get_team_game_today(team_name: str) -> list[str] | None:
-    """_summary_
+    """Get the game of a team today
 
     Parameters
     ----------
@@ -92,6 +100,8 @@ def get_team_game_today(team_name: str) -> list[str] | None:
     )
     if request is None:
         return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 
     if data["response"] == []:

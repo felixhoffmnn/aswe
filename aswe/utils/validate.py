@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from loguru import logger
+from requests import Response
 
 
 def validate_date(date: str, include_time: bool | None = None) -> bool:
@@ -34,3 +35,25 @@ def validate_date(date: str, include_time: bool | None = None) -> bool:
             return False
 
     return True
+
+
+def validate_api(response: Response) -> bool:
+    """Test if the API limit is reached
+
+    Parameters
+    ----------
+    response : Response
+        Response of the API request
+
+    Returns
+    -------
+    bool
+        Return True if the API limit is reached
+    """
+    try:
+        if "You have reached the request limit for the day" in response.json()["errors"]["requests"]:
+            return True
+    except KeyError:
+        return False
+
+    return False

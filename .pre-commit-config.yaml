@@ -78,13 +78,6 @@ repos:
 
   - repo: local
     hooks:
-      - id: pytest
-        name: run pytest (pytest)
-        language: system
-        entry: poetry run pytest
-        pass_filenames: false
-        always_run: true
-
       - id: pytest-cov
         name: check pytest coverage (pytest-cov)
         language: system

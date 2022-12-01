@@ -11,6 +11,14 @@ def test_get_results_by_round() -> None:
 
     assert len(results) == 20
 
+    results = get_results_by_round(2030, "20")
+
+    assert results is None
+
+    results = get_results_by_round(2023, "1")
+
+    assert results is None
+
 
 def test_get_results_last_round() -> None:
     """Test `aswe.api.sports.f1.get_results_last_round`"""

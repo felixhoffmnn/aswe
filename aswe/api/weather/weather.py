@@ -31,25 +31,6 @@ class WeatherApi:
         if self._API_KEY == "":
             raise Exception("WEATHER_API_KEY was not loaded into system")
 
-    def _validate_api_params(
-        self,
-        include: list[IncludeEnum] | None = None,
-        elements: list[ElementsEnum] | None = None,
-    ) -> bool:
-        if include is not None:
-            for inc_param in include:
-                if not IncludeEnum.has_value(inc_param.value):
-                    logger.error(f"IncludeEnum value is invalid: {inc_param}")
-                    return False
-
-        if elements is not None:
-            for ele_param in elements:
-                if not ElementsEnum.has_value(ele_param.value):
-                    logger.error(f"Element value is invalid: {ele_param}")
-                    return False
-
-        return True
-
     def _validate_location(self, location: str) -> bool:
         try:
             city, country = location.split(",")
@@ -137,9 +118,6 @@ class WeatherApi:
         if today <= end_date:
             raise Exception("end_date must be less than current date")
 
-        if not self._validate_api_params(include, elements):
-            raise Exception("Given API params are invalid")
-
         url = f"{self._BASE_URL}/{location}/{start_date}/{end_date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
         url = self._append_api_params(url, include, elements)
@@ -190,9 +168,6 @@ class WeatherApi:
         if today <= date:
             raise Exception("Given day must be less than current date")
 
-        # if not self._validate_api_params(include, elements):
-        #     raise Exception("Given API params are invalid")
-
         url = f"{self._BASE_URL}/{location}/{date}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
         url = self._append_api_params(url, include, elements)
@@ -235,12 +210,6 @@ class WeatherApi:
 
         if not self._validate_location(location):
             raise Exception("Given location is invalid")
-
-        if not DynamicPeriodEnum.has_value(dynamic_period.value):
-            raise Exception("Given DynamicPeriodEnum is invalid")
-
-        # if not self._validate_api_params(include, elements):
-        #     raise Exception("Given API params are invalid")
 
         url = f"{self._BASE_URL}/{location}/{dynamic_period}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
 
@@ -288,9 +257,6 @@ class WeatherApi:
 
         url = f"{self._BASE_URL}/{location}"
 
-        if not self._validate_api_params(include, elements):
-            raise Exception("Given API params are invalid")
-
         if start_date:
             if not validate_date(start_date):
                 raise Exception("Given start_date is invalid")
@@ -312,7 +278,7 @@ class WeatherApi:
                 url = f"{url}/{end_date}"
         else:
             if end_date:
-                raise Exception("if end_date is defined, start_date has to be defined as well.")
+                raise Exception("if end_date is defined, start_date has to be defined as well")
 
         url = f"{url}?key={self._API_KEY}&unitGroup={self.UNIT_GROUP}"
         url = self._append_api_params(url, include, elements)

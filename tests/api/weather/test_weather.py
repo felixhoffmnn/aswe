@@ -33,15 +33,6 @@ def test_class_init() -> None:
         WeatherApi()
 
 
-# TODO:
-# def test_validate_api_params(weather_api: WeatherApi) -> None:
-#     """Test `_validate_api_params` class method"""
-
-#     assert weather_api._validate_api_params(["lorem"]) is False  # type: ignore
-#     assert weather_api._validate_api_params(None, ["lorem"]) is False  # type: ignore
-#     assert weather_api._validate_api_params([IncludeEnum.ALERTS], [ElementsEnum.CAPE]) is True
-
-
 def test_validate_location(weather_api: WeatherApi) -> None:
     """Test `_validate_location` class method"""
 
@@ -175,12 +166,6 @@ def test_dynamic_range_invalid_params(weather_api: WeatherApi) -> None:
     with pytest.raises(Exception, match="Given location is invalid"):
         weather_api.dynamic_range("Lorem,Ipsum", "")  # type: ignore
 
-    with pytest.raises(AttributeError):
-        weather_api.dynamic_range("Lorem,Ip", "lorem")  # type: ignore
-
-    with pytest.raises(AttributeError):
-        weather_api.dynamic_range("Lorem,Ip", DynamicPeriodEnum.TODAY, ["lorem"], ["ipsum"])  # type: ignore
-
 
 def test_dynamic_range_valid_params(weather_api: WeatherApi, mocker: MockFixture) -> None:
     """Test `dynamic_range` class method. Call function with valid params.
@@ -218,9 +203,20 @@ def test_forecast_invalid_params(weather_api: WeatherApi) -> None:
     with pytest.raises(Exception, match="Given location is invalid"):
         weather_api.forecast("Lorem,Ipsum")
 
-    # TODO: Correct typing should already prevent this behavior
-    with pytest.raises(AttributeError):
-        weather_api.forecast("Lorem,Ip", include=["lorem"], elements=["ipsum"])  # type: ignore
+    with pytest.raises(Exception, match="Given start_date is invalid"):
+        weather_api.forecast("Stuttgart,DE", "lorem")
+
+    with pytest.raises(Exception, match="start_date cannot be before today"):
+        weather_api.forecast("Stuttgart,DE", "2000-01-01")
+
+    with pytest.raises(Exception, match="Given end_date is invalid"):
+        weather_api.forecast("Stuttgart,DE", "2030-01-01", "lorem")
+
+    with pytest.raises(Exception, match="end_date must be greater than start_date"):
+        weather_api.forecast("Stuttgart,DE", "2030-01-01", "2025-01-01")
+
+    with pytest.raises(Exception, match="if end_date is defined, start_date has to be defined as well"):
+        weather_api.forecast("Stuttgart,DE", end_date="2030-01-01")
 
 
 def test_forecast_valid_params(weather_api: WeatherApi, mocker: MockFixture) -> None:
@@ -234,7 +230,7 @@ def test_forecast_valid_params(weather_api: WeatherApi, mocker: MockFixture) -> 
     valid_response = Response()
     valid_response._content = b'{"lorem": "ipsum"}'
     mocker.patch(http_import_path, return_value=valid_response)
-    actual_response = weather_api.forecast("Lorem,Ip")
+    actual_response = weather_api.forecast("Lorem,Ip", start_date="2030-01-01", end_date="2035-01-01")
 
     assert {"lorem": "ipsum"} == actual_response
 

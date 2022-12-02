@@ -5,7 +5,6 @@ class IncludeEnum(str, Enum):
     """Enum of possible include parameters for weather API
 
     * TODO: Fix the wired typing and errors
-    * TODO: Why is there a need for `has_value` method?
     """
 
     DAYS = "days"
@@ -39,18 +38,11 @@ class IncludeEnum(str, Enum):
     """use the full statistical forecast information for dates in the future beyond the current model forecast.
     Permits hourly statistical forecast."""
 
-    @classmethod
-    def has_value(cls, value: str) -> bool:
-        """Checks if value exists in enum"""
-
-        return value in cls._value2member_map_
-
 
 class ElementsEnum(str, Enum):
     """Enum of possible element parameters for weather API
 
     * TODO: Fix the wired typing and errors
-    * TODO: Why is there a need for `has_value` method?
     """
 
     CLOUDCOVER = "cloudcover"
@@ -235,17 +227,11 @@ class ElementsEnum(str, Enum):
     for more information on degree days. To turn degree days and degree day accumulation on, use the elements
     parameter. For example, elements=datetime,tempmax,tempmin,degreedays,accdegreedays."""
 
-    @classmethod
-    def has_value(cls, value: str) -> bool:
-        """Checks if value exists in enum"""
-        return value in cls._value2member_map_
-
 
 class DynamicPeriodEnum(str, Enum):
     """Enum of possible dynamic periods for weather API
 
     * TODO: Fix the wired typing and errors
-    * TODO: Why is there a need for `has_value` method?
     """
 
     TODAY = "today"
@@ -275,21 +261,6 @@ class DynamicPeriodEnum(str, Enum):
     """the last occurrence of the weekend before today's day.
     Weekend is defined as Saturday and Sunday.
     Please let us know if you would like additional weekend definitions added."""
-
-    @classmethod
-    def has_value(cls, value: str) -> bool:
-        """Checks if value exists in enum"""
-
-        is_static = value in cls._value2member_map_
-
-        if is_static:
-            return True
-        if ("next" in value or "last" in value) and (
-            "days" in value
-            or value[4:] in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-        ):
-            return True
-        return False
 
     @classmethod
     def last_weekday(cls, weekday: str) -> str:

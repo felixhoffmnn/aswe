@@ -18,16 +18,6 @@ def test_include_enum_values() -> None:
     assert IncludeEnum.STATS_FORECAST.value == "statsfcst"
 
 
-def test_include_has_value() -> None:
-    """Test `has_value` function of `Include` Class"""
-
-    valid_value = "days"
-    invalid_value = "lorem ipsum"
-
-    assert IncludeEnum.has_value(valid_value) is True
-    assert IncludeEnum.has_value(invalid_value) is False
-
-
 def test_elements_enum_values() -> None:
     """Test values of `Elements` Enum Class"""
 
@@ -83,16 +73,6 @@ def test_elements_enum_values() -> None:
     assert ElementsEnum.DEGREE_DAYS.value == "degreedays"
 
 
-def test_elements_has_value() -> None:
-    """Test `has_value` function of `Elements` Class"""
-
-    valid_value = "cloudcover"
-    invalid_value = "lorem ipsum"
-
-    assert ElementsEnum.has_value(valid_value) is True
-    assert ElementsEnum.has_value(invalid_value) is False
-
-
 def test_dynamic_period_enum_values() -> None:
     """Test values of `_DynamicPeriod` Enum Class"""
 
@@ -104,20 +84,6 @@ def test_dynamic_period_enum_values() -> None:
     assert DynamicPeriodEnum.LAST_24_HOURS.value == "last24hours"
     assert DynamicPeriodEnum.NEXT_WEEKEND.value == "nextweekend"
     assert DynamicPeriodEnum.LAST_WEEKEND.value == "lastweekend"
-
-
-def test_dynamic_period_has_value() -> None:
-    """Test `has_value` function of `_DynamicPeriod` Class"""
-
-    valid_value_1 = "today"
-    valid_value_2 = "next0days"
-    valid_value_3 = "nextmonday"
-    invalid_value = "lorem ipsum"
-
-    assert DynamicPeriodEnum.has_value(valid_value_1) is True
-    assert DynamicPeriodEnum.has_value(valid_value_2) is True
-    assert DynamicPeriodEnum.has_value(valid_value_3) is True
-    assert DynamicPeriodEnum.has_value(invalid_value) is False
 
 
 def test_dynamic_period_last_weekday() -> None:

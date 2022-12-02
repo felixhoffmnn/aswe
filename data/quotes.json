@@ -34,8 +34,11 @@
     "basketballStandings": ["basketball standings", "basketball table"],
     "basketballTeamGameToday": ["basketball team game today", "basketball team game tonight"],
     "handballStandings": ["handball standings", "handball table"],
-    "handballTeamGameToday": ["handball team game today", "handball team game tonight"]
+    "handballTeamGameToday": ["handball team game today", "handball team game tonight"],
+    "f1ResultsByRound": ["f1 results by round", "formula 1 results by round"],
+    "f1LastRoundResult": ["f1 last round result", "formula 1 last round result"]
   },
+
   "general": {
     "time": ["time", "what time is it"],
     "wellBeing": ["how are you", "are you fine", "well being"],

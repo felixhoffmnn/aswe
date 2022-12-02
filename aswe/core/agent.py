@@ -132,6 +132,7 @@ class Agent:
         Function calculates the similarity between the parsed text and the use cases.
 
         * TODO: Add tokenization and stop words
+        * TODO: Extract calculation of similarity into a util function
 
         ??? example "`self.quotes` DataFrame"
 

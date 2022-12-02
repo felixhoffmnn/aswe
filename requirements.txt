@@ -666,11 +666,9 @@ pyasn1==0.4.8 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba
 pyaudio==0.2.12 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:0f9debc6e47b6a5a4fe9da9d213d4bfe5e8096e68f0612f1b9097e3253eeea4d \
-    --hash=sha256:19f654bd516154a655d9569d12d2a86ab5dfd58d039c0e4c6d1a26ec4ca02d89 \
     --hash=sha256:1c29930cf2e392d8b21a4c6253efe39d7400e37d61a7991756d3b00a46bf18ce \
     --hash=sha256:2f4206c6a8d2eeb2d1f054c69e3741c8634cfafe7887be4950a2f7d273700f8a \
     --hash=sha256:55ddf5db72bc537bba5f5dbca3ab9f0222ee5b842bda83978eab0b7b8f60fb9e \
-    --hash=sha256:5678725eb828742ea3febf381b1bd0bb94ba76c35e5e0daeab84e4c50f9f5d47 \
     --hash=sha256:71fc1688732fced907ae707d609cc3eead9fa05baf703bf08885f71a8fd9c658 \
     --hash=sha256:880aff391a73ff5e94bae73e32d3b8e27e988a93afec2dd9c74dcd92c305f8cc \
     --hash=sha256:d89f065adc0058df90ec59aa6b35c1c036f17bb4323fb68b4267c12924e9553e \

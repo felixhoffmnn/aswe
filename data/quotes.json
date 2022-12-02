@@ -32,7 +32,9 @@
       "soccer current team match"
     ],
     "basketballStandings": ["basketball standings", "basketball table"],
-    "basketballTeamGameToday": ["basketball team game today", "basketball team game tonight"]
+    "basketballTeamGameToday": ["basketball team game today", "basketball team game tonight"],
+    "handballStandings": ["handball standings", "handball table"],
+    "handballTeamGameToday": ["handball team game today", "handball team game tonight"]
   },
   "general": {
     "time": ["time", "what time is it"],

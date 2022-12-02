@@ -35,11 +35,11 @@ def get_nba_standings() -> list[list[str]] | None:
                 conferences.append(team["group"]["name"])
             if team["group"]["name"] == "Eastern Conference":
                 ec_standings.append(
-                    f"{team['position']}. {team['team']['name']} wins: {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
+                    f"{team['position']}. {team['team']['name']} {team['games']['win']['total']} wins {team['games']['lose']['total']} losses"
                 )
             if team["group"]["name"] == "Western Conference":
                 wc_standings.append(
-                    f"{team['position']}. {team['team']['name']} wins: {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
+                    f"{team['position']}. {team['team']['name']} {team['games']['win']['total']} wins {team['games']['lose']['total']} losses"
                 )
     return [wc_standings, ec_standings]
 

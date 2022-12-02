@@ -1,4 +1,4 @@
-from aswe.api.sport import basketball, football
+from aswe.api.sport import basketball, football, handball
 from aswe.core.data import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 from aswe.utils.error import ApiLimitReached
@@ -140,7 +140,7 @@ class SportUseCase(AbstractUseCase):
                     for team in nba_standings[1]:
                         self.tts.convert_text(team)
                 except ApiLimitReached:
-                    self.tts.convert_text("Sorry, the API limit for the NBA has been reached.")
+                    self.tts.convert_text("Sorry, the API limit for the NBA API has been reached.")
             case "basketballTeamGameToday":
                 try:
                     teams = basketball.get_nba_teams()
@@ -150,9 +150,40 @@ class SportUseCase(AbstractUseCase):
                     game = basketball.get_team_game_today(team)
                     if game is None:
                         raise Exception("Could not get game")
-                    self.tts.convert_text(game[0])
+                    try:
+                        self.tts.convert_text(game[0])
+                    except IndexError:
+                        self.tts.convert_text(f"The {team} have no games today.")
                 except ApiLimitReached:
-                    self.tts.convert_text("Sorry, the API limit for the NBA has been reached.")
+                    self.tts.convert_text("Sorry, the API limit for the NBA API has been reached.")
+            case "handballStandings":
+                try:
+                    leagues = ["Bundesliga", "Starligue", "Liga ASOBAL"]
+                    league = self.choose_league(leagues)
+                    handball_standings = handball.get_league_table(league)
+                    if handball_standings is None:
+                        raise Exception("Could not get handball standings")
+                    for team in handball_standings:
+                        self.tts.convert_text(team)
+                except ApiLimitReached:
+                    self.tts.convert_text("Sorry, the API limit for the handball API has been reached.")
+            case "handballTeamGameToday":
+                try:
+                    leagues = ["Bundesliga", "Starligue", "Liga ASOBAL"]
+                    league = self.choose_league(leagues)
+                    teams = handball.get_league_teams(league)
+                    if teams is None:
+                        raise Exception("Could not get handball teams")
+                    team = self.choose_team(teams)
+                    handball_game = handball.get_team_game_today(team)
+                    if handball_game is None:
+                        raise Exception("Could not get handball game")
+                    try:
+                        self.tts.convert_text(handball_game[0])
+                    except IndexError:
+                        self.tts.convert_text(f"The {team} have no games today.")
+                except ApiLimitReached:
+                    self.tts.convert_text("Sorry, the API limit for the handball API has been reached.")
 
             case _:
                 raise NotImplementedError

@@ -36,6 +36,36 @@ def get_league_id(league_name: str) -> int | None:
     return None
 
 
+def get_league_teams(league_name: str) -> list[str] | None:
+    """Get the league teams of a league
+
+    Parameters
+    ----------
+    league_name : str, optional
+        Name of the league for which the teams are returned
+
+    Returns
+    -------
+    list[str] | None
+        Return a list of strings with the teams in the league
+    """
+    league_id = get_league_id(league_name)
+    if league_id is None:
+        return None
+    request = http_request(
+        f"https://v1.handball.api-sports.io/standings?league={league_id}&season=2022", headers=headers
+    )
+    if request is None:
+        return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
+    standings = request.json()
+    table = []
+    for position in standings["response"][0]:
+        table.append(f'{position["position"]} {position["team"]["name"]} {position["points"]}')
+    return table
+
+
 def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     """Get the league table of a league
 
@@ -60,10 +90,10 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     if validate_api(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     standings = request.json()
-    table = []
+    teams = []
     for position in standings["response"][0]:
-        table.append(f'{position["position"]} {position["team"]["name"]} {position["points"]}')
-    return table
+        teams.append(position["team"]["name"])
+    return teams
 
 
 def get_team_id(team_name: str) -> int | None:

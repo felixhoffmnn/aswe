@@ -6,6 +6,7 @@ from loguru import logger
 
 from aswe.api.calendar.calendar import get_events_by_timeframe
 from aswe.api.event.event import EventApi
+from aswe.api.event.event_data import EventTTSInfo, TripModeEnum
 from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.weather.weather import WeatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
@@ -25,6 +26,7 @@ class EventUseCase(AbstractUseCase):
         """UseCase for events
 
         * TODO: Implement `quotes_key`
+        * TODO: Outsource navigation api
 
         Parameters
         ----------
@@ -41,7 +43,7 @@ class EventUseCase(AbstractUseCase):
             case "eventSummary":
                 raise NotImplementedError
             case "thisWeekend":
-                attendable_events_info = []
+                attendable_events_info: list[EventTTSInfo] = []
 
                 beginning_next_saturday = get_next_saturday()
                 end_next_sunday = beginning_next_saturday + timedelta(days=1, hours=23, minutes=59, seconds=59)
@@ -67,7 +69,7 @@ class EventUseCase(AbstractUseCase):
                 for event in events:
                     event_can_be_attended = True
 
-                    event_start_datetime = datetime.fromisoformat(event["start"].replace("T", " ").replace("Z", ""))
+                    event_start_datetime = datetime.fromisoformat(event.start.replace("T", " ").replace("Z", ""))
                     event_end_datetime = event_start_datetime + timedelta(hours=2)
 
                     for calendar_event in calendar_events:
@@ -88,7 +90,7 @@ class EventUseCase(AbstractUseCase):
                             break
 
                     if event_can_be_attended:
-                        event_tts_info = {"name": event["name"], "start": event_start_datetime}
+                        event_tts_info = EventTTSInfo(name=event.name, start=event_start_datetime)
 
                         weather_response = self._WEATHER_API.forecast(
                             location="Stuttgart,DE",
@@ -105,21 +107,21 @@ class EventUseCase(AbstractUseCase):
                             temperature = None
                             precipitation_probability = None
 
-                        event_location = f"""{event["location"]["address"]},{event["location"]["city"]}"""
+                        event_location = f"""{event.location.address},{event.location.city}"""
 
-                        # TODO ask user about preferred method (driving, walking, transit, bicycling)
+                        # TODO a user about preferred method (driving, walking, transit, bicycling)
                         directions = self._NAVIGATION_API.directions(
                             f"{self.user.street},{self.user.city}", event_location, mode="bicycling"
                         )
 
                         if temperature is not None:
-                            event_tts_info["is_cold"] = temperature < 5.0
+                            event_tts_info.is_cold = temperature < 5.0
 
                         if precipitation_probability is not None:
-                            event_tts_info["is_rainy"] = precipitation_probability > 40.0
+                            event_tts_info.is_rainy = precipitation_probability > 40.0
 
-                        event_tts_info["trip_mode"] = "bicycling"
-                        event_tts_info["trip_duration"] = directions[0]["legs"][0]["duration"]["text"]
+                        event_tts_info.trip_mode = TripModeEnum.BICYCLING
+                        event_tts_info.trip_duration = directions[0]["legs"][0]["duration"]["text"]
 
                         attendable_events_info.append(event_tts_info)
 
@@ -131,31 +133,31 @@ class EventUseCase(AbstractUseCase):
                     self.tts.convert_text("There are no events this weekend that fit your weekend plans.")
                 elif len(attendable_events_info) == 1:
                     self.tts.convert_text("There is one event that fits your weekend plans.")
-                    self.tts.convert_text(f"""It is the {attendable_events_info[0]["name"]} event.""")
+                    self.tts.convert_text(f"""It is the {attendable_events_info[0].name} event.""")
 
                     self.tts.convert_text(
-                        f"""The event starts at {attendable_events_info[0]["start"].hour}:"""
-                        f"""{str(attendable_events_info[0]["start"].minute).zfill(2)}. """
-                        f"""It will take you {attendable_events_info[0]["trip_duration"]} to get there."""
+                        f"""The event starts at {attendable_events_info[0].start.hour}:"""
+                        f"""{str(attendable_events_info[0].start.minute).zfill(2)}. """
+                        f"""It will take you {attendable_events_info[0].trip_duration} to get there."""
                     )
 
-                    if attendable_events_info[0].get("is_rainy", False):
+                    if attendable_events_info[0].is_rainy:
                         self.tts.convert_text("There is a high chance of rain, you might want to take an umbrella.")
-                    if attendable_events_info[0].get("is_cold", False):
+                    if attendable_events_info[0].is_cold:
                         self.tts.convert_text("Additionally, you should prepare for chilly temperatures.")
                 else:
                     # TODO provide user with more information about multiple events
                     self.tts.convert_text("There are multiple events you might want to attend to.")
 
                     if (
-                        attendable_events_info[0]["start"].weekday() == 5
-                        and attendable_events_info[1]["start"].weekday() == 5
+                        attendable_events_info[0].start.weekday() == 5
+                        and attendable_events_info[1].start.weekday() == 5
                     ):
                         self.tts.convert_text(
-                            f"""Both events are coming Saturday, at {attendable_events_info[0]["start"].hour}"""
-                            f""":{str(attendable_events_info[0]["start"].minute).zfill(2)} and """
-                            f"""{attendable_events_info[1]["start"].hour}"""
-                            f""":{str(attendable_events_info[1]["start"].minute).zfill(2)} respectively."""
+                            f"""Both events are coming Saturday, at {attendable_events_info[0].start.hour}"""
+                            f""":{str(attendable_events_info[0].start.minute).zfill(2)} and """
+                            f"""{attendable_events_info[1].start.hour}"""
+                            f""":{str(attendable_events_info[1].start.minute).zfill(2)} respectively."""
                         )
 
             case _:

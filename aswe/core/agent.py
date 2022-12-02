@@ -10,13 +10,13 @@ from loguru import logger
 from pandas.errors import IndexingError
 
 from aswe.core.data import BestMatch, User
-from aswe.core.use_cases import (
+from aswe.core.user_interaction import SpeechToText, TextToSpeech
+from aswe.use_cases import (
     EventUseCase,
     GeneralUseCase,
     SportUseCase,
     TransportationUseCase,
 )
-from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.utils.shell import clear_shell
 
 

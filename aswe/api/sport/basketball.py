@@ -35,15 +35,33 @@ def get_nba_standings() -> list[list[str]] | None:
                 conferences.append(team["group"]["name"])
             if team["group"]["name"] == "Eastern Conference":
                 ec_standings.append(
-                    f"{team['position']}. {team['team']['name']} wins: \
-                        {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
+                    f"{team['position']}. {team['team']['name']} wins: {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
                 )
             if team["group"]["name"] == "Western Conference":
                 wc_standings.append(
-                    f"{team['position']}. {team['team']['name']} wins: \
-                        {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
+                    f"{team['position']}. {team['team']['name']} wins: {team['games']['win']['total']} losses: {team['games']['lose']['total']}"
                 )
     return [wc_standings, ec_standings]
+
+
+def get_nba_teams() -> list[str] | None:
+    """Get all NBA teams
+
+    Returns
+    -------
+    list[str] | None
+        List of all NBA teams
+    """
+    request = http_request("https://v1.basketball.api-sports.io/standings?league=12&season=2022-2023", headers=headers)
+    if request is None:
+        return None
+    if validate_api(request):
+        raise ApiLimitReached("You have reached the handball API request limit for the day")
+    data = request.json()
+    teams = []
+    for team in data["response"][0]:
+        teams.append(team["team"]["name"])
+    return teams
 
 
 def get_team_id(team_name: str) -> int | None:
@@ -63,8 +81,6 @@ def get_team_id(team_name: str) -> int | None:
     request = http_request(f"https://v1.basketball.api-sports.io/teams?name={team_name}", headers=headers)
     if request is None:
         return None
-    if validate_api(request):
-        raise ApiLimitReached("You have reached the handball API request limit for the day")
     if validate_api(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()

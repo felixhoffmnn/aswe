@@ -1,6 +1,7 @@
-from aswe.api.sport import football
+from aswe.api.sport import basketball, football
 from aswe.core.data import BestMatch
 from aswe.utils.abstract import AbstractUseCase
+from aswe.utils.error import ApiLimitReached
 
 
 class SportUseCase(AbstractUseCase):
@@ -127,18 +128,31 @@ class SportUseCase(AbstractUseCase):
                     raise Exception("Could not get matches")
                 for match in matches:
                     self.tts.convert_text(match)
-            case "footballCurrentMatch":
-                leagues = ["Premier League", "Bundesliga", "Serie A", "Ligue 1", "World Cup"]
-                league = self.choose_league(leagues)
-                teams = football.get_teams(league)
-                if teams is None:
-                    raise Exception("Could not get teams")
-                team = self.choose_team(teams)
-                if team is None or league:
-                    raise Exception("Could not get team")
-                cur_match = football.get_current_team_match(league, team)
-                if cur_match is None:
-                    raise Exception("Could not get current match")
-                self.tts.convert_text(cur_match[0])
+            case "basketballStandings":
+                try:
+                    nba_standings = basketball.get_nba_standings()
+                    if nba_standings is None:
+                        raise Exception("Could not get NBA standings")
+                    self.tts.convert_text("The current standings of the NBA Western Conference are:")
+                    for team in nba_standings[0]:
+                        self.tts.convert_text(team)
+                    self.tts.convert_text("The current standings of the NBA Eastern Conference are:")
+                    for team in nba_standings[1]:
+                        self.tts.convert_text(team)
+                except ApiLimitReached:
+                    self.tts.convert_text("Sorry, the API limit for the NBA has been reached.")
+            case "basketballTeamGameToday":
+                try:
+                    teams = basketball.get_nba_teams()
+                    if teams is None:
+                        raise Exception("Could not get NBA teams")
+                    team = self.choose_team(teams)
+                    game = basketball.get_team_game_today(team)
+                    if game is None:
+                        raise Exception("Could not get game")
+                    self.tts.convert_text(game[0])
+                except ApiLimitReached:
+                    self.tts.convert_text("Sorry, the API limit for the NBA has been reached.")
+
             case _:
                 raise NotImplementedError

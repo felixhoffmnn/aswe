@@ -55,5 +55,7 @@ def validate_api(response: Response) -> bool:
             return True
     except KeyError:
         return False
+    except TypeError:
+        return False
 
     return False

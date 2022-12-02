@@ -23,7 +23,7 @@ def test_get_league_id() -> None:
 def test_get_league_table() -> None:
     """Test `aswe.api.sport.handball.get_league_table`"""
     standings = get_league_table("Bundesliga")
-    assert len(standings) == 18
+    assert len(standings) == 18  # type: ignore
 
     standings = get_league_table("Testing")
     assert standings is None

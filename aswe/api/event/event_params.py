@@ -206,6 +206,7 @@ class EventApiEventParams:
         return query[:-1]
 
 
+# TODO remove class as it is unused
 @dataclass
 class EventApiClassificationParams:
     """Query Params Dataclass for Event API Classification requests"""

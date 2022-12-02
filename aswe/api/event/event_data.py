@@ -17,7 +17,7 @@ class EventLocation:
     """Street and house number of location"""
 
 
-@dataclass
+@dataclass(eq=True)
 class ReducedEvent:
     """Dataclass storing reduced Event data for `EventApi.events`"""
 

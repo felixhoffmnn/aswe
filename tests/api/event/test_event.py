@@ -62,7 +62,14 @@ def test_reduce_events(event_api: EventApi) -> None:
     )
 
     assert len(reduced_event_list) == 1
-    assert reduced_event_list[0] == comparison_reduced_event
+
+    assert reduced_event_list[0] == {
+        "id": "test_id",
+        "name": "test_name",
+        "start": "2025-01-01T01:00:00Z",
+        "status": "onsale",
+        "location": {"name": "test_venue_name", "city": "test_city_name", "address": "test_address"},
+    }
 
 
 def test_events_invalid_params(event_api: EventApi) -> None:

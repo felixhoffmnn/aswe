@@ -3,6 +3,7 @@ import pytest
 from aswe.api.sport.handball import (
     get_league_id,
     get_league_table,
+    get_league_teams,
     get_team_game_today,
     get_team_id,
 )
@@ -23,7 +24,7 @@ def test_get_league_id() -> None:
 def test_get_league_table() -> None:
     """Test `aswe.api.sport.handball.get_league_table`"""
     standings = get_league_table("Bundesliga")
-    assert len(standings) == 18
+    assert isinstance(standings, list) and len(standings) == 18
 
     standings = get_league_table("Testing")
     assert standings is None
@@ -51,3 +52,13 @@ def test_get_team_game_today() -> None:
     game = get_team_game_today("Fuchse Berlin", "Testing")
 
     assert game is None
+
+
+@pytest.mark.xfail(raises=ApiLimitReached)
+def test_get_league_teams() -> None:
+    """Test `aswe.api.sport.handball.get_league_teams`"""
+    teams = get_league_teams("Bundesliga")
+    assert isinstance(teams, list) and len(teams) == 18
+
+    teams = get_league_teams("Testing")
+    assert teams is None

@@ -2,6 +2,7 @@ import pytest
 
 from aswe.api.sport.basketball import (
     get_nba_standings,
+    get_nba_teams,
     get_team_game_today,
     get_team_id,
 )
@@ -14,6 +15,14 @@ def test_get_nba_standings() -> None:
     standings = get_nba_standings()
 
     assert isinstance(standings, list) and len(standings) == 2 and len(standings[0]) == 15 and len(standings[1]) == 15
+
+
+@pytest.mark.xfail(raises=ApiLimitReached)
+def test_get_nba_teams() -> None:
+    """Test `aswe.api.sport.basketball.get_nba_teams`"""
+    teams = get_nba_teams()
+
+    assert isinstance(teams, list) and len(teams) == 60
 
 
 @pytest.mark.xfail(raises=ApiLimitReached)

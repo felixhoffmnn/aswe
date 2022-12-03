@@ -11,17 +11,17 @@ nav:
   - Overview:
       - Readme: index.md
       - License: license.md
-  - Documentation:
+  - Code Reference:
       - Core:
           - Agent: core/agent.md
           - User Interaction: core/user_interaction.md
-          - Use Cases:
-              - General: core/use_cases/general.md
-              - Event: core/use_cases/event.md
-              - Morning Briefing: core/use_cases/morning_briefing.md
-              - Sport: core/use_cases/sport.md
-              - Transportation: core/use_cases/transportation.md
-          - Data: core/data.md
+          - Data: core/objects.md
+      - Use Cases:
+          - General: use_cases/general.md
+          - Event: use_cases/event.md
+          - Morning Briefing: use_cases/morning_briefing.md
+          - Sport: use_cases/sport.md
+          - Transportation: use_cases/transportation.md
       - API:
           - Calendar: api/calendar.md
           - Event: api/event.md

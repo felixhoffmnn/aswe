@@ -1,5 +1,5 @@
 from aswe.api.sport import basketball, football, handball
-from aswe.core.data import BestMatch
+from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 from aswe.utils.error import ApiLimitReached
 

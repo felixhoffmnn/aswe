@@ -9,7 +9,7 @@ from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
-from aswe.core.data import BestMatch, User
+from aswe.core.objects import Address, BestMatch, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases import (
     EventUseCase,
@@ -28,17 +28,17 @@ class Agent:
     and handle proactivity.
     """
 
-    def __init__(self, get_mic: bool = False, get_user: bool = False, is_test: bool = False) -> None:
+    def __init__(self, get_mic: bool = False, is_test: bool = False) -> None:
         """
         * TODO: Add Attributes section
         * TODO: Tokenize the phrases and input
+        * TODO: Add flag for triggering proactivity
+        * TODO: Add variable for storing the last time when proactivity was triggered
 
         Parameters
         ----------
         get_mic : bool, optional
             Boolean if the speech to text class should first ask for the microphone to use. _By default `False`_.
-        get_user : bool, optional
-            Boolean if the default user should be used. _By default `False`_.
         is_test : bool, optional
             Boolean if the agent is used for testing. _By default `False`_.
 
@@ -82,13 +82,20 @@ class Agent:
         self.stt = SpeechToText(get_mic, is_test)
         self.tts = TextToSpeech(is_test)
 
-        if get_user:
-            clear_shell()
-            self.user = self._get_user()
-        else:
-            self.user = User(
-                name="Felix", age=22, street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE"
-            )
+        self.user = User(
+            name="Felix",
+            age=22,
+            possessions=Possessions(bike=True, car=False),
+            address=Address(
+                street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id="de:08111:6002"
+            ),
+        )
+
+        # GetFinanceData
+
+        # Print available stocks
+        # input("get user input")
+        # self.user.favorite_stocks = ["Apple", "Tesla", "Microsoft"]
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
@@ -106,25 +113,10 @@ class Agent:
         else:
             greeting_text = f"Good Evening {self.user.name}."
 
+        clear_shell()
         self.tts.convert_text(greeting_text)
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
         self.tts.convert_text("How can I help you?")
-
-    def _get_user(self) -> User:
-        """Asks for the name of the user.
-
-        * TODO: Refactor into a util function
-        """
-        name = input("What is your name? ")
-
-        age = None
-        while age is None:
-            try:
-                age = int(input("What is your age? "))
-            except ValueError:
-                print("Please enter a valid age.")
-
-        return User(name=name)  # type: ignore
 
     def get_best_match(self, parsed_text: str, threshold: float = 0.5) -> BestMatch | None:
         """Find the best match for the parsed text
@@ -232,15 +224,14 @@ class Agent:
         then checks proactively if there are updates for the user. If thats not the case, it will start
         listening for user input in `60` second intervals. If the user input is not empty, it will
         execute the use case function for proactivity.
+
+        * TODO: Implement proactivity
         """
-        clear_shell()
         self._greeting()
         proactivity_last_checked = datetime.now().minute
 
         while True:
             print("")
-
-            # TODO: Implement proactivity
             if proactivity_last_checked % 15 == 0:
                 self.check_proactivity()
 
@@ -263,8 +254,6 @@ class Agent:
         parsed_text : str
             The voice input of the user parsed to lower case string
         """
-        logger.info(f"Evaluating the parsed text: {parsed_text}")
-
         best_match = self.get_best_match(parsed_text)
         if best_match is None:
             self.tts.convert_text("Sorry, I didn't find a match for your request.")

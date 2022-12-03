@@ -262,7 +262,7 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
     Returns
     -------
     list[str] | None
-       Return list of the upcoming matches of the specified team
+        Return list of the upcoming matches of the specified team
     """
     league_id = convert_league_name(league)
     if league_id is None:

@@ -8,7 +8,7 @@ from pytest_mock import MockFixture
 from aswe.api.calendar.data import Event
 from aswe.api.event.event import EventApi
 from aswe.api.weather.weather import WeatherApi
-from aswe.core.data import BestMatch, User
+from aswe.core.objects import Address, BestMatch, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.event import EventUseCase
 
@@ -43,7 +43,12 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
     """
 
     best_match = BestMatch(use_case="events", function_key="thisWeekend", similarity=1, parsed_text="lorem ipsum")
-    user = User(name="TestUser", age=10, street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE")
+    user = User(
+        name="TestUser",
+        age=10,
+        possessions=Possessions(bike=True, car=False),
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+    )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Patch Event Api
@@ -74,7 +79,12 @@ def test_this_weekend_one_attendable_event(
     """
 
     best_match = BestMatch(use_case="events", function_key="thisWeekend", similarity=1, parsed_text="lorem ipsum")
-    user = User(name="TestUser", age=10, street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE")
+    user = User(
+        name="TestUser",
+        age=10,
+        possessions=Possessions(bike=True, car=False),
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+    )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Patch Event Api

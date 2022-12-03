@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from aswe.core.data import BestMatch, User
+from aswe.core.objects import BestMatch, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 
@@ -11,6 +11,7 @@ class AbstractUseCase(ABC):
         """Use case constructor to provide objects from the parent agent class
 
         * TODO: Add Attributes section
+        * TODO: Change how we pass arguments to the constructor/functions
 
         Parameters
         ----------
@@ -43,3 +44,4 @@ class AbstractUseCase(ABC):
             If the given key was not found in the match case statement for implemented functions,
             or if the function is not implemented yet.
         """
+        raise NotImplementedError

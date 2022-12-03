@@ -1,9 +1,14 @@
-from aswe.core.data import BestMatch
+from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 
 
 class MorningBriefingUseCase(AbstractUseCase):
     """Use case for the morning briefing"""
+
+    # def get_user_preference(self) -> list[str]:
+    #     """Get user preference"""
+    #     input
+    #     return ["newsSummary", "weatherForecast", "trafficForecast"]
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for morning briefing

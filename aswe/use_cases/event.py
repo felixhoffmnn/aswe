@@ -10,7 +10,7 @@ from aswe.api.event.event_data import EventTTSInfo, TripModeEnum
 from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.weather.weather import WeatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
-from aswe.core.data import BestMatch
+from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 from aswe.utils.date import get_next_saturday
 
@@ -66,12 +66,17 @@ class EventUseCase(AbstractUseCase):
                     max_timestamp=end_next_sunday.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                 )
 
+                # possible_events = [... for .. in .. if ..]
+                # event_context = [... for .. in possible_events]
+
+                # TODO: Refactor this and use list comprehension (e.g., check_event())
                 for event in events:
                     event_can_be_attended = True
 
                     event_start_datetime = datetime.fromisoformat(event.start.replace("T", " ").replace("Z", ""))
                     event_end_datetime = event_start_datetime + timedelta(hours=2)
 
+                    # TODO: Refactor this
                     for calendar_event in calendar_events:
                         if calendar_event.start_time == "":
                             continue
@@ -89,6 +94,9 @@ class EventUseCase(AbstractUseCase):
                             event_can_be_attended = False
                             break
 
+                    # TODO: Refactor this
+                    # I think it would be better to first get all events a user can attend and then
+                    # get all other information
                     if event_can_be_attended:
                         event_tts_info = EventTTSInfo(name=event.name, start=event_start_datetime)
 
@@ -111,7 +119,7 @@ class EventUseCase(AbstractUseCase):
 
                         # TODO a user about preferred method (driving, walking, transit, bicycling)
                         directions = self._NAVIGATION_API.directions(
-                            f"{self.user.street},{self.user.city}", event_location, mode="bicycling"
+                            f"{self.user.address.street},{self.user.address.city}", event_location, mode="bicycling"
                         )
 
                         if temperature is not None:
@@ -129,6 +137,7 @@ class EventUseCase(AbstractUseCase):
                 logger.debug("Count of attendable events:" + str(len(attendable_events_info)))
                 logger.debug(attendable_events_info)
 
+                # TODO: Refactor this into a function because it is to long and complex
                 if len(attendable_events_info) == 0:
                     self.tts.convert_text("There are no events this weekend that fit your weekend plans.")
                 elif len(attendable_events_info) == 1:

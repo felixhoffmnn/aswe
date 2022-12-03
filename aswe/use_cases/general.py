@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pyjokes
 
-from aswe.core.data import BestMatch
+from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 
 
@@ -41,7 +41,10 @@ class GeneralUseCase(AbstractUseCase):
                 self.tts.convert_text("I am your digital assistant")
                 self.tts.convert_text(f"Most of the time I am being called {self.assistant_name}")
             case "joke":
-                self.tts.convert_text(pyjokes.get_joke())
+                if self.user.age >= 18:
+                    self.tts.convert_text(pyjokes.get_joke())
+                else:
+                    self.tts.convert_text("Sorry, I am not allowed to tell jokes to minors.")
             case "stopListening":
                 self.tts.convert_text("For how long do you want me to stop listening (in seconds)?")
 

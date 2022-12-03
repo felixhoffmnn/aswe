@@ -6,7 +6,7 @@ from vvspy import get_trips
 from aswe.api.calendar.calendar import get_next_event_today
 from aswe.api.weather.weather import WeatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
-from aswe.core.data import BestMatch
+from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 
 

@@ -134,7 +134,7 @@ def create_event(event_info: Event) -> None:
 
     Parameters
     ----------
-    eventInfo : Event
+    event_info : Event
         Information about the event that is created
     """
     if event_info.full_day:

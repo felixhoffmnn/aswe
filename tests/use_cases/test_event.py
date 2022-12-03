@@ -46,8 +46,9 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
     user = User(
         name="TestUser",
         age=10,
-        possessions=Possessions(bike=True, car=False),
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=False),
+        favorite_stocks=[],
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -82,8 +83,9 @@ def test_this_weekend_one_attendable_event(
     user = User(
         name="TestUser",
         age=10,
-        possessions=Possessions(bike=True, car=False),
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=False),
+        favorite_stocks=[],
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 

@@ -79,12 +79,12 @@ class User:
         The age of the user.
     address : Address
         The address of the user.
-    favorite_stocks : list[str] | None, optional
-        The favorite stocks of the user. _By default `None`_.
+    favorite_stocks : list[str]
+        The favorite stocks of the user.
     """
 
     name: str
     age: int
     address: Address
     possessions: Possessions
-    favorite_stocks: list[str] | None = None
+    favorite_stocks: list[str]

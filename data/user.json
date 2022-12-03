@@ -1,0 +1,16 @@
+{
+  "name": "Felix",
+  "age": 22,
+  "address": {
+    "street": "Pfaffenwaldring 45",
+    "city": "Stuttgart",
+    "zip_code": 70565,
+    "country": "Germany",
+    "vvs_id": "de:08111:6002"
+  },
+  "possessions": {
+    "bike": true,
+    "car": false
+  },
+  "favorite_stocks": ["AAPL", "GOOG", "MSFT"]
+}

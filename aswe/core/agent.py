@@ -79,17 +79,31 @@ class Agent:
             logger.error("Could not open file. Please check if the file exists.")
             sys.exit(1)
 
+        try:
+            with open(Path("data/user.json"), encoding="utf-8") as file:
+                user_data = json.load(file)
+                self.user = User(
+                    name=user_data["name"],
+                    age=user_data["age"],
+                    possessions=Possessions(bike=user_data["possessions"]["bike"], car=user_data["possessions"]["car"]),
+                    address=Address(
+                        street=user_data["address"]["street"],
+                        city=user_data["address"]["city"],
+                        zip_code=user_data["address"]["zip_code"],
+                        country=user_data["address"]["country"],
+                        vvs_id=user_data["address"]["vvs_id"],
+                    ),
+                    favorite_stocks=user_data["favorite_stocks"],
+                )
+        except OSError:
+            logger.error("Could not open file. Please check if the file exists.")
+            sys.exit(1)
+        except KeyError:
+            logger.error("It appears that not all necessary keys are correctly set in the `user.json` file.")
+            sys.exit(1)
+
         self.stt = SpeechToText(get_mic, is_test)
         self.tts = TextToSpeech(is_test)
-
-        self.user = User(
-            name="Felix",
-            age=22,
-            possessions=Possessions(bike=True, car=False),
-            address=Address(
-                street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id="de:08111:6002"
-            ),
-        )
 
         # GetFinanceData
 

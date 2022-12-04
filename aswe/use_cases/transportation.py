@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from loguru import logger
-from vvspy import get_trips
 
 from aswe.api.calendar.calendar import get_next_event_today
+from aswe.api.navigation.vvs import get_next_connection
 from aswe.api.weather.weather import WeatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch
@@ -67,28 +67,32 @@ class TransportationUseCase(AbstractUseCase):
             minutes_bike = "20"
             bicycle_response = f"If you take the bike, you will need {minutes_bike} minutes. "
 
-        # TODO: replace start_location with user preference
-        start_location = "de:08111:6002"  # Vaihingen
+        vvs_response = ""
+        trip = None
+        if end_location != "":
+            start_location = self.user.address.vvs_id
 
-        vvs_routes = get_trips(start_location, end_location, limit=10)
-        logger.info(vvs_routes)
-        # TODO: filter important information from vvs_routes
-
-        start_loc = "Vaihingen"
-        end_loc = "Stadtmitte"
-        start_in_x_min = "5"
-        arrive_after = "12"
-        train_name = "S1"
+            trip = get_next_connection(start_location, end_location)
+            if trip is not None:
+                vvs_response = "You can take the"
+                for i, con in enumerate(trip.connections):
+                    if i != 0:
+                        vvs_response += " then the"
+                    vvs_response += f" {con.train_name} from {con.start_location} to {con.end_location} at {con.start_time.strftime('%H:%M')}"
+                vvs_response += f". You would arrive at {trip.connections[-1].end_time.strftime('%H:%M')} after {trip.duration} minutes. "
 
         next_event = get_next_event_today()
         next_event_announcement = "You do not have any more events today. "
         if next_event:
             event_start_time = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00").strftime("%H:%M")
             next_event_announcement = f"Your next Event is {next_event.title} at {event_start_time}. "
+            if (
+                trip is not None
+                and datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00") < trip.connections[-1].end_time
+            ):
+                next_event_announcement += (
+                    "If you take the train, you are still on a train when the next event starts. "
+                )
 
-        output = (
-            bicycle_response
-            + f"You can take the {train_name} in {start_in_x_min} minutes from {start_loc} to arrive at {end_loc} after {arrive_after} more minutes. "
-            + next_event_announcement
-        )
+        output = bicycle_response + vvs_response + next_event_announcement
         self.tts.convert_text(output)

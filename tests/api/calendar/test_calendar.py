@@ -38,17 +38,14 @@ def test_get_next_event_today() -> None:
 @pytest.mark.skip(reason="Avoid mass creation of calendar entries")
 def test_create_event() -> None:
     """Test `aswe.api.calendar.calendar.get_next_event_today`"""
-    try:
-        create_event(
-            Event(
-                title="Pytest_title",
-                description="Pytest_description",
-                location="Pytest_location",
-                full_day=False,
-                date="2022-11-20",
-                start_time="2022-11-20T16:30:00+01:00",
-                end_time="2022-11-20T17:30:00+01:00",
-            )
+    create_event(
+        Event(
+            title="Pytest_title",
+            description="Pytest_description",
+            location="Pytest_location",
+            full_day=False,
+            date="2022-11-20",
+            start_time="2022-11-20T16:30:00+01:00",
+            end_time="2022-11-20T17:30:00+01:00",
         )
-    except Exception:
-        assert False
+    )

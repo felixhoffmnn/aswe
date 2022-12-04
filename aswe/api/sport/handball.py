@@ -161,7 +161,7 @@ def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list
     games = []
     for game in data["response"]:
         games.append(
-            f"{game['teams']['home']['name']} {game['scores']['home']} -\
-                {game['scores']['away']} {game['teams']['away']['name']}"
+            f"{game['teams']['home']['name']} {game['scores']['home']} - "
+            f"{game['scores']['away']} {game['teams']['away']['name']}"
         )
     return games

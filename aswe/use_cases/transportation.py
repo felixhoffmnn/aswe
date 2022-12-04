@@ -147,7 +147,7 @@ class TransportationUseCase(AbstractUseCase):
         elif next_event:
             event_datetime = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
             time_available = int((event_datetime - datetime.now()).seconds / 60)
-            response = f"Your next Event is {next_event.title} at {event_datetime.strftime('%H:%M')}. "
+            response = f"Your next Event is {next_event.title} at {event_datetime.strftime('%H:%M')} at {next_event.location}. "
             not_fast_enough = []
             if self.user.possessions.bike:
                 if not bike_trip:

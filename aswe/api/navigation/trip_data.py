@@ -3,6 +3,22 @@ from datetime import datetime
 
 
 @dataclass
+class MapsTrip:
+    """Dataclass supposed to store the data of a connection retrieved from google maps
+
+    Parameters
+    ----------
+    duration : int
+        Duration in minutes
+    distance : int
+        Distance in meters
+    """
+
+    duration: int
+    distance: int
+
+
+@dataclass
 class Connection:
     """Dataclass supposed to store the data of a single vvs connection
 

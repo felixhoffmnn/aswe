@@ -2,7 +2,21 @@ from datetime import datetime
 
 import pytest
 
-from aswe.api.navigation.trip_data import Connection, Trip
+from aswe.api.navigation.trip_data import Connection, MapsTrip, Trip
+
+
+def test_maps_trip_required_fields() -> None:
+    """Test required fields for `MapsTrip` dataclass"""
+    with pytest.raises(TypeError):
+        MapsTrip()  # pylint: disable=no-value-for-parameter
+
+
+def test_maps_trip_variable_types() -> None:
+    """Test variable types for `MapsTrip` dataclass"""
+    maps_trip = MapsTrip(distance=1000, duration=60)
+
+    assert isinstance(maps_trip.distance, int)
+    assert isinstance(maps_trip.duration, int)
 
 
 def test_connection_required_fields() -> None:

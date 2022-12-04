@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from aswe.api.calendar.calendar import get_next_event_today
 from aswe.api.navigation.maps import get_maps_connection
+from aswe.api.navigation.trip_data import MapsTripMode
 from aswe.api.navigation.vvs import get_next_connection
 from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
@@ -78,13 +79,13 @@ class TransportationUseCase(AbstractUseCase):
                 and weather_now["precipprob"] <= max_precipprob
                 and weather_in_an_hour["precipprob"] <= max_precipprob
             ):
-                bike_trip = get_maps_connection(self.user.address.street, end_location, "bicycling")
+                bike_trip = get_maps_connection(self.user.address.street, end_location, MapsTripMode.BICYCLING)
                 bicycle_response = f"If you take the bike, you will need {bike_trip.duration} minutes for {round(bike_trip.distance / 1000, 1)} kilometers. "
 
         car_response = ""
         car_trip = None
         if self.user.possessions.car:
-            car_trip = get_maps_connection(self.user.address.street, end_location, "driving")
+            car_trip = get_maps_connection(self.user.address.street, end_location, MapsTripMode.DRIVING)
             car_response = f"If you take the car, you will need {car_trip.duration} minutes for {round(car_trip.distance / 1000, 1)} kilometers. "
 
         vvs_response = ""
@@ -162,7 +163,7 @@ class TransportationUseCase(AbstractUseCase):
                 elif car_trip is not None:
                     car_start = event_datetime - timedelta(minutes=car_trip.duration)
                     response += f"With the car, you have to start at {car_start.strftime('%H:%M')}. "
-            train_maps_trip = get_maps_connection(self.user.address.street, end_location, "transit")
+            train_maps_trip = get_maps_connection(self.user.address.street, end_location, MapsTripMode.TRANSIT)
             if train_maps_trip.duration > time_available:
                 not_fast_enough.append("train")
             elif car_trip is not None:

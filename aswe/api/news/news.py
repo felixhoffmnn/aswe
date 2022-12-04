@@ -1,12 +1,8 @@
 import os
 
-from dotenv import load_dotenv
-
 from aswe.utils.request import http_request
 
-load_dotenv()
-
-API_key = os.getenv("NEWS_API_KEY")
+_NEWS_API_KEY = os.getenv("NEWS__NEWS_API_KEY")
 
 
 def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str] | None:
@@ -25,7 +21,7 @@ def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str]
         Return a list of strings with the news articles
     """
     result = []
-    request = http_request(f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={API_key}")
+    request = http_request(f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={_NEWS_API_KEY}")
     if request is None:
         return None
     headline_request = request.json()
@@ -57,7 +53,7 @@ def keyword_search(keyword: str, max_results: int = 3) -> list[str] | None:
         Return a list of strings with the news articles
     """
     result = []
-    request = http_request(f"https://newsapi.org/v2/everything?q={keyword}&apiKey={API_key}")
+    request = http_request(f"https://newsapi.org/v2/everything?q={keyword}&apiKey={_NEWS_API_KEY}")
     if request is None:
         return None
     keyword_request = request.json()

@@ -1,14 +1,11 @@
 import os
 from datetime import date
 
-from dotenv import load_dotenv
-
 from aswe.utils.error import ApiLimitReached
 from aswe.utils.request import http_request
 from aswe.utils.validate import validate_api
 
-load_dotenv()
-headers = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
+_HEADERS = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
 
 
 def get_league_id(league_name: str) -> int | None:
@@ -24,7 +21,7 @@ def get_league_id(league_name: str) -> int | None:
     int | None
         Return the id of the league
     """
-    request = http_request("https://v1.handball.api-sports.io/leagues", headers=headers)
+    request = http_request("https://v1.handball.api-sports.io/leagues", headers=_HEADERS)
     if request is None:
         return None
     if validate_api(request):
@@ -53,7 +50,7 @@ def get_league_teams(league_name: str) -> list[str] | None:
     if league_id is None:
         return None
     request = http_request(
-        f"https://v1.handball.api-sports.io/standings?league={league_id}&season=2022", headers=headers
+        f"https://v1.handball.api-sports.io/standings?league={league_id}&season=2022", headers=_HEADERS
     )
     if request is None:
         return None
@@ -83,7 +80,7 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     if league_id is None:
         return None
     request = http_request(
-        f"https://v1.handball.api-sports.io/standings?league={league_id}&season=2022", headers=headers
+        f"https://v1.handball.api-sports.io/standings?league={league_id}&season=2022", headers=_HEADERS
     )
     if request is None:
         return None
@@ -110,7 +107,7 @@ def get_team_id(team_name: str) -> int | None:
         Return the id of the team
     """
     team_name = team_name.replace(" ", "%20")
-    request = http_request(f"https://v1.handball.api-sports.io/teams?name={team_name}", headers=headers)
+    request = http_request(f"https://v1.handball.api-sports.io/teams?name={team_name}", headers=_HEADERS)
     if request is None:
         return None
     if validate_api(request):
@@ -149,7 +146,7 @@ def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list
     request = http_request(
         f"https://v1.handball.api-sports.io/games?date={today}&timezone=Europe/Berlin\
             &league={league_id}&season=2022&team={team_id}",
-        headers=headers,
+        headers=_HEADERS,
     )
     if request is None:
         return None

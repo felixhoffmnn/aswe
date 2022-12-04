@@ -4,6 +4,8 @@ import googlemaps as gmaps
 
 from aswe.api.navigation.trip_data import MapsTrip, MapsTripMode
 
+_GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+
 
 def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMode) -> MapsTrip:
     """Provides the distance and duration for a trip with a specific transportation type
@@ -16,7 +18,7 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
     Returns:
         MapsTrip: _description_
     """
-    client = gmaps.Client(key=os.getenv("GOOGLE_MAPS_API_KEY"))
+    client = gmaps.Client(key=_GOOGLE_MAPS_API_KEY)
     directions_result = client.directions(start_location, end_location, mode=mode)
 
     return MapsTrip(

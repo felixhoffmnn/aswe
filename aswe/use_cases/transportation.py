@@ -30,15 +30,29 @@ class TransportationUseCase(AbstractUseCase):
         """
         end_vvs_location = ""
         end_location = ""
+        reach_next_event = False
+        next_event = None
 
         match best_match.function_key:
             case "dhbw":
                 end_vvs_location = "de:08111:6056"  # Stadtmitte
                 end_location = "Rotebühlplatz 41"
             case "hpe":
-                raise NotImplementedError
+                end_vvs_location = "de:08115:7115"  # Hulb
+                end_location = "Herrenberger Straße 140"
             case "ibm":
-                raise NotImplementedError
+                end_vvs_location = "de:08115:3218"  # IBM
+                end_location = "IBM-Allee 1"
+            case "nextEvent":
+                next_event = get_next_event_today()
+                if not next_event:
+                    self.tts.convert_text("You do not have any more events today.")
+                    return
+                if next_event.location == "":
+                    self.tts.convert_text("Your next event does not provide a location.")
+                    return
+                end_location = next_event.location
+                reach_next_event = True
             case _:
                 raise NotImplementedError
 
@@ -88,44 +102,78 @@ class TransportationUseCase(AbstractUseCase):
                     vvs_response += f" {con.train_name} from {con.start_location} to {con.end_location} at {con.start_time.strftime('%H:%M')}"
                 vvs_response += f". You would arrive at {train_trip.connections[-1].end_time.strftime('%H:%M')} after {train_trip.duration} minutes. "
 
-        next_event = get_next_event_today()
-        next_event_announcement = "You do not have any more events today. "
-        if next_event:
-            event_start_time = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00").strftime("%H:%M")
-            next_event_announcement = f"Your next Event is {next_event.title} at {event_start_time}. "
-            still_on_trip = []
-            if (
-                bike_trip is not None
-                and (
-                    datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
-                    - timedelta(minutes=bike_trip.duration)
-                )
-                < datetime.now()
-            ):
-                still_on_trip.append("bike")
-            if (
-                car_trip is not None
-                and (
-                    datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
-                    - timedelta(minutes=car_trip.duration)
-                )
-                < datetime.now()
-            ):
-                still_on_trip.append("car")
-            if (
-                train_trip is not None
-                and datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
-                < train_trip.connections[-1].end_time
-            ):
-                still_on_trip.append("train")
-            if len(still_on_trip) == 1:
-                next_event_announcement += (
-                    f"If you take the {still_on_trip[0]}, you will not arrive before the next event starts. "
-                )
-            if len(still_on_trip) == 2:
-                next_event_announcement += f"If you take the {still_on_trip[0]} or {still_on_trip[1]}, you will not arrive before the next event starts. "
-            if len(still_on_trip) == 3:
-                next_event_announcement += f"If you take the {still_on_trip[0]}, {still_on_trip[1]} or {still_on_trip[2]}, you will not arrive before the next event starts. "
+        if not reach_next_event:
+            next_event = get_next_event_today()
+            next_event_announcement = "You do not have any more events today. "
+            if next_event:
+                event_start_time = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00").strftime("%H:%M")
+                next_event_announcement = f"Your next Event is {next_event.title} at {event_start_time}. "
+                still_on_trip = []
+                if (
+                    bike_trip is not None
+                    and (
+                        datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
+                        - timedelta(minutes=bike_trip.duration)
+                    )
+                    < datetime.now()
+                ):
+                    still_on_trip.append("bike")
+                if (
+                    car_trip is not None
+                    and (
+                        datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
+                        - timedelta(minutes=car_trip.duration)
+                    )
+                    < datetime.now()
+                ):
+                    still_on_trip.append("car")
+                if (
+                    train_trip is not None
+                    and datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
+                    < train_trip.connections[-1].end_time
+                ):
+                    still_on_trip.append("train")
+                if len(still_on_trip) == 1:
+                    next_event_announcement += (
+                        f"If you take the {still_on_trip[0]}, you will not arrive before the next event starts. "
+                    )
+                if len(still_on_trip) == 2:
+                    next_event_announcement += f"If you take the {still_on_trip[0]} or {still_on_trip[1]}, you will not arrive before the next event starts. "
+                if len(still_on_trip) == 3:
+                    next_event_announcement += f"If you take the {still_on_trip[0]}, {still_on_trip[1]} or {still_on_trip[2]}, you will not arrive before the next event starts. "
 
-        output = bicycle_response + car_response + vvs_response + next_event_announcement
-        self.tts.convert_text(output)
+            output = bicycle_response + car_response + vvs_response + next_event_announcement
+            self.tts.convert_text(output)
+        elif next_event:
+            event_datetime = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
+            time_available = int((event_datetime - datetime.now()).seconds / 60)
+            response = f"Your next Event is {next_event.title} at {event_datetime.strftime('%H:%M')}. "
+            not_fast_enough = []
+            if self.user.possessions.bike:
+                if not bike_trip:
+                    response += "The weather is not good enough for the bike. "
+                elif bike_trip.duration > time_available:
+                    not_fast_enough.append("bike")
+                else:
+                    bike_start = event_datetime - timedelta(minutes=bike_trip.duration)
+                    response += f"With the bike, you have to start at {bike_start.strftime('%H:%M')}. "
+            if self.user.possessions.car:
+                if car_trip is not None and car_trip.duration > time_available:
+                    not_fast_enough.append("car")
+                elif car_trip is not None:
+                    car_start = event_datetime - timedelta(minutes=car_trip.duration)
+                    response += f"With the car, you have to start at {car_start.strftime('%H:%M')}. "
+            train_maps_trip = get_maps_connection(self.user.address.street, end_location, "transit")
+            if train_maps_trip.duration > time_available:
+                not_fast_enough.append("train")
+            elif car_trip is not None:
+                train_start = event_datetime - timedelta(minutes=train_maps_trip.duration)
+                response += f"With the train, you have to start at {train_start.strftime('%H:%M')}. "
+            if len(not_fast_enough) == 1:
+                response += f"The {not_fast_enough[0]} is not fast enough."
+            if len(not_fast_enough) == 2:
+                response += f"The {not_fast_enough[0]} and {not_fast_enough[1]} are not fast enough."
+            if len(not_fast_enough) == 3:
+                response += f"The {not_fast_enough[0]}, {not_fast_enough[1]} and {not_fast_enough[2]} are all not fast enough. There is no way to reach the next event."
+
+            self.tts.convert_text(response)

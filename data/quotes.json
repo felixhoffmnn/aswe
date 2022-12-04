@@ -13,7 +13,8 @@
   "transportation": {
     "dhbw": ["dhbw", "i need to get to the dhbw"],
     "hpe": ["hpe", "i need to get to the hpe"],
-    "ibm": ["ibm", "i need to get to the ibm"]
+    "ibm": ["ibm", "i need to get to the ibm"],
+    "nextEvent": ["next event", "i need to get to my next event"]
   },
   "sport": {
     "footballStandings": ["football standings", "soccer standings", "football table", "soccer table"],

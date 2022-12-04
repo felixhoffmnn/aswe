@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 
 
 @dataclass
@@ -16,6 +17,15 @@ class MapsTrip:
 
     duration: int
     distance: int
+
+
+class MapsTripMode(str, Enum):
+    """Enum for google maps api trip modes"""
+
+    BICYCLING = "bicycling"
+    DRIVING = "driving"
+    TRANSIT = "transit"
+    WALKING = "walking"
 
 
 @dataclass

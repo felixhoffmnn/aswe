@@ -6,8 +6,8 @@ from googlemaps import Client
 from pytest_mock import MockFixture
 
 from aswe.api.calendar.data import Event
-from aswe.api.event.event import EventApi
-from aswe.api.weather.weather import WeatherApi
+from aswe.api.event import event as eventApi
+from aswe.api.weather import weather as weatherApi
 from aswe.core.objects import Address, BestMatch, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.event import EventUseCase
@@ -53,7 +53,7 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Patch Event Api
-    mocked_event_api = mocker.patch.object(EventApi, "events", return_value=None)
+    mocked_event_api = mocker.patch.object(eventApi, "events", return_value=None)
 
     # * Spy on tts.convert_text
     spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
@@ -100,7 +100,7 @@ def test_this_weekend_one_attendable_event(
         }
     ]
 
-    mocked_event_api = mocker.patch.object(EventApi, "events", return_value=test_events)
+    mocked_event_api = mocker.patch.object(eventApi, "events", return_value=test_events)
 
     # * Patch Calendar Api
     test_calendar_events = [
@@ -121,7 +121,7 @@ def test_this_weekend_one_attendable_event(
     # * Patch Weather Api
     test_weather_response = {"days": [{"hours": [{"temp": 4, "precipprob": 50}]}]}
 
-    mocked_weater_api = mocker.patch.object(WeatherApi, "forecast", return_value=test_weather_response)
+    mocked_weater_api = mocker.patch.object(weatherApi, "forecast", return_value=test_weather_response)
 
     # * Patch googlemaps Api
     test_directions_response = [{"legs": [{"duration": {"text": "test min"}}]}]

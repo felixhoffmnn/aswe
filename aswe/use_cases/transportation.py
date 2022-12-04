@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from aswe.api.calendar.calendar import get_next_event_today
 from aswe.api.navigation.maps import get_maps_connection
 from aswe.api.navigation.vvs import get_next_connection
-from aswe.api.weather.weather import WeatherApi
+from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
@@ -63,8 +63,7 @@ class TransportationUseCase(AbstractUseCase):
             max_precipprob = 25
             bicycle_response = "The weather is not good enough for riding a bike. "
 
-            crawler = WeatherApi()
-            weather_today = crawler.dynamic_range(
+            weather_today = weatherApi.dynamic_range(
                 location="Stuttgart,DE",
                 dynamic_period=DynamicPeriodEnum.TODAY,
                 elements=[ElementsEnum.PRECIP_PROB, ElementsEnum.TEMP],

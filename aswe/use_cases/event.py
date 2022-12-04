@@ -5,10 +5,10 @@ import googlemaps as gmaps
 from loguru import logger
 
 from aswe.api.calendar.calendar import get_events_by_timeframe
-from aswe.api.event.event import EventApi
+from aswe.api.event import event as eventApi
 from aswe.api.event.event_data import EventTTSInfo, TripModeEnum
 from aswe.api.event.event_params import EventApiEventParams
-from aswe.api.weather.weather import WeatherApi
+from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
@@ -18,8 +18,6 @@ from aswe.utils.date import get_next_saturday
 class EventUseCase(AbstractUseCase):
     """Use case to handle events"""
 
-    _EVENT_API = EventApi()
-    _WEATHER_API = WeatherApi()
     _NAVIGATION_API = gmaps.Client(key=os.getenv("GOOGLE_MAPS_API_KEY"))
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
@@ -55,7 +53,7 @@ class EventUseCase(AbstractUseCase):
                     end_date_time=end_next_sunday.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 )
 
-                events = self._EVENT_API.events(event_params)
+                events = eventApi.events(event_params)
 
                 if events is None or len(events) == 0:
                     self.tts.convert_text("Looks like there are no events this weekend.")
@@ -100,7 +98,7 @@ class EventUseCase(AbstractUseCase):
                     if event_can_be_attended:
                         event_tts_info = EventTTSInfo(name=event.name, start=event_start_datetime)
 
-                        weather_response = self._WEATHER_API.forecast(
+                        weather_response = weatherApi.forecast(
                             location="Stuttgart,DE",
                             start_date=event_start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
                             elements=[ElementsEnum.DATETIME, ElementsEnum.PRECIP_PROB, ElementsEnum.TEMP],

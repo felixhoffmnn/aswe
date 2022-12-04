@@ -5,29 +5,27 @@ import pytest
 from pytest_mock import MockFixture
 from requests.models import Response
 
-from aswe.api.event.event import EventApi
-from aswe.api.event.event_data import EventLocation, ReducedEvent
+from aswe.api.event import event as eventApi
 from aswe.api.event.event_params import EventApiEventParams
 
 
 @pytest.fixture(scope="function")
-def event_api() -> EventApi:
+def mock_event_api_key(mocker: MockFixture) -> None:
     """Returns new instance"""
 
-    EventApi._API_KEY = "test_key"
-    return EventApi()
+    mocker.patch.object(eventApi, "_API_KEY", new="test_key")
 
 
 def test_validate_api_key() -> None:
     """Test whether class checks for API key"""
-    EventApi._API_KEY = ""
-    with pytest.raises(Exception, match="EVENT_API_KEY was not loaded into system"):
-        EventApi()
+    eventApi._API_KEY = ""
+    with pytest.raises(Exception, match="EVENT_API_KEY was not loaded into system"):  # type: ignore
+        eventApi._validate_api_key()
 
 
-def test_reduce_events(event_api: EventApi) -> None:
+def test_reduce_events(mock_event_api_key: None) -> None:
     """Call `_reduce_events` with expected Http response and test for return values"""
-    assert event_api._reduce_events({}) == []
+    assert not eventApi._reduce_events({})
 
     test_events = {
         "_embedded": {
@@ -52,14 +50,7 @@ def test_reduce_events(event_api: EventApi) -> None:
         }
     }
 
-    reduced_event_list = event_api._reduce_events(test_events)
-    comparison_reduced_event = ReducedEvent(
-        id="test_id",
-        name="test_name",
-        start="2025-01-01T01:00:00Z",
-        status="onsale",
-        location=EventLocation(name="test_venue_name", city="test_city_name", address="test_address"),
-    )
+    reduced_event_list = eventApi._reduce_events(test_events)
 
     assert len(reduced_event_list) == 1
 
@@ -72,15 +63,15 @@ def test_reduce_events(event_api: EventApi) -> None:
     }
 
 
-def test_events_invalid_params(event_api: EventApi) -> None:
+def test_events_invalid_params(mock_event_api_key: None) -> None:
     """Test `events` class method. Call function with invalid params."""
 
     with pytest.raises(Exception, match="Given Event Api Event Params are invalid"):
         invalid_event_params = EventApiEventParams(radius=0)
-        event_api.events(invalid_event_params)
+        eventApi.events(invalid_event_params)
 
 
-def test_events_valid_response(event_api: EventApi, mocker: MockFixture) -> None:
+def test_events_valid_response(mock_event_api_key: None, mocker: MockFixture) -> None:
     """Test `events` class method. Call function with valid params.
     Mocked functions:
         - `http_request`"""
@@ -91,7 +82,7 @@ def test_events_valid_response(event_api: EventApi, mocker: MockFixture) -> None
     valid_response._content = b'{"lorem": "ipsum"}'
     valid_response.status_code = 200
     mocker.patch(http_import_path, return_value=valid_response)
-    actual_response = event_api.events(EventApiEventParams())
+    actual_response = eventApi.events(EventApiEventParams())
 
     assert actual_response == []
 
@@ -100,12 +91,12 @@ def test_events_valid_response(event_api: EventApi, mocker: MockFixture) -> None
     invalid_response._content = b'{"lorem": "ipsum}'
     invalid_response.status_code = 200
     mocker.patch(http_import_path, return_value=invalid_response)
-    actual_response = event_api.events(EventApiEventParams())
+    actual_response = eventApi.events(EventApiEventParams())
 
     assert actual_response is None
 
     # * Mock other Exception
     mocker.patch(http_import_path, return_value=False)
-    actual_response = event_api.events(EventApiEventParams())
+    actual_response = eventApi.events(EventApiEventParams())
 
     assert actual_response is None

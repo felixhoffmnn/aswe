@@ -200,7 +200,7 @@ class EventUseCase(AbstractUseCase):
 
         # TODO ask user about preferred method (driving, walking, transit, bicycling)
         directions = get_maps_connection(
-            f"{self.user.address.street},{self.user.address.city}", event_location, MapsTripMode.BICYCLING
+            f"{self.user.address.street},{self.user.address.city}", event_location, "bicycling"
         )
 
         event_summary["trip_mode"] = MapsTripMode.BICYCLING.value

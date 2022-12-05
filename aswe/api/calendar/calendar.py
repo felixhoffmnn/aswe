@@ -81,17 +81,19 @@ def get_events_by_timeframe(min_timestamp: str, max_timestamp: str) -> list[Even
             events = events_result.get("items", [])
 
             for event_data in events:
-                event = Event(
-                    title=event_data.get("summary", ""),
-                    description=event_data.get("description", ""),
-                    location=event_data.get("location", ""),
-                    full_day="date" in event_data.get("start", {}),
-                    date=event_data.get("start", {}).get("date", ""),
-                    start_time=event_data.get("start", {}).get("dateTime", ""),
-                    end_time=event_data.get("end", {}).get("dateTime", ""),
-                )
-                event_array.append(event)
+                if "Kalenderwoche" not in event_data.get("summary", ""):
+                    event = Event(
+                        title=event_data.get("summary", ""),
+                        description=event_data.get("description", ""),
+                        location=event_data.get("location", ""),
+                        full_day="date" in event_data.get("start", {}),
+                        date=event_data.get("start", {}).get("date", ""),
+                        start_time=event_data.get("start", {}).get("dateTime", ""),
+                        end_time=event_data.get("end", {}).get("dateTime", ""),
+                    )
+                    event_array.append(event)
 
+    logger.debug(f"All events: {event_array}")
     return event_array
 
 
@@ -123,6 +125,7 @@ def get_next_event_today() -> Event | None:
         if not event.full_day:
             start_time = datetime.strptime(event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
             if datetime.now() < start_time:
+                logger.debug(f"Next event: {event}")
                 return event
     return None
 

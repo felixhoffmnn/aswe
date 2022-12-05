@@ -95,7 +95,7 @@ class TransportationUseCase(AbstractUseCase):
             car_trip = get_maps_connection(self.user.address.street, end_location, MapsTripMode.DRIVING)
             car_response = f"If you take the car, you will need {car_trip.duration} minutes for {round(car_trip.distance / 1000, 1)} kilometers. "
 
-        vvs_response = ""
+        vvs_response = "There seems to be no train connection. "
         train_trip = None
         if end_vvs_location != "":
             start_location = self.user.address.vvs_id

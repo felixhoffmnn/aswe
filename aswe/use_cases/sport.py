@@ -149,7 +149,7 @@ class SportUseCase(AbstractUseCase):
                     team = self.choose_team(teams)
                     game = basketball.get_team_game_today(team)
                     if game is None:
-                        raise Exception("Could not get game")
+                        raise Exception("Could not get basketball game")
                     try:
                         self.tts.convert_text(game[0])
                     except IndexError:

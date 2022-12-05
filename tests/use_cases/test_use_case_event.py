@@ -138,4 +138,4 @@ def test_this_weekend_one_attendable_event(
     mocked_event_api.assert_called_once()
     mocked_weater_api.assert_called_once()
     # mocked_google_maps_api.assert_called_once()
-    assert spy_tts_convert_text.call_count == 3
+    assert spy_tts_convert_text.call_count == 4

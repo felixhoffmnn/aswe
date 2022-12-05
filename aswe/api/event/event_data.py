@@ -2,19 +2,20 @@
 
 from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
+
+from aswe.api.navigation.trip_data import MapsTripMode
 
 
 @dataclass
 class EventLocation:
     """Helper dataclass storing Event Location"""
 
-    name: str
-    """Name of location"""
     city: str
     """City the event is located in"""
     address: str
     """Street and house number of location"""
+    name: str = ""
+    """Name of location"""
 
 
 @dataclass(eq=True)
@@ -33,28 +34,21 @@ class ReducedEvent:
     """Location of event"""
 
 
-class TripModeEnum(str, Enum):
-    """Trip Mode Enum for `googlemaps.directions` method"""
-
-    BICYCLING = "bicycling"
-    DRIVING = "driving"
-    TRANSIT = "transit"
-    WALKING = "walking"
-
-
 @dataclass
-class EventTTSInfo:
+class EventSummary:
     """Dataclass of Event info which is used for tts"""
 
     name: str
     """Name / Title of event"""
     start: datetime
     """Datetime of when event starts"""
+    location: EventLocation
+    """Location of event"""
     is_cold: bool = False
     """Whether or not temperature is below threshold. Defined in `use_cases.event`"""
     is_rainy: bool = False
     """Whether or not precipitation is above certain threshold. Defined in `use_cases.event`"""
-    trip_mode: TripModeEnum = TripModeEnum.BICYCLING
+    trip_mode: MapsTripMode = MapsTripMode.BICYCLING
     """Preferred trip mode to event"""
-    trip_duration: str | None = None
+    trip_duration: int | None = None
     """Trip duration. Example: `25 min`"""

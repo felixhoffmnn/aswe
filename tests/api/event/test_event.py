@@ -6,6 +6,7 @@ from pytest_mock import MockFixture
 from requests.models import Response
 
 from aswe.api.event import event as eventApi
+from aswe.api.event.event_data import EventLocation, ReducedEvent
 from aswe.api.event.event_params import EventApiEventParams
 
 
@@ -54,13 +55,13 @@ def test_reduce_events(mock_event_api_key: None) -> None:
 
     assert len(reduced_event_list) == 1
 
-    assert reduced_event_list[0] == {
-        "id": "test_id",
-        "name": "test_name",
-        "start": "2025-01-01T01:00:00Z",
-        "status": "onsale",
-        "location": {"name": "test_venue_name", "city": "test_city_name", "address": "test_address"},
-    }
+    assert reduced_event_list[0] == ReducedEvent(
+        id="test_id",
+        name="test_name",
+        start="2025-01-01T01:00:00Z",
+        status="onsale",
+        location=EventLocation(name="test_venue_name", city="test_city_name", address="test_address"),
+    )
 
 
 def test_events_invalid_params(mock_event_api_key: None) -> None:

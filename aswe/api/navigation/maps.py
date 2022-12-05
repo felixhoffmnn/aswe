@@ -3,12 +3,12 @@ import os
 import googlemaps as gmaps
 from loguru import logger
 
-from aswe.api.navigation.trip_data import MapsTrip
+from aswe.api.navigation.trip_data import MapsTrip, MapsTripMode
 
 _GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 
-def get_maps_connection(start_location: str, end_location: str, mode: str) -> MapsTrip:
+def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMode) -> MapsTrip:
     """Provides the distance and duration for a trip with a specific transportation type
 
     Parameters

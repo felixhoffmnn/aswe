@@ -6,6 +6,7 @@ from pytest_mock import MockFixture
 
 from aswe.api.calendar.data import Event
 from aswe.api.event import event as eventApi
+from aswe.api.event.event_data import EventLocation, ReducedEvent
 from aswe.api.navigation.trip_data import MapsTrip
 from aswe.api.weather import weather as weatherApi
 from aswe.core.objects import Address, BestMatch, Possessions, User
@@ -91,13 +92,13 @@ def test_this_weekend_one_attendable_event(
 
     # * Patch Event Api
     test_events = [
-        {
-            "id": "test_id",
-            "name": "test_name",
-            "start": "2030-01-01T00:00:00Z",
-            "status": "onsale",
-            "location": {"name": "test_location_name", "city": "test_city", "address": "test_address"},
-        }
+        ReducedEvent(
+            id="test_id",
+            name="test_name",
+            start="2030-01-01T00:00:00Z",
+            status="onsale",
+            location=EventLocation(name="test_location_name", city="test_city", address="test_address"),
+        )
     ]
 
     mocked_event_api = mocker.patch.object(eventApi, "events", return_value=test_events)

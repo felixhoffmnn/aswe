@@ -4,6 +4,7 @@ from loguru import logger
 
 from aswe.api.calendar.calendar import get_next_event_today
 from aswe.api.navigation.maps import get_maps_connection
+from aswe.api.navigation.trip_data import MapsTripMode
 from aswe.api.navigation.vvs import get_next_connection
 from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
@@ -77,7 +78,7 @@ class TransportationUseCase(AbstractUseCase):
             if self.weather_good_enough_for_bike():
                 response += "The weather is not good enough for the bike. "
             else:
-                bike_trip = get_maps_connection(self.user.address.street, end_maps_location, "bicycling")
+                bike_trip = get_maps_connection(self.user.address.street, end_maps_location, MapsTripMode.BICYCLING)
                 response += f"If you take the bike, you will need {bike_trip.duration} minutes for {round(bike_trip.distance / 1000, 1)} kilometers. "
                 if next_event_datetime is not None and (
                     (next_event_datetime - timedelta(minutes=int(bike_trip.duration))) < datetime.now()
@@ -85,7 +86,7 @@ class TransportationUseCase(AbstractUseCase):
                     still_on_trip.append("bike")
 
         if self.user.possessions.car:
-            car_trip = get_maps_connection(self.user.address.street, end_maps_location, "driving")
+            car_trip = get_maps_connection(self.user.address.street, end_maps_location, MapsTripMode.DRIVING)
             response += f"If you take the car, you will need {car_trip.duration} minutes for {round(car_trip.distance / 1000, 1)} kilometers. "
             if next_event_datetime is not None and (
                 (next_event_datetime - timedelta(minutes=int(car_trip.duration))) < datetime.now()
@@ -134,7 +135,9 @@ class TransportationUseCase(AbstractUseCase):
                 if self.weather_good_enough_for_bike():
                     response += "The weather is not good enough for the bike. "
                 else:
-                    bike_trip = get_maps_connection(self.user.address.street, next_event.location, "bicycling")
+                    bike_trip = get_maps_connection(
+                        self.user.address.street, next_event.location, MapsTripMode.BICYCLING
+                    )
                     if bike_trip.duration > time_available:
                         not_fast_enough.append("bike")
                     else:
@@ -142,14 +145,14 @@ class TransportationUseCase(AbstractUseCase):
                         response += f"With the bike, you have to start at {bike_start.strftime('%H:%M')} . "
 
             if self.user.possessions.car:
-                car_trip = get_maps_connection(self.user.address.street, next_event.location, "driving")
+                car_trip = get_maps_connection(self.user.address.street, next_event.location, MapsTripMode.DRIVING)
                 if car_trip.duration > time_available:
                     not_fast_enough.append("car")
                 else:
                     car_start = event_datetime - timedelta(minutes=car_trip.duration)
                     response += f"With the car, you have to start at {car_start.strftime('%H:%M')} . "
 
-            train_trip = get_maps_connection(self.user.address.street, next_event.location, "transit")
+            train_trip = get_maps_connection(self.user.address.street, next_event.location, MapsTripMode.TRANSIT)
             if train_trip.duration > time_available:
                 not_fast_enough.append("train")
             else:

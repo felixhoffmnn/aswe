@@ -3,6 +3,8 @@
 # pylint: disable=redefined-outer-name,protected-access
 
 
+import os
+
 import pytest
 from pytest_mock import MockFixture
 from requests.models import Response
@@ -33,6 +35,7 @@ def test_class_init() -> None:
     weatherApi._API_KEY = ""
     with pytest.raises(Exception, match="WEATHER_API_KEY was not loaded into system"):
         weatherApi._validate_api_key()
+    weatherApi._API_KEY = os.getenv("WEATHER_API_KEY", "")
 
 
 def test_validate_location(mock_api_key: None) -> None:

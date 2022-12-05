@@ -1,6 +1,6 @@
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -9,7 +9,7 @@ from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, LogProactivity, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases import (
     EventUseCase,
@@ -17,7 +17,7 @@ from aswe.use_cases import (
     SportUseCase,
     TransportationUseCase,
 )
-from aswe.utils.shell import clear_shell
+from aswe.utils.shell import clear_shell, get_int, print_options
 
 
 class Agent:
@@ -111,6 +111,8 @@ class Agent:
         # input("get user input")
         # self.user.favorite_stocks = ["Apple", "Tesla", "Microsoft"]
 
+        self.log_proactivity = LogProactivity()
+
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_event = EventUseCase(self.stt, self.tts, self.assistant_name, self.user)
@@ -199,36 +201,34 @@ class Agent:
             return None
 
         if temp_df.empty:
+            logger.warning("Could not find a match for the parsed text meeting the requirements.")
             return None
 
         choice = None
         if len(temp_df) > 1:
             print("")
             self.tts.convert_text("I got multiple matches. Please choose one.")
-            print("")
-            for index, row in temp_df.iterrows():
-                print(f"{index}: {row['use_case']}, {row['choice']}")
-            print("")
-            while choice is None:
-                try:
-                    choice = int(input("Please enter the number of your choice: "))
-                except ValueError:
-                    self.tts.convert_text("Sorry, I didn't get that. Please try again.")
 
-        selected_row = temp_df.iloc[choice if choice else 0]
-        return BestMatch(
-            selected_row["use_case"],
-            selected_row["choice"],
-            selected_row["similarity"],
-            parsed_text,
-        )
+            options = temp_df["phrase"].tolist()
+            print_options(options=options)
+            choice = get_int(options=options)
+
+        if choice is not None or len(temp_df) == 1:
+            selected_row = temp_df.iloc[choice - 1 if choice is not None else 0]
+            return BestMatch(
+                selected_row["use_case"],
+                selected_row["choice"],
+                selected_row["similarity"],
+                parsed_text,
+            )
+
+        return None
 
     def check_proactivity(self) -> None:
         """Checks if there are any updates which should be announced to the user
 
         * TODO: Implement proactivity
         """
-        # Call use_case_1.proactive()
         logger.debug("Checking for proactivity.")
 
     def agent(self) -> None:
@@ -238,15 +238,12 @@ class Agent:
         then checks proactively if there are updates for the user. If thats not the case, it will start
         listening for user input in `60` second intervals. If the user input is not empty, it will
         execute the use case function for proactivity.
-
-        * TODO: Implement proactivity
         """
         self._greeting()
-        proactivity_last_checked = datetime.now().minute
 
         while True:
             print("")
-            if proactivity_last_checked % 15 == 0:
+            if datetime.now() - self.log_proactivity.last_check > timedelta(minutes=15):
                 self.check_proactivity()
 
             query = self.stt.convert_speech()

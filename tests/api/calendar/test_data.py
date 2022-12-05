@@ -1,3 +1,4 @@
+# pylint: disable=no-value-for-parameter
 import pytest
 
 from aswe.api.calendar.data import Event
@@ -6,7 +7,7 @@ from aswe.api.calendar.data import Event
 def test_event_required_fields() -> None:
     """Test required fields for `Event` dataclass"""
     with pytest.raises(TypeError):
-        Event()  # pylint: disable=no-value-for-parameter
+        Event()  # type: ignore
 
 
 def test_event_variable_types() -> None:

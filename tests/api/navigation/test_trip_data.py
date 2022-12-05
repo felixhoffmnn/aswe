@@ -1,3 +1,4 @@
+# pylint: disable=no-value-for-parameter
 from datetime import datetime
 
 import pytest
@@ -8,7 +9,7 @@ from aswe.api.navigation.trip_data import Connection, MapsTrip, Trip
 def test_maps_trip_required_fields() -> None:
     """Test required fields for `MapsTrip` dataclass"""
     with pytest.raises(TypeError):
-        MapsTrip()  # pylint: disable=no-value-for-parameter
+        MapsTrip()  # type: ignore
 
 
 def test_maps_trip_variable_types() -> None:
@@ -22,7 +23,7 @@ def test_maps_trip_variable_types() -> None:
 def test_connection_required_fields() -> None:
     """Test required fields for `Connection` dataclass"""
     with pytest.raises(TypeError):
-        Connection()  # pylint: disable=no-value-for-parameter
+        Connection()  # type: ignore
 
 
 def test_connection_variable_types() -> None:
@@ -45,7 +46,7 @@ def test_connection_variable_types() -> None:
 def test_trip_required_fields() -> None:
     """Test required fields for `Trip` dataclass"""
     with pytest.raises(TypeError):
-        Trip()  # pylint: disable=no-value-for-parameter
+        Trip()  # type: ignore
 
 
 def test_trip_variable_types() -> None:

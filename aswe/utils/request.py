@@ -33,7 +33,7 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
     except requests.HTTPError as http_err:
         logger.error(f"HTTP error occurred: {http_err}")
         if http_err.response.status_code == 429:
-            raise TooManyRequests
+            raise TooManyRequests from http_err
         return None
     except Exception as err:
         logger.error(f"Other error occurred: {err}")

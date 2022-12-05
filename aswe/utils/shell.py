@@ -20,11 +20,12 @@ def print_options(options: list[str | int]) -> None:
     options : list[str  |  int]
         The list of options to print
     """
+    print()
+
     if len(options) == 0:
         logger.warning("The options list is empty")
         return None
 
-    print("")
     for index, option in enumerate(options, start=1):
         print(f"{index}: {option}")
 
@@ -39,8 +40,8 @@ def get_int(options: list[str | int], start: int = 1) -> int | None:
     options : list[int]
         The list of options to choose from
     start : int, optional
-        The starting index of the options. _By default `1`._
-        This feature is useful if you also use the `print_options` function
+        The starting index of the options. This feature is useful if you also use
+        the `print_options` function. _By default `1`._
 
     Returns
     -------
@@ -52,11 +53,12 @@ def get_int(options: list[str | int], start: int = 1) -> int | None:
     ValueError
         If the input was invalid, but the error is caught within the function
     """
+    print()
+
     if len(options) == 0:
         logger.warning("The options list is empty")
         return None
 
-    print("")
     choice = None
     while choice is None:
         try:

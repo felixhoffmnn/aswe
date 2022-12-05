@@ -107,7 +107,7 @@ def test_get_league_table(mocker: MockFixture, import_paths: dict[str, str]) -> 
     Parameters
     ----------
     mocker : MockFixture
-        _description_
+        General MockFixture Class
     import_paths : dict[str, str]
         Fixture used for test setup
     """
@@ -161,7 +161,7 @@ def test_get_league_table_api_limit(mocker: MockFixture, import_paths: dict[str,
     Parameters
     ----------
     mocker : MockFixture
-        _description_
+        General MockFixture Class
     import_paths : dict[str, str]
         Fixture used for test setup
     """
@@ -335,14 +335,74 @@ def test_get_team_game_today_api_limit(mocker: MockFixture, import_paths: dict[s
         get_team_game_today("test_team")
 
 
-@pytest.mark.xfail(raises=ApiLimitReached)
-def test_get_league_teams() -> None:
-    """Test `aswe.api.sport.handball.get_league_teams`"""
-    teams = get_league_teams("Bundesliga")
-    assert isinstance(teams, list) and len(teams) == 18
+def test_get_league_teams(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.handball.get_nba_teams`
 
-    teams = get_league_teams("Testing")
-    assert teams is None
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    # * Mock valid response
+    mock_valid_response_object = {
+        "response": [[{"position": "test_position", "team": {"name": "test_team_name1"}, "points": "test_points"}]]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["get_league_id"], return_value=1)
+    mocker.patch(import_paths["validate_api"], return_value=False)
+
+    assert get_league_teams("test_name") == ["test_team_name1"]
+
+
+def test_get_league_teams_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.handball.get_league_teams` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["get_league_id"], return_value=None)
+
+    assert get_league_teams("test_name") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["get_league_id"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_league_teams("test_name") is None
+
+
+def test_get_league_teams_api_limit(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.handball.get_league_teams` when ApiLimits is reached
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    mock_empty_response_object: dict[str, list[Any]] = {"response": []}
+    empty_response = Response()
+    empty_response._content = json.dumps(mock_empty_response_object).encode()
+
+    # * Mock ApiLimitReached
+    mocker.patch(import_paths["http_request"], return_value=empty_response)
+    mocker.patch(import_paths["validate_api"], return_value=True)
+
+    with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
+        get_league_teams("test_name")
 
 
 # * ---------------------------------------------------------------------------

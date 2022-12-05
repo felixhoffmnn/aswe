@@ -1,3 +1,4 @@
+import re
 import time
 from contextlib import redirect_stdout
 from io import StringIO
@@ -175,6 +176,24 @@ class TextToSpeech:
         self.engine.setProperty("rate", 175)
         self.engine.setProperty("voice", "english")
 
+    def optimize_time_for_speech(self, text: str) -> str:
+        """Optimizes text with time indications (in HH:MM format) for speech.
+
+        Parameters
+        ----------
+        text : str
+            The text which should be optimized.
+
+        Returns
+        -------
+        str
+            The optimized text.
+        """
+        text = text.replace(":00", " o'clock")
+        text = re.sub(r"(\d{2}):(\d{2})", r"\1 \2", text)
+
+        return text
+
     def convert_text(
         self,
         text: str,
@@ -193,6 +212,8 @@ class TextToSpeech:
             print()
 
         logger.debug(f"Converting text to speech: {text.strip()}")
+
+        text = self.optimize_time_for_speech(text)
 
         print(f"Bot: {text.strip()}")
         try:

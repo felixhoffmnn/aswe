@@ -10,6 +10,13 @@ class MorningBriefingUseCase(AbstractUseCase):
     #     input
     #     return ["newsSummary", "weatherForecast", "trafficForecast"]
 
+    def check_proactivity(self) -> None:
+        """Check if there is a proactivity to be triggered
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
+
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for morning briefing
 

@@ -1,7 +1,6 @@
 import json
 import sys
-from datetime import datetime, timedelta
-from difflib import SequenceMatcher
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -17,7 +16,9 @@ from aswe.use_cases import (
     SportUseCase,
     TransportationUseCase,
 )
+from aswe.utils.date import check_timedelta
 from aswe.utils.shell import clear_shell, get_int, print_options
+from aswe.utils.text import calculate_similarity
 
 
 class Agent:
@@ -185,9 +186,7 @@ class Agent:
         temp_df: pd.DataFrame = self.quotes.copy()
 
         try:
-            temp_df["similarity"] = temp_df["phrase"].apply(
-                lambda value: SequenceMatcher(None, parsed_text, value).quick_ratio()
-            )
+            temp_df["similarity"] = temp_df["phrase"].apply(lambda value: calculate_similarity(parsed_text, value))
             temp_df = temp_df.iloc[
                 temp_df.groupby(["use_case", "choice"], sort=False)["similarity"].agg(pd.Series.idxmax)
             ]
@@ -206,8 +205,7 @@ class Agent:
 
         choice = None
         if len(temp_df) > 1:
-            print("")
-            self.tts.convert_text("I got multiple matches. Please choose one.")
+            self.tts.convert_text("I got multiple matches. Please choose one.", line_above=True)
 
             options = temp_df["phrase"].tolist()
             print_options(options=options)
@@ -227,9 +225,43 @@ class Agent:
     def check_proactivity(self) -> None:
         """Checks if there are any updates which should be announced to the user
 
-        * TODO: Implement proactivity
+        For each use case the interval can be set individually. If the interval is reached
+        the `check_proactivity` function of the current use case is called.
+
+        * TODO: Implement proactivity for morning briefing
+        * TODO: Add alarm function for morning briefing
         """
         logger.debug("Checking for proactivity.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_event_check, 15):
+                self.uc_event.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for events is not implemented yet.")
+
+        # try:
+        # if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15):
+        #     self.uc_morning_briefing.check_proactivity()
+        # except NotImplementedError:
+        #     logger.warning("Proactivity for morning briefing is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_sport_check, 15):
+                self.uc_sport.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for sport is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_transportation_check, 15):
+                self.uc_transportation.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for transportation is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_general_check, 15):
+                self.uc_general.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for general is not implemented yet.")
 
     def agent(self) -> None:
         """Main function to interact with the user
@@ -242,11 +274,10 @@ class Agent:
         self._greeting()
 
         while True:
-            print("")
-            if datetime.now() - self.log_proactivity.last_check > timedelta(minutes=15):
+            if check_timedelta(self.log_proactivity.last_check, 5):
                 self.check_proactivity()
 
-            query = self.stt.convert_speech()
+            query = self.stt.convert_speech(line_above=True)
             if not query:
                 self.tts.convert_text(
                     "Sorry, I was not able to parse anything. If you said something, please try again."

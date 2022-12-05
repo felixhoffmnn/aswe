@@ -5,7 +5,14 @@ from aswe.utils.error import ApiLimitReached
 
 
 class SportUseCase(AbstractUseCase):
-    """ "Use case for sports"""
+    """Use case for sports"""
+
+    def check_proactivity(self) -> None:
+        """Check if there is a proactivity to be triggered
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
 
     def choose_league(self, leagues: list[str]) -> str:
         """Returns the league the users chooses.

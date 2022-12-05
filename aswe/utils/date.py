@@ -17,3 +17,27 @@ def get_next_saturday() -> datetime:
     next_saturday = today + timedelta(days=delta_to_next_saturday)
 
     return next_saturday
+
+
+def check_timedelta(last_trigger: datetime, delta: int) -> bool:
+    """Calculate the time difference between the last trigger and the current time.
+    If the time difference is greater than the given delta, return `True`, else `False`.
+
+    Parameters
+    ----------
+    last_trigger : datetime
+        The last time when the proactivity was triggered
+    delta : int
+        The interval in minutes
+
+    Returns
+    -------
+    bool
+        If the time difference is greater than the given delta, return `True`, else `False`
+    """
+    current_time = datetime.now()
+
+    if current_time - last_trigger > timedelta(minutes=delta):
+        return True
+
+    return False

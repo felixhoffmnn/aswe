@@ -11,6 +11,13 @@ from aswe.utils.abstract import AbstractUseCase
 class GeneralUseCase(AbstractUseCase):
     """Class for managing the general use case"""
 
+    def check_proactivity(self) -> None:
+        """Check if there is a proactivity to be triggered
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
+
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for general questions
 
@@ -63,8 +70,7 @@ class GeneralUseCase(AbstractUseCase):
                 self.tts.convert_text("I am sorry, I am not interested in any relationship with my customers.")
             case "exit":
                 self.tts.convert_text("Do you really want to exit?")
-                response = self.stt.convert_speech()
-                if response in ["yes", "yeah", "yep", "sure", "ok"]:
+                if self.stt.check_if_yes():
                     self.tts.convert_text("Thanks for using me, have a nice day.")
                     sys.exit()
             case _:

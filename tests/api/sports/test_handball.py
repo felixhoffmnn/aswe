@@ -12,6 +12,7 @@ from requests.models import Response
 from aswe.api.sport.handball import (
     get_league_id,
     get_league_table,
+    get_league_teams,
     get_team_game_today,
     get_team_id,
 )
@@ -219,7 +220,7 @@ def test_get_team_id_invalid_response(mocker: MockFixture, import_paths: dict[st
     assert get_team_id("test_name") is None
 
     # * Mock empty response
-    mock_valid_response_object = {"response": []}
+    mock_valid_response_object: dict[str, list[Any]] = {"response": []}
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
@@ -334,6 +335,16 @@ def test_get_team_game_today_api_limit(mocker: MockFixture, import_paths: dict[s
 
     with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
         get_team_game_today("test_team")
+
+
+@pytest.mark.xfail(raises=ApiLimitReached)
+def test_get_league_teams() -> None:
+    """Test `aswe.api.sport.handball.get_league_teams`"""
+    teams = get_league_teams("Bundesliga")
+    assert isinstance(teams, list) and len(teams) == 18
+
+    teams = get_league_teams("Testing")
+    assert teams is None
 
 
 # * ---------------------------------------------------------------------------

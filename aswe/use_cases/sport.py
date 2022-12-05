@@ -1,4 +1,4 @@
-from aswe.api.sport import basketball, football, handball
+from aswe.api.sport import basketball, f1, football, handball
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 from aswe.utils.error import ApiLimitReached
@@ -184,6 +184,24 @@ class SportUseCase(AbstractUseCase):
                         self.tts.convert_text(f"The {team} have no games today.")
                 except ApiLimitReached:
                     self.tts.convert_text("Sorry, the API limit for the handball API has been reached.")
+            case "f1ResultsByRound":
+                self.tts.convert_text("Please enter the round of the past formula 1 season you are interested in.")
+                race_num = input("Which round are you interested in? ")
+                while not race_num.isdigit() or int(race_num) < 1 or int(race_num) > 22:  # type: ignore
+                    self.tts.convert_text("Please enter a valid round number. Must be between 1 and 22.")
+                    race_num = input("Which round are you interested in? ")
+                results = f1.get_results_by_round(2022, race_num)  # type: ignore
+                if results is None:
+                    raise Exception("Could not get results")
+                for driver in results:
+                    self.tts.convert_text(driver)
+            case "f1LastRoundResult":
+                results = f1.get_results_last_round()
+                if results is None:
+                    raise Exception("Could not get results")
+                self.tts.convert_text("The results of the last round of the 2022 formula 1 season are:")
+                for driver in results:
+                    self.tts.convert_text(driver)
 
             case _:
                 raise NotImplementedError

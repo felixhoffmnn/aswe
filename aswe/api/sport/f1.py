@@ -21,7 +21,6 @@ def get_results_by_round(year: int, round_num: int) -> list[str] | None:
     if request is None:
         return None
     response = dict(request.json())
-
     if response["MRData"]["total"] == "0":
         return None
     result = [

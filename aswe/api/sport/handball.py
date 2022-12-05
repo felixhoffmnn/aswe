@@ -87,10 +87,10 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     if validate_api(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     standings = request.json()
-    teams = []
+    table = []
     for position in standings["response"][0]:
-        teams.append(position["team"]["name"])
-    return teams
+        table.append(f'{position["position"]} {position["team"]["name"]} {position["points"]}')
+    return table
 
 
 def get_team_id(team_name: str) -> int | None:

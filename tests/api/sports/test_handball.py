@@ -23,14 +23,12 @@ from aswe.utils.error import ApiLimitReached
 def import_paths() -> dict[str, str]:
     """Prepare import paths of functions which shall be mocked"""
 
-    import_paths = {
+    return {
         "http_request": "aswe.api.sport.handball.http_request",
         "validate_api": "aswe.api.sport.handball.validate_api",
         "get_league_id": "aswe.api.sport.handball.get_league_id",
         "get_team_id": "aswe.api.sport.handball.get_team_id",
     }
-
-    return import_paths
 
 
 # * get_league_id -------------------------------------------------------------

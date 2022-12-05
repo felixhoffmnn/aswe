@@ -11,6 +11,13 @@ from aswe.utils.abstract import AbstractUseCase
 class GeneralUseCase(AbstractUseCase):
     """Class for managing the general use case"""
 
+    def check_proactivity(self) -> None:
+        """Check if there is a proactivity to be triggered
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
+
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for general questions
 

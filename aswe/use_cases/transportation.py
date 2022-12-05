@@ -13,6 +13,13 @@ from aswe.utils.abstract import AbstractUseCase
 class TransportationUseCase(AbstractUseCase):
     """Use case for transportation"""
 
+    def check_proactivity(self) -> None:
+        """Check if there is a proactivity to be triggered
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
+
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for transportation
 

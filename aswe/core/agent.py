@@ -1,6 +1,6 @@
 import json
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -17,6 +17,7 @@ from aswe.use_cases import (
     SportUseCase,
     TransportationUseCase,
 )
+from aswe.utils.date import check_timedelta
 from aswe.utils.shell import clear_shell, get_int, print_options
 
 
@@ -227,9 +228,42 @@ class Agent:
     def check_proactivity(self) -> None:
         """Checks if there are any updates which should be announced to the user
 
-        * TODO: Implement proactivity
+        For each use case the interval can be set individually. If the interval is reached
+        the `check_proactivity` function of the current use case is called.
+
+        * TODO: Implement proactivity for morning briefing
         """
         logger.debug("Checking for proactivity.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_event_check, 15):
+                self.uc_event.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for events is not implemented yet.")
+
+        # try:
+        # if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15):
+        #     self.uc_morning_briefing.check_proactivity()
+        # except NotImplementedError:
+        #     logger.warning("Proactivity for morning briefing is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_sport_check, 15):
+                self.uc_sport.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for sport is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_transportation_check, 15):
+                self.uc_transportation.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for transportation is not implemented yet.")
+
+        try:
+            if check_timedelta(self.log_proactivity.last_general_check, 15):
+                self.uc_general.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for general is not implemented yet.")
 
     def agent(self) -> None:
         """Main function to interact with the user
@@ -243,7 +277,7 @@ class Agent:
 
         while True:
             print("")
-            if datetime.now() - self.log_proactivity.last_check > timedelta(minutes=15):
+            if check_timedelta(self.log_proactivity.last_check, 5):
                 self.check_proactivity()
 
             query = self.stt.convert_speech()

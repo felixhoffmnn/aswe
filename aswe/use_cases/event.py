@@ -19,6 +19,13 @@ from aswe.utils.date import get_next_saturday
 class EventUseCase(AbstractUseCase):
     """Use case to handle events"""
 
+    def check_proactivity(self) -> None:
+        """Check if there are any events in the next 30 minutes and trigger the assistant
+
+        * TODO: Implement proactivity
+        """
+        raise NotImplementedError
+
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for events
 

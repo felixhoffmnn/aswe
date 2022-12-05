@@ -45,3 +45,15 @@ class AbstractUseCase(ABC):
             or if the function is not implemented yet.
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def check_proactivity(self) -> None:
+        """UseCase for morning briefing
+
+        Raises
+        ------
+        NotImplementedError
+            If the given key was not found in the match case statement for implemented functions,
+            or if the function is not implemented yet.
+        """
+        raise NotImplementedError

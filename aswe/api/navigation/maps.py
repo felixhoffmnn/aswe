@@ -1,13 +1,14 @@
 import os
 
 import googlemaps as gmaps
+from loguru import logger
 
-from aswe.api.navigation.trip_data import MapsTrip, MapsTripMode
+from aswe.api.navigation.trip_data import MapsTrip
 
 _GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 
-def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMode) -> MapsTrip:
+def get_maps_connection(start_location: str, end_location: str, mode: str) -> MapsTrip:
     """Provides the distance and duration for a trip with a specific transportation type
 
     Parameters
@@ -16,7 +17,7 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
         Name of the location the trip starts
     end_location : str
         Name of the location the trip ends
-    mode : MapsTripMode
+    mode : str
         Type of transportation. Possible values: 'driving', 'walking', 'bicycling' or 'transit'
 
     Returns
@@ -27,7 +28,12 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
     client = gmaps.Client(key=_GOOGLE_MAPS_API_KEY)
     directions_result = client.directions(start_location, end_location, mode=mode)  # type: ignore
 
+    distance = int(directions_result[0]["legs"][0]["distance"]["value"])
+    duration = int(directions_result[0]["legs"][0]["duration"]["value"] / 60)
+
+    logger.debug(f"Maps: From {start_location} to {end_location} with {mode}: {distance} meter, {duration} minutes")
+
     return MapsTrip(
-        distance=int(directions_result[0]["legs"][0]["distance"]["value"]),
-        duration=int(directions_result[0]["legs"][0]["duration"]["value"] / 60),
+        distance=distance,
+        duration=duration,
     )

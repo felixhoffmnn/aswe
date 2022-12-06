@@ -148,7 +148,10 @@ class Agent:
         self.uc_morning_briefing = MorningBriefingUseCase(self.stt, self.tts, self.assistant_name, self.user)
 
     def _greeting(self) -> None:
-        """Function to greet the user."""
+        """Function to greet the user.
+
+        Depending on the time of the day, the assistant greets the user with a different greeting.
+        """
         hour = datetime.now().hour
 
         if 4 <= hour < 12:
@@ -298,6 +301,8 @@ class Agent:
         then checks proactively if there are updates for the user. If thats not the case, it will start
         listening for user input in `60` second intervals. If the user input is not empty, it will
         execute the use case function for proactivity.
+
+        * TODO: Add hotword detection
         """
         self._greeting()
 

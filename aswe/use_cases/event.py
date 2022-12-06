@@ -105,7 +105,7 @@ class EventUseCase(AbstractUseCase):
                 raise NotImplementedError
 
     def _get_attendable_events(self, raw_events: list[ReducedEvent], calendar_events: list[Event]) -> list[Any]:
-        """Checks whether or not given events can be attended depending on existing events in the users calenda.
+        """Checks whether or not given events can be attended depending on existing events in the users calendar.
 
         Parameters
         ----------

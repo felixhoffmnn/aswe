@@ -48,7 +48,10 @@ class AbstractUseCase(ABC):
 
     @abstractmethod
     def check_proactivity(self) -> None:
-        """UseCase for morning briefing
+        """Check if the assistant should be proactive
+
+        This function should first collect data from the APIs and if there is anything interesting
+        the use case is going to inform the user about it.
 
         * TODO: Think about renaming this function
 

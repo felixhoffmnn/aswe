@@ -25,6 +25,8 @@ nav:
       - API:
           - Calendar: api/calendar.md
           - Event: api/event.md
+          - Finance: api/finance.md
+          - Navigation: api/navigation.md
           - News: api/news.md
           - Sport: api/sport.md
           - Weather: api/weather.md

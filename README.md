@@ -54,16 +54,26 @@ Following dependencies are listed which are required to either run or contribute
 After the setup is complete, use the **following commands** to run the agent. Note that you need to be in the **root directory** of the project.
 
 ```bash
-poetry run python aswe/core/agent.py agent
-```
+# If want to run the agent with the default settings
+poetry run python aswe/core/agent.py main
 
-> :bulb: If you want to choose the used microphone, just add `--get_mic` to the command above.
+# With this you can trigger a specific proactivity
+poetry run python aswe/core/agent.py main --test_proactivity 4
+
+# If you want to get the microphone input
+poetry run python aswe/core/agent.py main -- --get_mic
+
+# If you want to trigger a specific proactivity and get the microphone input
+poetry run python aswe/core/agent.py main --test_proactivity 3 --get_mic
+```
 
 ## :speech_balloon: Concept
 
 In the following section we will go into detail about the concept of the agent. The agent is divided into three main parts: the **speech** and **text conversion**, the **agent**, the **use cases**, and the **API layer**.
 
-<!-- TODO: Add drawio diagram -->
+<!-- TODO: Fix link to diagram -->
+
+![Concept](./data/flowcharts/layered_architecture_2.png)
 
 ## :memo: License
 

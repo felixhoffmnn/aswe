@@ -8,8 +8,6 @@ class LogProactivity:
 
     Attributes
     ----------
-    last_check : datetime
-        The last time proactivity was triggered
     last_event_check : datetime
         The last time the event use case was triggered
     last_morning_briefing_check : datetime
@@ -20,7 +18,6 @@ class LogProactivity:
         The last time the transportation use case was triggered
     """
 
-    last_check: datetime = datetime.now()
     last_event_check: datetime = datetime.now()
     last_morning_briefing_check: datetime = datetime.now()
     last_sport_check: datetime = datetime.now()
@@ -100,6 +97,14 @@ class Favorites:
     ----------
     stocks : list[str]
         The favorite stocks of the user.
+    league : str
+        The favorite league of the user.
+    team : str
+        The favorite team of the user.
+    news_keywords : list[str]
+        The favorite news keywords of the user.
+    wakeup_time : datetime
+        The wakeup time of the user.
     """
 
     stocks: list[dict[str, str]]
@@ -123,6 +128,7 @@ class User:
         The age of the user.
     address : Address
         The address of the user.
+    favorites : Favorites
     """
 
     name: str

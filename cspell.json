@@ -1,6 +1,9 @@
 {
   "language": "en, de-de, lorem-ipsum, python",
-  "ignorePaths": [".git", ".vscode"],
+  "ignorePaths": [
+    ".git",
+    ".vscode"
+  ],
   "words": [
     "aswe",
     "attendable",
@@ -46,6 +49,7 @@
     "pyttsx",
     "pyupgrade",
     "saturday",
+    "steadl",
     "sunday",
     "superfences",
     "tasklist",

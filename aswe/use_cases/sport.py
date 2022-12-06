@@ -17,6 +17,8 @@ class SportUseCase(AbstractUseCase):
     def choose_league(self, leagues: list[str]) -> str:
         """Returns the league the users chooses.
 
+        * TODO: Refactor by using `print_options` and `get_int`
+
         Returns
         -------
         str
@@ -36,6 +38,8 @@ class SportUseCase(AbstractUseCase):
     def choose_team(self, teams: list[str]) -> str:
         """Returns the team the users chooses.
 
+        * TODO: Refactor by using `print_options` and `get_int`
+
         Returns
         -------
         str
@@ -54,6 +58,8 @@ class SportUseCase(AbstractUseCase):
 
     def get_matchday_num(self, max_num: int) -> int:
         """Returns the matchday number the user chooses.
+
+        * TODO: Refactor by using `print_options` and `get_int`
 
         Parameters
         ----------
@@ -81,7 +87,7 @@ class SportUseCase(AbstractUseCase):
 
         * TODO: Implement `quotes_key`
         * TODO: Fix typing (remove type ignore)
-        * TODO: Implement custom exceptions
+        * TODO: Refactor try except blocks to only include the api call
 
         Parameters
         ----------

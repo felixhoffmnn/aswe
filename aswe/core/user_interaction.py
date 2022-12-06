@@ -107,11 +107,12 @@ class SpeechToText:
         When the function does not detect any speech for `60` seconds it will timeout and return `None`.
 
         * TODO: Check `adjust_for_ambient_noise`
+        * TODO: Add function to cancel the request without quitting the program
 
         Parameters
         ----------
         line_above : bool, optional
-            If a new line should be printed before the user input. _By default `False`_.
+            If a new line should be printed before the user input. _By default `False`._
 
         Returns
         -------

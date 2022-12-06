@@ -8,6 +8,7 @@ on:
     branches: ["main"]
 
 # TODO: Add windows as testing platform
+# TODO: Increase coverage to 80%
 jobs:
   pytest:
     runs-on: ${{ matrix.os }}

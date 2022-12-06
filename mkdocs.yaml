@@ -34,6 +34,7 @@ nav:
           - Error: utils/error.md
           - Request: utils/request.md
           - Shell: utils/shell.md
+          - Text: utils/text.md
           - Validate: utils/validate.md
 
 # Plugins

@@ -27,6 +27,19 @@ class Agent:
     The core functionality of the assistant is to handle speech-to-text conversion (_stt_), text-to_speech (_tts_)
     conversion, calculate the best match for the parsed text, greet the user, trigger the right use case,
     and handle proactivity.
+
+    ```mermaid
+    graph LR;
+
+    start_agent --> greet_user;
+    greet_user --> check_for_proactivity;
+    check_for_proactivity --> trigger_proactivity;
+    trigger_proactivity --> get_user_input;
+    check_for_proactivity --> get_user_input;
+    get_user_input --> calculate_best_match;
+    calculate_best_match --> trigger_use_case;
+    trigger_use_case --> check_for_proactivity;
+    ```
     """
 
     def __init__(self, get_mic: bool = False, is_test: bool = False) -> None:
@@ -47,18 +60,26 @@ class Agent:
         ----------
         assistant_name : str
             The name of the assistant
-        is_test : bool
-            Boolean if the agent is used for testing
         quotes : pd.DataFrame
             DataFrame storing the use cases and functionality combinations
+        user : User
+            User class to store the user information (eg., name, age)
         stt : SpeechToText
             Speech to text class to handle speech-to-text conversion
         tts : TextToSpeech
             Text to speech class to handle text-to-speech conversion
         user : User
             User class to store the user information (eg., name, age)
+        log_proactivity : LogProactivity
+            Log proactivity class to handle the logging of proactivity
         uc_general : GeneralUseCase
             General use case class to handle general use cases
+        uc_transportation : TransportationUseCase
+            Transportation use case class to handle transportation use cases
+        uc_event : EventUseCase
+            Event use case class to handle event use cases
+        uc_sport : SportUseCase
+            Sport use case class to handle sport use cases
         """
         self.assistant_name = "HiBuddy"
 

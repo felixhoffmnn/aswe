@@ -6,20 +6,18 @@ from datetime import datetime
 class LogProactivity:
     """A class to keep track of the last time proactivity was triggered
 
-    Parameters
+    Attributes
     ----------
     last_check : datetime
         The last time proactivity was triggered
-    last_event : datetime
+    last_event_check : datetime
         The last time the event use case was triggered
-    last_morning_briefing : datetime
+    last_morning_briefing_check : datetime
         The last time the morning briefing was triggered
-    last_sport : datetime
+    last_sport_check : datetime
         The last time the sport use case was triggered
-    last_transportation : datetime
+    last_transportation_check : datetime
         The last time the transportation use case was triggered
-    last_general : datetime
-        The last time the general use case was triggered
     """
 
     last_check: datetime = datetime.now()
@@ -34,7 +32,7 @@ class LogProactivity:
 class BestMatch:
     """Dataclass to store the best match for a given user input.
 
-    Parameters
+    Attributes
     ----------
     use_case : str
         The name of the use case.
@@ -56,7 +54,7 @@ class BestMatch:
 class Address:
     """Dataclass to store the address of a user.
 
-    Parameters
+    Attributes
     ----------
     street : str
         The street of the user.
@@ -81,7 +79,7 @@ class Address:
 class Possessions:
     """Dataclass to store the possessions of a user.
 
-    Parameters
+    Attributes
     ----------
     bike : bool
         Does the user own a bike?
@@ -100,7 +98,7 @@ class User:
     * TODO: Add more attributes and evaluate the existing ones
     * TODO: User has a car?
 
-    Parameters
+    Attributes
     ----------
     name : str
         The name of the user.

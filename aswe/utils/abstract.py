@@ -50,6 +50,8 @@ class AbstractUseCase(ABC):
     def check_proactivity(self) -> None:
         """UseCase for morning briefing
 
+        * TODO: Think about renaming this function
+
         Raises
         ------
         NotImplementedError

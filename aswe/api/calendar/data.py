@@ -5,7 +5,7 @@ from dataclasses import dataclass
 class Event:
     """Dataclass storing Event data
 
-    Parameters
+    Attributes
     ----------
     title : str
         The title of the event
@@ -24,16 +24,9 @@ class Event:
     """
 
     title: str
-    """The title of the event"""
-
     description: str
-    """The description of the event"""
-
     location: str
-    """The location the event takes place"""
-
     full_day: bool
-    """Stores if the event is active the entire day"""
 
     date: str
     """The date of a full-day event with the format "yyyy-MM-dd"""

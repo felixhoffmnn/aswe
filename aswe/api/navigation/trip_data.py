@@ -7,7 +7,7 @@ from enum import Enum
 class MapsTrip:
     """Dataclass supposed to store the data of a connection retrieved from google maps
 
-    Parameters
+    Attributes
     ----------
     duration : int
         Duration in minutes
@@ -32,7 +32,7 @@ class MapsTripMode(str, Enum):
 class Connection:
     """Dataclass supposed to store the data of a single vvs connection
 
-    Parameters
+    Attributes
     ----------
     train_name : str
         Name of the train
@@ -57,7 +57,7 @@ class Connection:
 class Trip:
     """Dataclass supposed to store the data of a vvs trip
 
-    Parameters
+    Attributes
     ----------
     duration : int
         Time needed for the entire trip in minutes

@@ -48,7 +48,7 @@ class EventUseCase(AbstractUseCase):
                 beginning_next_saturday = get_next_saturday()
                 end_next_sunday = beginning_next_saturday + timedelta(days=1, hours=23, minutes=59, seconds=59)
 
-                # TODO use user city
+                # TODO: Use user city
                 events = eventApi.events(
                     EventApiEventParams(
                         city=["Berlin"],
@@ -77,13 +77,14 @@ class EventUseCase(AbstractUseCase):
                     else:
                         self.tts.convert_text("There are multiple events you might want to attend to.")
 
+                    # TODO: Maybe put into a seperate function
                     for event_summary in attendable_events_info:
                         formatted_summary = self._format_event_summary(event_summary)
                         self.tts.convert_text(formatted_summary)
                         self.tts.convert_text("Do you want to attend?")
 
                         if self.stt.check_if_yes():
-                            # TODO use user city
+                            # TODO: Use user city
                             # create_event(
                             #     Event(
                             #         title=attendable_events_info[0]["name"],
@@ -103,7 +104,9 @@ class EventUseCase(AbstractUseCase):
                 raise NotImplementedError
 
     def _get_attendable_events(self, raw_events: list[dict[Any, Any]], calendar_events: list[Event]) -> list[Any]:
-        """Checks whether or not given events can be attended depending on existing events in the users calenda.
+        """Checks whether or not given events can be attended depending on existing events in the users calendar.
+
+        * TODO: Fix typing
 
         Parameters
         ----------
@@ -129,6 +132,8 @@ class EventUseCase(AbstractUseCase):
 
     def _event_is_attendable(self, event: dict[Any, Any], calendar_events: list[Any]) -> bool:
         """Checks whether a single event can be attended
+
+        * TODO: Fix typing for `calendar_events`, and `event`
 
         Parameters
         ----------
@@ -161,6 +166,8 @@ class EventUseCase(AbstractUseCase):
     def _get_event_summary(self, event: Any) -> dict[str, Any]:
         """Collects short summary about event using weather & gmaps api
 
+        * TODO: Fix typing for `event`
+
         Parameters
         ----------
         event : Any
@@ -181,7 +188,7 @@ class EventUseCase(AbstractUseCase):
             "is_rainy": False,
         }
 
-        # TODO use user city
+        # TODO: Use user city
         weather_response = weatherApi.forecast(
             location="Stuttgart,DE",
             start_date=event_start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -198,7 +205,8 @@ class EventUseCase(AbstractUseCase):
             event_summary["is_cold"] = temperature < 5.0
             event_summary["is_rainy"] = precipitation_probability > 40.0
 
-        # TODO ask user about preferred method (driving, walking, transit, bicycling)
+        # TODO: Ask user about preferred method (driving, walking, transit, bicycling)
+        # TODO: Check which possessions the user has (bike, car, etc.)
         directions = get_maps_connection(
             f"{self.user.address.street},{self.user.address.city}", event_location, MapsTripMode.BICYCLING
         )
@@ -210,6 +218,8 @@ class EventUseCase(AbstractUseCase):
 
     def _get_event_times(self, event: dict[Any, Any], event_duration: int = 2) -> tuple[datetime, datetime]:
         """Gets start and end time of event
+
+        * TODO: Extract function as `util`
 
         Parameters
         ----------

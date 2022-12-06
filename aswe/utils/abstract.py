@@ -31,7 +31,7 @@ class AbstractUseCase(ABC):
 
     @abstractmethod
     def trigger_assistant(self, best_match: BestMatch) -> None:
-        """UseCase for morning briefing
+        """Abstract Use Case method
 
         Parameters
         ----------

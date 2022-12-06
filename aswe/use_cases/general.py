@@ -6,6 +6,7 @@ import pyjokes
 
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
+from aswe.utils.shell import get_int
 
 
 class GeneralUseCase(AbstractUseCase):
@@ -55,15 +56,13 @@ class GeneralUseCase(AbstractUseCase):
             case "stopListening":
                 self.tts.convert_text("For how long do you want me to stop listening (in seconds)?")
 
-                sleep_time = 0
-                while sleep_time == 0:
-                    try:
-                        sleep_time = int(input("Please enter the number of your choice: "))
-                    except ValueError:
-                        self.tts.convert_text("Sorry, I didn't get that. Please try again.")
+                sleep_time = get_int(list(range(1, 60)))
 
-                time.sleep(sleep_time)
-                self.tts.convert_text("I am back again.")
+                if sleep_time is not None and sleep_time > 0:
+                    time.sleep(sleep_time)
+                    self.tts.convert_text("I am back again.")
+            case "love":
+                raise NotImplementedError
             case "marryMe":
                 self.tts.convert_text("I am sorry, I am already married to my job.")
             case "boyGirlFriend":

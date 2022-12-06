@@ -148,13 +148,14 @@ class Agent:
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
         self.tts.convert_text("How can I help you?")
 
-    def get_best_match(self, parsed_text: str, threshold: float = 0.5) -> BestMatch | None:
+    def get_best_match(self, parsed_text: str, threshold: float = 0.7) -> BestMatch | None:
         """Find the best match for the parsed text
 
         Function calculates the similarity between the parsed text and the use cases.
 
         * TODO: Add tokenization and stop words
         * TODO: Extract calculation of similarity into a util function
+        * TODO: Watch if the default threshold is too high
 
         ??? example "`self.quotes` DataFrame"
 
@@ -178,7 +179,7 @@ class Agent:
             The parsed text which should be matched to a use case.
         threshold : float, optional
             The threshold which is used to determine if the similarity is high enough to be considered.
-            The value needs to be between 0 and 1. _By default `0.5`_.
+            The value needs to be between 0 and 1. _By default `0.7`_.
 
         Raises
         ------
@@ -248,24 +249,28 @@ class Agent:
 
         try:
             if check_timedelta(self.log_proactivity.last_event_check, 15):
+                logger.debug("Triggering proactivity for events.")
                 self.uc_event.check_proactivity()
         except NotImplementedError:
             logger.warning("Proactivity for events is not implemented yet.")
 
         # try:
-        # if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15):
-        #     self.uc_morning_briefing.check_proactivity()
+        #     if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15):
+        #         logger.debug("Triggering proactivity for morning briefing.")
+        #         self.uc_morning_briefing.check_proactivity()
         # except NotImplementedError:
         #     logger.warning("Proactivity for morning briefing is not implemented yet.")
 
         try:
             if check_timedelta(self.log_proactivity.last_sport_check, 15):
+                logger.debug("Triggering proactivity for sport.")
                 self.uc_sport.check_proactivity()
         except NotImplementedError:
             logger.warning("Proactivity for sport is not implemented yet.")
 
         try:
             if check_timedelta(self.log_proactivity.last_transportation_check, 15):
+                logger.debug("Triggering proactivity for transportation.")
                 self.uc_transportation.check_proactivity()
         except NotImplementedError:
             logger.warning("Proactivity for transportation is not implemented yet.")

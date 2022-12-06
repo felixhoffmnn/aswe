@@ -24,6 +24,7 @@ class TransportationUseCase(AbstractUseCase):
         """UseCase for transportation
 
         * TODO: Implement `quotes_key`
+        * TODO: Refactor this function into smaller functions
 
         Parameters
         ----------

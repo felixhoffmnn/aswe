@@ -120,15 +120,9 @@ class EventUseCase(AbstractUseCase):
         list[Any]
             List of short summaries of events that can be attended.
         """
-        attendable_events_info = []
-        for event in raw_events:
-            event_is_attendable = self._event_is_attendable(event, calendar_events)
-
-            if event_is_attendable:
-                event_summary = self._get_event_summary(event)
-                attendable_events_info.append(event_summary)
-
-        return attendable_events_info
+        return [
+            self._get_event_summary(event) for event in raw_events if self._event_is_attendable(event, calendar_events)
+        ]
 
     def _event_is_attendable(self, event: dict[Any, Any], calendar_events: list[Any]) -> bool:
         """Checks whether a single event can be attended

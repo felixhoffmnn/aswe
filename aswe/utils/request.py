@@ -2,7 +2,7 @@ from typing import Any
 
 import requests
 from loguru import logger
-from requests import Response
+from requests import HTTPError, Response
 
 from aswe.utils.error import TooManyRequests
 
@@ -30,7 +30,7 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
         response.raise_for_status()
         if not response.status_code == 200:
             raise Exception("HTTP status code is not 200")
-    except requests.HTTPError as http_err:
+    except HTTPError as http_err:
         logger.error(f"HTTP error occurred: {http_err}")
         if http_err.response.status_code == 429:
             raise TooManyRequests from http_err

@@ -2,10 +2,7 @@ from enum import Enum
 
 
 class IncludeEnum(str, Enum):
-    """Enum of possible include parameters for weather API
-
-    * TODO: Fix the wired typing and errors
-    """
+    """Enum of possible include parameters for weather API"""
 
     DAYS = "days"
     "daily data"
@@ -40,10 +37,7 @@ class IncludeEnum(str, Enum):
 
 
 class ElementsEnum(str, Enum):
-    """Enum of possible element parameters for weather API
-
-    * TODO: Fix the wired typing and errors
-    """
+    """Enum of possible element parameters for weather API"""
 
     CLOUDCOVER = "cloudcover"
     "how much of the sky is covered in cloud ranging from 0-100%"
@@ -229,10 +223,7 @@ class ElementsEnum(str, Enum):
 
 
 class DynamicPeriodEnum(str, Enum):
-    """Enum of possible dynamic periods for weather API
-
-    * TODO: Fix the wired typing and errors
-    """
+    """Enum of possible dynamic periods for weather API"""
 
     TODAY = "today"
     "from midnight to the current time at the requested location."

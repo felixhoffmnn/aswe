@@ -61,7 +61,7 @@ class SpeechToText:
         parsed_text = self.convert_speech()
 
         if parsed_text is None:
-            logger.warning("No text could be parsed. Maybe a error occurred?")
+            logger.warning("No text could be parsed. Maybe an error occurred?")
             return False
 
         return calculate_similarity(parsed_text, ["yes", "yeah", "yep", "sure", "ok", "okay", "ja"]) == 1

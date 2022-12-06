@@ -188,7 +188,7 @@ class MorningBriefingUseCase(AbstractUseCase):
                 if abs(change) >= 0.03:
                     self.tts.convert_text(
                         f"""I have breaking news about the {stock['name']} stock for you! The price has changed"""
-                        f"""significantly, {change * 100} percent since the last the I told you the price."""
+                        f"""significantly, {change * 100} percent since the last time I told you the price."""
                         f"""It is now trading at {price} {self.currency[0]} per share."""
                     )
                     self.last_stock_prices[stock["symbol"]] = price

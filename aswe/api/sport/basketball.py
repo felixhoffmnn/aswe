@@ -3,7 +3,7 @@ from datetime import date
 
 from aswe.utils.error import ApiLimitReached
 from aswe.utils.request import http_request
-from aswe.utils.validate import validate_api
+from aswe.utils.validate import validate_api_limit_reached
 
 _HEADERS = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.basketball.api-sports.io"}
 
@@ -19,7 +19,7 @@ def get_nba_standings() -> list[list[str]] | None:
     request = http_request("https://v1.basketball.api-sports.io/standings?league=12&season=2022-2023", headers=_HEADERS)
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     wc_standings = []
@@ -51,7 +51,7 @@ def get_nba_teams() -> list[str] | None:
     request = http_request("https://v1.basketball.api-sports.io/standings?league=12&season=2022-2023", headers=_HEADERS)
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     teams = []
@@ -77,7 +77,7 @@ def get_team_id(team_name: str) -> int | None:
     request = http_request(f"https://v1.basketball.api-sports.io/teams?name={team_name}", headers=_HEADERS)
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 
@@ -112,7 +112,7 @@ def get_team_game_today(team_name: str) -> list[str] | None:
     )
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 

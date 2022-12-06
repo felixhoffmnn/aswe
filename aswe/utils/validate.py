@@ -37,7 +37,7 @@ def validate_date(date: str, include_time: bool | None = None) -> bool:
     return True
 
 
-def validate_api(response: Response) -> bool:
+def validate_api_limit_reached(response: Response) -> bool:
     """Test if the API limit is reached
 
     Parameters
@@ -48,7 +48,7 @@ def validate_api(response: Response) -> bool:
     Returns
     -------
     bool
-        Return True if the API limit is reached
+        True if the API limit is reached
     """
     try:
         if "You have reached the request limit for the day" in response.json()["errors"]["requests"]:

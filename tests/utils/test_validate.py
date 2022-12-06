@@ -3,7 +3,7 @@
 
 from requests.models import Response
 
-from aswe.utils.validate import validate_api, validate_date
+from aswe.utils.validate import validate_api_limit_reached, validate_date
 
 
 def test_valid_date() -> None:
@@ -27,19 +27,19 @@ def test_invalid_datetime() -> None:
 
 
 def test_valid_api_response() -> None:
-    """Test `validate_api` function"""
+    """Test `validate_api_limit_reached` function"""
 
     key_error_response = Response()
     key_error_response._content = b"{}"
 
-    assert validate_api(key_error_response) is False
+    assert validate_api_limit_reached(key_error_response) is False
 
     limit_not_reached = Response()
     limit_not_reached._content = b'{"errors": {"requests": ""}}'
 
-    assert validate_api(limit_not_reached) is False
+    assert validate_api_limit_reached(limit_not_reached) is False
 
     limit_reached = Response()
     limit_reached._content = b'{"errors": {"requests": "You have reached the request limit for the day"}}'
 
-    assert validate_api(limit_reached) is True
+    assert validate_api_limit_reached(limit_reached) is True

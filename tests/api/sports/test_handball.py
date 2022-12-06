@@ -25,7 +25,7 @@ def import_paths() -> dict[str, str]:
 
     return {
         "http_request": "aswe.api.sport.handball.http_request",
-        "validate_api": "aswe.api.sport.handball.validate_api",
+        "validate_api_limit_reached": "aswe.api.sport.handball.validate_api_limit_reached",
         "get_league_id": "aswe.api.sport.handball.get_league_id",
         "get_team_id": "aswe.api.sport.handball.get_team_id",
     }
@@ -47,7 +47,7 @@ def test_get_league_id(mocker: MockFixture, import_paths: dict[str, str]) -> Non
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
 
     assert get_league_id("test_name") == 1
 
@@ -92,7 +92,7 @@ def test_get_league_id_api_limit(mocker: MockFixture, import_paths: dict[str, st
 
     # * Mock ApiLimitReached
     mocker.patch(import_paths["http_request"], return_value=empty_response)
-    mocker.patch(import_paths["validate_api"], return_value=True)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=True)
 
     with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
         get_league_id("test_name")
@@ -120,7 +120,7 @@ def test_get_league_table(mocker: MockFixture, import_paths: dict[str, str]) -> 
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
     mocker.patch(import_paths["get_league_id"], return_value=1)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
 
     assert get_league_table("test_name") == ["test_position test_team_name test_points"]
 
@@ -172,7 +172,7 @@ def test_get_league_table_api_limit(mocker: MockFixture, import_paths: dict[str,
 
     # * Mock ApiLimitReached
     mocker.patch(import_paths["http_request"], return_value=empty_response)
-    mocker.patch(import_paths["validate_api"], return_value=True)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=True)
     mocker.patch(import_paths["get_league_id"], return_value=1)
 
     with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
@@ -197,7 +197,7 @@ def test_get_team_id(mocker: MockFixture, import_paths: dict[str, str]) -> None:
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
 
     assert get_team_id("test_name") == 1
 
@@ -222,7 +222,7 @@ def test_get_team_id_invalid_response(mocker: MockFixture, import_paths: dict[st
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
 
     assert get_team_id("test_name") is None
 
@@ -243,7 +243,7 @@ def test_get_team_id_api_limit(mocker: MockFixture, import_paths: dict[str, str]
 
     # * Mock ApiLimitReached
     mocker.patch(import_paths["http_request"], return_value=empty_response)
-    mocker.patch(import_paths["validate_api"], return_value=True)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=True)
 
     with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
         get_team_id("test_team")
@@ -272,7 +272,7 @@ def test_get_team_game_today(mocker: MockFixture, import_paths: dict[str, str]) 
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
     mocker.patch(import_paths["get_league_id"], return_value=1)
     mocker.patch(import_paths["get_team_id"], return_value=1)
 
@@ -327,7 +327,7 @@ def test_get_team_game_today_api_limit(mocker: MockFixture, import_paths: dict[s
 
     # * Mock ApiLimitReached
     mocker.patch(import_paths["http_request"], return_value=1)
-    mocker.patch(import_paths["validate_api"], return_value=True)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=True)
     mocker.patch(import_paths["get_league_id"], return_value=1)
     mocker.patch(import_paths["get_team_id"], return_value=1)
 
@@ -355,7 +355,7 @@ def test_get_league_teams(mocker: MockFixture, import_paths: dict[str, str]) -> 
     valid_response._content = json.dumps(mock_valid_response_object).encode()
     mocker.patch(import_paths["http_request"], return_value=valid_response)
     mocker.patch(import_paths["get_league_id"], return_value=1)
-    mocker.patch(import_paths["validate_api"], return_value=False)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=False)
 
     assert get_league_teams("test_name") == ["test_team_name1"]
 
@@ -399,7 +399,7 @@ def test_get_league_teams_api_limit(mocker: MockFixture, import_paths: dict[str,
 
     # * Mock ApiLimitReached
     mocker.patch(import_paths["http_request"], return_value=empty_response)
-    mocker.patch(import_paths["validate_api"], return_value=True)
+    mocker.patch(import_paths["validate_api_limit_reached"], return_value=True)
 
     with pytest.raises(ApiLimitReached, match="You have reached the handball API request limit for the day"):
         get_league_teams("test_name")

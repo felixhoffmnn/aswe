@@ -3,7 +3,7 @@ from datetime import date
 
 from aswe.utils.error import ApiLimitReached
 from aswe.utils.request import http_request
-from aswe.utils.validate import validate_api
+from aswe.utils.validate import validate_api_limit_reached
 
 _HEADERS = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
 
@@ -24,7 +24,7 @@ def get_league_id(league_name: str) -> int | None:
     request = http_request("https://v1.handball.api-sports.io/leagues", headers=_HEADERS)
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     for league in data["response"]:
@@ -54,7 +54,7 @@ def get_league_teams(league_name: str) -> list[str] | None:
     )
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     standings = request.json()
     table = []
@@ -84,7 +84,7 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     )
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     standings = request.json()
     table = []
@@ -110,7 +110,7 @@ def get_team_id(team_name: str) -> int | None:
     request = http_request(f"https://v1.handball.api-sports.io/teams?name={team_name}", headers=_HEADERS)
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
 
@@ -150,7 +150,7 @@ def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list
     )
     if request is None:
         return None
-    if validate_api(request):
+    if validate_api_limit_reached(request):
         raise ApiLimitReached("You have reached the handball API request limit for the day")
     data = request.json()
     if data["response"] == []:

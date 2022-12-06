@@ -25,7 +25,6 @@ class LogProactivity:
     last_morning_briefing_check: datetime = datetime.now()
     last_sport_check: datetime = datetime.now()
     last_transportation_check: datetime = datetime.now()
-    last_general_check: datetime = datetime.now()
 
 
 @dataclass

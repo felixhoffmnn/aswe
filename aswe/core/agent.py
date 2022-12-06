@@ -42,7 +42,7 @@ class Agent:
     ```
     """
 
-    def __init__(self, get_mic: bool = False, is_test: bool = False) -> None:
+    def __init__(self, get_mic: bool = False) -> None:
         """
         * TODO: Add Attributes section
         * TODO: Tokenize the phrases and input
@@ -53,8 +53,6 @@ class Agent:
         ----------
         get_mic : bool, optional
             Boolean if the speech to text class should first ask for the microphone to use. _By default `False`_.
-        is_test : bool, optional
-            Boolean if the agent is used for testing. _By default `False`_.
 
         Attributes
         ----------
@@ -124,14 +122,8 @@ class Agent:
             logger.error("It appears that not all necessary keys are correctly set in the `user.json` file.")
             sys.exit(1)
 
-        self.stt = SpeechToText(get_mic, is_test)
-        self.tts = TextToSpeech(is_test)
-
-        # GetFinanceData
-
-        # Print available stocks
-        # input("get user input")
-        # self.user.favorite_stocks = ["Apple", "Tesla", "Microsoft"]
+        self.stt = SpeechToText(get_mic)
+        self.tts = TextToSpeech()
 
         self.log_proactivity = LogProactivity()
 
@@ -277,12 +269,6 @@ class Agent:
                 self.uc_transportation.check_proactivity()
         except NotImplementedError:
             logger.warning("Proactivity for transportation is not implemented yet.")
-
-        try:
-            if check_timedelta(self.log_proactivity.last_general_check, 15):
-                self.uc_general.check_proactivity()
-        except NotImplementedError:
-            logger.warning("Proactivity for general is not implemented yet.")
 
     def agent(self) -> None:
         """Main function to interact with the user

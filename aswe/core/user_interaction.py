@@ -15,7 +15,7 @@ from aswe.utils.text import calculate_similarity
 class SpeechToText:
     """Class to convert speech to text."""
 
-    def __init__(self, get_mic: bool, is_test: bool) -> None:
+    def __init__(self, get_mic: bool) -> None:
         """Initializes the speech to text class.
 
         * TODO: Think about a better way to handle the case that the `microphone_index` is not required
@@ -26,11 +26,7 @@ class SpeechToText:
         ----------
         get_mic : bool
             If the speech to text class should first get the microphone index.
-        is_test : bool, optional
-            Boolean if the agent is used for testing. _By default `False`_.
         """
-        self.is_test = is_test
-
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = 2500
         self.recognizer.pause_threshold = 1
@@ -160,19 +156,12 @@ class SpeechToText:
 class TextToSpeech:
     """Class to convert text to speech."""
 
-    def __init__(self, is_test: bool) -> None:
+    def __init__(self) -> None:
         """Initializes the text to speech class.
 
         * TODO: Add Attributes section
         * TODO: Add test method
-
-        Parameters
-        ----------
-        is_test : bool, optional
-            Boolean if the agent is used for testing. _By default `False`_.
         """
-        self.is_test = is_test
-
         self.engine: pyttsx3.Engine = pyttsx3.init()
         self.engine.setProperty("rate", 175)
         self.engine.setProperty("voice", "english")

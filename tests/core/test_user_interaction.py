@@ -9,7 +9,7 @@ from aswe.core.user_interaction import SpeechToText, TextToSpeech
 def test_convert_file() -> None:
     """Test if the speech is parsed correctly"""
     audio_path = Path("data/test_user_interaction.wav")
-    stt = SpeechToText(get_mic=False, is_test=True)
+    stt = SpeechToText(get_mic=False)
     assert isinstance(stt, SpeechToText)
     assert isinstance(stt.recognizer, sr.Recognizer)
 
@@ -23,7 +23,7 @@ def test_convert_file() -> None:
 
 def test_convert_text() -> None:
     """Test if text is parsed without any errors."""
-    tts = TextToSpeech(is_test=True)
+    tts = TextToSpeech()
     assert isinstance(tts, TextToSpeech)
     assert isinstance(tts.engine, Engine)
 
@@ -32,7 +32,7 @@ def test_convert_text() -> None:
 
 def test_optimize_time_for_speech() -> None:
     """Test if the time is optimized for speech correctly."""
-    tts = TextToSpeech(is_test=True)
+    tts = TextToSpeech()
 
     text_with_time_1 = "The event is at 12:00"
     text_with_time_2 = "The event is at 13:45"

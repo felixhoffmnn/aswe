@@ -62,7 +62,7 @@ pymdown-extensions = "^9.8"
 mkdocs-mermaid2-plugin = "^0.6.0"
 
 [tool.poe.tasks]
-run = { cmd = "python ./aswe/core/agent.py agent", help = "Runs agent" }
+run = { cmd = "python ./aswe/core/agent.py main", help = "Runs agent" }
 pytest = { cmd = "pytest", help = "Runs pytest" }
 test-cov = { cmd = "pytest --cov=aswe --cov-report=term-missing --cov-fail-under=${THRESHOLD}", help = "Test entire project with coverage.", args = [
   { name = "THRESHOLD", help = "Minimal threshold test coverage should reach before failing. By default 80.", default = 80, required = false, positional = true, type = "integer" },
@@ -85,13 +85,11 @@ warn_unused_configs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
 warn_no_return = true
+pretty = "True"
 
 [tool.black]
 line-length = 120
 target-version = ['py310']
-
-# What does pretty for black mean?
-pretty = "True"
 
 [tool.isort]
 profile = "black"

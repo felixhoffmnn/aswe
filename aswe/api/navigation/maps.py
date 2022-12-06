@@ -17,7 +17,7 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
         Name of the location the trip starts
     end_location : str
         Name of the location the trip ends
-    mode : str
+    mode : MapsTripMode
         Type of transportation. Possible values: 'driving', 'walking', 'bicycling' or 'transit'
 
     Returns
@@ -26,7 +26,7 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
         A MapsTrip object containing the distance and duration of the trip
     """
     client = gmaps.Client(key=_GOOGLE_MAPS_API_KEY)
-    directions_result = client.directions(start_location, end_location, mode=mode)  # type: ignore
+    directions_result = client.directions(start_location, end_location, mode=mode.value)  # type: ignore
 
     distance = int(directions_result[0]["legs"][0]["distance"]["value"])
     duration = int(directions_result[0]["legs"][0]["duration"]["value"] / 60)

@@ -142,7 +142,7 @@ class TransportationUseCase(AbstractUseCase):
                         not_fast_enough.append("bike")
                     else:
                         bike_start = event_datetime - timedelta(minutes=bike_trip.duration)
-                        response += f"With the bike, you have to start at {bike_start.strftime('%H:%M')} . "
+                        response += f"With the bike, you have to start at {bike_start.strftime('%H:%M')}. "
 
             if self.user.possessions.car:
                 car_trip = get_maps_connection(self.user.address.street, next_event.location, MapsTripMode.DRIVING)
@@ -150,14 +150,14 @@ class TransportationUseCase(AbstractUseCase):
                     not_fast_enough.append("car")
                 else:
                     car_start = event_datetime - timedelta(minutes=car_trip.duration)
-                    response += f"With the car, you have to start at {car_start.strftime('%H:%M')} . "
+                    response += f"With the car, you have to start at {car_start.strftime('%H:%M')}. "
 
             train_trip = get_maps_connection(self.user.address.street, next_event.location, MapsTripMode.TRANSIT)
             if train_trip.duration > time_available:
                 not_fast_enough.append("train")
             else:
                 train_start = event_datetime - timedelta(minutes=train_trip.duration)
-                response += f"With the train, you have to start at {train_start.strftime('%H:%M')} . "
+                response += f"With the train, you have to start at {train_start.strftime('%H:%M')}. "
 
             if len(not_fast_enough) == 1:
                 response += f"The {not_fast_enough[0]} is not fast enough."

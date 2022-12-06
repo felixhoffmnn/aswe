@@ -1,6 +1,10 @@
 {
   "morningBriefing": {
-    "newsSummary": ["whats going on", "morning briefing", "good morning"]
+    "fullBriefing": ["morning briefing", "good morning"],
+    "news": ["news", "what are the latest news"],
+    "weather": ["weather", "what is the weather"],
+    "calendar": ["calendar", "what appointments do i have today"],
+    "finance": ["finance", "how are my shares doing"]
   },
   "events": {
     "eventSummary": ["what is going on", "event summary"],
@@ -20,6 +24,7 @@
     "footballStandings": ["football standings", "soccer standings", "football table", "soccer table"],
     "footballMatchdayMatches": ["football matchday matches", "soccer matchday matches"],
     "footballOngoingMatches": ["football ongoing matches", "soccer ongoing matches"],
+    "footballMatchesToday": ["football matches today", "soccer matches today"],
     "footballUpcomingMatches": [
       "football upcoming matches",
       "soccer upcoming matches",

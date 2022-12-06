@@ -12,5 +12,14 @@
     "bike": true,
     "car": true
   },
-  "favorite_stocks": ["AAPL", "GOOG", "MSFT"]
+  "favorites": {
+    "stocks": [
+      { "name": "Apple", "symbol": "AAPL" },
+      { "name": "Microsoft", "symbol": "MSFT" }
+    ],
+    "league": "World Cup",
+    "team": "Netherlands",
+    "news_keywords": ["Ukraine", "Baerbock"],
+    "wakeup_time": "07:30"
+  }
 }

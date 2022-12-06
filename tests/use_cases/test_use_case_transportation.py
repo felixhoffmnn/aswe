@@ -1,9 +1,11 @@
 # pylint: disable=redefined-outer-name
 
+from datetime import datetime
+
 import pytest
 from pytest_mock import MockFixture
 
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.transportation import TransportationUseCase
 
@@ -22,6 +24,37 @@ def patch_tts(mocker: MockFixture) -> TextToSpeech:
     patched_tts: TextToSpeech = mocker.patch.object(TextToSpeech, "convert_text")
 
     return patched_tts
+
+
+def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
+    """Test proactivity of `use_cases.transportation`.
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    patch_stt : SpeechToText
+        Patched class to instantiate use_case class
+    patch_tts : TextToSpeech
+        Patched class to instantiate use_case class
+    """
+
+    user = User(
+        name="TestUser",
+        age=10,
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=True),
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
+    )
+    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+
+    use_case.check_proactivity()
 
 
 def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
@@ -43,7 +76,13 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -74,7 +113,13 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -105,7 +150,13 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -136,7 +187,13 @@ def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: Tex
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 

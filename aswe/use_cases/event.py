@@ -4,6 +4,7 @@ from typing import Any
 from aswe.api.calendar.calendar import get_events_by_timeframe
 from aswe.api.calendar.data import Event
 from aswe.api.event import event as eventApi
+from aswe.api.event.event_data import EventLocation, EventSummary, ReducedEvent
 from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.navigation.maps import get_maps_connection
 from aswe.api.navigation.trip_data import MapsTripMode
@@ -103,14 +104,12 @@ class EventUseCase(AbstractUseCase):
             case _:
                 raise NotImplementedError
 
-    def _get_attendable_events(self, raw_events: list[dict[Any, Any]], calendar_events: list[Event]) -> list[Any]:
-        """Checks whether or not given events can be attended depending on existing events in the users calendar.
-
-        * TODO: Fix typing
+    def _get_attendable_events(self, raw_events: list[ReducedEvent], calendar_events: list[Event]) -> list[Any]:
+        """Checks whether or not given events can be attended depending on existing events in the users calenda.
 
         Parameters
         ----------
-        raw_events : list[dict[Any, Any]]
+        raw_events : list[ReducedEvent]
             retrieved events from `aswe.api.event.event.events`
         calendar_events : list[Event]
             retrieved calendar events from `aswe.api.calendar.calendar.get_events_by_timeframe`
@@ -124,14 +123,14 @@ class EventUseCase(AbstractUseCase):
             self._get_event_summary(event) for event in raw_events if self._event_is_attendable(event, calendar_events)
         ]
 
-    def _event_is_attendable(self, event: dict[Any, Any], calendar_events: list[Any]) -> bool:
+    def _event_is_attendable(self, event: ReducedEvent, calendar_events: list[Any]) -> bool:
         """Checks whether a single event can be attended
 
         * TODO: Fix typing for `calendar_events`, and `event`
 
         Parameters
         ----------
-        event : dict[Any, Any]
+        event : ReducedEvent
             single event retrieved from `aswe.api.event.event.events`
         calendar_events : list[Any]
             retrieved calendar events from `aswe.api.calendar.calendar.get_events_by_timeframe`
@@ -157,7 +156,7 @@ class EventUseCase(AbstractUseCase):
 
         return True
 
-    def _get_event_summary(self, event: Any) -> dict[str, Any]:
+    def _get_event_summary(self, event: ReducedEvent) -> EventSummary:
         """Collects short summary about event using weather & gmaps api
 
         * TODO: Fix typing for `event`
@@ -173,14 +172,14 @@ class EventUseCase(AbstractUseCase):
             short summary of given event which can be formatted to readable string
         """
         event_start_datetime, _ = self._get_event_times(event)
-        event_location = f"""{event["location"]["address"]},{event["location"]["city"]}"""
-        event_summary = {
-            "name": event["name"],
-            "start": event_start_datetime,
-            "location": event_location,
-            "is_cold": False,
-            "is_rainy": False,
-        }
+
+        event_summary = EventSummary(
+            name=event.name,
+            start=event_start_datetime,
+            location=EventLocation(city=event.location.city, address=event.location.address),
+            is_cold=False,
+            is_rainy=False,
+        )
 
         # TODO: Use user city
         weather_response = weatherApi.forecast(
@@ -196,28 +195,30 @@ class EventUseCase(AbstractUseCase):
                 weather_response["days"][0]["hours"][event_start_datetime.hour]["precipprob"]
             )
 
-            event_summary["is_cold"] = temperature < 5.0
-            event_summary["is_rainy"] = precipitation_probability > 40.0
+            event_summary.is_cold = temperature < 5.0
+            event_summary.is_rainy = precipitation_probability > 40.0
 
         # TODO: Ask user about preferred method (driving, walking, transit, bicycling)
         # TODO: Check which possessions the user has (bike, car, etc.)
         directions = get_maps_connection(
-            f"{self.user.address.street},{self.user.address.city}", event_location, MapsTripMode.BICYCLING
+            f"{self.user.address.street},{self.user.address.city}",
+            f"{event_summary.location.address},{event_summary.location.city}",
+            MapsTripMode.BICYCLING,
         )
 
-        event_summary["trip_mode"] = MapsTripMode.BICYCLING.value
-        event_summary["trip_duration"] = directions.duration
+        event_summary.trip_mode = MapsTripMode.BICYCLING
+        event_summary.trip_duration = directions.duration
 
         return event_summary
 
-    def _get_event_times(self, event: dict[Any, Any], event_duration: int = 2) -> tuple[datetime, datetime]:
+    def _get_event_times(self, event: ReducedEvent, event_duration: int = 2) -> tuple[datetime, datetime]:
         """Gets start and end time of event
 
         * TODO: Extract function as `util`
 
         Parameters
         ----------
-        event : dict[Any, Any]
+        event : ReducedEvent
             single event
         event_duration : int, optional
             configurable duration event should have, by default 2
@@ -227,17 +228,17 @@ class EventUseCase(AbstractUseCase):
         Tuple[datetime, datetime]
             start and end datetime of given event
         """
-        event_start_datetime = datetime.fromisoformat(event["start"].replace("T", " ").replace("Z", ""))
+        event_start_datetime = datetime.fromisoformat(event.start.replace("T", " ").replace("Z", ""))
         event_end_datetime = event_start_datetime + timedelta(hours=event_duration)
 
         return (event_start_datetime, event_end_datetime)
 
-    def _format_event_summary(self, event_summary: dict[Any, Any]) -> str:
+    def _format_event_summary(self, event_summary: EventSummary) -> str:
         """Formats event summary to a readable string
 
         Parameters
         ----------
-        event_summary : dict[Any, Any]
+        event_summary : EventSummary
             Short event summary
 
         Returns
@@ -246,15 +247,15 @@ class EventUseCase(AbstractUseCase):
             Single string that can be read by assistant
         """
         formatted_summary = (
-            f"""The {event_summary["name"]} starts at {event_summary["start"].hour}:"""
-            f"""{str(event_summary["start"].minute).zfill(2)}. """
-            f"""It will take you {event_summary["trip_duration"]} minutes to get there. """
+            f"""The {event_summary.name} starts at {event_summary.start.hour}:"""
+            f"""{str(event_summary.start.minute).zfill(2)}. """
+            f"""It will take you {event_summary.trip_duration} minutes to get there. """
         )
 
-        if event_summary["is_rainy"]:
+        if event_summary.is_rainy:
             formatted_summary += "There is a high chance of rain, you might want to take an umbrella."
 
-        if event_summary["is_cold"]:
+        if event_summary.is_cold:
             formatted_summary += "Additionally, you should prepare for chilly temperatures."
 
         return formatted_summary

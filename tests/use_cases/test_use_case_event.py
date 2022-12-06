@@ -1,14 +1,17 @@
 # ? Disable private attribute access to test class methods
 # pylint: disable=redefined-outer-name,protected-access
 
+from datetime import datetime
+
 import pytest
 from pytest_mock import MockFixture
 
 from aswe.api.calendar.data import Event
 from aswe.api.event import event as eventApi
+from aswe.api.event.event_data import EventLocation, ReducedEvent
 from aswe.api.navigation.trip_data import MapsTrip
 from aswe.api.weather import weather as weatherApi
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.event import EventUseCase
 
@@ -48,7 +51,13 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -85,19 +94,25 @@ def test_this_weekend_one_attendable_event(
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Patch Event Api
     test_events = [
-        {
-            "id": "test_id",
-            "name": "test_name",
-            "start": "2030-01-01T00:00:00Z",
-            "status": "onsale",
-            "location": {"name": "test_location_name", "city": "test_city", "address": "test_address"},
-        }
+        ReducedEvent(
+            id="test_id",
+            name="test_name",
+            start="2030-01-01T00:00:00Z",
+            status="onsale",
+            location=EventLocation(name="test_location_name", city="test_city", address="test_address"),
+        )
     ]
 
     mocked_event_api = mocker.patch.object(eventApi, "events", return_value=test_events)
@@ -138,4 +153,4 @@ def test_this_weekend_one_attendable_event(
     mocked_event_api.assert_called_once()
     mocked_weater_api.assert_called_once()
     # mocked_google_maps_api.assert_called_once()
-    assert spy_tts_convert_text.call_count == 3
+    assert spy_tts_convert_text.call_count == 4

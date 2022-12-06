@@ -166,27 +166,43 @@ class TextToSpeech:
         self.engine.setProperty("rate", 175)
         self.engine.setProperty("voice", "english")
 
-    def optimize_time_for_speech(self, text: str) -> str:
+    def optimize_text(
+        self,
+        text: str,
+        optimize_time: bool,
+        optimize_numbers: bool,
+    ) -> str:
         """Optimizes text with time indications (in HH:MM format) for speech.
 
         Parameters
         ----------
         text : str
             The text which should be optimized.
+        optimize_time : bool, optional
+            If the time should be optimized for speech. Will replace `22:00` with `22 o'clock`
+            and `22:30` with `22 30`. _By default `True`._
+        optimize_numbers : bool, optional
+            If the numbers should be optimized for speech. Will replace `22.` with `22 .`. _By default `True`._
 
         Returns
         -------
         str
             The optimized text.
         """
-        text = text.replace(":00", " o'clock")
-        text = re.sub(r"(\d{2}):(\d{2})", r"\1 \2", text)
+        if optimize_numbers:
+            text = re.sub(r"(\d+)\.", r"\1 .", text)
+
+        if optimize_time:
+            text = text.replace(":00", " o'clock")
+            text = re.sub(r"(\d{2}):(\d{2})", r"\1 \2", text)
 
         return text
 
     def convert_text(
         self,
         text: str,
+        optimize_time: bool = True,
+        optimize_numbers: bool = True,
         line_above: bool = False,
     ) -> None:
         """Converts text to speech
@@ -195,6 +211,11 @@ class TextToSpeech:
         ----------
         text : str
             The Text which should be converted to speech.
+        optimize_time : bool, optional
+            If the time should be optimized for speech. Will replace `22:00` with `22 o'clock`
+            and `22:30` with `22 30`. _By default `True`._
+        optimize_numbers : bool, optional
+            If the numbers should be optimized for speech. Will replace `22.` with `22 .`. _By default `True`._
         line_above : bool, optional
             If a new line should be printed before the bot input. _By default `False`_.
         """
@@ -203,9 +224,10 @@ class TextToSpeech:
 
         logger.debug(f"Converting text to speech: {text.strip()}")
 
-        text = self.optimize_time_for_speech(text)
-
         print(f"Bot: {text.strip()}")
+
+        if optimize_time or optimize_numbers:
+            text = self.optimize_text(text, optimize_time, optimize_numbers)
         try:
             self.engine.say(text)
             self.engine.runAndWait()

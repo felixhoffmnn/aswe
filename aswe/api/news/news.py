@@ -62,6 +62,3 @@ def keyword_search(keyword: str, max_results: int = 3) -> list[str] | None:
     for i in range(max_results):
         result.append(keyword_request["articles"][i]["title"] + ": " + keyword_request["articles"][i]["description"])
     return result
-
-
-print(top_headlines_search())

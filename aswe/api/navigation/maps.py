@@ -1,6 +1,7 @@
 import os
 
 import googlemaps as gmaps
+from loguru import logger
 
 from aswe.api.navigation.trip_data import MapsTrip, MapsTripMode
 
@@ -25,9 +26,14 @@ def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMo
         A MapsTrip object containing the distance and duration of the trip
     """
     client = gmaps.Client(key=_GOOGLE_MAPS_API_KEY)
-    directions_result = client.directions(start_location, end_location, mode=mode)  # type: ignore
+    directions_result = client.directions(start_location, end_location, mode=mode.value)  # type: ignore
+
+    distance = int(directions_result[0]["legs"][0]["distance"]["value"])
+    duration = int(directions_result[0]["legs"][0]["duration"]["value"] / 60)
+
+    logger.debug(f"Maps: From {start_location} to {end_location} with {mode}: {distance} meter, {duration} minutes")
 
     return MapsTrip(
-        distance=int(directions_result[0]["legs"][0]["distance"]["value"]),
-        duration=int(directions_result[0]["legs"][0]["duration"]["value"] / 60),
+        distance=distance,
+        duration=duration,
     )

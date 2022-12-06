@@ -69,7 +69,7 @@ def get_stock_price(symbol: str, currency: str = "USD") -> float | None:
             if currency != "USD":
                 price = cur_conv.convert(price, "USD", currency)
             return float(round(price, 2))
-        except (AttributeError, JSONDecodeError):
+        except (KeyError, AttributeError, JSONDecodeError):
             logger.error("Got invalid response from Stock API.")
         except IndexError:
             logger.warning(f"Could not find stock price for symbol: {symbol}.")
@@ -93,9 +93,11 @@ def get_stock_rating(symbol: str) -> str | None:
     if response is not None:
         try:
             rating_data = response.json()[0]
-            rating = f"{rating_data['rating']} ({rating_data['ratingRecommendation']})"
+            rating = f"{rating_data['rating']} ({rating_data['ratingRecommendation']})"
+            rating = rating.replace("-", " minus")
+            rating = rating.replace("+", " plus")
             return rating
-        except (AttributeError, JSONDecodeError):
+        except (KeyError, AttributeError, JSONDecodeError):
             logger.error("Got invalid response from Stock API.")
         except IndexError:
             logger.warning(f"Could not find stock rating for symbol: {symbol}.")
@@ -143,7 +145,7 @@ def get_stock_price_change(symbol: str) -> dict[str, str] | None:
                 "5D": _get_percentage_change(change_data["5D"]),
             }
             return change
-        except (AttributeError, JSONDecodeError):
+        except (KeyError, AttributeError, JSONDecodeError):
             logger.error("Got invalid response from Stock API.")
         except IndexError:
             logger.error(f"Could not find stock price change for symbol: {symbol}.")
@@ -176,18 +178,18 @@ def get_news_info_by_symbol(symbol: str) -> list[dict[str, Any]] | None:
             all_news = response.json()["feed"]
             most_relevant_news = list(
                 filter(
-                    lambda news: float(_get_ticker_by_symbol(news["ticker_sentiment"], symbol)["relevance_score"])
+                    lambda news: float(get_ticker_by_symbol(news["ticker_sentiment"], symbol)["relevance_score"])
                     >= 0.8,
                     all_news,
                 )
             )[:3]
             return most_relevant_news
-        except (AttributeError, JSONDecodeError):
+        except (KeyError, AttributeError, JSONDecodeError):
             logger.error("Got invalid response from News Sentiment API.")
     return None
 
 
-def _get_ticker_by_symbol(ticker_list: list[dict[str, str]], symbol: str) -> dict[str, str]:
+def get_ticker_by_symbol(ticker_list: list[dict[str, str]], symbol: str) -> dict[str, str]:
     """Returns the ticker data for a given symbol.
 
     Parameters

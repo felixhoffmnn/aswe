@@ -8,11 +8,19 @@ from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
-from aswe.core.objects import Address, BestMatch, LogProactivity, Possessions, User
+from aswe.core.objects import (
+    Address,
+    BestMatch,
+    Favorites,
+    LogProactivity,
+    Possessions,
+    User,
+)
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases import (
     EventUseCase,
     GeneralUseCase,
+    MorningBriefingUseCase,
     SportUseCase,
     TransportationUseCase,
 )
@@ -113,7 +121,13 @@ class Agent:
                         country=user_data["address"]["country"],
                         vvs_id=user_data["address"]["vvs_id"],
                     ),
-                    favorite_stocks=user_data["favorite_stocks"],
+                    favorites=Favorites(
+                        stocks=user_data["favorites"]["stocks"],
+                        league=user_data["favorites"]["league"],
+                        team=user_data["favorites"]["team"],
+                        news_keywords=user_data["favorites"]["news_keywords"],
+                        wakeup_time=datetime.strptime(user_data["favorites"]["wakeup_time"], "%H:%M"),
+                    ),
                 )
         except OSError:
             logger.error("Could not open file. Please check if the file exists.")
@@ -131,6 +145,7 @@ class Agent:
         self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_event = EventUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_sport = SportUseCase(self.stt, self.tts, self.assistant_name, self.user)
+        self.uc_morning_briefing = MorningBriefingUseCase(self.stt, self.tts, self.assistant_name, self.user)
 
     def _greeting(self) -> None:
         """Function to greet the user."""
@@ -254,12 +269,13 @@ class Agent:
         except NotImplementedError:
             logger.warning("Proactivity for events is not implemented yet.")
 
-        # try:
-        #     if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15):
-        #         logger.debug("Triggering proactivity for morning briefing.")
-        #         self.uc_morning_briefing.check_proactivity()
-        # except NotImplementedError:
-        #     logger.warning("Proactivity for morning briefing is not implemented yet.")
+        try:
+            # TODO: Trigger morning briefing at {self.user.favorites.wakeup_time}
+            if check_timedelta(self.log_proactivity.last_morning_briefing_check, 30):
+                logger.debug("Triggering proactivity for morning briefing.")
+                self.uc_morning_briefing.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for morning briefing is not implemented yet.")
 
         try:
             if check_timedelta(self.log_proactivity.last_sport_check, 15):
@@ -320,7 +336,7 @@ class Agent:
                 case "general":
                     self.uc_general.trigger_assistant(best_match)
                 case "morningBriefing":
-                    raise NotImplementedError
+                    self.uc_morning_briefing.trigger_assistant(best_match)
                 case "events":
                     self.uc_event.trigger_assistant(best_match)
                 case "transportation":

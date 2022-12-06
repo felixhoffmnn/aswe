@@ -32,7 +32,7 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
             raise Exception("HTTP status code is not 200")
     except requests.HTTPError as http_err:
         logger.error(f"HTTP error occurred: {http_err}")
-        if http_err.response.status_code == 429:
+        if http_err.response.status_code == 429 or http_err.response.status_code == 403:
             raise TooManyRequests from http_err
         return None
     except Exception as err:

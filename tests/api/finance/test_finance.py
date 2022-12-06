@@ -1,3 +1,5 @@
+import pytest
+
 from aswe.api.finance.finance import (
     _get_percentage_change,
     _get_ticker_by_symbol,
@@ -7,6 +9,7 @@ from aswe.api.finance.finance import (
     get_stock_price_change,
     get_stock_rating,
 )
+from aswe.utils.error import TooManyRequests
 
 
 def test_get_percentage_change() -> None:
@@ -18,6 +21,7 @@ def test_get_percentage_change() -> None:
     assert change == "-1.23%"
 
 
+@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_ticker_by_symbol() -> None:
     """Test `aswe.api.finance.finance._get_ticker_by_symbol`"""
     ticker_sentiment = [
@@ -76,6 +80,7 @@ def test_get_currency_by_country() -> None:
     assert get_currency_by_country("Deutschland GmbH") == ("US Dollar", "USD")
 
 
+@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_news_info_by_symbol() -> None:
     """Test `aswe.api.finance.finance.get_news_info_by_symbol`"""
     apple_news = get_news_info_by_symbol("AAPL")
@@ -86,6 +91,7 @@ def test_get_news_info_by_symbol() -> None:
     assert all(all(key in news for key in ["title", "authors", "source", "ticker_sentiment"]) for news in apple_news)
 
 
+@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_stock_price() -> None:
     """Test `aswe.api.finance.finance.get_stock_price`"""
     apple_price = get_stock_price("AAPL")
@@ -102,6 +108,7 @@ def test_get_stock_price() -> None:
     assert unknown_price is None
 
 
+@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_stock_price_change() -> None:
     """Test `aswe.api.finance.finance.get_stock_price_change`"""
     apple_price_change = get_stock_price_change("AAPL")
@@ -119,6 +126,7 @@ def test_get_stock_price_change() -> None:
     assert unknown_price_change is None
 
 
+@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_stock_rating() -> None:
     """Test `aswe.api.finance.finance.get_stock_rating`"""
     apple_rating = get_stock_rating("AAPL")

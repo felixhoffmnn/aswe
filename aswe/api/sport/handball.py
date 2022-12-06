@@ -2,8 +2,7 @@ import os
 from datetime import date
 
 from aswe.utils.error import ApiLimitReached
-from aswe.utils.request import http_request
-from aswe.utils.validate import validate_api
+from aswe.utils.request import http_request, validate_api
 
 _HEADERS = {"x-rapidapi-key": os.getenv("SPORTS_API_KEY"), "x-rapidapi-host": "v1.handball.api-sports.io"}
 

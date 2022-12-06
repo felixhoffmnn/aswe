@@ -1,3 +1,0 @@
-# Validate
-
-::: aswe.utils.validate

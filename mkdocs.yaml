@@ -12,10 +12,7 @@ nav:
       - Readme: index.md
       - License: license.md
   - Code Reference:
-      - Core:
-          - Agent: core/agent.md
-          - User Interaction: core/user_interaction.md
-          - Data: core/objects.md
+      - Core: core.md
       - Use Cases:
           - General: use_cases/general.md
           - Event: use_cases/event.md
@@ -30,14 +27,7 @@ nav:
           - News: api/news.md
           - Sport: api/sport.md
           - Weather: api/weather.md
-      - Utilities:
-          - Abstract Classes: utils/abstract.md
-          - Date: utils/date.md
-          - Error: utils/error.md
-          - Request: utils/request.md
-          - Shell: utils/shell.md
-          - Text: utils/text.md
-          - Validate: utils/validate.md
+      - Utilities: utils.md
 
 # Plugins
 plugins:
@@ -63,6 +53,7 @@ plugins:
           options:
             filters: ["!^__"]
             docstring_style: numpy
+            heading_level: 3
             docstring_section_style: table
             merge_init_into_class: true
             show_root_heading: no

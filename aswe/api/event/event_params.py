@@ -5,7 +5,7 @@ from enum import Enum
 
 from loguru import logger
 
-from aswe.utils.validate import validate_date
+from aswe.utils.date import validate_date
 
 
 class UnitEnum(str, Enum):

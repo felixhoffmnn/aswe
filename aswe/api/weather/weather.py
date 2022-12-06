@@ -6,8 +6,8 @@ from loguru import logger
 from requests import JSONDecodeError
 
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
+from aswe.utils.date import validate_date
 from aswe.utils.request import http_request
-from aswe.utils.validate import validate_date
 
 _BASE_URL: Final[str] = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 _API_KEY: str = os.getenv("WEATHER_API_KEY", "")

@@ -41,3 +41,27 @@ def http_request(url: str, headers: dict[Any, Any] | None = None, timeout: int =
 
     logger.success(f"Successfully fetched data from {url} with status code {response.status_code}")
     return response
+
+
+def validate_api(response: Response) -> bool:
+    """Test if the API limit is reached
+
+    Parameters
+    ----------
+    response : Response
+        Response of the API request
+
+    Returns
+    -------
+    bool
+        Return True if the API limit is reached
+    """
+    try:
+        if "You have reached the request limit for the day" in response.json()["errors"]["requests"]:
+            return True
+    except KeyError:
+        return False
+    except TypeError:
+        return False
+
+    return False

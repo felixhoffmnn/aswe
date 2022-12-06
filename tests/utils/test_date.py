@@ -1,6 +1,6 @@
 import datetime
 
-from aswe.utils.date import get_next_saturday
+from aswe.utils.date import get_next_saturday, validate_date
 
 
 def test_get_next_saturday() -> None:
@@ -26,3 +26,11 @@ def test_get_next_saturday() -> None:
             assert days_diff == 0
         case 6:
             assert days_diff == 6
+
+
+def test_valid_date() -> None:
+    """Test the `validate_date` function with a valid date."""
+    assert validate_date("2020-02-02") is True
+    assert validate_date("2022-30-01") is False
+    assert validate_date("2022-09-09T22:00:00Z") is True
+    assert validate_date("2022-09-01Ttest") is False

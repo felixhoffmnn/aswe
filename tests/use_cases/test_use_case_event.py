@@ -9,7 +9,7 @@ from aswe.api.event import event as eventApi
 from aswe.api.event.event_data import EventLocation, ReducedEvent
 from aswe.api.navigation.trip_data import MapsTrip
 from aswe.api.weather import weather as weatherApi
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.event import EventUseCase
 
@@ -49,7 +49,11 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -86,7 +90,11 @@ def test_this_weekend_one_attendable_event(
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
 

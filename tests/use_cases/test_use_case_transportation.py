@@ -3,7 +3,7 @@
 import pytest
 from pytest_mock import MockFixture
 
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.transportation import TransportationUseCase
 
@@ -42,7 +42,11 @@ def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -68,7 +72,11 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -99,7 +107,11 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -130,7 +142,11 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
@@ -161,7 +177,11 @@ def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: Tex
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=True),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 

@@ -10,7 +10,7 @@ from aswe.api.sport import basketball as basketballApi
 from aswe.api.sport import f1 as f1Api
 from aswe.api.sport import football as footballApi
 from aswe.api.sport import handball as handballApi
-from aswe.core.objects import Address, BestMatch, Possessions, User
+from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.sport import SportUseCase
 
@@ -49,7 +49,11 @@ def test_choose_league(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
     use_case.tts = MagicMock()  # Use a mock object for the tts property
@@ -79,7 +83,11 @@ def test_choose_team(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
     use_case.tts = MagicMock()  # Use a mock object for the tts property
@@ -109,7 +117,11 @@ def test_get_matchday_num(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> N
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
     use_case.tts = MagicMock()  # Use a mock object for the tts property
@@ -139,7 +151,11 @@ def test_football_standings(mocker: MockFixture, patch_stt: SpeechToText, patch_
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -179,7 +195,11 @@ def test_football_matchday_matches(mocker: MockFixture, patch_stt: SpeechToText,
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -221,7 +241,11 @@ def test_football_ongoing_matches(mocker: MockFixture, patch_stt: SpeechToText, 
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -263,7 +287,11 @@ def test_football_upcoming_matches(mocker: MockFixture, patch_stt: SpeechToText,
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -311,7 +339,11 @@ def test_basketball_standings(mocker: MockFixture, patch_stt: SpeechToText, patc
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -357,7 +389,11 @@ def test_basketball_game_today(mocker: MockFixture, patch_stt: SpeechToText, pat
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -415,7 +451,11 @@ def test_handball_standings(mocker: MockFixture, patch_stt: SpeechToText, patch_
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     mocked_sport_choose_league = mocker.patch.object(SportUseCase, "choose_league", return_value="Bundesliga")
@@ -459,7 +499,11 @@ def test_handball_game_today(mocker: MockFixture, patch_stt: SpeechToText, patch
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     mocked_sport_choose_league = mocker.patch.object(SportUseCase, "choose_league", return_value="Bundesliga")
@@ -519,7 +563,11 @@ def test_f1_round_results(mocker: MockFixture, patch_stt: SpeechToText, patch_tt
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api
@@ -560,7 +608,11 @@ def test_f1_last_round_results(mocker: MockFixture, patch_stt: SpeechToText, pat
         age=10,
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
-        favorite_stocks=[],
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
     )
 
     # * Patch Event Api

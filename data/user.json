@@ -12,5 +12,9 @@
     "bike": true,
     "car": true
   },
-  "favorite_stocks": ["AAPL", "GOOG", "MSFT"]
+  "favorites": {
+    "stocks": ["AAPL", "GOOG", "MSFT"],
+    "league": "World Cup",
+    "team": "Netherlands"
+  }
 }

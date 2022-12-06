@@ -94,11 +94,27 @@ class Possessions:
 
 
 @dataclass
+class Favorites:
+    """Dataclass to store the favorites of a user.
+
+    For example the favorite stocks, sports teams, etc.
+
+    Parameters
+    ----------
+    stocks : list[str]
+        The favorite stocks of the user.
+    """
+
+    stocks: list[str]
+    league: str
+    team: str
+
+
+@dataclass
 class User:
     """Dataclass supposed to store the user data
 
     * TODO: Add more attributes and evaluate the existing ones
-    * TODO: User has a car?
 
     Parameters
     ----------
@@ -108,12 +124,10 @@ class User:
         The age of the user.
     address : Address
         The address of the user.
-    favorite_stocks : list[str]
-        The favorite stocks of the user.
     """
 
     name: str
     age: int
     address: Address
     possessions: Possessions
-    favorite_stocks: list[str]
+    favorites: Favorites

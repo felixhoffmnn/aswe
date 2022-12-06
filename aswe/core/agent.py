@@ -8,7 +8,14 @@ from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
-from aswe.core.objects import Address, BestMatch, LogProactivity, Possessions, User
+from aswe.core.objects import (
+    Address,
+    BestMatch,
+    Favorites,
+    LogProactivity,
+    Possessions,
+    User,
+)
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases import (
     EventUseCase,
@@ -94,7 +101,11 @@ class Agent:
                         country=user_data["address"]["country"],
                         vvs_id=user_data["address"]["vvs_id"],
                     ),
-                    favorite_stocks=user_data["favorite_stocks"],
+                    favorites=Favorites(
+                        stocks=user_data["favorites"]["stocks"],
+                        league=user_data["favorites"]["league"],
+                        team=user_data["favorites"]["team"],
+                    ),
                 )
         except OSError:
             logger.error("Could not open file. Please check if the file exists.")

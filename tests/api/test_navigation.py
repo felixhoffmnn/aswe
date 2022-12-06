@@ -1,9 +1,41 @@
 # pylint: disable=no-value-for-parameter
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
-from aswe.api.navigation.trip_data import Connection, MapsTrip, Trip
+from aswe.api.navigation.maps import get_maps_connection
+from aswe.api.navigation.trip_data import Connection, MapsTrip, MapsTripMode, Trip
+from aswe.api.navigation.vvs import get_latest_connection, get_next_connection
+
+
+def test_get_latest_connection() -> None:
+    """Test `aswe.api.navigation.vvs.get_latest_connection`"""
+    trip = get_latest_connection("de:08111:6056", "de:08111:355", datetime.now() + timedelta(hours=2))
+
+    if trip is not None:
+        assert isinstance(trip.duration, int)
+        assert isinstance(trip.connections, list)
+        if len(trip.connections) > 0:
+            assert isinstance(trip.connections[0], Connection)
+
+
+def test_get_next_connection() -> None:
+    """Test `aswe.api.navigation.vvs.get_next_connection`"""
+    trip = get_next_connection("de:08111:6056", "de:08111:355")
+
+    if trip is not None:
+        assert isinstance(trip.duration, int)
+        assert isinstance(trip.connections, list)
+        if len(trip.connections) > 0:
+            assert isinstance(trip.connections[0], Connection)
+
+
+def test_get_maps_connection() -> None:
+    """Test `aswe.api.navigation.maps.get_maps_connection`"""
+    maps_trip = get_maps_connection("Ernsthaldenstraße 43", "Rotebühlplatz 41", MapsTripMode.DRIVING)
+
+    assert isinstance(maps_trip.duration, int)
+    assert isinstance(maps_trip.distance, int)
 
 
 def test_maps_trip_required_fields() -> None:

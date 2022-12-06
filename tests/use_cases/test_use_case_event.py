@@ -98,6 +98,7 @@ def test_trigger_assistant(mocker: MockFixture, patch_tts: TextToSpeech, patch_u
     event_location = EventLocation(city="test_city", address="test_address")
 
     event_summary = EventSummary(
+        id="event_id_1",
         name="event_1",
         start=datetime(2030, 1, 1, 0, 0, 0),
         location=event_location,
@@ -184,6 +185,7 @@ def test_get_attendable_events(mocker: MockFixture, patch_use_case: EventUseCase
         end_time="2030-01-01T03:00:00+01:00",
     )
     event_summary = EventSummary(
+        id="event_id_1",
         name="event_1",
         start=datetime(2030, 1, 1, 0, 0, 0),
         location=event_location,
@@ -269,6 +271,7 @@ def test_get_event_summary(mocker: MockFixture, patch_use_case: EventUseCase) ->
     mocker.patch("aswe.use_cases.event.get_maps_connection", return_value=mocked_trip_response)
 
     expected_event_summary = EventSummary(
+        id="test_id",
         name="test_name",
         start=datetime.strptime(reduced_event.start, "%Y-%m-%dT%H:%M:%SZ"),
         location=event_location,
@@ -310,6 +313,7 @@ def test_format_event_summary(patch_use_case: EventUseCase) -> None:
     """
     event_location = EventLocation(city="test_city", address="test_address", name="test_name")
     event_summary_1 = EventSummary(
+        id="event_id_1",
         name="event_1",
         start=datetime(2030, 1, 1, 0, 0, 0),
         location=event_location,
@@ -319,6 +323,7 @@ def test_format_event_summary(patch_use_case: EventUseCase) -> None:
     )
 
     event_summary_2 = EventSummary(
+        id="event_id_2",
         name="event_2",
         start=datetime(2030, 1, 1, 0, 0, 0),
         location=event_location,

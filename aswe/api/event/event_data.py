@@ -38,6 +38,8 @@ class ReducedEvent:
 class EventSummary:
     """Dataclass of Event info which is used for tts"""
 
+    id: str
+    """Id of event"""
     name: str
     """Name / Title of event"""
     start: datetime

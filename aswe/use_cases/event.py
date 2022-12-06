@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from math import floor
 
+from loguru import logger
+
 from aswe.api.calendar.calendar import get_events_by_timeframe
 from aswe.api.calendar.data import Event
 from aswe.api.event import event as eventApi
@@ -19,12 +21,64 @@ from aswe.utils.shell import get_int, print_options
 class EventUseCase(AbstractUseCase):
     """Use case to handle events"""
 
-    def check_proactivity(self) -> None:
-        """Check if there are any events in the next 30 minutes and trigger the assistant
+    attending_events: dict[str, EventSummary] = {}
 
-        * TODO: Implement proactivity
-        """
-        raise NotImplementedError
+    def check_proactivity(self) -> None:
+        """Check if there are any events in the next 30 minutes and trigger the assistant"""
+
+        logger.debug("Perform proactivity for EventUseCase")
+
+        for old_event_summary in self.attending_events.values():
+            reduced_events = eventApi.events(EventApiEventParams(id=old_event_summary.id))
+
+            if reduced_events is None or len(reduced_events) == 0:
+                self.tts.convert_text(
+                    "Seems like an event you wanted to attend to has been cancelled. "
+                    "It will be removed from your calendar."
+                )
+                # TODO remove from calendar
+                self.attending_events.pop(old_event_summary.id, None)
+            else:
+                new_event_summary = self._get_event_summary(reduced_events[0])
+                formatted_weather_change = ""
+
+                if old_event_summary.start != new_event_summary.start:
+                    self.tts.convert_text(
+                        f"The starttime of the event {new_event_summary.name} has been changed. "
+                        "Your calendar will be updated."
+                    )
+                    # TODO update event time in calendar
+
+                if old_event_summary.is_cold and not new_event_summary.is_cold:
+                    formatted_weather_change = (
+                        f"The weather forecast for the event {new_event_summary.name} has changed. "
+                        "It will be a bit warmer."
+                    )
+
+                elif not old_event_summary.is_cold and new_event_summary.is_cold:
+                    formatted_weather_change = (
+                        f"The weahter forecast for the event {new_event_summary.name} has changed. "
+                        "It will be a bit colder."
+                    )
+
+                if old_event_summary.is_rainy and not new_event_summary.is_rainy:
+                    formatted_weather_change += (
+                        f"The weather forecast for the event {new_event_summary.name} has changed. "
+                        "It won't rain anymore."
+                        if formatted_weather_change == ""
+                        else "Additionally, it won't rain anymore."
+                    )
+
+                elif not old_event_summary.is_rainy and new_event_summary.is_rainy:
+                    formatted_weather_change += (
+                        f"The weather forecast for the event {new_event_summary.name} has changed. "
+                        "It will probably rain."
+                        if formatted_weather_change == ""
+                        else "Additionally, it will probably rain."
+                    )
+
+                if formatted_weather_change != "":
+                    self.tts.convert_text(formatted_weather_change)
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for events
@@ -87,6 +141,8 @@ class EventUseCase(AbstractUseCase):
                             #         ),
                             #     )
                             # )
+                            self.attending_events[event_summary.id] = event_summary
+                            logger.debug(self.attending_events)
                             self.tts.convert_text("Great, the event was added to your calendar.")
 
             case _:
@@ -170,6 +226,7 @@ class EventUseCase(AbstractUseCase):
         event_start_datetime, _ = self._get_event_times(event)
 
         event_summary = EventSummary(
+            id=event.id,
             name=event.name,
             start=event_start_datetime,
             location=EventLocation(city=event.location.city, address=event.location.address),

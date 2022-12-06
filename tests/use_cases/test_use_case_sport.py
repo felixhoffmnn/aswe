@@ -304,6 +304,8 @@ def test_football_matches_today(mocker: MockFixture, patch_stt: SpeechToText, pa
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 

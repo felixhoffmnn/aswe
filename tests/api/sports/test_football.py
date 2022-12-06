@@ -1,4 +1,12 @@
+# ? Disable typing errors for pytest fixtures
+# ? Disable private attribute access to test class methods
+# pylint: disable=redefined-outer-name,protected-access
+
+import json
+
 import pytest
+from pytest_mock import MockFixture
+from requests.models import Response
 
 from aswe.api.sport.football import (
     convert_league_name,
@@ -10,7 +18,17 @@ from aswe.api.sport.football import (
     get_teams,
     get_upcoming_team_matches,
 )
-from aswe.utils.error import TooManyRequests
+
+
+@pytest.fixture
+def import_paths() -> dict[str, str]:
+    """Prepare import paths of functions which shall be mocked"""
+
+    return {
+        "http_request": "aswe.api.sport.football.http_request",
+        "convert_league_name": "aswe.api.sport.football.convert_league_name",
+        "get_teams": "aswe.api.sport.football.get_teams",
+    }
 
 
 def test_convert_league_name() -> None:
@@ -56,102 +74,450 @@ def test_convert_league_name() -> None:
     assert name == "EC"
 
 
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_league_standings() -> None:
-    """Test `aswe.api.sport.football.get_league_standings`"""
-    standings = get_league_standings("Premier League")
+# * test get_league_standings ----------------------------------------------------------
+def test_get_league_standings(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_league_standings`
 
-    assert isinstance(standings, list) and len(standings) == 20
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
 
-    standings = get_league_standings("Test")
+    # * Mock valid response
+    mock_valid_response_object = {
+        "standings": [
+            {
+                "stage": "REGULAR_SEASON",
+                "type": "TOTAL",
+                "group": "None",
+                "table": [
+                    {
+                        "position": 1,
+                        "team": {
+                            "name": "Arsenal FC",
+                        },
+                        "points": 37,
+                    },
+                    {
+                        "position": 2,
+                        "team": {
+                            "name": "Manchester City FC",
+                        },
+                        "points": 32,
+                    },
+                ],
+            }
+        ],
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["convert_league_name"], return_value="PL")
 
-    assert standings is None
-
-
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_matchday_matches() -> None:
-    """Test `aswe.api.sport.football.get_matchday_matches`"""
-    matches = get_matchday_matches("Bundesliga", 7)
-
-    assert isinstance(matches, list)
-
-    matches = get_matchday_matches("TS", 3)
-
-    assert matches is None
-
-    matches = get_matchday_matches("Bundesliga", 700)
-
-    assert matches is None
-
-
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_ongoing_matches() -> None:
-    """Test `aswe.api.sport.football.get_matchday_matches`"""
-    matches = get_ongoing_matches("Primera Division")
-
-    assert isinstance(matches, list)
-
-    matches = get_ongoing_matches("TS")
-
-    assert matches is None
-
-    # only works till next European Championship 2024
-    matches = get_ongoing_matches("European Championship")
-
-    assert matches == ["No matches are currently being played."]
-
-
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_matches_today() -> None:
-    """Test `aswe.api.sport.football.get_matches_today`"""
-    matches = get_matches_today("Bundesliga")
-
-    assert isinstance(matches, list)
-
-    matches = get_matches_today("TS")
-
-    assert matches is None
+    assert get_league_standings("test_name") == ["1. Arsenal FC - 37 points", "2. Manchester City FC - 32 points"]
 
 
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_current_team_match() -> None:
-    """Test `aswe.api.sport.football.get_current_team_match`"""
-    match = get_current_team_match("Champions League", "Frankfurt")
+def test_get_league_standings_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_league_standings` with invalid api responses
 
-    assert isinstance(match, list)
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
 
-    match = get_current_team_match("Bundesliga", "Test")
+    # * Mock None league id
+    mocker.patch(import_paths["convert_league_name"], return_value=None)
 
-    assert match is None
+    assert get_league_standings("test_name") is None
 
-    match = get_current_team_match("TS", "Frankfurt")
+    # * Mock None response
+    mocker.patch(import_paths["convert_league_name"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
 
-    assert match is None
-
-
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_upcoming_team_matches() -> None:
-    """Test `aswe.api.sport.football.get_upcoming_team_matches`"""
-    matches = get_upcoming_team_matches("Ligue 1", "PSG", 6)
-
-    assert isinstance(matches, list) and len(matches) == 6
-
-    match = get_current_team_match("Champions Ligue", "Test")
-
-    assert match is None
-
-    match = get_current_team_match("TS", "Frankfurt")
-
-    assert match is None
+    assert get_league_standings("league_name") is None
 
 
-@pytest.mark.xfail(raises=TooManyRequests)
-def test_get_teams() -> None:
-    """Test `aswe.api.sport.football.get_teams`"""
-    teams = get_teams("Premier League")
+def test_get_matchday_matches(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_matchday_matches`
 
-    assert isinstance(teams, list) and len(teams) == 20
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
 
-    teams = get_teams("TS")
+    # * Mock valid response
+    mock_valid_response_object = {
+        "matches": [
+            {
+                "utcDate": "2022-12-03T15:00:00Z",
+                "status": "FINISHED",
+                "matchday": 4,
+                "homeTeam": {
+                    "name": "Netherlands",
+                },
+                "awayTeam": {
+                    "name": "United States",
+                },
+                "score": {
+                    "fullTime": {"home": 3, "away": 1},
+                },
+            }
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["convert_league_name"], return_value="test")
 
-    assert teams is None
+    assert get_matchday_matches("test_name", 4) == [
+        "played on the 03.12.2022 at 16:00: Netherlands 3 to 1 United States"
+    ]
+
+
+def test_get_matchday_matches_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_matchday_matches` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["convert_league_name"], return_value=None)
+
+    assert get_matchday_matches("test_name", 3) is None
+
+    # * Mock None response
+    mocker.patch(import_paths["convert_league_name"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_matchday_matches("league_name", 3) is None
+
+
+def test_get_ongoing_matches(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_ongoing_matches`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    mock_valid_response_object = {
+        "matches": [
+            {
+                "competition": {
+                    "id": 2000,
+                    "name": "FIFA World Cup",
+                    "code": "WC",
+                },
+                "utcDate": "2022-12-03T15:00:00Z",
+                "status": "IN_PLAY",
+                "matchday": 4,
+                "homeTeam": {
+                    "name": "Netherlands",
+                },
+                "awayTeam": {
+                    "name": "United States",
+                },
+                "score": {
+                    "fullTime": {"home": 2, "away": 0},
+                },
+            }
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["convert_league_name"], return_value="WC")
+
+    assert get_ongoing_matches("World Cup") == ["Netherlands 2 : 0 United States in FIFA World Cup"]
+
+
+def test_get_ongoing_matches_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_ongoing_matches` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["convert_league_name"], return_value=None)
+
+    assert get_ongoing_matches("test_name") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["convert_league_name"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_ongoing_matches("league_name") is None
+
+
+def test_get_matches_today(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_matches_today`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    mock_valid_response_object = {
+        "matches": [
+            {
+                "competition": {
+                    "id": 2000,
+                    "name": "FIFA World Cup",
+                    "code": "WC",
+                },
+                "utcDate": "2022-12-03T15:00:00Z",
+                "status": "SCHEDULED",
+                "matchday": 4,
+                "homeTeam": {
+                    "name": "Netherlands",
+                },
+                "awayTeam": {
+                    "name": "United States",
+                },
+            }
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["convert_league_name"], return_value="WC")
+
+    assert get_matches_today("World Cup") == ["playing at 16:00: Netherlands vs United States in FIFA World Cup"]
+
+
+def test_get_matches_today_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_matches_today` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["convert_league_name"], return_value=None)
+
+    assert get_matches_today("test_name") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["convert_league_name"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_matches_today("league_name") is None
+
+
+def test_get_current_team_match(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_current_team_match`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    mocker.patch(import_paths["get_teams"], return_value=["Netherlands", 1, "United States", 0, "Germany", 7])
+    mocker.patch(import_paths["convert_league_name"], return_value="WC")
+    mock_valid_response_object = {
+        "matches": [
+            {
+                "competition": {
+                    "id": 2000,
+                    "name": "FIFA World Cup",
+                    "code": "WC",
+                },
+                "utcDate": "2022-12-03T15:00:00Z",
+                "status": "IN_PLAY",
+                "matchday": 4,
+                "homeTeam": {
+                    "name": "Netherlands",
+                },
+                "awayTeam": {
+                    "name": "United States",
+                },
+                "score": {
+                    "fullTime": {"home": 2, "away": 0},
+                },
+            }
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    assert get_current_team_match("World Cup", "Netherlands") == ["Netherlands 2 : 0 United States in FIFA World Cup"]
+
+
+def test_get_current_team_match_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_current_team_match` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["get_teams"], return_value=None)
+
+    assert get_current_team_match("World Cup", "Netherlands") is None
+
+    mocker.patch(import_paths["get_teams"], return_value=["United States", 0, "Germany", 7])
+
+    assert get_current_team_match("World Cup", "Netherlands") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["get_teams"], return_value=["Netherlands", 1, "United States", 0, "Germany", 7])
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_current_team_match("World Cup", "Netherlands") is None
+
+
+def test_get_upcoming_team_matches(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_upcoming_team_matches`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    mocker.patch(import_paths["get_teams"], return_value=["Netherlands", 1, "United States", 0, "Germany", 7])
+    mocker.patch(import_paths["convert_league_name"], return_value="WC")
+    mock_valid_response_object = {
+        "matches": [
+            {
+                "competition": {
+                    "id": 2000,
+                    "name": "FIFA World Cup",
+                    "code": "WC",
+                },
+                "utcDate": "2022-12-03T15:00:00Z",
+                "status": "SCHEDULED",
+                "matchday": 4,
+                "homeTeam": {
+                    "name": "Netherlands",
+                },
+                "awayTeam": {
+                    "name": "United States",
+                },
+            }
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    print(get_upcoming_team_matches("World Cup", "Netherlands"))
+    assert get_upcoming_team_matches("World Cup", "Netherlands") == [
+        "playing on the 03.12.2022 at 16:00: Netherlands vs United States"
+    ]
+
+
+def test_get_upcoming_team_matches_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_upcoming_team_match` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["get_teams"], return_value=None)
+
+    assert get_upcoming_team_matches("World Cup", "Netherlands") is None
+
+    mocker.patch(import_paths["get_teams"], return_value=["United States", 0, "Germany", 7])
+
+    assert get_upcoming_team_matches("World Cup", "Netherlands") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["get_teams"], return_value=["Netherlands", 1, "United States", 0, "Germany", 7])
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_upcoming_team_matches("World Cup", "Netherlands") is None
+
+
+def test_get_teams(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.foodball.get_teams`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock valid response
+    mock_valid_response_object = {
+        "teams": [
+            {
+                "id": 758,
+                "name": "Uruguay",
+            },
+            {
+                "id": 200,
+                "name": "Netherlands",
+            },
+        ]
+    }
+    valid_response = Response()
+    valid_response._content = json.dumps(mock_valid_response_object).encode()
+    mocker.patch(import_paths["http_request"], return_value=valid_response)
+    mocker.patch(import_paths["convert_league_name"], return_value="WC")
+
+    assert get_teams("World Cupt") == ["Uruguay", 758, "Netherlands", 200]
+
+
+def test_get_teams_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
+    """Test `aswe.api.sport.football.get_teams` with invalid api responses
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    import_paths : dict[str, str]
+        Fixture used for test setup
+    """
+
+    # * Mock None league id
+    mocker.patch(import_paths["convert_league_name"], return_value=None)
+
+    assert get_teams("test_name") is None
+
+    # * Mock None response
+    mocker.patch(import_paths["convert_league_name"], return_value=1)
+    mocker.patch(import_paths["http_request"], return_value=None)
+
+    assert get_teams("league_name") is None

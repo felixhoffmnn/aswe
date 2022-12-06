@@ -127,6 +127,7 @@ class SportUseCase(AbstractUseCase):
                 teams = football.get_teams(league)
                 if teams is None:
                     raise Exception("Could not get teams")
+                teams = [x for x in teams if not isinstance(x, int)]  # type: ignore
                 team = self.choose_team(teams)
                 matches = football.get_upcoming_team_matches(league, team)
                 if matches == []:

@@ -258,7 +258,7 @@ def test_get_team_game_today(mocker: MockFixture, import_paths: dict[str, str]) 
     Parameters
     ----------
     mocker : MockFixture
-        _description_
+        General MockFixture Class
     import_paths : dict[str, str]
         Fixture used for test setup
     """

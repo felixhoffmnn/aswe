@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any
+from math import floor
 
 from aswe.api.calendar.calendar import get_events_by_timeframe
 from aswe.api.calendar.data import Event
@@ -7,14 +7,13 @@ from aswe.api.event import event as eventApi
 from aswe.api.event.event_data import EventLocation, EventSummary, ReducedEvent
 from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.navigation.maps import get_maps_connection
-from aswe.api.navigation.trip_data import MapsTripMode
+from aswe.api.navigation.trip_data import MapsTrip, MapsTripMode
 from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 from aswe.utils.date import get_next_saturday
-
-# TODO add to calendar
+from aswe.utils.shell import get_int, print_options
 
 
 class EventUseCase(AbstractUseCase):
@@ -31,7 +30,6 @@ class EventUseCase(AbstractUseCase):
         """UseCase for events
 
         * TODO: Implement `quotes_key`
-        * TODO: Outsource navigation api
 
         Parameters
         ----------
@@ -49,24 +47,15 @@ class EventUseCase(AbstractUseCase):
                 beginning_next_saturday = get_next_saturday()
                 end_next_sunday = beginning_next_saturday + timedelta(days=1, hours=23, minutes=59, seconds=59)
 
-                # TODO use user city
-                events = eventApi.events(
-                    EventApiEventParams(
-                        city=["Berlin"],
-                        radius=30,
-                        start_date_time=beginning_next_saturday.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                        end_date_time=end_next_sunday.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    )
-                )
+                events = self._get_events_in_preferred_city(beginning_next_saturday, end_next_sunday)
+
+                if len(events) == 0:
+                    return
 
                 calendar_events = get_events_by_timeframe(
                     min_timestamp=beginning_next_saturday.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                     max_timestamp=end_next_sunday.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                 )
-
-                if events is None or len(events) == 0:
-                    self.tts.convert_text("Looks like there are no events this weekend.")
-                    return
 
                 attendable_events_info = self._get_attendable_events(events[:3], calendar_events)
 
@@ -84,16 +73,16 @@ class EventUseCase(AbstractUseCase):
                         self.tts.convert_text("Do you want to attend?")
 
                         if self.stt.check_if_yes():
-                            # TODO use user city
+                            # ! uncomment patch in test_use_case_event.py before uncommenting
                             # create_event(
                             #     Event(
-                            #         title=attendable_events_info[0]["name"],
+                            #         title=attendable_events_info[0].name,
                             #         description="",
                             #         full_day=False,
-                            #         location="Stuttgart,DE",
-                            #         date=attendable_events_info[0]["start"].strftime("%Y-%m-%d"),
-                            #         start_time=attendable_events_info[0]["start"].strftime("%Y-%m-%dT%H:%M:%SZ"),
-                            #         end_time=(attendable_events_info[0]["start"] + timedelta(hours=2)).strftime(
+                            #         location=attendable_events_info[0].location.city,
+                            #         date=attendable_events_info[0].start.strftime("%Y-%m-%d"),
+                            #         start_time=attendable_events_info[0].start.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                            #         end_time=(attendable_events_info[0].start + timedelta(hours=2)).strftime(
                             #             "%Y-%m-%dT%H:%M:%SZ"
                             #         ),
                             #     )
@@ -103,7 +92,9 @@ class EventUseCase(AbstractUseCase):
             case _:
                 raise NotImplementedError
 
-    def _get_attendable_events(self, raw_events: list[ReducedEvent], calendar_events: list[Event]) -> list[Any]:
+    def _get_attendable_events(
+        self, raw_events: list[ReducedEvent], calendar_events: list[Event]
+    ) -> list[EventSummary]:
         """Checks whether or not given events can be attended depending on existing events in the users calenda.
 
         Parameters
@@ -115,10 +106,10 @@ class EventUseCase(AbstractUseCase):
 
         Returns
         -------
-        list[Any]
+        list[EventSummary]
             List of short summaries of events that can be attended.
         """
-        attendable_events_info = []
+        attendable_events_info: list[EventSummary] = []
         for event in raw_events:
             event_is_attendable = self._event_is_attendable(event, calendar_events)
 
@@ -128,7 +119,7 @@ class EventUseCase(AbstractUseCase):
 
         return attendable_events_info
 
-    def _event_is_attendable(self, event: ReducedEvent, calendar_events: list[Any]) -> bool:
+    def _event_is_attendable(self, event: ReducedEvent, calendar_events: list[Event]) -> bool:
         """Checks whether a single event can be attended
 
         Parameters
@@ -149,8 +140,12 @@ class EventUseCase(AbstractUseCase):
             if calendar_event.start_time == "":
                 continue
 
-            calendar_event_start_datetime = datetime.fromisoformat(calendar_event.start_time) + timedelta(hours=1)
-            calendar_event_end_datetime = datetime.fromisoformat(calendar_event.end_time) + timedelta(hours=1)
+            calendar_event_start_datetime = (
+                datetime.fromisoformat(calendar_event.start_time) + timedelta(hours=1)
+            ).replace(tzinfo=None)
+            calendar_event_end_datetime = (
+                datetime.fromisoformat(calendar_event.end_time) + timedelta(hours=1)
+            ).replace(tzinfo=None)
 
             if (calendar_event_start_datetime <= event_start_datetime <= calendar_event_end_datetime) or (
                 calendar_event_start_datetime <= event_end_datetime <= calendar_event_end_datetime
@@ -182,9 +177,8 @@ class EventUseCase(AbstractUseCase):
             is_rainy=False,
         )
 
-        # TODO use user city
         weather_response = weatherApi.forecast(
-            location="Stuttgart,DE",
+            location=f"{event_summary.location.city},DE",
             start_date=event_start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
             elements=[ElementsEnum.DATETIME, ElementsEnum.PRECIP_PROB, ElementsEnum.TEMP],
             include=[IncludeEnum.HOURS],
@@ -199,15 +193,10 @@ class EventUseCase(AbstractUseCase):
             event_summary.is_cold = temperature < 5.0
             event_summary.is_rainy = precipitation_probability > 40.0
 
-        # TODO ask user about preferred method (driving, walking, transit, bicycling)
-        directions = get_maps_connection(
-            f"{self.user.address.street},{self.user.address.city}",
-            f"{event_summary.location.address},{event_summary.location.city}",
-            MapsTripMode.BICYCLING,
-        )
+        trip, mode = self._determine_trip_medium(event_summary)
 
-        event_summary.trip_mode = MapsTripMode.BICYCLING
-        event_summary.trip_duration = directions.duration
+        event_summary.trip_mode = mode
+        event_summary.trip_duration = trip.duration
 
         return event_summary
 
@@ -219,14 +208,14 @@ class EventUseCase(AbstractUseCase):
         event : ReducedEvent
             single event
         event_duration : int, optional
-            configurable duration event should have, by default 2
+            configurable duration in hours event should have, by default 2
 
         Returns
         -------
         Tuple[datetime, datetime]
             start and end datetime of given event
         """
-        event_start_datetime = datetime.fromisoformat(event.start.replace("T", " ").replace("Z", ""))
+        event_start_datetime = datetime.strptime(event.start, "%Y-%m-%dT%H:%M:%SZ")
         event_end_datetime = event_start_datetime + timedelta(hours=event_duration)
 
         return (event_start_datetime, event_end_datetime)
@@ -244,16 +233,148 @@ class EventUseCase(AbstractUseCase):
         str
             Single string that can be read by assistant
         """
+        trip_hours = floor(event_summary.trip_duration / 60) if event_summary.trip_duration else 0
+        trip_minutes = event_summary.trip_duration % 60 if event_summary.trip_duration else 0
+        formatted_trip_duration = (
+            f"{'1 hour and ' if trip_hours == 1 else str(trip_hours) + ' hours and ' if trip_hours > 1 else ''}"
+            f"{'1 minute' if trip_minutes == 1 else str(trip_minutes) + ' minutes' if trip_minutes > 1 else ''}"
+        )
+
+        match event_summary.trip_mode:
+            case MapsTripMode.WALKING:
+                formatted_trip_mode = "foot"
+            case MapsTripMode.BICYCLING:
+                formatted_trip_mode = "bike"
+            case MapsTripMode.TRANSIT:
+                formatted_trip_mode = "transit"
+            case MapsTripMode.DRIVING:
+                formatted_trip_mode = "car"
+
         formatted_summary = (
-            f"""The {event_summary.name} starts at {event_summary.start.hour}:"""
+            f"""The {event_summary.name} starts at {str(event_summary.start.hour).zfill(2)}:"""
             f"""{str(event_summary.start.minute).zfill(2)}. """
-            f"""It will take you {event_summary.trip_duration} minutes to get there. """
+            f"""It will take you {formatted_trip_duration} to get there by {formatted_trip_mode}. """
         )
 
         if event_summary.is_rainy:
-            formatted_summary += "There is a high chance of rain, you might want to take an umbrella."
+            formatted_summary += "There is a high chance of rain, you might want to take an umbrella. "
 
         if event_summary.is_cold:
             formatted_summary += "Additionally, you should prepare for chilly temperatures."
 
         return formatted_summary
+
+    def _ask_for_event_city(self) -> str:
+        """Ask user in which city to search for events
+
+        Returns
+        -------
+        str
+            Possible cities: ["Stuttgart", "Berlin", "Koeln", "Muenchen", "Dortmund"]
+        """
+        self.tts.convert_text("In which city should I search for events?")
+        options: list[str | int] = ["Stuttgart", "Berlin", "Koeln", "Muenchen", "Dortmund"]
+        print_options(options)
+        city_index = get_int(options)
+
+        while not city_index:
+            self.tts.convert_text("Sorry I could not find given city. Please try again.")
+            city_index = get_int(options)
+
+        return str(options[city_index - 1])
+
+    def _get_events_in_preferred_city(self, start_datetime: datetime, end_datetime: datetime) -> list[ReducedEvent]:
+        """Asks user for preferred city and searches for events in given city.
+
+        Parameters
+        ----------
+        start_datetime : datetime
+            Start of timeframe assistant should look for events
+        end_datetime : datetime
+            End of timeframe assistant should look for events
+
+        Returns
+        -------
+        list[ReducedEvent]
+            List of events in given timeframe
+        """
+        city = self._ask_for_event_city()
+
+        events = eventApi.events(
+            EventApiEventParams(
+                city=[city],
+                radius=30,
+                start_date_time=start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                end_date_time=end_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            )
+        )
+
+        while events is None or len(events) == 0:
+            self.tts.convert_text(
+                f"Looks like there are no events in {city} this weekend. "
+                "Do you want to look for events in another city?"
+            )
+
+            if not self.stt.check_if_yes():
+                return []
+
+            city = self._ask_for_event_city()
+
+            events = eventApi.events(
+                EventApiEventParams(
+                    city=[city],
+                    radius=30,
+                    start_date_time=start_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    end_date_time=end_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                )
+            )
+        return events
+
+    def _determine_trip_medium(self, event_summary: EventSummary) -> tuple[MapsTrip, MapsTripMode]:
+        """Determines which `MapsTripMode to use depending on trip duration and user possessions.
+
+        If the trip via walking is longer than 45 min then the user should, depending on possessions, use
+        `MapsTripMode.DRIVING` or `MapsTripMode.TRANSIT`
+
+        Parameters
+        ----------
+        event_summary : EventSummary
+            Used event to determine trip duration
+
+        Returns
+        -------
+        Tuple[MapsTrip, MapsTripMode]
+            Trip and Medium user should use
+        """
+        trip = get_maps_connection(
+            f"{self.user.address.street},{self.user.address.city}",
+            f"{event_summary.location.address},{event_summary.location.city}",
+            MapsTripMode.WALKING,
+        )
+        medium = MapsTripMode.WALKING
+
+        if self.user.possessions.bike:
+            trip = get_maps_connection(
+                f"{self.user.address.street},{self.user.address.city}",
+                f"{event_summary.location.address},{event_summary.location.city}",
+                MapsTripMode.BICYCLING,
+            )
+            medium = MapsTripMode.BICYCLING
+
+        if trip.duration > 45:
+            if self.user.possessions.car:
+                trip = get_maps_connection(
+                    f"{self.user.address.street},{self.user.address.city}",
+                    f"{event_summary.location.address},{event_summary.location.city}",
+                    MapsTripMode.DRIVING,
+                )
+                medium = MapsTripMode.DRIVING
+            else:
+                trip = get_maps_connection(
+                    f"{self.user.address.street},{self.user.address.city}",
+                    f"{event_summary.location.address},{event_summary.location.city}",
+                    MapsTripMode.TRANSIT,
+                )
+                medium = MapsTripMode.TRANSIT
+
+        return trip, medium

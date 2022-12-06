@@ -294,7 +294,7 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
     return matches[0:num_matches]
 
 
-def get_current_team_match(league: str, team_name: str) -> list[str | int] | None:
+def get_current_team_match(league: str, team_name: str) -> list[str] | None:
     """Get the current match of the specified team
 
     Parameters
@@ -348,7 +348,7 @@ def get_teams(league: str) -> list[str] | None:
 
     Returns
     -------
-    list[str] | None
+    list[str | int] | None
         Return list of the teams of the specified league
     """
     league_id = convert_league_name(league)
@@ -361,5 +361,5 @@ def get_teams(league: str) -> list[str] | None:
     teams = []
     for team in results["teams"]:
         teams.append(team["name"])
-        teams.append(int(team["id"]))
+        teams.append(str(team["id"]))
     return teams

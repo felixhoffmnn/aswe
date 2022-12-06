@@ -498,7 +498,7 @@ def test_get_teams(mocker: MockFixture, import_paths: dict[str, str]) -> None:
     mocker.patch(import_paths["http_request"], return_value=valid_response)
     mocker.patch(import_paths["convert_league_name"], return_value="WC")
 
-    assert get_teams("World Cupt") == ["Uruguay", 758, "Netherlands", 200]
+    assert get_teams("World Cup") == ["Uruguay", "758", "Netherlands", "200"]
 
 
 def test_get_teams_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:

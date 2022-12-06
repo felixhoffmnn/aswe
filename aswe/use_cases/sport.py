@@ -10,9 +10,20 @@ class SportUseCase(AbstractUseCase):
     def check_proactivity(self) -> None:
         """Check if there is a proactivity to be triggered
 
-        * TODO: Implement proactivity
+        * TODO: Why is it necessary to check if valid_teams is None twice?
         """
-        raise NotImplementedError
+        valid_teams = football.get_teams(self.user.favorites.league)
+        if valid_teams is None:
+            self.tts.convert_text("Sorry, I could not find any teams for the league you specified.")
+        if valid_teams is not None and self.user.favorites.team not in valid_teams:
+            self.tts.convert_text(
+                f"{self.user.favorites.team} could not be found"
+                f"in {self.user.favorites.league}. Pleaser choose a team which plays in the legue which was specified."
+            )
+        match = football.get_current_team_match(self.user.favorites.league, self.user.favorites.team)
+        if match is None:
+            return
+        self.tts.convert_text(match[0])
 
     def choose_league(self, leagues: list[str]) -> str:
         """Returns the league the users chooses.
@@ -121,13 +132,21 @@ class SportUseCase(AbstractUseCase):
                     raise Exception("Could not get matches")
                 for match in matches:
                     self.tts.convert_text(match)
+            case "footballMatchesToday":
+                leagues = ["Premier League", "Bundesliga", "Serie A", "Ligue 1", "World Cup"]
+                league = self.choose_league(leagues)
+                matches = football.get_matches_today(league)
+                if matches is None:
+                    raise Exception("Could not get matches")
+                for match in matches:
+                    self.tts.convert_text(match)
             case "footballUpcomingMatches":
                 leagues = ["Premier League", "Bundesliga", "Serie A", "Ligue 1", "World Cup"]
                 league = self.choose_league(leagues)
                 teams = football.get_teams(league)
                 if teams is None:
                     raise Exception("Could not get teams")
-                teams = [x for x in teams if not isinstance(x, int)]  # type: ignore
+                teams = [x for x in teams if not x.isnumeric()]  # type: ignore
                 team = self.choose_team(teams)
                 matches = football.get_upcoming_team_matches(league, team)
                 if matches == []:

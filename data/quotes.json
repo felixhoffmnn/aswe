@@ -20,6 +20,7 @@
     "footballStandings": ["football standings", "soccer standings", "football table", "soccer table"],
     "footballMatchdayMatches": ["football matchday matches", "soccer matchday matches"],
     "footballOngoingMatches": ["football ongoing matches", "soccer ongoing matches"],
+    "footballMatchesToday": ["football matches today", "soccer matches today"],
     "footballUpcomingMatches": [
       "football upcoming matches",
       "soccer upcoming matches",

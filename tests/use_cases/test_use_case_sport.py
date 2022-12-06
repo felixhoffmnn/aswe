@@ -266,6 +266,52 @@ def test_football_ongoing_matches(mocker: MockFixture, patch_stt: SpeechToText, 
         use_case.trigger_assistant(best_match)
 
 
+def test_football_matches_today(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
+    """Test the case of footballMatchesToday in the sport use case
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    patch_stt : SpeechToText
+        Patched class to instantiate use_case class
+    patch_tts : TextToSpeech
+        Patched class to instantiate use_case class
+    """
+    best_match = BestMatch(
+        use_case="sport", function_key="footballMatchesToday", similarity=1, parsed_text="lorem ipsum"
+    )
+    # Set up the test case
+    user = User(
+        name="TestUser",
+        age=10,
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=False),
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+        ),
+    )
+
+    # * Patch Event Api
+    mocker.patch.object(footballApi, "get_matches_today", return_value=["Team A vs. Team B", "Team C vs. Team D"])
+    mocked_sport_choose_league = mocker.patch.object(SportUseCase, "choose_league", return_value="Bundesliga")
+
+    spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
+    use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case.trigger_assistant(best_match)
+
+    mocked_sport_choose_league.assert_called_with(["Premier League", "Bundesliga", "Serie A", "Ligue 1", "World Cup"])
+    # spy_tts_convert_text.assert_called_with("Team A vs. Team B")
+    assert spy_tts_convert_text.call_args_list[0][0][0] == "Team A vs. Team B"
+    assert spy_tts_convert_text.call_args_list[1][0][0] == "Team C vs. Team D"
+
+    mocker.patch.object(footballApi, "get_matches_today", return_value=None)
+    with pytest.raises(Exception, match="Could not get matches"):
+        use_case.trigger_assistant(best_match)
+
+
 def test_football_upcoming_matches(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test the case of footballUpcomingMatches in the sport use case
 

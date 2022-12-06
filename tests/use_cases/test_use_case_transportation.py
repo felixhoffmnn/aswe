@@ -24,6 +24,31 @@ def patch_tts(mocker: MockFixture) -> TextToSpeech:
     return patched_tts
 
 
+def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
+    """Test proactivity of `use_cases.transportation`.
+
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    patch_stt : SpeechToText
+        Patched class to instantiate use_case class
+    patch_tts : TextToSpeech
+        Patched class to instantiate use_case class
+    """
+
+    user = User(
+        name="TestUser",
+        age=10,
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=True),
+        favorite_stocks=[],
+    )
+    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+
+    use_case.check_proactivity()
+
+
 def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test "dhbw" event of `use_cases.transportation`.
 

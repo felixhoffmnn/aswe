@@ -164,7 +164,6 @@ class Agent:
         clear_shell()
         self.tts.convert_text(greeting_text)
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
-        self.tts.convert_text("How can I help you?")
 
     def get_best_match(self, parsed_text: str, threshold: float = 0.7) -> BestMatch | None:
         """Find the best match for the parsed text

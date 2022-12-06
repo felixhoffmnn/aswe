@@ -24,7 +24,7 @@ class TransportationUseCase(AbstractUseCase):
         if next_event is not None:
             next_event_start_time = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
             time_to_next_event = (next_event_start_time - datetime.now()).seconds / 60
-            if 30 < time_to_next_event and time_to_next_event < 45:
+            if 30 <= time_to_next_event < 45:
 
                 self.next_event_use_case()
 

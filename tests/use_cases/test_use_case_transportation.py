@@ -1,5 +1,7 @@
 # pylint: disable=redefined-outer-name
 
+from datetime import datetime
+
 import pytest
 from pytest_mock import MockFixture
 
@@ -46,6 +48,8 @@ def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -76,6 +80,8 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -111,6 +117,8 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -146,6 +154,8 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -181,6 +191,8 @@ def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: Tex
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)

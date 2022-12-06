@@ -105,9 +105,11 @@ class Favorites:
         The favorite stocks of the user.
     """
 
-    stocks: list[str]
+    stocks: list[dict[str, str]]
     league: str
     team: str
+    news_keywords: list[str]
+    wakeup_time: datetime
 
 
 @dataclass

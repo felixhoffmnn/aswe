@@ -34,6 +34,7 @@ pyjokes = "^0.6.0"
 google-api-python-client = "^2.66.0"
 google-auth-oauthlib = "^0.7.1"
 gtts = "^2.3.0"
+pycountry = "^22.3.5"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["jupyter"], version = "^22.8.0" }

@@ -1,6 +1,8 @@
 # ? Disable private attribute access to test class methods
 # pylint: disable=redefined-outer-name,protected-access
 
+from datetime import datetime
+
 import pytest
 from pytest_mock import MockFixture
 
@@ -53,6 +55,8 @@ def test_this_weekend_no_events(mocker: MockFixture, patch_stt: SpeechToText, pa
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -94,6 +98,8 @@ def test_this_weekend_one_attendable_event(
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = EventUseCase(patch_stt, patch_tts, "TestBuddy", user)

@@ -1,6 +1,7 @@
 # ? Disable private attribute access to test class methods
 # pylint: disable=redefined-outer-name,protected-access
 
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -53,6 +54,8 @@ def test_choose_league(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -87,6 +90,8 @@ def test_choose_team(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -121,6 +126,8 @@ def test_get_matchday_num(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> N
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
     use_case = SportUseCase(patch_stt, patch_tts, "TestBuddy", user)
@@ -155,6 +162,8 @@ def test_football_standings(mocker: MockFixture, patch_stt: SpeechToText, patch_
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -199,6 +208,8 @@ def test_football_matchday_matches(mocker: MockFixture, patch_stt: SpeechToText,
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -245,6 +256,8 @@ def test_football_ongoing_matches(mocker: MockFixture, patch_stt: SpeechToText, 
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -337,6 +350,8 @@ def test_football_upcoming_matches(mocker: MockFixture, patch_stt: SpeechToText,
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -389,6 +404,8 @@ def test_basketball_standings(mocker: MockFixture, patch_stt: SpeechToText, patc
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -439,6 +456,8 @@ def test_basketball_game_today(mocker: MockFixture, patch_stt: SpeechToText, pat
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -501,6 +520,8 @@ def test_handball_standings(mocker: MockFixture, patch_stt: SpeechToText, patch_
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -549,6 +570,8 @@ def test_handball_game_today(mocker: MockFixture, patch_stt: SpeechToText, patch
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -613,6 +636,8 @@ def test_f1_round_results(mocker: MockFixture, patch_stt: SpeechToText, patch_tt
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 
@@ -658,6 +683,8 @@ def test_f1_last_round_results(mocker: MockFixture, patch_stt: SpeechToText, pat
             stocks=[],
             league="",
             team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
         ),
     )
 

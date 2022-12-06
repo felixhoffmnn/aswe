@@ -2,12 +2,12 @@ import pytest
 
 from aswe.api.finance.finance import (
     _get_percentage_change,
-    _get_ticker_by_symbol,
     get_currency_by_country,
     get_news_info_by_symbol,
     get_stock_price,
     get_stock_price_change,
     get_stock_rating,
+    get_ticker_by_symbol,
 )
 from aswe.utils.error import TooManyRequests
 
@@ -21,9 +21,8 @@ def test_get_percentage_change() -> None:
     assert change == "-1.23%"
 
 
-@pytest.mark.xfail(raises=TooManyRequests)
 def test_get_ticker_by_symbol() -> None:
-    """Test `aswe.api.finance.finance._get_ticker_by_symbol`"""
+    """Test `aswe.api.finance.finance.get_ticker_by_symbol`"""
     ticker_sentiment = [
         {
             "ticker": "SE",
@@ -51,8 +50,8 @@ def test_get_ticker_by_symbol() -> None:
         },
     ]
 
-    apple_sentiment = _get_ticker_by_symbol(ticker_sentiment, "AAPL")
-    microsoft_sentiment = _get_ticker_by_symbol(ticker_sentiment, "MSFT")
+    apple_sentiment = get_ticker_by_symbol(ticker_sentiment, "AAPL")
+    microsoft_sentiment = get_ticker_by_symbol(ticker_sentiment, "MSFT")
 
     assert apple_sentiment == {
         "ticker": "AAPL",

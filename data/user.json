@@ -13,8 +13,13 @@
     "car": true
   },
   "favorites": {
-    "stocks": ["AAPL", "GOOG", "MSFT"],
+    "stocks": [
+      { "name": "Apple", "symbol": "AAPL" },
+      { "name": "Microsoft", "symbol": "MSFT" }
+    ],
     "league": "World Cup",
-    "team": "Netherlands"
+    "team": "Netherlands",
+    "news_keywords": ["Ukraine", "Baerbock"],
+    "wakeup_time": "07:30"
   }
 }

@@ -11,29 +11,7 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-packages = [
-  { include = "aswe" },
-]
-
-[tool.poe.tasks]
-[tool.poe.tasks.run]
-cmd = "python ./aswe/core/agent.py agent"
-help = "Runs agent"
-
-[tool.poe.tasks.test]
-cmd = "pytest"
-help = "Test entire project"
-
-[tool.poe.tasks.test_cov]
-cmd = "pytest --cov=aswe --cov-report=term-missing --cov-fail-under=${THRESHOLD}"
-help = "Test entire project with coverage."
-  [[tool.poe.tasks.test_cov.args]]
-  name = "THRESHOLD"
-  help = "Minimal threshold test coverage should reach before failing. By default 80."
-  default = 80
-  required = false
-  positional = true
-  type = "integer"
+packages = [{ include = "aswe" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -66,7 +44,7 @@ flake8 = "^5.0.4"
 pytest = "^7.1.3"
 autopep8 = "^1.7.0"
 pre-commit = "^2.20.0"
-pytest-cov = {extras = ["toml"], version = "^4.0.0"}
+pytest-cov = { extras = ["toml"], version = "^4.0.0" }
 jupyter = "^1.0.0"
 types-requests = "^2.28.11.2"
 pytest-mock = "^3.10.0"
@@ -81,6 +59,15 @@ mkdocs-git-revision-date-localized-plugin = "^1.1.0"
 mkdocs-jupyter = "^0.22.0"
 pymdown-extensions = "^9.8"
 mkdocs-mermaid2-plugin = "^0.6.0"
+
+[tool.poe.tasks]
+run = { cmd = "python ./aswe/core/agent.py agent", help = "Runs agent" }
+pytest = { cmd = "pytest", help = "Runs pytest" }
+test-cov = { cmd = "pytest --cov=aswe --cov-report=term-missing --cov-fail-under=${THRESHOLD}", help = "Test entire project with coverage.", args = [
+  { name = "THRESHOLD", help = "Minimal threshold test coverage should reach before failing. By default 80.", default = 80, required = false, positional = true, type = "integer" },
+] }
+pre-commit = { cmd = "pre-commit run --all-files", help = "Runs pre-commit hooks" }
+mkdocs-serve = { cmd = "mkdocs serve", help = "Serves mkdocs documentation" }
 
 [tool.mypy]
 mypy_path = 'aswe'
@@ -101,32 +88,16 @@ warn_no_return = true
 [tool.black]
 line-length = 120
 target-version = ['py310']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.mypy_cache
-  | \.tox
-  | .*\.pyc$
-  | venv
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | deploy
-  | presentations
-)/
-'''
 
+# What does pretty for black mean?
 pretty = "True"
 
 [tool.isort]
 profile = "black"
 
 [tool.pylint]
-disable="missing-module-docstring, broad-except"
-max-line-length=120
+disable = "missing-module-docstring, broad-except"
+max-line-length = 120
 
 [tool.pytest]
 testpaths = "tests"

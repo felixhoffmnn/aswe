@@ -1,0 +1,14 @@
+name: 🤔 Question
+title: "🤔 [question] <Title>"
+description: Question
+labels: ["question"]
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your question
+      description: Feel free to ask anything regarding this project.
+      placeholder: Ex. I have a question about...
+    validations:
+      required: true

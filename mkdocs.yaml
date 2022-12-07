@@ -36,8 +36,6 @@ plugins:
       arguments:
         theme: |
           ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
-  - git-revision-date-localized:
-      fallback_to_build_date: true
   - autorefs
   - mkdocstrings:
       handlers:

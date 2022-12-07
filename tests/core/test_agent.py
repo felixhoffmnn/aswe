@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from aswe.core.agent import Agent
-from aswe.core.objects import User
+from aswe.core.objects import BestMatch, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 
@@ -28,3 +28,21 @@ def test_init(agent: Agent) -> None:
     assert isinstance(agent.user, User)
     assert isinstance(agent.stt, SpeechToText)
     assert isinstance(agent.tts, TextToSpeech)
+
+
+def test_greeting(agent: Agent) -> None:
+    """Test agent greeting"""
+
+    agent._greeting()
+
+
+def test_evaluate_use_case(agent: Agent) -> None:
+    """Test agent evaluate_use_case and get_best_match"""
+
+    agent._evaluate_use_case("marry me")
+
+
+def test_check_proactivity(agent: Agent) -> None:
+    """Test agent check_proactivity"""
+
+    agent._check_proactivity()

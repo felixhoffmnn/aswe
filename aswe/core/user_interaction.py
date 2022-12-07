@@ -194,6 +194,8 @@ class TextToSpeech:
 
         if optimize_time:
             text = text.replace(":00", " o'clock")
+            text = re.sub(r"0(\d{1}) o'clock", r"\1 o'clock", text)
+            text = re.sub(r"0(\d{1}):(\d{2})", r"\1 \2", text)
             text = re.sub(r"(\d{2}):(\d{2})", r"\1 \2", text)
 
         return text

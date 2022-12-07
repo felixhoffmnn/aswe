@@ -39,12 +39,19 @@ def test_optimize_text() -> None:
         == "The event is at 12 o'clock"
     )
     assert (
+        tts.optimize_text("The event is at 09:00", optimize_time=True, optimize_numbers=False)
+        == "The event is at 9 o'clock"
+    )
+    assert (
         tts.optimize_text("The event is at 12:00.", optimize_time=True, optimize_numbers=True)
         == "The event is at 12 o'clock ."
     )
     assert (
         tts.optimize_text("The event is at 13:45", optimize_time=True, optimize_numbers=False)
         == "The event is at 13 45"
+    )
+    assert (
+        tts.optimize_text("The event is at 09:45", optimize_time=True, optimize_numbers=False) == "The event is at 9 45"
     )
     assert (
         tts.optimize_text("The event is at 14:15.", optimize_time=False, optimize_numbers=True)

@@ -26,29 +26,18 @@
     ]
   },
   "sport": {
-    "footballStandings": ["football standings", "soccer standings", "football table", "soccer table"],
-    "footballMatchdayMatches": ["football matchday matches", "soccer matchday matches"],
-    "footballOngoingMatches": ["football ongoing matches", "soccer ongoing matches"],
-    "footballMatchesToday": ["football matches today", "soccer matches today"],
-    "footballUpcomingMatches": [
-      "football upcoming matches",
-      "football upcoming team matches",
-      "soccer upcoming matches",
-      "soccer upcoming team matches",
-      "what is the next football match"
-    ],
-    "footballCurrentMatch": [
-      "football current match",
-      "soccer current match",
-      "football current team match",
-      "soccer current team match"
-    ],
-    "basketballStandings": ["basketball standings", "basketball table"],
-    "basketballTeamGameToday": ["basketball team game today", "basketball team game tonight"],
-    "handballStandings": ["handball standings", "handball table"],
-    "handballTeamGameToday": ["handball team game today", "handball team game tonight"],
-    "f1ResultsByRound": ["f1 results by round", "formula 1 results by round"],
-    "f1LastRoundResult": ["f1 last round result", "formula 1 last round result"]
+    "footballStandings": ["Tell me current football standings", "football standings"],
+    "footballMatchdayMatches": ["Tell me football matches for a specific matchday", "football matchday matches"],
+    "footballOngoingMatches": ["Tell me ongoing football matches", "football ongoing matches"],
+    "footballMatchesToday": ["Tell me football matches today", "football matches today"],
+    "footballUpcomingMatches": ["Tell me upcoming football matches", "football upcoming matches"],
+    "footballCurrentMatch": ["Tell me current football match", "football current match"],
+    "basketballStandings": ["Tell me current basketball standings", "basketball standings"],
+    "basketballTeamGameToday": ["Tell me basketball team game today", "basketball team game tonight"],
+    "handballStandings": ["Tell me current handball standings", "handball standings"],
+    "handballTeamGameToday": ["Tell me today's handball game for a specific team", "handball team game tonight"],
+    "f1ResultsByRound": ["Tell me f1 results for a specif round", "f1 results by round"],
+    "f1LastRoundResult": ["Tell me f1 results fo the round race", "f1 last round result"]
   },
 
   "general": {

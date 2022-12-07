@@ -270,7 +270,7 @@ class EventUseCase(AbstractUseCase):
         event : ReducedEvent
             single event
         event_duration : int, optional
-            configurable duration in hours event should have, by default 2
+            configurable duration in hours event should have. _By default `2`._
 
         Returns
         -------

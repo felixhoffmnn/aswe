@@ -171,7 +171,7 @@ def get_ongoing_matches(league: str = "") -> list[str] | None:
     Parameters
     ----------
     league : str, optional
-        Name of the league, by default ""
+        Name of the league. _By default `""`._
 
     Returns
     -------
@@ -211,7 +211,7 @@ def get_matches_today(league: str = "") -> list[str] | None:
     Parameters
     ----------
     league : str, optional
-        Name of the league, by default ""
+        Name of the league. _By default `""`._
 
     Returns
     -------
@@ -252,7 +252,7 @@ def get_upcoming_team_matches(league: str, team_name: str, num_matches: int = 3)
     team_name : str
         Name of the team from which the matches are requested
     num_matches : int, optional
-        Number of matches which will be returned, by default 3
+        Number of matches which will be returned. _By default `3`._
 
     Returns
     -------

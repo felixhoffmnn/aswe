@@ -54,16 +54,16 @@ class MorningBriefingUseCase(AbstractUseCase):
             self.tts.convert_text("Today you have the following calendar events:")
             for event in events_today:
                 if event.location != "":
-                    location_info = f"at {event.location}"
+                    location_info = f" at {event.location}"
                 else:
                     location_info = ""
                 if event.full_day:
-                    time_info = "all day"
+                    time_info = " all day"
                 else:
                     start_time = datetime.strptime(event.start_time, "%Y-%m-%dT%H:%M:%S+01:00").strftime("%H:%M")
                     end_time = datetime.strptime(event.end_time, "%Y-%m-%dT%H:%M:%S+01:00").strftime("%H:%M")
-                    time_info = f"from {start_time} to {end_time}"
-                self.tts.convert_text(f"{event.title} {location_info} {time_info}")
+                    time_info = f" from {start_time} to {end_time}"
+                self.tts.convert_text(f"{event.title}{location_info}{time_info}")
         else:
             self.tts.convert_text("You do not have any calendar events today.")
 
@@ -198,8 +198,6 @@ class MorningBriefingUseCase(AbstractUseCase):
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for morning briefing
-
-        * TODO: Implement `quotes_key`
 
         Parameters
         ----------

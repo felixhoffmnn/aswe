@@ -43,6 +43,7 @@ This project was built by a team of 5 students during the advanced software engi
 Following dependencies are listed which are required to either run or contribute to this project.
 
 1. Install `portaudio` for speech recognition:
+    - On Windows: Everything should be installed by default
     - On macOS: `brew install portaudio`
     - On Linux: `sudo apt install python3-pyaudio`
 2. Install [Poetry](https://python-poetry.org/docs/#installation)

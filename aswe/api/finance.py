@@ -55,7 +55,7 @@ def get_stock_price(symbol: str, currency: str = "USD") -> float | None:
     symbol : str
         The symbol for which the stock price should be returned.
     currency : str, optional
-        The currency in which the stock price should be returned, by default "USD"
+        The currency in which the stock price should be returned. _By default `USD`._
 
     Returns
     -------

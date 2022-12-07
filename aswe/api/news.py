@@ -11,9 +11,9 @@ def top_headlines_search(country: str = "us", max_results: int = 3) -> list[str]
     Parameters
     ----------
     country : str, optional
-        Name of the country the news will be about, by default "us"
+        Name of the country the news will be about. _By default `us`._
     max_results : int, optional
-        Number of news article returned, by default 3
+        Number of news article returned. _By default `3`._
 
     Returns
     -------
@@ -45,7 +45,7 @@ def keyword_search(keyword: str, max_results: int = 3) -> list[str] | None:
     keyword : str
         Keyword which the news will be about
     max_results : int, optional
-        Number of news articles that will be returned, by default 3
+        Number of news articles that will be returned. _By default `3`._
 
     Returns
     -------

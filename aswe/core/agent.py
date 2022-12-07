@@ -112,6 +112,7 @@ class Agent:
                         stocks=user_data["favorites"]["stocks"],
                         league=user_data["favorites"]["league"],
                         team=user_data["favorites"]["team"],
+                        news_country=user_data["favorites"]["news_country"],
                         news_keywords=user_data["favorites"]["news_keywords"],
                         wakeup_time=datetime.strptime(user_data["favorites"]["wakeup_time"], "%H:%M"),
                     ),

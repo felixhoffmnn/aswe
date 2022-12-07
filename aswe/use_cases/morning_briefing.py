@@ -71,7 +71,7 @@ class MorningBriefingUseCase(AbstractUseCase):
         """Reads out the top headlines for the current day including articles related to the user's keywords"""
         try:
             country_top_headlines = top_headlines_search(
-                country=pycountry.countries.get(name=self.user.address.country).alpha_2, max_results=2
+                country=pycountry.countries.get(name=self.user.favorites.news_country).alpha_2, max_results=2
             )
         except TooManyRequests:
             self.tts.convert_text("Unfortunately, I could not find any news for you today.")

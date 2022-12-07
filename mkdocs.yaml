@@ -18,7 +18,7 @@ nav:
           - Event: use_cases/event.md
           - Morning Briefing: use_cases/morning_briefing.md
           - Sport: use_cases/sport.md
-          - Transportation: use_cases/transportation.md
+          - Navigation: use_cases/navigation.md
       - API:
           - Calendar: api/calendar.md
           - Event: api/event.md
@@ -53,7 +53,6 @@ plugins:
           options:
             filters: ["!^__"]
             docstring_style: numpy
-            heading_level: 3
             docstring_section_style: table
             merge_init_into_class: true
             show_root_heading: no

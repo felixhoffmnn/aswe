@@ -1,13 +1,11 @@
 from datetime import datetime, timedelta
 from typing import Any
 
-from aswe.api.calendar.calendar import get_events_by_timeframe
-from aswe.api.calendar.data import Event
+from aswe.api.calendar import Event, get_events_by_timeframe
 from aswe.api.event import event as eventApi
 from aswe.api.event.event_data import EventLocation, EventSummary, ReducedEvent
 from aswe.api.event.event_params import EventApiEventParams
-from aswe.api.navigation.maps import get_maps_connection
-from aswe.api.navigation.trip_data import MapsTripMode
+from aswe.api.navigation import MapsTripMode, get_maps_connection
 from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch

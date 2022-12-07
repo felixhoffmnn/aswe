@@ -2,18 +2,16 @@ from datetime import datetime, timedelta
 
 from loguru import logger
 
-from aswe.api.calendar.calendar import get_next_event_today
-from aswe.api.navigation.maps import get_maps_connection
-from aswe.api.navigation.trip_data import MapsTripMode
-from aswe.api.navigation.vvs import get_next_connection
+from aswe.api.calendar import get_next_event_today
+from aswe.api.navigation import MapsTripMode, get_maps_connection, get_next_connection
 from aswe.api.weather import weather as weatherApi
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch
 from aswe.utils.abstract import AbstractUseCase
 
 
-class TransportationUseCase(AbstractUseCase):
-    """Use case for transportation"""
+class NavigationUseCase(AbstractUseCase):
+    """Use case for navigation"""
 
     def check_proactivity(self) -> None:
         """Trigger proactivity if the next event is between 30 and 45 minutes in the future"""

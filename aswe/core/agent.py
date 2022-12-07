@@ -23,8 +23,8 @@ from aswe.use_cases import (
     EventUseCase,
     GeneralUseCase,
     MorningBriefingUseCase,
+    NavigationUseCase,
     SportUseCase,
-    TransportationUseCase,
 )
 from aswe.utils.date import check_timedelta
 from aswe.utils.shell import clear_shell, get_int, print_options
@@ -82,8 +82,8 @@ class Agent:
             Log proactivity class to handle the logging of proactivity
         uc_general : GeneralUseCase
             General use case class to handle general use cases
-        uc_transportation : TransportationUseCase
-            Transportation use case class to handle transportation use cases
+        uc_navigation : NavigationUseCase
+            Navigation use case class to handle navigation use cases
         uc_event : EventUseCase
             Event use case class to handle event use cases
         uc_sport : SportUseCase
@@ -144,7 +144,7 @@ class Agent:
         self.log_proactivity = LogProactivity()
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
-        self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
+        self.uc_navigation = NavigationUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_event = EventUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_sport = SportUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_morning_briefing = MorningBriefingUseCase(self.stt, self.tts, self.assistant_name, self.user)
@@ -188,9 +188,9 @@ class Agent:
             | 0   | morningBriefing | newsSummary  | whats going on            |
             | 1   | morningBriefing | newsSummary  | morning briefing          |
             | 2   | events          | eventSummary | what is going on          |
-            | 3   | transportation  | dhbw         | dhbw                      |
-            | 4   | transportation  | dhbw         | i need to get to the dhbw |
-            | 5   | transportation  | hpe          | i need to get to the hpe  |
+            | 3   | navigation      | dhbw         | dhbw                      |
+            | 4   | navigation      | dhbw         | i need to get to the dhbw |
+            | 5   | navigation      | hpe          | i need to get to the hpe  |
 
         Parameters
         ----------
@@ -280,8 +280,8 @@ class Agent:
                     self.uc_morning_briefing.trigger_assistant(best_match)
                 case "events":
                     self.uc_event.trigger_assistant(best_match)
-                case "transportation":
-                    self.uc_transportation.trigger_assistant(best_match)
+                case "navigation":
+                    self.uc_navigation.trigger_assistant(best_match)
                 case "sport":
                     self.uc_sport.trigger_assistant(best_match)
                 case _:
@@ -311,7 +311,7 @@ class Agent:
             | 1   | Event            |
             | 2   | Morning Briefing |
             | 3   | Sport            |
-            | 4   | Transportation   |
+            | 4   | Navigation       |
 
         Parameters
         ----------
@@ -359,17 +359,13 @@ class Agent:
             except NotImplementedError:
                 logger.warning("Proactivity for sport is not implemented yet.")
 
-            if (
-                check_timedelta(self.log_proactivity.last_transportation_check, 15)
-                or test_proactivity == 4
-                and first_run
-            ):
-                logger.info("Triggered proactivity for transportation.")
-                self.log_proactivity.last_transportation_check = datetime.now()
+            if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 4 and first_run:
+                logger.info("Triggered proactivity for navigation.")
+                self.log_proactivity.last_navigation_check = datetime.now()
 
                 logger.debug("Acquiring lock.")
                 with lock:
-                    self.uc_transportation.check_proactivity()
+                    self.uc_navigation.check_proactivity()
 
             first_run = False
 

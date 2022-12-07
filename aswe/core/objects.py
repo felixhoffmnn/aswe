@@ -14,14 +14,14 @@ class LogProactivity:
         The last time the morning briefing was triggered
     last_sport_check : datetime
         The last time the sport use case was triggered
-    last_transportation_check : datetime
-        The last time the transportation use case was triggered
+    last_navigation_check : datetime
+        The last time the navigation use case was triggered
     """
 
     last_event_check: datetime = datetime.now()
     last_morning_briefing_check: datetime = datetime.now()
     last_sport_check: datetime = datetime.now()
-    last_transportation_check: datetime = datetime.now()
+    last_navigation_check: datetime = datetime.now()
 
 
 @dataclass

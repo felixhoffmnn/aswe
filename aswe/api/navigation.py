@@ -1,10 +1,80 @@
+import os
+from dataclasses import dataclass
 from datetime import datetime, timedelta
+from enum import Enum
 
+import googlemaps as gmaps
 from loguru import logger
 from requests import Response
 from vvspy import get_trips
 
-from aswe.api.navigation.trip_data import Connection, Trip
+_GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+
+
+@dataclass
+class MapsTrip:
+    """Dataclass supposed to store the data of a connection retrieved from google maps
+
+    Attributes
+    ----------
+    duration : int
+        Duration in minutes
+    distance : int
+        Distance in meters
+    """
+
+    duration: int
+    distance: int
+
+
+class MapsTripMode(str, Enum):
+    """Enum for google maps api trip modes"""
+
+    BICYCLING = "bicycling"
+    DRIVING = "driving"
+    TRANSIT = "transit"
+    WALKING = "walking"
+
+
+@dataclass
+class Connection:
+    """Dataclass supposed to store the data of a single vvs connection
+
+    Attributes
+    ----------
+    train_name : str
+        Name of the train
+    start_location : str
+        Name of the starting location
+    start_time : datetime
+        Departure time of the train
+    end_lcocation : str
+        Name of the end location
+    end_time : datetime
+        Arrival time of the train
+    """
+
+    train_name: str
+    start_location: str
+    start_time: datetime
+    end_location: str
+    end_time: datetime
+
+
+@dataclass
+class Trip:
+    """Dataclass supposed to store the data of a vvs trip
+
+    Attributes
+    ----------
+    duration : int
+        Time needed for the entire trip in minutes
+    connections : list[Connection]
+        All connections that are part of the trip
+    """
+
+    duration: int
+    connections: list[Connection]
 
 
 def get_latest_connection(start_station: str, end_station: str, arrival_time: datetime) -> Trip | None:
@@ -103,3 +173,34 @@ def get_next_connection(start_station: str, end_station: str) -> Trip | None:
         return trip_output
 
     return None
+
+
+def get_maps_connection(start_location: str, end_location: str, mode: MapsTripMode) -> MapsTrip:
+    """Provides the distance and duration for a trip with a specific transportation type
+
+    Parameters
+    ----------
+    start_location : str
+        Name of the location the trip starts
+    end_location : str
+        Name of the location the trip ends
+    mode : MapsTripMode
+        Type of transportation. Possible values: 'driving', 'walking', 'bicycling' or 'transit'
+
+    Returns
+    -------
+    MapsTrip
+        A MapsTrip object containing the distance and duration of the trip
+    """
+    client = gmaps.Client(key=_GOOGLE_MAPS_API_KEY)
+    directions_result = client.directions(start_location, end_location, mode=mode.value)  # type: ignore
+
+    distance = int(directions_result[0]["legs"][0]["distance"]["value"])
+    duration = int(directions_result[0]["legs"][0]["duration"]["value"] / 60)
+
+    logger.debug(f"Maps: From {start_location} to {end_location} with {mode}: {distance} meter, {duration} minutes")
+
+    return MapsTrip(
+        distance=distance,
+        duration=duration,
+    )

@@ -6,12 +6,21 @@ The core module contains the **Agent**, **STT**, **TTS**, as well as dataclasses
 
 <!-- TODO: Add flowchart -->
 
+<!-- prettier-ignore -->
 ::: aswe.core.agent
+    options:
+        heading_level: 3
 
 ## User Interaction
 
+<!-- prettier-ignore -->
 ::: aswe.core.user_interaction
+    options:
+        heading_level: 3
 
 ## Dataclasses
 
+<!-- prettier-ignore -->
 ::: aswe.core.objects
+    options:
+        heading_level: 3

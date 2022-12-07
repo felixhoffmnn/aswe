@@ -3,8 +3,8 @@ from datetime import datetime
 import pycountry
 from loguru import logger
 
-from aswe.api.calendar.calendar import get_all_events_today
-from aswe.api.finance.finance import (
+from aswe.api.calendar import get_all_events_today
+from aswe.api.finance import (
     get_currency_by_country,
     get_news_info_by_symbol,
     get_stock_price,
@@ -12,7 +12,7 @@ from aswe.api.finance.finance import (
     get_stock_rating,
     get_ticker_by_symbol,
 )
-from aswe.api.news.news import keyword_search, top_headlines_search
+from aswe.api.news import keyword_search, top_headlines_search
 from aswe.api.weather.weather import dynamic_range
 from aswe.api.weather.weather_params import DynamicPeriodEnum, ElementsEnum, IncludeEnum
 from aswe.core.objects import BestMatch

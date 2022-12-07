@@ -11,7 +11,7 @@ from loguru._logger import Logger
 from pytest_mock import MockFixture
 from requests.models import Response
 
-from aswe.api.finance.finance import (
+from aswe.api.finance import (
     _get_percentage_change,
     get_currency_by_country,
     get_news_info_by_symbol,
@@ -25,7 +25,7 @@ from aswe.api.finance.finance import (
 @pytest.fixture
 def http_request_path() -> str:
     """Path for the `http_request` function."""
-    return "aswe.api.finance.finance.http_request"
+    return "aswe.api.finance.http_request"
 
 
 @pytest.fixture
@@ -36,7 +36,7 @@ def patch_logger(mocker: MockFixture) -> Logger:
 
 
 def test_get_percentage_change() -> None:
-    """Test `aswe.api.finance.finance._get_percentage_change`"""
+    """Test `aswe.api.finance._get_percentage_change`"""
     change = _get_percentage_change("1.23")
     assert change == "+1.23%"
 
@@ -45,7 +45,7 @@ def test_get_percentage_change() -> None:
 
 
 def test_get_ticker_by_symbol() -> None:
-    """Test `aswe.api.finance.finance.get_ticker_by_symbol`"""
+    """Test `aswe.api.finance.get_ticker_by_symbol`"""
     ticker_sentiment = [
         {
             "ticker": "SE",
@@ -92,7 +92,7 @@ def test_get_ticker_by_symbol() -> None:
 
 
 def test_get_currency_by_country() -> None:
-    """Test `aswe.api.finance.finance.get_currency_by_country`"""
+    """Test `aswe.api.finance.get_currency_by_country`"""
     assert get_currency_by_country("Germany") == ("Euro", "EUR")
 
     assert get_currency_by_country("United States") == ("US Dollar", "USD")
@@ -101,12 +101,12 @@ def test_get_currency_by_country() -> None:
 
 
 def test_get_currency_by_country_invalid_country() -> None:
-    """Test `aswe.api.finance.finance.get_currency_by_country` with invalid country."""
+    """Test `aswe.api.finance.get_currency_by_country` with invalid country."""
     assert get_currency_by_country("Deutschland GmbH") == ("US Dollar", "USD")
 
 
 def test_get_news_info_by_symbol(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_news_info_by_symbol`"""
+    """Test `aswe.api.finance.get_news_info_by_symbol`"""
     mock_valid_response_object = {
         "items": "50",
         "sentiment_score_definition": "x <= -0.35: Bearish; -0.35 < x <= -0.15: Somewhat-Bearish; -0.15 < x < 0.15: Neutral; 0.15 <= x < 0.35: Somewhat_Bullish; x >= 0.35: Bullish",
@@ -248,7 +248,7 @@ def test_get_news_info_by_symbol(mocker: MockFixture, http_request_path: str) ->
 
 
 def test_get_news_info_by_symbol_invalid_response(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_news_info_by_symbol` with invalid response."""
+    """Test `aswe.api.finance.get_news_info_by_symbol` with invalid response."""
     mocker.patch(http_request_path, return_value=None)
 
     apple_news = get_news_info_by_symbol("AAPl")
@@ -266,7 +266,7 @@ def test_get_news_info_by_symbol_invalid_response(mocker: MockFixture, http_requ
 
 
 def test_get_stock_price(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_price`"""
+    """Test `aswe.api.finance.get_stock_price`"""
     mock_valid_response_object = [{"symbol": "AAPL", "price": 120.96000000, "volume": 332607163}]
     valid_response = Response()
     valid_response._content = json.dumps(mock_valid_response_object).encode()
@@ -279,7 +279,7 @@ def test_get_stock_price(mocker: MockFixture, http_request_path: str) -> None:
 
 
 def test_get_stock_price_other_currency(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_price` with currency conversion."""
+    """Test `aswe.api.finance.get_stock_price` with currency conversion."""
     cur_conv = CurrencyConverter()
 
     mock_valid_response_object = [{"symbol": "AAPL", "price": 120.96000000, "volume": 332607163}]
@@ -294,7 +294,7 @@ def test_get_stock_price_other_currency(mocker: MockFixture, http_request_path: 
 
 
 def test_get_stock_price_invalid_response(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_price` with invalid response."""
+    """Test `aswe.api.finance.get_stock_price` with invalid response."""
     mocker.patch(http_request_path, return_value=None)
 
     apple_price = get_stock_price("AAPL")
@@ -320,7 +320,7 @@ def test_get_stock_price_invalid_response(mocker: MockFixture, http_request_path
 
 
 def test_get_stock_price_change(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_price_change`"""
+    """Test `aswe.api.finance.get_stock_price_change`"""
 
     mock_valid_response_object = [
         {
@@ -351,7 +351,7 @@ def test_get_stock_price_change(mocker: MockFixture, http_request_path: str) -> 
 
 
 def test_get_stock_price_change_invalid_response(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_price_change` with inval"""
+    """Test `aswe.api.finance.get_stock_price_change` with inval"""
     mocker.patch(http_request_path, return_value=None)
 
     apple_price_change = get_stock_price_change("AAPL")
@@ -393,7 +393,7 @@ def test_get_stock_price_change_invalid_response(mocker: MockFixture, http_reque
 
 
 def test_get_stock_rating(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_rating`"""
+    """Test `aswe.api.finance.get_stock_rating`"""
     mock_valid_response_object = [
         {
             "symbol": "AAPL",
@@ -425,7 +425,7 @@ def test_get_stock_rating(mocker: MockFixture, http_request_path: str) -> None:
 
 
 def test_get_stock_rating_invalid_response(mocker: MockFixture, http_request_path: str) -> None:
-    """Test `aswe.api.finance.finance.get_stock_rating` with invalid response."""
+    """Test `aswe.api.finance.get_stock_rating` with invalid response."""
     mocker.patch(http_request_path, return_value=None)
 
     apple_rating = get_stock_rating("AAPL")

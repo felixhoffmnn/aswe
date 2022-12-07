@@ -1,3 +1,5 @@
+# TODO: Correctly assign codeowners
+
 # Default Codeowners
 * @felixhoffmnn
 
@@ -12,10 +14,10 @@
 /**/core/* @felixhoffmnn
 /aswe/use_cases/general.py @felixhoffmnn
 
-/docs/use_cases/transportation.md @steadl
+/docs/use_cases/navigation.md @steadl
 /docs/api/calendar.md @steadl
 /docs/api/navigation.md @steadl
-/aswe/use_cases/transportation.py @steadl
+/aswe/use_cases/navigation.py @steadl
 /**/calendar/* @steadl
 /**/navigation/* @steadl
 

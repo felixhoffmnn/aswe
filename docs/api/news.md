@@ -1,3 +1,3 @@
 # News
 
-::: aswe.api.news.news
+::: aswe.api.news

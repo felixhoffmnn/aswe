@@ -1,5 +1,6 @@
 import os.path
 import pickle
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 
@@ -8,11 +9,46 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from loguru import logger
 
-from aswe.api.calendar.data import Event
-
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 CREDENTIALS_FILE = "calendar_credentials.json"
 PICKLE_FILE = "calendar_token.pickle"
+
+
+@dataclass
+class Event:
+    """Dataclass storing Event data
+
+    Attributes
+    ----------
+    title : str
+        The title of the event
+    description : str
+        The description of the event
+    location : str
+        The location the event takes place
+    full_day : bool
+        Stores if the event is active the entire day
+    date : str
+        The date of a full-day event with the format "yyyy-MM-dd"
+    start_time : str
+        The start time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"
+    end_time : str
+        The end time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"
+    """
+
+    title: str
+    description: str
+    location: str
+    full_day: bool
+
+    date: str
+    """The date of a full-day event with the format "yyyy-MM-dd"""
+
+    start_time: str
+    """The start time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"""
+
+    end_time: str
+    """The end time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"""
 
 
 def get_calendar_service() -> Any:

@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from aswe.api.navigation.trip_data import MapsTripMode
+from aswe.api.navigation import MapsTripMode
 
 
 @dataclass

@@ -1,13 +1,13 @@
 # pylint: disable=no-value-for-parameter
 import pytest
 
-from aswe.api.calendar.calendar import (
+from aswe.api.calendar import (
+    Event,
     create_event,
     get_all_events_today,
     get_events_by_timeframe,
     get_next_event_today,
 )
-from aswe.api.calendar.data import Event
 
 
 def test_event_required_fields() -> None:
@@ -38,7 +38,7 @@ def test_event_variable_types() -> None:
 
 
 def test_get_events_by_timeframe() -> None:
-    """Test `aswe.api.calendar.calendar.get_events_by_timeframe`"""
+    """Test `aswe.api.calendar.get_events_by_timeframe`"""
     events = get_events_by_timeframe("2022-10-19T00:00:00.000001Z", "2022-10-19T23:59:59.999999Z")
 
     assert isinstance(events, list)
@@ -50,14 +50,14 @@ def test_get_events_by_timeframe() -> None:
 
 
 def test_get_all_events_today() -> None:
-    """Test `aswe.api.calendar.calendar.get_all_events_today`"""
+    """Test `aswe.api.calendar.get_all_events_today`"""
     events = get_all_events_today()
 
     assert isinstance(events, list)
 
 
 def test_get_next_event_today() -> None:
-    """Test `aswe.api.calendar.calendar.get_next_event_today`"""
+    """Test `aswe.api.calendar.get_next_event_today`"""
     event = get_next_event_today()
 
     assert event is None or isinstance(event, Event)
@@ -65,7 +65,7 @@ def test_get_next_event_today() -> None:
 
 @pytest.mark.skip(reason="Avoid mass creation of calendar entries")
 def test_create_event() -> None:
-    """Test `aswe.api.calendar.calendar.get_next_event_today`"""
+    """Test `aswe.api.calendar.get_next_event_today`"""
     create_event(
         Event(
             title="Pytest_title",

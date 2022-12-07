@@ -1,3 +1,3 @@
 # Finance
 
-::: aswe.api.finance.finance
+::: aswe.api.finance

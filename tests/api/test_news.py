@@ -8,7 +8,7 @@ import pytest
 from pytest_mock import MockFixture
 from requests.models import Response
 
-from aswe.api.news.news import keyword_search, top_headlines_search
+from aswe.api.news import keyword_search, top_headlines_search
 
 
 @pytest.fixture
@@ -16,13 +16,13 @@ def import_paths() -> dict[str, str]:
     """Prepare import paths of functions which shall be mocked"""
 
     return {
-        "http_request": "aswe.api.news.news.http_request",
+        "http_request": "aswe.api.news.http_request",
     }
 
 
 # * top_headlines_search ------------------------------------------------------
 def test_top_headlines_search(mocker: MockFixture, import_paths: dict[str, str]) -> None:
-    """Test `aswe.api.news.news.test_top_headlines_search`
+    """Test `aswe.api.news.test_top_headlines_search`
 
     Parameters
     ----------
@@ -49,7 +49,7 @@ def test_top_headlines_search(mocker: MockFixture, import_paths: dict[str, str])
 
 
 def test_top_headlines_search_empty_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:
-    """Test `aswe.api.news.news.test_top_headlines_search` with and empty api response
+    """Test `aswe.api.news.test_top_headlines_search` with and empty api response
 
     Parameters
     ----------

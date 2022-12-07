@@ -7,7 +7,7 @@ from pytest_mock import MockFixture
 
 from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
-from aswe.use_cases.transportation import TransportationUseCase
+from aswe.use_cases.navigation import NavigationUseCase
 
 
 @pytest.fixture(scope="function")
@@ -27,7 +27,7 @@ def patch_tts(mocker: MockFixture) -> TextToSpeech:
 
 
 def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
-    """Test proactivity of `use_cases.transportation`.
+    """Test proactivity of `use_cases.navigation`.
 
     Parameters
     ----------
@@ -52,13 +52,13 @@ def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
             wakeup_time=datetime.now(),
         ),
     )
-    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case = NavigationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     use_case.check_proactivity()
 
 
 def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
-    """Test "dhbw" event of `use_cases.transportation`.
+    """Test "dhbw" event of `use_cases.navigation`.
 
     Parameters
     ----------
@@ -70,7 +70,7 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
         Patched class to instantiate use_case class
     """
 
-    best_match = BestMatch(use_case="transportation", function_key="dhbw", similarity=1, parsed_text="lorem ipsum")
+    best_match = BestMatch(use_case="navigation", function_key="dhbw", similarity=1, parsed_text="lorem ipsum")
     user = User(
         name="TestUser",
         age=10,
@@ -84,7 +84,7 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
             wakeup_time=datetime.now(),
         ),
     )
-    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case = NavigationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Spy on tts.convert_text
     spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
@@ -95,7 +95,7 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
 
 
 def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
-    """Test "hpe" event of `use_cases.transportation`.
+    """Test "hpe" event of `use_cases.navigation`.
 
     Parameters
     ----------
@@ -107,7 +107,7 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         Patched class to instantiate use_case class
     """
 
-    best_match = BestMatch(use_case="transportation", function_key="hpe", similarity=1, parsed_text="lorem ipsum")
+    best_match = BestMatch(use_case="navigation", function_key="hpe", similarity=1, parsed_text="lorem ipsum")
     user = User(
         name="TestUser",
         age=10,
@@ -121,7 +121,7 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
             wakeup_time=datetime.now(),
         ),
     )
-    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case = NavigationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Spy on tts.convert_text
     spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
@@ -132,7 +132,7 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
 
 
 def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
-    """Test "ibm" event of `use_cases.transportation`.
+    """Test "ibm" event of `use_cases.navigation`.
 
     Parameters
     ----------
@@ -144,7 +144,7 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
         Patched class to instantiate use_case class
     """
 
-    best_match = BestMatch(use_case="transportation", function_key="ibm", similarity=1, parsed_text="lorem ipsum")
+    best_match = BestMatch(use_case="navigation", function_key="ibm", similarity=1, parsed_text="lorem ipsum")
     user = User(
         name="TestUser",
         age=10,
@@ -158,7 +158,7 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
             wakeup_time=datetime.now(),
         ),
     )
-    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case = NavigationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Spy on tts.convert_text
     spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
@@ -169,7 +169,7 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
 
 
 def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
-    """Test "nextEvent" event of `use_cases.transportation`.
+    """Test "nextEvent" event of `use_cases.navigation`.
 
     Parameters
     ----------
@@ -181,7 +181,7 @@ def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: Tex
         Patched class to instantiate use_case class
     """
 
-    best_match = BestMatch(use_case="transportation", function_key="nextEvent", similarity=1, parsed_text="lorem ipsum")
+    best_match = BestMatch(use_case="navigation", function_key="nextEvent", similarity=1, parsed_text="lorem ipsum")
     user = User(
         name="TestUser",
         age=10,
@@ -195,7 +195,7 @@ def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: Tex
             wakeup_time=datetime.now(),
         ),
     )
-    use_case = TransportationUseCase(patch_stt, patch_tts, "TestBuddy", user)
+    use_case = NavigationUseCase(patch_stt, patch_tts, "TestBuddy", user)
 
     # * Spy on tts.convert_text
     spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")

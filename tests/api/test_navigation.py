@@ -3,9 +3,15 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from aswe.api.navigation.maps import get_maps_connection
-from aswe.api.navigation.trip_data import Connection, MapsTrip, MapsTripMode, Trip
-from aswe.api.navigation.vvs import get_latest_connection, get_next_connection
+from aswe.api.navigation import (
+    Connection,
+    MapsTrip,
+    MapsTripMode,
+    Trip,
+    get_latest_connection,
+    get_maps_connection,
+    get_next_connection,
+)
 
 
 def test_get_latest_connection() -> None:

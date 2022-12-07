@@ -6,10 +6,10 @@ from datetime import datetime
 import pytest
 from pytest_mock import MockFixture
 
-from aswe.api.calendar.data import Event
+from aswe.api.calendar import Event
 from aswe.api.event import event as eventApi
 from aswe.api.event.event_data import EventLocation, ReducedEvent
-from aswe.api.navigation.trip_data import MapsTrip
+from aswe.api.navigation import MapsTrip
 from aswe.api.weather import weather as weatherApi
 from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech

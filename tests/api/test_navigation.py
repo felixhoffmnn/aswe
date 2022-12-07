@@ -36,6 +36,7 @@ def test_get_next_connection() -> None:
             assert isinstance(trip.connections[0], Connection)
 
 
+@pytest.mark.xfail(raises=ValueError, reason="The token file is not available")
 def test_get_maps_connection() -> None:
     """Test `aswe.api.navigation.maps.get_maps_connection`"""
     maps_trip = get_maps_connection("Ernsthaldenstraße 43", "Rotebühlplatz 41", MapsTripMode.DRIVING)

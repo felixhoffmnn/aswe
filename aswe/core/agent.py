@@ -286,7 +286,7 @@ class Agent:
 
         return None
 
-    def check_proactivity(self, test_proactivity: int | None = None) -> None:
+    def _check_proactivity(self, test_proactivity: int | None = None) -> None:
         """Checks if there are any updates which should be announced to the user
 
         Checks every `60` seconds if there are any updates which should be announced to the user.
@@ -363,11 +363,11 @@ class Agent:
 
         if test_proactivity is not None:
             logger.info("Proactivity is triggered for test purposes.")
-            self.check_proactivity(test_proactivity)
+            self._check_proactivity(test_proactivity)
 
         while True:
             if check_timedelta(self.log_proactivity.last_check, 1):
-                self.check_proactivity()
+                self._check_proactivity()
 
             query = self.stt.convert_speech(line_above=True)
             if not query:

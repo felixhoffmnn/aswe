@@ -67,7 +67,7 @@ def events(query_params: EventApiEventParams) -> list[ReducedEvent] | None:
 
     Returns
     -------
-    list[dict[Any, Any]] | None
+    list[ReducedEvent] | None
         List of events
 
     """

@@ -178,7 +178,6 @@ def historic_day(
     return None
 
 
-# TODO next_x_days is inclusive with today, adapt docstring
 def dynamic_range(
     location: str,
     dynamic_period: DynamicPeriodEnum,

@@ -31,7 +31,9 @@ class AbstractUseCase(ABC):
 
     @abstractmethod
     def trigger_assistant(self, best_match: BestMatch) -> None:
-        """UseCase for morning briefing
+        """Abstract method for use case classes
+
+        Handles business logic and communication between user and apis depending on user input.
 
         Parameters
         ----------
@@ -48,10 +50,9 @@ class AbstractUseCase(ABC):
 
     @abstractmethod
     def check_proactivity(self) -> None:
-        """Check if the assistant should be proactive
+        """Abstract method for use case classes
 
-        This function should first collect data from the APIs and if there is anything interesting
-        the use case is going to inform the user about it.
+        Checks apis if certain events have occurred and informs user.
 
         * TODO: Think about renaming this function
 

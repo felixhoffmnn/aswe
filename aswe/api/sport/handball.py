@@ -37,7 +37,7 @@ def get_league_teams(league_name: str) -> list[str] | None:
 
     Parameters
     ----------
-    league_name : str, optional
+    league_name : str
         Name of the league for which the teams are returned
 
     Returns
@@ -68,7 +68,7 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     Parameters
     ----------
     league_name : str, optional
-        Name of the league for which a table is returned, by default "Bundesliga"
+        Name of the league for which a table is returned. _By default `Bundesliga`._
 
     Returns
     -------
@@ -127,7 +127,7 @@ def get_team_game_today(team_name: str, league_name: str = "Bundesliga") -> list
     team_name : str
         Name of the team for which the game is to be returned
     league_name : str, optional
-        Name of the league in which the game is to be played, by default "Bundesliga"
+        Name of the league in which the game is to be played. _By default `Bundesliga`._
 
     Returns
     -------

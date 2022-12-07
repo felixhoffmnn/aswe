@@ -27,7 +27,7 @@ class ReducedEvent:
     name: str
     """Name / Title of event"""
     start: str
-    """date or datetime as string. format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ss`"""
+    """date or datetime as string. format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`"""
     status: str
     """Status of event. Either `onsale`, `cancelled`, or `offsale`"""
     location: EventLocation
@@ -38,6 +38,8 @@ class ReducedEvent:
 class EventSummary:
     """Dataclass of Event info which is used for tts"""
 
+    id: str
+    """Id of event"""
     name: str
     """Name / Title of event"""
     start: datetime
@@ -51,4 +53,4 @@ class EventSummary:
     trip_mode: MapsTripMode = MapsTripMode.BICYCLING
     """Preferred trip mode to event"""
     trip_duration: int | None = None
-    """Trip duration. Example: `25 min`"""
+    """Trip duration"""

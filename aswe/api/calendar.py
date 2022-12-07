@@ -9,9 +9,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from loguru import logger
 
-SCOPES = ["https://www.googleapis.com/auth/calendar"]
-CREDENTIALS_FILE = "calendar_credentials.json"
-PICKLE_FILE = "calendar_token.pickle"
+_SCOPES = ["https://www.googleapis.com/auth/calendar"]
+_CREDENTIALS_FILE = "calendar_credentials.json"
+_PICKLE_FILE = "calendar_token.pickle"
 
 
 @dataclass
@@ -42,13 +42,13 @@ class Event:
     full_day: bool
 
     date: str
-    """The date of a full-day event with the format "yyyy-MM-dd"""
+    """The date of a full-day event with the format `yyyy-MM-dd`"""
 
     start_time: str
-    """The start time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"""
+    """The start time of a non-full-day event with the format `yyyy-MM-ddTHH:mm:ss+01:00`"""
 
     end_time: str
-    """The end time of a non-full-day event with the format "yyyy-MM-ddTHH:mm:ss+01:00"""
+    """The end time of a non-full-day event with the format `yyyy-MM-ddTHH:mm:ss+01:00`"""
 
 
 def get_calendar_service() -> Any:
@@ -60,18 +60,18 @@ def get_calendar_service() -> Any:
         Resource for interacting with Google Calendar
     """
     creds = None
-    if os.path.exists(PICKLE_FILE):  # stores access tokens once created (automatically)
-        with open(PICKLE_FILE, "rb") as token:
+    if os.path.exists(_PICKLE_FILE):  # stores access tokens once created (automatically)
+        with open(_PICKLE_FILE, "rb") as token:
             creds = pickle.load(token)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(_CREDENTIALS_FILE, _SCOPES)
             creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run
-        with open(PICKLE_FILE, "wb") as token:
+        with open(_PICKLE_FILE, "wb") as token:
             pickle.dump(creds, token)
 
     service = build("calendar", "v3", credentials=creds)
@@ -84,9 +84,9 @@ def get_events_by_timeframe(min_timestamp: str, max_timestamp: str) -> list[Even
     Parameters
     ----------
     min_timestamp : str
-        Lower timestamp in timeframe with format "yyyy-MM-ddTHH:mm:ss.ffffffZ"
+        Lower timestamp in timeframe with format `yyyy-MM-ddTHH:mm:ss.ffffffZ`
     max_timestamp : str
-        Higher timestamp in timeframe with format "yyyy-MM-ddTHH:mm:ss.ffffffZ"
+        Higher timestamp in timeframe with format `yyyy-MM-ddTHH:mm:ss.ffffffZ`
 
     Returns
     -------
@@ -152,7 +152,7 @@ def get_next_event_today() -> Event | None:
 
     Returns
     -------
-    Event|None
+    Event | None
         Next event happening today if one exists
     """
     events = get_all_events_today()

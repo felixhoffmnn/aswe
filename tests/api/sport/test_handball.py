@@ -122,7 +122,7 @@ def test_get_league_table(mocker: MockFixture, import_paths: dict[str, str]) -> 
     mocker.patch(import_paths["get_league_id"], return_value=1)
     mocker.patch(import_paths["validate_api"], return_value=False)
 
-    assert get_league_table("test_name") == ["test_position test_team_name test_points"]
+    assert get_league_table("test_name") == ["test_position. test_team_name test_points points"]
 
 
 def test_get_league_table_invalid_response(mocker: MockFixture, import_paths: dict[str, str]) -> None:

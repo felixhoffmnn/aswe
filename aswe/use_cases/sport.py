@@ -144,6 +144,8 @@ class SportUseCase(AbstractUseCase):
                 matches = football.get_matches_today(league)
                 if matches is None:
                     raise Exception("Could not get matches")
+                if matches == []:
+                    self.tts.convert_text(f"There are no matches in the {league} today.")
                 for match in matches:
                     self.tts.convert_text(match)
             case "footballUpcomingMatches":

@@ -88,7 +88,7 @@ def get_league_table(league_name: str = "Bundesliga") -> list[str] | None:
     standings = request.json()
     table = []
     for position in standings["response"][0]:
-        table.append(f'{position["position"]} {position["team"]["name"]} {position["points"]}')
+        table.append(f'{position["position"]}. {position["team"]["name"]} {position["points"]} points')
     return table
 
 

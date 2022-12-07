@@ -1,9 +1,4 @@
-from aswe.api.event.event_params import (
-    EventApiClassificationParams,
-    EventApiEventParams,
-    SortEnum,
-    UnitEnum,
-)
+from aswe.api.event.event_params import EventApiEventParams, SortEnum, UnitEnum
 
 
 def test_unit_enum_values() -> None:
@@ -91,25 +86,3 @@ def test_event_params_concat_to_query() -> None:
         "&sort=distance,asc&city=Stuttgart,Berlin&countryCode=DE&classificationName=comedy"
         "&classificationId=some_id&includeFamily=False&geoPoint=some_hash"
     )
-
-
-def test_classification_params_validate_fields() -> None:
-    """Test `aswe.api.event.event_params.EventApiClassificationParams.validate_fields` method"""
-
-    default_params = EventApiClassificationParams()
-
-    assert default_params.validate_fields() is True
-
-    zero_integer = EventApiClassificationParams(size=0)
-    negative_integer = EventApiClassificationParams(size=-1)
-
-    assert zero_integer.validate_fields() is False
-    assert negative_integer.validate_fields() is False
-
-
-def test_classification_params_concnt_to_query() -> None:
-    """Test `aswe.api.event.event_params.EventApiClassificationParams.concat_to_query` method"""
-
-    full_query = EventApiClassificationParams(id="id", keyword="keyword", size=10, sort=SortEnum.DISTANCE_ASC)
-
-    assert full_query.concat_to_query() == "id=id&keyword=keyword&size=10&sort=distance,asc"

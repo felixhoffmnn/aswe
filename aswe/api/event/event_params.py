@@ -9,27 +9,35 @@ from aswe.utils.date import validate_date
 
 
 class UnitEnum(str, Enum):
-    """Enum of possible radius values for Event API Params
-
-    * TODO: Add documentation for the different units
-    """
+    """Enum of possible radius values for Event API Params"""
 
     MILES = "miles"
+    """Event search radius in miles"""
+
     KILOMETER = "km"
+    """Event search radius in kilometers"""
 
 
 class SortEnum(str, Enum):
-    """Enum of possible sort by values
-
-    * TODO: Add documentation for the different sort by values
-    """
+    """Enum of possible sort by values"""
 
     NAME_ASC = "name,asc"
+    """Sorting by name in ascending order"""
+
     NAME_DESC = "name,desc"
+    """Sorting by name in descending order"""
+
     RELEVANCE_ASC = "relevance,asc"
+    """Sorting by relevance in ascending order"""
+
     RELEVANCE_DESC = "relevance,desc"
+    """Sorting by relevance in descending order"""
+
     DISTANCE_ASC = "distance,asc"
+    """Sorting by distance in ascending order"""
+
     DISTANCE_DESC = "distance,desc"
+    """Sorting by distance in descending order"""
 
 
 @dataclass
@@ -202,54 +210,5 @@ class EventApiEventParams:
             query += f"includeFamily={self.include_family}&"
         if self.geo_point:
             query += f"geoPoint={self.geo_point}&"
-
-        return query[:-1]
-
-
-# TODO remove class as it is unused
-@dataclass
-class EventApiClassificationParams:
-    """Query Params Dataclass for Event API Classification requests"""
-
-    id: str | None = None
-    """Filter entities by its id"""
-
-    keyword: str | None = None
-    """Keyword to search on"""
-
-    size: int | None = None
-    """Page size of the response. Defaults to 20."""
-
-    sort: SortEnum | None = None
-    """Sorting order of the search result. Allowable Values: `name,asc`, `name,desc`, `relevance,asc`,
-    `relevance,desc`, `distance,asc`, `distance,desc`, `random`.
-    Defaults to `relevance,desc`"""
-
-    def validate_fields(self) -> bool:
-        """Validates fields"""
-
-        is_valid = True
-
-        if self.size is not None and self.size <= 0:
-            logger.error(f"Size cannot be below or equal to 0. {self.size} was given.")
-            is_valid = False
-
-        return is_valid
-
-    def concat_to_query(self) -> str:
-        """
-        Concatenates all fields to a string so that query can be appended to the request url
-        Assumes all query fields were validated before, using `validate_fields` class method.
-        """
-        query = ""
-
-        if self.id:
-            query += f"id={self.id}&"
-        if self.keyword:
-            query += f"keyword={self.keyword}&"
-        if self.size:
-            query += f"size={self.size}&"
-        if self.sort:
-            query += f"sort={self.sort.value}&"
 
         return query[:-1]

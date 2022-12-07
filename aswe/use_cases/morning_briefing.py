@@ -29,7 +29,7 @@ class MorningBriefingUseCase(AbstractUseCase):
     def full_briefing(self) -> None:
         """Provides an overview of the calendar, news, weather and finance for the current day"""
         self.tts.convert_text(
-            f"Good morning {self.user.name}! Here is your morning briefing "
+            f"Good morning {self.user.name}! It's time to get up! Here is your morning briefing "
             "providing all the essential information to start into the day."
         )
 
@@ -168,8 +168,8 @@ class MorningBriefingUseCase(AbstractUseCase):
         if news_info is not None:
             for news in news_info:
                 symbol_ticker = get_ticker_by_symbol(news["ticker_sentiment"], stock["symbol"])
-                print(
-                    f"""The article '{news['title']}' written by {news['authors'][0]} and published"""
+                self.tts.convert_text(
+                    f"""The article '{news['title']}' written by {news['authors'][0]} and published """
                     f"""on {news['source']} implies a {symbol_ticker['ticker_sentiment_label']} sentiment."""
                 )
             return
@@ -187,9 +187,9 @@ class MorningBriefingUseCase(AbstractUseCase):
                 change = (price - self.last_stock_prices[stock["symbol"]]) / self.last_stock_prices[stock["symbol"]]
                 if abs(change) >= 0.03:
                     self.tts.convert_text(
-                        f"""I have breaking news about the {stock['name']} stock for you! The price has changed"""
-                        f"""significantly, {change * 100} percent since the last time I told you the price."""
-                        f"""It is now trading at {price} {self.currency[0]} per share."""
+                        f"""I have breaking news about the {stock['name']} stock for you! The price has changed """
+                        f"""significantly, {round(change * 100, 2)} percent since the last time I told you the """
+                        f"""price. It is now trading at {round(price, 2)} {self.currency[0]} per share."""
                     )
                     self.last_stock_prices[stock["symbol"]] = price
                     self.tts.convert_text("Do you want to hear more about this?")

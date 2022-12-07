@@ -127,7 +127,14 @@ class Agent:
         self.stt = SpeechToText(get_mic)
         self.tts = TextToSpeech()
 
-        self.log_proactivity = LogProactivity()
+        self.log_proactivity = LogProactivity(
+            last_wakeup_check=datetime.now().replace(
+                hour=self.user.favorites.wakeup_time.hour,
+                minute=self.user.favorites.wakeup_time.minute,
+                second=0,
+                microsecond=0,
+            )
+        )
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_navigation = NavigationUseCase(self.stt, self.tts, self.assistant_name, self.user)
@@ -313,23 +320,22 @@ class Agent:
         except NotImplementedError:
             logger.warning("Proactivity for events is not implemented yet.")
 
-        try:
-            # TODO: Trigger morning briefing at {self.user.favorites.wakeup_time}
-            if check_timedelta(self.log_proactivity.last_morning_briefing_check, 30) or test_proactivity == 2:
-                logger.debug("Triggering proactivity for morning briefing.")
-                self.uc_morning_briefing.check_proactivity()
-        except NotImplementedError:
-            logger.warning("Proactivity for morning briefing is not implemented yet.")
+        if check_timedelta(self.log_proactivity.last_morning_briefing_check, 15) or test_proactivity == 2:
+            logger.debug("Triggering proactivity for morning briefing.")
+            self.uc_morning_briefing.check_proactivity()
+        if check_timedelta(self.log_proactivity.last_wakeup_check, 1440) or test_proactivity == 3:
+            logger.debug("Triggering proactivity for morning briefing (wakeup).")
+            self.uc_morning_briefing.full_briefing()
 
         try:
-            if check_timedelta(self.log_proactivity.last_sport_check, 15) or test_proactivity == 3:
+            if check_timedelta(self.log_proactivity.last_sport_check, 15) or test_proactivity == 4:
                 logger.info("Triggered proactivity for sport.")
                 self.log_proactivity.last_sport_check = datetime.now()
                 self.uc_sport.check_proactivity()
         except NotImplementedError:
             logger.warning("Proactivity for sport is not implemented yet.")
 
-        if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 4:
+        if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 5:
             logger.info("Triggered proactivity for navigation.")
             self.log_proactivity.last_navigation_check = datetime.now()
             self.uc_navigation.check_proactivity()

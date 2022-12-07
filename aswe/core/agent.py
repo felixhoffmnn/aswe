@@ -308,7 +308,7 @@ class Agent:
         Parameters
         ----------
         test_proactivity : int | None, optional
-            A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
+            A integer between `1` and `5` which triggers the proactivity for the corresponding use case.
         """
         logger.debug("Checking for proactivity.")
 
@@ -357,11 +357,11 @@ class Agent:
         Parameters
         ----------
         test_proactivity : int | None, optional
-            A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
+            A integer between `1` and `5` which triggers the proactivity for the corresponding use case.
         """
-        self._greeting()
-
-        if test_proactivity is not None:
+        if test_proactivity is None:
+            self._greeting()
+        else:
             logger.info("Proactivity is triggered for test purposes.")
             self._check_proactivity(test_proactivity)
 

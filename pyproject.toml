@@ -63,12 +63,19 @@ mkdocs-mermaid2-plugin = "^0.6.0"
 
 [tool.poe.tasks]
 run = { cmd = "python ./aswe/core/agent.py main", help = "Runs agent" }
-pytest = { cmd = "pytest", help = "Runs pytest" }
+test = { cmd = "pytest", help = "Runs pytest" }
 test-cov = { cmd = "pytest --cov=aswe --cov-report=term-missing --cov-fail-under=${THRESHOLD}", help = "Test entire project with coverage.", args = [
   { name = "THRESHOLD", help = "Minimal threshold test coverage should reach before failing. By default 80.", default = 80, required = false, positional = true, type = "integer" },
 ] }
 pre-commit = { cmd = "pre-commit run --all-files", help = "Runs pre-commit hooks" }
-mkdocs-serve = { cmd = "mkdocs serve", help = "Serves mkdocs documentation" }
+docs-serve = { cmd = "mkdocs serve", help = "Serves mkdocs documentation" }
+docs-build = { cmd = "mkdocs build", help = "Serves mkdocs documentation" }
+lock = [
+  {cmd = "poetry lock"},
+  {cmd = "poetry export -f requirements.txt -o requirements.txt"},
+  {cmd = "poetry export --only=dev -f requirements.txt -o requirements_dev.txt"},
+  {cmd = "poetry export --only=docs -f requirements.txt -o docs/requirements_docs.txt"}
+]
 
 [tool.mypy]
 mypy_path = 'aswe'

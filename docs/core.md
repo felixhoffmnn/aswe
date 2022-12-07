@@ -4,7 +4,18 @@ The core module contains the **Agent**, **STT**, **TTS**, as well as dataclasses
 
 ## Agent
 
-<!-- TODO: Add flowchart -->
+```mermaid
+graph LR;
+
+start_agent --> greet_user;
+greet_user --> check_for_proactivity;
+check_for_proactivity --> trigger_proactivity;
+trigger_proactivity --> get_user_input;
+check_for_proactivity --> get_user_input;
+get_user_input --> calculate_best_match;
+calculate_best_match --> trigger_use_case;
+trigger_use_case --> check_for_proactivity;
+```
 
 <!-- prettier-ignore -->
 ::: aswe.core.agent

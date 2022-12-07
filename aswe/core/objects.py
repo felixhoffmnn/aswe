@@ -8,6 +8,8 @@ class LogProactivity:
 
     Attributes
     ----------
+    last_check : datetime
+        The last time proactivity was triggered
     last_event_check : datetime
         The last time the event use case was triggered
     last_morning_briefing_check : datetime
@@ -18,6 +20,7 @@ class LogProactivity:
         The last time the navigation use case was triggered
     """
 
+    last_check: datetime = datetime.now()
     last_event_check: datetime = datetime.now()
     last_morning_briefing_check: datetime = datetime.now()
     last_sport_check: datetime = datetime.now()

@@ -1,9 +1,7 @@
 import json
 import sys
-import threading
 from datetime import datetime
 from pathlib import Path
-from time import sleep
 
 import pandas as pd
 from fire import Fire
@@ -37,19 +35,6 @@ class Agent:
     The core functionality of the assistant is to handle speech-to-text conversion (_stt_), text-to_speech (_tts_)
     conversion, calculate the best match for the parsed text, greet the user, trigger the right use case,
     and handle proactivity.
-
-    ```mermaid
-    graph LR;
-
-    start_agent --> greet_user;
-    greet_user --> check_for_proactivity;
-    check_for_proactivity --> trigger_proactivity;
-    trigger_proactivity --> get_user_input;
-    check_for_proactivity --> get_user_input;
-    get_user_input --> calculate_best_match;
-    calculate_best_match --> trigger_use_case;
-    trigger_use_case --> check_for_proactivity;
-    ```
     """
 
     def __init__(self, get_mic: bool = False) -> None:
@@ -293,14 +278,13 @@ class Agent:
 
         return None
 
-    def check_proactivity(self, lock: threading.Lock, test_proactivity: int | None = None) -> None:
+    def check_proactivity(self, test_proactivity: int | None = None) -> None:
         """Checks if there are any updates which should be announced to the user
 
         Checks every `60` seconds if there are any updates which should be announced to the user.
         There is an additional option to set a separate interval for each use case.
 
         * TODO: Implement proactivity for morning briefing
-        * TODO: Add alarm function for morning briefing
 
         ??? note "Proactivity IDs"
 
@@ -315,61 +299,41 @@ class Agent:
 
         Parameters
         ----------
-        lock : threading.Lock
-            A lock object which is used to prevent multiple threads from speaking and acting at the same time.
         test_proactivity : int | None, optional
             A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
         """
-        first_run = True
+        logger.debug("Checking for proactivity.")
 
-        while True:
-            if first_run is False:
-                logger.debug("Proactivity is going to sleep for 60 seconds.")
-                sleep(60)
+        try:
+            if check_timedelta(self.log_proactivity.last_event_check, 15) or test_proactivity == 1:
+                logger.info("Triggered proactivity for events.")
+                self.log_proactivity.last_event_check = datetime.now()
+                self.uc_event.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for events is not implemented yet.")
 
-            logger.debug("Checking for proactivity.")
+        try:
+            # TODO: Trigger morning briefing at {self.user.favorites.wakeup_time}
+            if check_timedelta(self.log_proactivity.last_morning_briefing_check, 30) or test_proactivity == 2:
+                logger.debug("Triggering proactivity for morning briefing.")
+                self.uc_morning_briefing.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for morning briefing is not implemented yet.")
 
-            try:
-                if check_timedelta(self.log_proactivity.last_event_check, 15) or test_proactivity == 1 and first_run:
-                    logger.info("Triggered proactivity for events.")
-                    self.log_proactivity.last_event_check = datetime.now()
+        try:
+            if check_timedelta(self.log_proactivity.last_sport_check, 15) or test_proactivity == 3:
+                logger.info("Triggered proactivity for sport.")
+                self.log_proactivity.last_sport_check = datetime.now()
+                self.uc_sport.check_proactivity()
+        except NotImplementedError:
+            logger.warning("Proactivity for sport is not implemented yet.")
 
-                    logger.debug("Acquiring lock.")
-                    with lock:
-                        self.uc_event.check_proactivity()
-            except NotImplementedError:
-                logger.warning("Proactivity for events is not implemented yet.")
+        if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 4:
+            logger.info("Triggered proactivity for navigation.")
+            self.log_proactivity.last_navigation_check = datetime.now()
+            self.uc_navigation.check_proactivity()
 
-            try:
-                # TODO: Trigger morning briefing at {self.user.favorites.wakeup_time}
-                if check_timedelta(self.log_proactivity.last_morning_briefing_check, 30):
-                    logger.debug("Triggering proactivity for morning briefing.")
-                    self.uc_morning_briefing.check_proactivity()
-            except NotImplementedError:
-                logger.warning("Proactivity for morning briefing is not implemented yet.")
-
-            try:
-                if check_timedelta(self.log_proactivity.last_sport_check, 15) or test_proactivity == 3 and first_run:
-                    logger.info("Triggered proactivity for sport.")
-                    self.log_proactivity.last_sport_check = datetime.now()
-
-                    logger.debug("Acquiring lock.")
-                    with lock:
-                        self.uc_sport.check_proactivity()
-            except NotImplementedError:
-                logger.warning("Proactivity for sport is not implemented yet.")
-
-            if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 4 and first_run:
-                logger.info("Triggered proactivity for navigation.")
-                self.log_proactivity.last_navigation_check = datetime.now()
-
-                logger.debug("Acquiring lock.")
-                with lock:
-                    self.uc_navigation.check_proactivity()
-
-            first_run = False
-
-    def agent(self, lock: threading.Lock) -> None:
+    def main(self, test_proactivity: int | None = None) -> None:
         """Main function to interact with the user
 
         The agent function is the main function of the assistant. It first greets the user and
@@ -377,54 +341,33 @@ class Agent:
         listening for user input in `60` second intervals. If the user input is not empty, it will
         execute the use case function for proactivity.
 
+        The `threading` library seems to be not compatible with some python version
+        ([documentation](https://docs.python.org/3/library/threading.html)). Therefore it will be removed
+        and the agent will be executed in a single thread.
+
         * TODO: Add hotword detection
-
-        Parameters
-        ----------
-        lock : threading.Lock
-            A lock object which is used to prevent multiple threads from speaking and acting at the same time.
-        """
-        logger.debug("Acquiring lock.")
-        with lock:
-            self._greeting()
-
-        while True:
-            sleep(1)
-            logger.debug("Acquiring lock.")
-            with lock:
-                query = self.stt.convert_speech(line_above=True)
-                if not query:
-                    logger.info("No input detected. Please try again.")
-                    continue
-                parsed_text = query.lower()
-                self._evaluate_use_case(parsed_text)
-
-    def main(self, test_proactivity: int | None = None) -> None:
-        """The main interface to start the assistant.
-
-        Within this function two threads are started. One for the agent and one for the proactivity.
-        The agent thread is responsible for the interaction with the user. The proactivity thread
-        checks every `60` seconds if there are any updates which should be announced to the user.
 
         Parameters
         ----------
         test_proactivity : int | None, optional
             A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
-            _By default `None`._
         """
-        lock = threading.Lock()
+        self._greeting()
 
-        logger.debug("Creating threads.")
-        thread_agent = threading.Thread(target=self.agent, args=[lock])
-        thread_proactivity = threading.Thread(target=self.check_proactivity, args=[lock, test_proactivity])
+        if test_proactivity is not None:
+            logger.info("Proactivity is triggered for test purposes.")
+            self.check_proactivity(test_proactivity)
 
-        logger.debug("Starting threads.")
-        thread_agent.start()
-        thread_proactivity.start()
+        while True:
+            if check_timedelta(self.log_proactivity.last_check, 1):
+                self.check_proactivity()
 
-        logger.debug("Joining threads.")
-        thread_agent.join()
-        thread_proactivity.join()
+            query = self.stt.convert_speech(line_above=True)
+            if not query:
+                logger.info("No input detected. Please try again.")
+                continue
+            parsed_text = query.lower()
+            self._evaluate_use_case(parsed_text)
 
 
 if __name__ == "__main__":

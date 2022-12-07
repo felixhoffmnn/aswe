@@ -182,7 +182,7 @@ def get_news_info_by_symbol(symbol: str) -> list[dict[str, Any]] | None:
                     >= 0.8,
                     all_news,
                 )
-            )[:3]
+            )[:2]
             return most_relevant_news
         except (KeyError, AttributeError, JSONDecodeError):
             logger.error("Got invalid response from News Sentiment API.")

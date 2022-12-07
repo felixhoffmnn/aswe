@@ -51,7 +51,7 @@ def patch_use_case(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> MorningB
         address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="Germany", vvs_id=""),
         possessions=Possessions(bike=True, car=False),
         favorites=Favorites(
-            stocks=[],
+            stocks=[{"name": "Apple", "symbol": "AAPL"}],
             league="",
             team="",
             news_country="Australia",
@@ -250,3 +250,48 @@ def test_weather_overview(mocker: MockFixture, patch_tts: TextToSpeech, patch_us
     spy_tts_convert_text.assert_called_once_with(
         "Unfortunately, I could not find any weather information for you today."
     )
+
+
+def test_finance_overview(mocker: MockFixture, patch_tts: TextToSpeech, patch_use_case: MorningBriefingUseCase) -> None:
+    """Test "finance_overview" event of `use_cases.morning_briefing`.
+    Parameters
+    ----------
+    mocker : MockFixture
+        General MockFixture Class
+    patch_stt : SpeechToText
+        Patched class to instantiate use_case class
+    patch_tts : TextToSpeech
+        Patched class to instantiate use_case class
+    """
+
+    best_match = BestMatch(use_case="morningBriefing", function_key="finance", similarity=1, parsed_text="lore ipsum")
+
+    stock_price = 120.96
+    stock_price_change = {
+        "24h": "-1.92%",
+        "5D": "+3.86%",
+    }
+    stock_rating = "S minus (Strong Buy)"
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_price", return_value=stock_price)
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_price_change", return_value=stock_price_change)
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_rating", return_value=stock_rating)
+    spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
+
+    patch_use_case.trigger_assistant(best_match)
+
+    assert spy_tts_convert_text.call_args_list == [
+        call("About Apple:"),
+        call("The Apple stock is currently trading at 120.96 Euro per share."),
+        call("It has changed by -1.92% in the last 24 hours (+3.86% in the last 5 days)."),
+        call("The latest rating by analysts is S minus (Strong Buy)."),
+    ]
+
+    # Test with no stock data
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_price", return_value=None)
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_price_change", return_value=None)
+    mocker.patch("aswe.use_cases.morning_briefing.get_stock_rating", return_value=None)
+    spy_tts_convert_text = mocker.spy(patch_tts, "convert_text")
+
+    patch_use_case.trigger_assistant(best_match)
+
+    spy_tts_convert_text.assert_called_once_with("Unfortunately, I could not find any information for you today.")

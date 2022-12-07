@@ -83,7 +83,7 @@ class MorningBriefingUseCase(AbstractUseCase):
                 self.tts.convert_text(headline)
 
         keyword_headlines_list = [
-            keyword_search(keyword=keyword, max_results=2) for keyword in self.user.favorites.news_keywords
+            keyword_search(keyword=keyword, max_results=1) for keyword in self.user.favorites.news_keywords
         ]
         for keyword_headlines in keyword_headlines_list:
             if keyword_headlines is not None:
@@ -148,7 +148,7 @@ class MorningBriefingUseCase(AbstractUseCase):
                         )
                     if change is not None:
                         self.tts.convert_text(
-                            f"""It has changed by {change['24h']} in the last 24 hours ({change['5D']}"""
+                            f"""It has changed by {change['24h']} in the last 24 hours ({change['5D']} """
                             """in the last 5 days)."""
                         )
                     if rating is not None:

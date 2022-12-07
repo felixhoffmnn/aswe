@@ -52,12 +52,11 @@ pytest-mock = "^3.10.0"
 poethepoet = "^0.16.5"
 
 [tool.poetry.group.docs.dependencies]
-mkdocs = { extras = ["python"], version = "^1.4.0" }
+mkdocs = "^1.4.0"
 mkdocs-material = "^8.5.6"
 mkdocstrings = { extras = ["python"], version = "^0.19.0" }
 mkdocs-autorefs = "^0.4.1"
 mkdocs-git-revision-date-localized-plugin = "^1.1.0"
-mkdocs-jupyter = "^0.22.0"
 pymdown-extensions = "^9.8"
 mkdocs-mermaid2-plugin = "^0.6.0"
 
@@ -71,10 +70,10 @@ pre-commit = { cmd = "pre-commit run --all-files", help = "Runs pre-commit hooks
 docs-serve = { cmd = "mkdocs serve", help = "Serves mkdocs documentation" }
 docs-build = { cmd = "mkdocs build", help = "Serves mkdocs documentation" }
 lock = [
-  {cmd = "poetry lock"},
-  {cmd = "poetry export -f requirements.txt -o requirements.txt"},
-  {cmd = "poetry export --only=dev -f requirements.txt -o requirements_dev.txt"},
-  {cmd = "poetry export --only=docs -f requirements.txt -o docs/requirements_docs.txt"}
+  { cmd = "poetry lock" },
+  { cmd = "poetry export -f requirements.txt -o requirements.txt" },
+  { cmd = "poetry export --only=dev -f requirements.txt -o requirements_dev.txt" },
+  { cmd = "poetry export --only=docs -f requirements.txt -o docs/requirements_docs.txt" },
 ]
 
 [tool.mypy]

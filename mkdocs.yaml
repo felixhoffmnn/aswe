@@ -39,9 +39,6 @@ plugins:
   - git-revision-date-localized:
       fallback_to_build_date: true
   - autorefs
-  - mkdocs-jupyter:
-      include: ["*.ipynb"]
-      kernel_name: python3
   - mkdocstrings:
       handlers:
         python:

@@ -1,14 +1,14 @@
 from aswe.utils.request import http_request
 
 
-def get_results_by_round(year: int, round_num: str) -> list[str] | None:
+def get_results_by_round(year: int, round_num: int) -> list[str] | None:
     """Get f1 results by round
 
     Parameters
     ----------
     year : int
         Year of the season in which the race took place
-    round_num : str
+    round_num : int
         Number of the race in the season
 
     Returns
@@ -21,12 +21,13 @@ def get_results_by_round(year: int, round_num: str) -> list[str] | None:
     if request is None:
         return None
     response = dict(request.json())
-
     if response["MRData"]["total"] == "0":
         return None
     result = [
-        f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\
-            {driver['Constructor']['name']} - {driver['position']}"
+        (
+            f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} - "
+            f"{driver['Constructor']['name']} - {driver['position']}"
+        )
         for driver in response["MRData"]["RaceTable"]["Races"][0]["Results"]
     ]
     return result
@@ -50,8 +51,10 @@ def get_results_next_round() -> list[str] | None:
         return []
 
     result = [
-        f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\
-            {driver['Constructor']['name']} - {driver['position']}"
+        (
+            f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\""
+            f"{driver['Constructor']['name']} - {driver['position']}"
+        )
         for driver in response["MRData"]["RaceTable"]["Races"][0]["Results"]
     ]
     return result
@@ -75,8 +78,10 @@ def get_results_last_round() -> list[str] | None:
         return []
 
     result = [
-        f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} -\
-            {driver['Constructor']['name']} - {driver['position']}"
+        (
+            f"{driver['Driver']['givenName']} {driver['Driver']['familyName']} - "
+            f"{driver['Constructor']['name']} - {driver['position']}"
+        )
         for driver in response["MRData"]["RaceTable"]["Races"][0]["Results"]
     ]
     return result

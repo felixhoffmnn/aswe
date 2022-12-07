@@ -1,3 +1,0 @@
-# Shell
-
-::: aswe.utils.shell

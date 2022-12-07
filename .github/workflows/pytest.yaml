@@ -8,6 +8,7 @@ on:
     branches: ["main"]
 
 # TODO: Add windows as testing platform
+# TODO: Increase coverage to 80%
 jobs:
   pytest:
     runs-on: ${{ matrix.os }}
@@ -36,6 +37,4 @@ jobs:
       - name: Install dependencies using Poetry
         run: poetry install
       - name: Run tests
-        run: poetry run pytest
-      - name: Check code coverage
-        run: poetry run pytest
+        run: poetry run pytest --cov=aswe --cov-fail-under=20 --cov-report=term-missing

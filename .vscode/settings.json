@@ -13,16 +13,14 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.flake8Enabled": true,
   "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestArgs": ["tests"],
   "autoDocstring.docstringFormat": "numpy",
-  "python.analysis.typeCheckingMode": "strict",
-  "python.analysis.diagnosticSeverityOverrides": {
-    "reportMissingTypeStubs": "none"
-  }
+  "python.analysis.typeCheckingMode": "basic"
 }

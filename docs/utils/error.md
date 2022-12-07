@@ -1,3 +1,0 @@
-# Error
-
-::: aswe.utils.error

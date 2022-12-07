@@ -1,23 +1,34 @@
 import json
 import sys
+import threading
 from datetime import datetime
-from difflib import SequenceMatcher
 from pathlib import Path
+from time import sleep
 
 import pandas as pd
 from fire import Fire
 from loguru import logger
 from pandas.errors import IndexingError
 
-from aswe.core.data import BestMatch, User
-from aswe.core.use_cases import (
-    EventUseCase,
-    GeneralUseCase,
-    SportUseCase,
-    TransportationUseCase,
+from aswe.core.objects import (
+    Address,
+    BestMatch,
+    Favorites,
+    LogProactivity,
+    Possessions,
+    User,
 )
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
-from aswe.utils.shell import clear_shell
+from aswe.use_cases import (
+    EventUseCase,
+    GeneralUseCase,
+    MorningBriefingUseCase,
+    NavigationUseCase,
+    SportUseCase,
+)
+from aswe.utils.date import check_timedelta
+from aswe.utils.shell import clear_shell, get_int, print_options
+from aswe.utils.text import calculate_similarity
 
 
 class Agent:
@@ -26,38 +37,57 @@ class Agent:
     The core functionality of the assistant is to handle speech-to-text conversion (_stt_), text-to_speech (_tts_)
     conversion, calculate the best match for the parsed text, greet the user, trigger the right use case,
     and handle proactivity.
+
+    ```mermaid
+    graph LR;
+
+    start_agent --> greet_user;
+    greet_user --> check_for_proactivity;
+    check_for_proactivity --> trigger_proactivity;
+    trigger_proactivity --> get_user_input;
+    check_for_proactivity --> get_user_input;
+    get_user_input --> calculate_best_match;
+    calculate_best_match --> trigger_use_case;
+    trigger_use_case --> check_for_proactivity;
+    ```
     """
 
-    def __init__(self, get_mic: bool = False, get_user: bool = False, is_test: bool = False) -> None:
+    def __init__(self, get_mic: bool = False) -> None:
         """
         * TODO: Add Attributes section
         * TODO: Tokenize the phrases and input
+        * TODO: Add flag for triggering proactivity
+        * TODO: Add variable for storing the last time when proactivity was triggered
 
         Parameters
         ----------
         get_mic : bool, optional
             Boolean if the speech to text class should first ask for the microphone to use. _By default `False`_.
-        get_user : bool, optional
-            Boolean if the default user should be used. _By default `False`_.
-        is_test : bool, optional
-            Boolean if the agent is used for testing. _By default `False`_.
 
         Attributes
         ----------
         assistant_name : str
             The name of the assistant
-        is_test : bool
-            Boolean if the agent is used for testing
         quotes : pd.DataFrame
             DataFrame storing the use cases and functionality combinations
+        user : User
+            User class to store the user information (eg., name, age)
         stt : SpeechToText
             Speech to text class to handle speech-to-text conversion
         tts : TextToSpeech
             Text to speech class to handle text-to-speech conversion
         user : User
             User class to store the user information (eg., name, age)
+        log_proactivity : LogProactivity
+            Log proactivity class to handle the logging of proactivity
         uc_general : GeneralUseCase
             General use case class to handle general use cases
+        uc_navigation : NavigationUseCase
+            Navigation use case class to handle navigation use cases
+        uc_event : EventUseCase
+            Event use case class to handle event use cases
+        uc_sport : SportUseCase
+            Sport use case class to handle sport use cases
         """
         self.assistant_name = "HiBuddy"
 
@@ -79,24 +109,51 @@ class Agent:
             logger.error("Could not open file. Please check if the file exists.")
             sys.exit(1)
 
-        self.stt = SpeechToText(get_mic, is_test)
-        self.tts = TextToSpeech(is_test)
+        try:
+            with open(Path("data/user.json"), encoding="utf-8") as file:
+                user_data = json.load(file)
+                self.user = User(
+                    name=user_data["name"],
+                    age=user_data["age"],
+                    possessions=Possessions(bike=user_data["possessions"]["bike"], car=user_data["possessions"]["car"]),
+                    address=Address(
+                        street=user_data["address"]["street"],
+                        city=user_data["address"]["city"],
+                        zip_code=user_data["address"]["zip_code"],
+                        country=user_data["address"]["country"],
+                        vvs_id=user_data["address"]["vvs_id"],
+                    ),
+                    favorites=Favorites(
+                        stocks=user_data["favorites"]["stocks"],
+                        league=user_data["favorites"]["league"],
+                        team=user_data["favorites"]["team"],
+                        news_keywords=user_data["favorites"]["news_keywords"],
+                        wakeup_time=datetime.strptime(user_data["favorites"]["wakeup_time"], "%H:%M"),
+                    ),
+                )
+        except OSError:
+            logger.error("Could not open file. Please check if the file exists.")
+            sys.exit(1)
+        except KeyError:
+            logger.error("It appears that not all necessary keys are correctly set in the `user.json` file.")
+            sys.exit(1)
 
-        if get_user:
-            clear_shell()
-            self.user = self._get_user()
-        else:
-            self.user = User(
-                name="Felix", age=22, street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE"
-            )
+        self.stt = SpeechToText(get_mic)
+        self.tts = TextToSpeech()
+
+        self.log_proactivity = LogProactivity()
 
         self.uc_general = GeneralUseCase(self.stt, self.tts, self.assistant_name, self.user)
-        self.uc_transportation = TransportationUseCase(self.stt, self.tts, self.assistant_name, self.user)
+        self.uc_navigation = NavigationUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_event = EventUseCase(self.stt, self.tts, self.assistant_name, self.user)
         self.uc_sport = SportUseCase(self.stt, self.tts, self.assistant_name, self.user)
+        self.uc_morning_briefing = MorningBriefingUseCase(self.stt, self.tts, self.assistant_name, self.user)
 
     def _greeting(self) -> None:
-        """Function to greet the user."""
+        """Function to greet the user.
+
+        Depending on the time of the day, the assistant greets the user with a different greeting.
+        """
         hour = datetime.now().hour
 
         if 4 <= hour < 12:
@@ -106,33 +163,18 @@ class Agent:
         else:
             greeting_text = f"Good Evening {self.user.name}."
 
+        clear_shell()
         self.tts.convert_text(greeting_text)
         self.tts.convert_text(f"I am your Assistant {self.assistant_name}")
-        self.tts.convert_text("How can I help you?")
 
-    def _get_user(self) -> User:
-        """Asks for the name of the user.
-
-        * TODO: Refactor into a util function
-        """
-        name = input("What is your name? ")
-
-        age = None
-        while age is None:
-            try:
-                age = int(input("What is your age? "))
-            except ValueError:
-                print("Please enter a valid age.")
-
-        return User(name=name)  # type: ignore
-
-    def get_best_match(self, parsed_text: str, threshold: float = 0.5) -> BestMatch | None:
+    def _get_best_match(self, parsed_text: str, threshold: float = 0.7) -> BestMatch | None:
         """Find the best match for the parsed text
 
         Function calculates the similarity between the parsed text and the use cases.
 
         * TODO: Add tokenization and stop words
         * TODO: Extract calculation of similarity into a util function
+        * TODO: Watch if the default threshold is too high
 
         ??? example "`self.quotes` DataFrame"
 
@@ -146,9 +188,9 @@ class Agent:
             | 0   | morningBriefing | newsSummary  | whats going on            |
             | 1   | morningBriefing | newsSummary  | morning briefing          |
             | 2   | events          | eventSummary | what is going on          |
-            | 3   | transportation  | dhbw         | dhbw                      |
-            | 4   | transportation  | dhbw         | i need to get to the dhbw |
-            | 5   | transportation  | hpe          | i need to get to the hpe  |
+            | 3   | navigation      | dhbw         | dhbw                      |
+            | 4   | navigation      | dhbw         | i need to get to the dhbw |
+            | 5   | navigation      | hpe          | i need to get to the hpe  |
 
         Parameters
         ----------
@@ -156,7 +198,7 @@ class Agent:
             The parsed text which should be matched to a use case.
         threshold : float, optional
             The threshold which is used to determine if the similarity is high enough to be considered.
-            The value needs to be between 0 and 1. _By default `0.5`_.
+            The value needs to be between 0 and 1. _By default `0.7`_.
 
         Raises
         ------
@@ -177,9 +219,7 @@ class Agent:
         temp_df: pd.DataFrame = self.quotes.copy()
 
         try:
-            temp_df["similarity"] = temp_df["phrase"].apply(
-                lambda value: SequenceMatcher(None, parsed_text, value).quick_ratio()
-            )
+            temp_df["similarity"] = temp_df["phrase"].apply(lambda value: calculate_similarity(parsed_text, value))
             temp_df = temp_df.iloc[
                 temp_df.groupby(["use_case", "choice"], sort=False)["similarity"].agg(pd.Series.idxmax)
             ]
@@ -193,67 +233,29 @@ class Agent:
             return None
 
         if temp_df.empty:
+            logger.warning("Could not find a match for the parsed text meeting the requirements.")
             return None
 
         choice = None
         if len(temp_df) > 1:
-            print("")
-            self.tts.convert_text("I got multiple matches. Please choose one.")
-            print("")
-            for index, row in temp_df.iterrows():
-                print(f"{index}: {row['use_case']}, {row['choice']}")
-            print("")
-            while choice is None:
-                try:
-                    choice = int(input("Please enter the number of your choice: "))
-                except ValueError:
-                    self.tts.convert_text("Sorry, I didn't get that. Please try again.")
+            self.tts.convert_text("I got multiple matches. Please choose one.", line_above=True)
 
-        selected_row = temp_df.iloc[choice if choice else 0]
-        return BestMatch(
-            selected_row["use_case"],
-            selected_row["choice"],
-            selected_row["similarity"],
-            parsed_text,
-        )
+            options = temp_df["phrase"].tolist()
+            print_options(options=options)
+            choice = get_int(options=options)
 
-    def check_proactivity(self) -> None:
-        """Checks if there are any updates which should be announced to the user
+        if choice is not None or len(temp_df) == 1:
+            selected_row = temp_df.iloc[choice - 1 if choice is not None else 0]
+            return BestMatch(
+                selected_row["use_case"],
+                selected_row["choice"],
+                selected_row["similarity"],
+                parsed_text,
+            )
 
-        * TODO: Implement proactivity
-        """
-        # Call use_case_1.proactive()
-        logger.debug("Checking for proactivity.")
+        return None
 
-    def agent(self) -> None:
-        """Main function to interact with the user
-
-        The agent function is the main function of the assistant. It first greets the user and
-        then checks proactively if there are updates for the user. If thats not the case, it will start
-        listening for user input in `60` second intervals. If the user input is not empty, it will
-        execute the use case function for proactivity.
-        """
-        clear_shell()
-        self._greeting()
-        proactivity_last_checked = datetime.now().minute
-
-        while True:
-            print("")
-
-            # TODO: Implement proactivity
-            if proactivity_last_checked % 15 == 0:
-                self.check_proactivity()
-
-            query = self.stt.convert_speech()
-            if not query:
-                self.tts.convert_text(
-                    "Sorry, I was not able to parse anything. If you said something, please try again."
-                )
-                continue
-            parsed_text = query.lower()
-            self.evaluate_use_case(parsed_text)
-
-    def evaluate_use_case(self, parsed_text: str) -> None:
+    def _evaluate_use_case(self, parsed_text: str) -> None:
         """Evaluates the parsed text to trigger the correct use case
 
         * TODO: Implement more use cases
@@ -263,9 +265,7 @@ class Agent:
         parsed_text : str
             The voice input of the user parsed to lower case string
         """
-        logger.info(f"Evaluating the parsed text: {parsed_text}")
-
-        best_match = self.get_best_match(parsed_text)
+        best_match = self._get_best_match(parsed_text)
         if best_match is None:
             self.tts.convert_text("Sorry, I didn't find a match for your request.")
             return None
@@ -277,11 +277,11 @@ class Agent:
                 case "general":
                     self.uc_general.trigger_assistant(best_match)
                 case "morningBriefing":
-                    raise NotImplementedError
+                    self.uc_morning_briefing.trigger_assistant(best_match)
                 case "events":
                     self.uc_event.trigger_assistant(best_match)
-                case "transportation":
-                    self.uc_transportation.trigger_assistant(best_match)
+                case "navigation":
+                    self.uc_navigation.trigger_assistant(best_match)
                 case "sport":
                     self.uc_sport.trigger_assistant(best_match)
                 case _:
@@ -292,6 +292,139 @@ class Agent:
             self.tts.convert_text("Sorry, the requested function is not implemented yet.")
 
         return None
+
+    def check_proactivity(self, lock: threading.Lock, test_proactivity: int | None = None) -> None:
+        """Checks if there are any updates which should be announced to the user
+
+        Checks every `60` seconds if there are any updates which should be announced to the user.
+        There is an additional option to set a separate interval for each use case.
+
+        * TODO: Implement proactivity for morning briefing
+        * TODO: Add alarm function for morning briefing
+
+        ??? note "Proactivity IDs"
+
+            The following table shows the IDs for the proactivity.
+
+            | ID  | Use Case         |
+            | --- | ---------------- |
+            | 1   | Event            |
+            | 2   | Morning Briefing |
+            | 3   | Sport            |
+            | 4   | Navigation       |
+
+        Parameters
+        ----------
+        lock : threading.Lock
+            A lock object which is used to prevent multiple threads from speaking and acting at the same time.
+        test_proactivity : int | None, optional
+            A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
+        """
+        first_run = True
+
+        while True:
+            if first_run is False:
+                logger.debug("Proactivity is going to sleep for 60 seconds.")
+                sleep(60)
+
+            logger.debug("Checking for proactivity.")
+
+            try:
+                if check_timedelta(self.log_proactivity.last_event_check, 15) or test_proactivity == 1 and first_run:
+                    logger.info("Triggered proactivity for events.")
+                    self.log_proactivity.last_event_check = datetime.now()
+
+                    logger.debug("Acquiring lock.")
+                    with lock:
+                        self.uc_event.check_proactivity()
+            except NotImplementedError:
+                logger.warning("Proactivity for events is not implemented yet.")
+
+            try:
+                # TODO: Trigger morning briefing at {self.user.favorites.wakeup_time}
+                if check_timedelta(self.log_proactivity.last_morning_briefing_check, 30):
+                    logger.debug("Triggering proactivity for morning briefing.")
+                    self.uc_morning_briefing.check_proactivity()
+            except NotImplementedError:
+                logger.warning("Proactivity for morning briefing is not implemented yet.")
+
+            try:
+                if check_timedelta(self.log_proactivity.last_sport_check, 15) or test_proactivity == 3 and first_run:
+                    logger.info("Triggered proactivity for sport.")
+                    self.log_proactivity.last_sport_check = datetime.now()
+
+                    logger.debug("Acquiring lock.")
+                    with lock:
+                        self.uc_sport.check_proactivity()
+            except NotImplementedError:
+                logger.warning("Proactivity for sport is not implemented yet.")
+
+            if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 4 and first_run:
+                logger.info("Triggered proactivity for navigation.")
+                self.log_proactivity.last_navigation_check = datetime.now()
+
+                logger.debug("Acquiring lock.")
+                with lock:
+                    self.uc_navigation.check_proactivity()
+
+            first_run = False
+
+    def agent(self, lock: threading.Lock) -> None:
+        """Main function to interact with the user
+
+        The agent function is the main function of the assistant. It first greets the user and
+        then checks proactively if there are updates for the user. If thats not the case, it will start
+        listening for user input in `60` second intervals. If the user input is not empty, it will
+        execute the use case function for proactivity.
+
+        * TODO: Add hotword detection
+
+        Parameters
+        ----------
+        lock : threading.Lock
+            A lock object which is used to prevent multiple threads from speaking and acting at the same time.
+        """
+        logger.debug("Acquiring lock.")
+        with lock:
+            self._greeting()
+
+        while True:
+            sleep(1)
+            logger.debug("Acquiring lock.")
+            with lock:
+                query = self.stt.convert_speech(line_above=True)
+                if not query:
+                    logger.info("No input detected. Please try again.")
+                    continue
+                parsed_text = query.lower()
+                self._evaluate_use_case(parsed_text)
+
+    def main(self, test_proactivity: int | None = None) -> None:
+        """The main interface to start the assistant.
+
+        Within this function two threads are started. One for the agent and one for the proactivity.
+        The agent thread is responsible for the interaction with the user. The proactivity thread
+        checks every `60` seconds if there are any updates which should be announced to the user.
+
+        Parameters
+        ----------
+        test_proactivity : int | None, optional
+            A integer between `1` and `4` which triggers the proactivity for the corresponding use case.
+            _By default `None`._
+        """
+        lock = threading.Lock()
+
+        logger.debug("Creating threads.")
+        thread_agent = threading.Thread(target=self.agent, args=[lock])
+        thread_proactivity = threading.Thread(target=self.check_proactivity, args=[lock, test_proactivity])
+
+        logger.debug("Starting threads.")
+        thread_agent.start()
+        thread_proactivity.start()
+
+        logger.debug("Joining threads.")
+        thread_agent.join()
+        thread_proactivity.join()
 
 
 if __name__ == "__main__":

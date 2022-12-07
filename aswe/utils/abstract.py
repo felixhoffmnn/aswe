@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from aswe.core.data import BestMatch, User
+from aswe.core.objects import BestMatch, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 
@@ -11,6 +11,7 @@ class AbstractUseCase(ABC):
         """Use case constructor to provide objects from the parent agent class
 
         * TODO: Add Attributes section
+        * TODO: Change how we pass arguments to the constructor/functions
 
         Parameters
         ----------
@@ -30,7 +31,9 @@ class AbstractUseCase(ABC):
 
     @abstractmethod
     def trigger_assistant(self, best_match: BestMatch) -> None:
-        """UseCase for morning briefing
+        """Abstract method for use case classes
+
+        Handles business logic and communication between user and apis depending on user input.
 
         Parameters
         ----------
@@ -43,3 +46,20 @@ class AbstractUseCase(ABC):
             If the given key was not found in the match case statement for implemented functions,
             or if the function is not implemented yet.
         """
+        raise NotImplementedError
+
+    @abstractmethod
+    def check_proactivity(self) -> None:
+        """Abstract method for use case classes
+
+        Checks apis if certain events have occurred and informs user.
+
+        * TODO: Think about renaming this function
+
+        Raises
+        ------
+        NotImplementedError
+            If the given key was not found in the match case statement for implemented functions,
+            or if the function is not implemented yet.
+        """
+        raise NotImplementedError

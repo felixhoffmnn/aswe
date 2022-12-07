@@ -1,0 +1,25 @@
+{
+  "name": "Felix",
+  "age": 22,
+  "address": {
+    "street": "Pfaffenwaldring 45",
+    "city": "Stuttgart",
+    "zip_code": 70565,
+    "country": "Germany",
+    "vvs_id": "de:08111:6002"
+  },
+  "possessions": {
+    "bike": true,
+    "car": true
+  },
+  "favorites": {
+    "stocks": [
+      { "name": "Apple", "symbol": "AAPL" },
+      { "name": "Microsoft", "symbol": "MSFT" }
+    ],
+    "league": "World Cup",
+    "team": "Netherlands",
+    "news_keywords": ["Ukraine", "Baerbock"],
+    "wakeup_time": "07:30"
+  }
+}

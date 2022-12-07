@@ -1,6 +1,10 @@
 {
   "morningBriefing": {
-    "newsSummary": ["whats going on", "morning briefing", "good morning"]
+    "fullBriefing": ["morning briefing", "good morning"],
+    "news": ["news", "what are the latest news"],
+    "weather": ["weather", "what is the weather"],
+    "calendar": ["calendar", "what appointments do i have today"],
+    "finance": ["finance", "how are my shares doing"]
   },
   "events": {
     "eventSummary": ["what is going on", "event summary"],
@@ -10,20 +14,23 @@
       "what events are on this weekend"
     ]
   },
-  "transportation": {
-    "dhbw": ["dhbw", "i need to get to the dhbw"],
-    "hpe": ["hpe", "i need to get to the hpe"],
-    "ibm": ["ibm", "i need to get to the ibm"]
+  "navigation": {
+    "dhbw": ["dhbw", "i need to get to the dhbw", "i need to get to the university"],
+    "hpe": ["hpe", "i need to get to hpe", "i need to get to my favorite workplace"],
+    "ibm": ["ibm", "i need to get to ibm", "i need to get to my boring workplace"],
+    "nextEvent": ["next event", "i need to get to my next event"]
   },
   "sport": {
     "footballStandings": ["football standings", "soccer standings", "football table", "soccer table"],
     "footballMatchdayMatches": ["football matchday matches", "soccer matchday matches"],
     "footballOngoingMatches": ["football ongoing matches", "soccer ongoing matches"],
+    "footballMatchesToday": ["football matches today", "soccer matches today"],
     "footballUpcomingMatches": [
       "football upcoming matches",
-      "soccer upcoming matches",
       "football upcoming team matches",
-      "soccer upcoming team matches"
+      "soccer upcoming matches",
+      "soccer upcoming team matches",
+      "what is the next football match"
     ],
     "footballCurrentMatch": [
       "football current match",
@@ -34,8 +41,11 @@
     "basketballStandings": ["basketball standings", "basketball table"],
     "basketballTeamGameToday": ["basketball team game today", "basketball team game tonight"],
     "handballStandings": ["handball standings", "handball table"],
-    "handballTeamGameToday": ["handball team game today", "handball team game tonight"]
+    "handballTeamGameToday": ["handball team game today", "handball team game tonight"],
+    "f1ResultsByRound": ["f1 results by round", "formula 1 results by round"],
+    "f1LastRoundResult": ["f1 last round result", "formula 1 last round result"]
   },
+
   "general": {
     "time": ["time", "what time is it"],
     "wellBeing": ["how are you", "are you fine", "well being"],

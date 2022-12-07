@@ -54,29 +54,26 @@ Following dependencies are listed which are required to either run or contribute
 After the setup is complete, use the **following commands** to run the agent. Note that you need to be in the **root directory** of the project.
 
 ```bash
-poetry run python aswe/core/agent.py agent --get_mic --get_user
+# If want to run the agent with the default settings
+poetry run python aswe/core/agent.py main
+
+# With this you can trigger a specific proactivity
+poetry run python aswe/core/agent.py main --test_proactivity 4
+
+# If you want to get the microphone input
+poetry run python aswe/core/agent.py main -- --get_mic
+
+# If you want to trigger a specific proactivity and get the microphone input
+poetry run python aswe/core/agent.py main --test_proactivity 3 --get_mic
 ```
 
 ## :speech_balloon: Concept
 
 In the following section we will go into detail about the concept of the agent. The agent is divided into three main parts: the **speech** and **text conversion**, the **agent**, the **use cases**, and the **API layer**.
 
-<!-- TODO: Update mermaid or replace with drawio -->
+<!-- TODO: Fix link to diagram -->
 
-```mermaid
-graph TB
-
-APIs_auf_updates_prüfen --> Speech-To-Text_Hotword_Kontext
-Speech-To-Text_Hotword_Kontext --> Übereinstimmung_berechnen
-Übereinstimmung_berechnen --> Ergebnisse_anzeigen
-Ergebnisse_anzeigen --> Use_Case_ausführen
-Use_Case_ausführen --> API_request
-Use_Case_ausführen --> Text-To-Speech
-API_request --> Text-To-Speech
-Text-To-Speech --> Speech-To-Text_CLI_input
-Speech-To-Text_CLI_input --> Use_Case_ausführen
-Text-To-Speech --> APIs_auf_updates_prüfen
-```
+![Concept](./data/flowcharts/layered_architecture_2.png)
 
 ## :memo: License
 

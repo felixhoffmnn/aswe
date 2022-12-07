@@ -87,7 +87,7 @@ def test_full_briefing(mocker: MockFixture, patch_tts: TextToSpeech, patch_use_c
 
     assert spy_tts_convert_text.call_args_list == [
         call(
-            "Good morning TestUser! Here is your morning briefing "
+            "Good morning TestUser! It's time to get up! Here is your morning briefing "
             "providing all the essential information to start into the day."
         ),
         call("Now about your calendar:"),

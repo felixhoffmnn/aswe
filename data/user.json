@@ -19,7 +19,8 @@
     ],
     "league": "World Cup",
     "team": "Netherlands",
-    "news_keywords": ["Ukraine", "Baerbock"],
+    "news_country": "Australia",
+    "news_keywords": ["Ukraine", "Covid-19"],
     "wakeup_time": "07:30"
   }
 }

@@ -104,6 +104,8 @@ class Favorites:
         The favorite league of the user.
     team : str
         The favorite team of the user.
+    news_country : str
+        The country the user wants to receive news from.
     news_keywords : list[str]
         The favorite news keywords of the user.
     wakeup_time : datetime
@@ -113,6 +115,7 @@ class Favorites:
     stocks: list[dict[str, str]]
     league: str
     team: str
+    news_country: str
     news_keywords: list[str]
     wakeup_time: datetime
 

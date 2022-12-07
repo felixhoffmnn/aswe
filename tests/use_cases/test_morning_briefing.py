@@ -54,6 +54,7 @@ def patch_use_case(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> MorningB
             stocks=[],
             league="",
             team="",
+            news_country="Australia",
             news_keywords=[""],
             wakeup_time=datetime.now(),
         ),

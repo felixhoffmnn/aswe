@@ -7,25 +7,28 @@
 </h4>
 
 <div align="center">
- <a href="https://www.python.org/downloads/release/python-3100/">
-  <img src="https://img.shields.io/badge/python-3.10-blue.svg"
-   alt="Python 3.10" />
- </a>
- <a href="https://github.com/psf/black">
-  <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
- </a>
- <a href="https://github.com/prettier/prettier">
-  <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat&logo=appveyor"
-   alt="Codestyle: Prettier" />
- </a>
- <a href="https://github.com/pre-commit/pre-commit">
-  <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"
-   alt="pre-commit" />
- </a>
- <a href="https://github.com/felixhoffmnn/python_template">
-  <img src="https://img.shields.io/github/license/felixhoffmnn/python_template"
-   alt="License: MIT" />
- </a>
+    <a href="https://github.com/felixhoffmnn/python_template">
+        <img src="https://img.shields.io/github/license/felixhoffmnn/python_template"
+        alt="License: MIT" />
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3100/">
+        <img src="https://img.shields.io/badge/python-3.10-blue.svg"
+        alt="Python 3.10" />
+    </a>
+    <a href="https://github.com/psf/black">
+        <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+    </a>
+    <a href="https://github.com/prettier/prettier">
+        <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat&logo=appveyor"
+        alt="Codestyle: Prettier" />
+    </a>
+    <a href="https://github.com/pre-commit/pre-commit">
+        <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"
+        alt="pre-commit" />
+    </a>
+    <a href="https://codecov.io/gh/felixhoffmnn/aswe" >
+        <img src="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" alt="Code coverage"/>
+    </a>
 </div>
 <br>
 
@@ -73,7 +76,7 @@ In the following section we will go into detail about the concept of the agent. 
 
 <!-- TODO: Fix link to diagram -->
 
-![Concept](./data/flowcharts/layered_architecture_2.png)
+![Concept](https://github.com/felixhoffmnn/aswe/blob/main/data/flowcharts/layerd_architecture_2.png)
 
 ## :memo: License
 

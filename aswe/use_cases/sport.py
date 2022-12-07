@@ -21,7 +21,7 @@ class SportUseCase(AbstractUseCase):
                 f"in {self.user.favorites.league}. Pleaser choose a team which plays in the legue which was specified."
             )
         match = football.get_current_team_match(self.user.favorites.league, self.user.favorites.team)
-        if match is None:
+        if match is None or match == []:
             return
         self.tts.convert_text(match[0])
 

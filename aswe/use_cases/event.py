@@ -4,7 +4,7 @@ from math import floor
 from loguru import logger
 
 from aswe.api.calendar import Event, get_events_by_timeframe
-from aswe.api.event import event as eventApi
+from aswe.api.event.event import events
 from aswe.api.event.event_data import EventLocation, EventSummary, ReducedEvent
 from aswe.api.event.event_params import EventApiEventParams
 from aswe.api.navigation import MapsTrip, MapsTripMode, get_maps_connection
@@ -27,7 +27,7 @@ class EventUseCase(AbstractUseCase):
         logger.debug("Perform proactivity for EventUseCase")
 
         for old_event_summary in self.attending_events.values():
-            reduced_events = eventApi.events(EventApiEventParams(id=old_event_summary.id))
+            reduced_events = events(EventApiEventParams(id=old_event_summary.id))
 
             if reduced_events is None or len(reduced_events) == 0:
                 self.tts.convert_text(
@@ -99,9 +99,9 @@ class EventUseCase(AbstractUseCase):
                 beginning_next_saturday = get_next_saturday()
                 end_next_sunday = beginning_next_saturday + timedelta(days=1, hours=23, minutes=59, seconds=59)
 
-                events = self._get_events_in_preferred_city(beginning_next_saturday, end_next_sunday)
+                reduced_events = self._get_events_in_preferred_city(beginning_next_saturday, end_next_sunday)
 
-                if len(events) == 0:
+                if len(reduced_events) == 0:
                     return
 
                 calendar_events = get_events_by_timeframe(
@@ -109,7 +109,7 @@ class EventUseCase(AbstractUseCase):
                     max_timestamp=end_next_sunday.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                 )
 
-                attendable_events_info = self._get_attendable_events(events[:3], calendar_events)
+                attendable_events_info = self._get_attendable_events(reduced_events[:3], calendar_events)
 
                 if len(attendable_events_info) == 0:
                     self.tts.convert_text("There are no events this weekend that fit your weekend plans.")
@@ -362,7 +362,7 @@ class EventUseCase(AbstractUseCase):
         """
         city = self._ask_for_event_city()
 
-        events = eventApi.events(
+        reduced_events = events(
             EventApiEventParams(
                 city=[city],
                 radius=30,
@@ -371,7 +371,7 @@ class EventUseCase(AbstractUseCase):
             )
         )
 
-        while events is None or len(events) == 0:
+        while reduced_events is None or len(reduced_events) == 0:
             self.tts.convert_text(
                 f"Looks like there are no events in {city} this weekend. "
                 "Do you want to look for events in another city?"
@@ -382,7 +382,7 @@ class EventUseCase(AbstractUseCase):
 
             city = self._ask_for_event_city()
 
-            events = eventApi.events(
+            reduced_events = events(
                 EventApiEventParams(
                     city=[city],
                     radius=30,
@@ -390,7 +390,7 @@ class EventUseCase(AbstractUseCase):
                     end_date_time=end_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 )
             )
-        return events
+        return reduced_events
 
     def _determine_trip_medium(self, event_summary: EventSummary) -> tuple[MapsTrip, MapsTripMode]:
         """Determines which `MapsTripMode to use depending on trip duration and user possessions.

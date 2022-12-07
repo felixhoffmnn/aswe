@@ -9,7 +9,7 @@ from pytest_mock import MockFixture
 
 from aswe.api.calendar import Event
 from aswe.api.event.event_data import EventLocation, EventSummary, ReducedEvent
-from aswe.api.navigation import MapsTrip
+from aswe.api.navigation import MapsTrip, MapsTripMode
 from aswe.core.objects import Address, BestMatch, Favorites, Possessions, User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 from aswe.use_cases.event import EventUseCase
@@ -341,3 +341,102 @@ def test_format_event_summary(patch_use_case: EventUseCase) -> None:
     assert patch_use_case._format_event_summary(event_summary_2) == (
         "The event_2 starts at 00:00. It will take you 10 minutes to get there by bike. "
     )
+
+
+def test_get_events_in_preferred_city(mocker: MockFixture, patch_use_case: EventUseCase) -> None:
+    """Test `EventUseCase._get_events_in_preferred_city`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    patch_use_case : EventUseCase
+        `EventUseCase` instance with patched `TextToSpeech` and `SpeechToText` instances.
+    """
+    event_location = EventLocation(city="test_city", address="test_address", name="test_name")
+    reduced_event = ReducedEvent(
+        id="test_id", name="test_name", start="test_start", status="test_status", location=event_location
+    )
+
+    patch_ask_for_event_city = mocker.patch.object(patch_use_case, "_ask_for_event_city", return_value="test_city")
+    mocker.patch("aswe.use_cases.event.events", return_value=[])
+    spy_convert_text = mocker.spy(patch_use_case.tts, "convert_text")
+    mocker.patch.object(patch_use_case.stt, "check_if_yes", return_value=False)
+
+    result_1 = patch_use_case._get_events_in_preferred_city(datetime(2030, 1, 1), datetime(2030, 1, 2))
+
+    assert result_1 == []
+    patch_ask_for_event_city.assert_called_once()
+    spy_convert_text.assert_called_once()
+
+    patch_ask_for_event_city.reset_mock()
+    spy_convert_text.reset_mock()
+
+    mocker.patch("aswe.use_cases.event.events", side_effect=[[], [reduced_event]])
+    mocker.patch.object(patch_use_case.stt, "check_if_yes", return_value=True)
+
+    result_2 = patch_use_case._get_events_in_preferred_city(datetime(2030, 1, 1), datetime(2030, 1, 2))
+
+    assert result_2 == [reduced_event]
+    assert patch_ask_for_event_city.call_count == 2
+    spy_convert_text.assert_called_once()
+
+
+def test_determine_trip_medium(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
+    """Test `EventUseCase._determine_trip_medium`
+
+    Parameters
+    ----------
+    mocker : MockFixture
+    patch_stt : SpeechToText
+        `SpeechToText` instance with patched `convert_speech` method.
+    patch_tts : TextToSpeech
+        `TextToSpeech` instance with patched `convert_text` method.
+    """
+    user_has_car = User(
+        name="TestUser",
+        age=10,
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=True),
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
+    )
+    user_has_no_car = User(
+        name="TestUser",
+        age=10,
+        address=Address(street="Pfaffenwaldring 45", city="Stuttgart", zip_code=70569, country="DE", vvs_id=""),
+        possessions=Possessions(bike=True, car=False),
+        favorites=Favorites(
+            stocks=[],
+            league="",
+            team="",
+            news_keywords=[""],
+            wakeup_time=datetime.now(),
+        ),
+    )
+
+    mocked_used_case_has_car = EventUseCase(patch_stt, patch_tts, "TestBuddy", user_has_car)
+    mocked_used_case_has_no_car = EventUseCase(patch_stt, patch_tts, "TestBuddy", user_has_no_car)
+
+    event_location = EventLocation(city="test_city", address="test_address")
+    event_summary = EventSummary(
+        id="event_id_1",
+        name="event_1",
+        start=datetime(2030, 1, 1, 0, 0, 0),
+        location=event_location,
+        is_cold=True,
+        is_rainy=True,
+        trip_duration=10,
+    )
+
+    mocked_trip_response = MapsTrip(duration=60, distance=10)
+    mocker.patch("aswe.use_cases.event.get_maps_connection", return_value=mocked_trip_response)
+
+    expected_trip = MapsTrip(duration=60, distance=10)
+
+    assert mocked_used_case_has_car._determine_trip_medium(event_summary) == (expected_trip, MapsTripMode.DRIVING)
+    assert mocked_used_case_has_no_car._determine_trip_medium(event_summary) == (expected_trip, MapsTripMode.TRANSIT)

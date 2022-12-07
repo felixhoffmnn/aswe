@@ -26,6 +26,7 @@ def patch_tts(mocker: MockFixture) -> TextToSpeech:
     return patched_tts
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test proactivity of `use_cases.navigation`.
 
@@ -57,6 +58,7 @@ def test_proactivity(patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     use_case.check_proactivity()
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test "dhbw" event of `use_cases.navigation`.
 
@@ -94,6 +96,7 @@ def test_dhbw(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpe
     spy_tts_convert_text.assert_called_once()
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test "hpe" event of `use_cases.navigation`.
 
@@ -131,6 +134,7 @@ def test_hpe(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
     spy_tts_convert_text.assert_called_once()
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test "ibm" event of `use_cases.navigation`.
 
@@ -168,6 +172,7 @@ def test_ibm(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpee
     spy_tts_convert_text.assert_called_once()
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_next_event(mocker: MockFixture, patch_stt: SpeechToText, patch_tts: TextToSpeech) -> None:
     """Test "nextEvent" event of `use_cases.navigation`.
 

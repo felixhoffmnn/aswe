@@ -37,6 +37,7 @@ def test_event_variable_types() -> None:
     assert isinstance(event.end_time, str)
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_get_events_by_timeframe() -> None:
     """Test `aswe.api.calendar.get_events_by_timeframe`"""
     events = get_events_by_timeframe("2022-10-19T00:00:00.000001Z", "2022-10-19T23:59:59.999999Z")
@@ -49,6 +50,7 @@ def test_get_events_by_timeframe() -> None:
     assert isinstance(events[3], Event)
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_get_all_events_today() -> None:
     """Test `aswe.api.calendar.get_all_events_today`"""
     events = get_all_events_today()
@@ -56,6 +58,7 @@ def test_get_all_events_today() -> None:
     assert isinstance(events, list)
 
 
+@pytest.mark.xfail(raises=FileNotFoundError, reason="The token file is not available")
 def test_get_next_event_today() -> None:
     """Test `aswe.api.calendar.get_next_event_today`"""
     event = get_next_event_today()

@@ -15,9 +15,9 @@
     ]
   },
   "navigation": {
-    "dhbw": ["dhbw", "i need to get to the dhbw", "i need to get to the university"],
-    "hpe": ["hpe", "i need to get to hpe", "i need to get to my boring workplace"],
-    "ibm": ["ibm", "i need to get to ibm", "i need to get to my favorite workplace"],
+    "dhbw": ["dhbw", "i need to get to the dhbw", "how do i get to the dhbw", "i need to get to the university"],
+    "hpe": ["hpe", "i need to get to hpe", "how do i get to hpe", "i need to get to my boring workplace"],
+    "ibm": ["ibm", "i need to get to ibm", "how do i get to ibm", "i need to get to my favorite workplace"],
     "nextEvent": [
       "next event",
       "i need to get to my next event",

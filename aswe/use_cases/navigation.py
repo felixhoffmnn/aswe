@@ -14,7 +14,7 @@ class NavigationUseCase(AbstractUseCase):
     """Use case for navigation"""
 
     def check_proactivity(self) -> None:
-        """Trigger proactivity if the next event is between 30 and 45 minutes in the future"""
+        """Trigger proactivity if the next event is between 40 and 45 minutes in the future"""
 
         logger.debug("Evaluate proactivity in Navigation use case")
 
@@ -22,7 +22,7 @@ class NavigationUseCase(AbstractUseCase):
         if next_event is not None:
             next_event_start_time = datetime.strptime(next_event.start_time, "%Y-%m-%dT%H:%M:%S+01:00")
             time_to_next_event = (next_event_start_time - datetime.now()).seconds / 60
-            if 30 <= time_to_next_event < 45:
+            if 40 <= time_to_next_event < 45:
 
                 self.next_event_use_case()
 

@@ -335,7 +335,7 @@ class Agent:
         except NotImplementedError:
             logger.warning("Proactivity for sport is not implemented yet.")
 
-        if check_timedelta(self.log_proactivity.last_navigation_check, 15) or test_proactivity == 5:
+        if check_timedelta(self.log_proactivity.last_navigation_check, 5) or test_proactivity == 5:
             logger.info("Triggered proactivity for navigation.")
             self.log_proactivity.last_navigation_check = datetime.now()
             self.uc_navigation.check_proactivity()

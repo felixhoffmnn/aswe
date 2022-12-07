@@ -20,4 +20,4 @@ jobs:
       - name: Install dependencies using Poetry
         run: poetry install --only docs
       - name: Deploy docs
-        run: poetry run mkdocs gh-deploy
+        run: poetry run mkdocs gh-deploy --force --clean --verbose

@@ -16,7 +16,7 @@ class NavigationUseCase(AbstractUseCase):
     def check_proactivity(self) -> None:
         """Trigger proactivity if the next event is between 30 and 45 minutes in the future"""
 
-        logger.debug("Evaluate proactivity in Transportation use case")
+        logger.debug("Evaluate proactivity in Navigation use case")
 
         next_event = get_next_event_today()
         if next_event is not None:
@@ -27,7 +27,7 @@ class NavigationUseCase(AbstractUseCase):
                 self.next_event_use_case()
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
-        """UseCase for transportation
+        """UseCase for navigation
 
         * TODO: Implement `quotes_key`
         * TODO: Refactor this function into smaller functions

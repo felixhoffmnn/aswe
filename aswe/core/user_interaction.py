@@ -28,8 +28,7 @@ class SpeechToText:
             If the speech to text class should first get the microphone index.
         """
         self.recognizer = sr.Recognizer()
-        self.recognizer.energy_threshold = 2500
-        self.recognizer.pause_threshold = 1
+        self.recognizer.energy_threshold = 800
 
         if get_mic:
             clear_shell()

@@ -24,14 +24,26 @@
 /tests/api/test_calendar.py @steadl
 /tests/api/test_navigation.py @steadl
 
-/aswe/use_cases/morning_briefing.md @l7f19
-/**/morning_briefing.py @l7f19
-/**/finance/* @l7f19
+/docs/use_cases/morning_briefing.md @l7f19
+/docs/api/finance.md @l7f19
+/aswe/use_cases/morning_briefing.py @l7f19
+/aswe/api/finance.py @l7f19
+/tests/use_cases/test_morning_briefing.py @l7f19
+/tests/api/test_finance.py @l7f19
 
 /aswe/use_cases/sport.md @mFritzsch
 
-/**/news/* @mFritzsch
-/**/sport/* @mFritzsch
+/aswe/api/news.py @mFritzsch
+/aswe/api/sport/handball.py @mFritzsch
+/aswe/api/sport/football.py @mFritzsch
+/aswe/api/sport/basketball.py @mFritzsch
+/aswe/api/sport/f1.py @mFritzsch
+/aswe/use_cases/sport.py @mFritzsch
+/tests/use_cases/test_sport.py @mFritzsch
+test/api/test_news.py @mFritzsch
+test/api/test_basketball.py @mFritzsch
+test/api/test_football.py @mFritzsch
+test/api/test_f1.py @mFritzsch
 
 docs/use_cases/event.md @nbs2904
 docs/api/event.md @nbs2904
@@ -45,3 +57,5 @@ docs/api/weather.md @nbs2904
 /data/flowcharts @felixhoffmnn
 /data/quotes.json @felixhoffmnn
 /data/user.json @felixhoffmnn
+
+/data/finance/* @l7f19

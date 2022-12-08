@@ -11,7 +11,6 @@ class AbstractUseCase(ABC):
         """Use case constructor to provide objects from the parent agent class
 
         * TODO: Add Attributes section
-        * TODO: Change how we pass arguments to the constructor/functions
 
         Parameters
         ----------
@@ -53,8 +52,6 @@ class AbstractUseCase(ABC):
         """Abstract method for use case classes
 
         Checks apis if certain events have occurred and informs user.
-
-        * TODO: Think about renaming this function
 
         Raises
         ------

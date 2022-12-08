@@ -39,11 +39,6 @@ class Agent:
 
     def __init__(self, get_mic: bool = False) -> None:
         """
-        * TODO: Add Attributes section
-        * TODO: Tokenize the phrases and input
-        * TODO: Add flag for triggering proactivity
-        * TODO: Add variable for storing the last time when proactivity was triggered
-
         Parameters
         ----------
         get_mic : bool, optional
@@ -164,7 +159,6 @@ class Agent:
         Function calculates the similarity between the parsed text and the use cases.
 
         * TODO: Add tokenization and stop words
-        * TODO: Extract calculation of similarity into a util function
         * TODO: Watch if the default threshold is too high
 
         ??? example "`self.quotes` DataFrame"
@@ -249,8 +243,6 @@ class Agent:
     def _evaluate_use_case(self, parsed_text: str) -> None:
         """Evaluates the parsed text to trigger the correct use case
 
-        * TODO: Implement more use cases
-
         Parameters
         ----------
         parsed_text : str
@@ -289,8 +281,6 @@ class Agent:
 
         Checks every `60` seconds if there are any updates which should be announced to the user.
         There is an additional option to set a separate interval for each use case.
-
-        * TODO: Implement proactivity for morning briefing
 
         ??? note "Proactivity IDs"
 

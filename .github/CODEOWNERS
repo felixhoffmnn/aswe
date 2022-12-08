@@ -1,5 +1,3 @@
-# TODO: Correctly assign codeowners
-
 # Default Codeowners
 * @felixhoffmnn
 
@@ -14,15 +12,12 @@
 /**/core/* @felixhoffmnn
 /aswe/use_cases/general.py @felixhoffmnn
 
-/docs/use_cases/navigation.md @steadl
+/**/navigation.md @steadl
 /docs/api/calendar.md @steadl
-/docs/api/navigation.md @steadl
-/aswe/use_cases/navigation.py @steadl
+/**/navigation.py @steadl
 /aswe/api/calendar.py @steadl
-/aswe/api/navigation.py @steadl
-/tests/use_cases/test_navigation.py @steadl
+/**/test_navigation.py @steadl
 /tests/api/test_calendar.py @steadl
-/tests/api/test_navigation.py @steadl
 
 /docs/use_cases/morning_briefing.md @l7f19
 /docs/api/finance.md @l7f19
@@ -32,29 +27,23 @@
 /tests/api/test_finance.py @l7f19
 
 /aswe/use_cases/sport.md @mFritzsch
-
 /aswe/api/news.py @mFritzsch
-/aswe/api/sport/handball.py @mFritzsch
-/aswe/api/sport/football.py @mFritzsch
-/aswe/api/sport/basketball.py @mFritzsch
-/aswe/api/sport/f1.py @mFritzsch
+/**/sport/* @mFritzsch
 /aswe/use_cases/sport.py @mFritzsch
-/tests/use_cases/test_sport.py @mFritzsch
 test/api/test_news.py @mFritzsch
 test/api/test_basketball.py @mFritzsch
 test/api/test_football.py @mFritzsch
 test/api/test_f1.py @mFritzsch
 
-docs/use_cases/event.md @nbs2904
-docs/api/event.md @nbs2904
-docs/api/weather.md @nbs2904
+/**/event.md @nbs2904
+/docs/api/weather.md @nbs2904
 /**/event/* @nbs2904
 /**/weather/* @nbs2904
 /aswe/use_cases/event.py @nbs2904
 
 # Data
 /data/vvs/* @felixhoffmnn
-/data/flowcharts @felixhoffmnn
+/data/flowcharts/** @felixhoffmnn
 /data/quotes.json @felixhoffmnn
 /data/user.json @felixhoffmnn
 

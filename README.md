@@ -26,7 +26,7 @@
         <img src="https://results.pre-commit.ci/badge/github/felixhoffmnn/aswe/main.svg"
         alt="pre-commit" />
     </a>
-    <a href="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" >
+    <a href="https://codecov.io/gh/felixhoffmnn/aswe" >
         <img src="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" alt="Code coverage"/>
     </a>
 </div>

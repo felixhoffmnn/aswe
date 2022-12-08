@@ -22,11 +22,11 @@
         <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat&logo=appveyor"
         alt="Codestyle: Prettier" />
     </a>
-    <a href="https://github.com/pre-commit/pre-commit">
-        <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"
+    <a href="https://results.pre-commit.ci/latest/github/felixhoffmnn/aswe/main">
+        <img src="https://results.pre-commit.ci/badge/github/felixhoffmnn/aswe/main.svg"
         alt="pre-commit" />
     </a>
-    <a href="https://codecov.io/gh/felixhoffmnn/aswe" >
+    <a href="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" >
         <img src="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" alt="Code coverage"/>
     </a>
 </div>
@@ -78,6 +78,25 @@ In the following section we will go into detail about the concept of the agent. 
 <!-- TODO: Fix link to diagram -->
 
 ![Concept](https://github.com/felixhoffmnn/aswe/blob/main/data/flowcharts/layerd_architecture_2.png)
+
+## :repeat: CI/CD
+
+This project uses [pre-commit](https://pre-commit.com) to ensure a consistent code style before committing. This pipeline runs primarily before committing, but will also be triggered as CI/CD pipeline on GitHub using [pre-commit.ci](https://pre-commit.ci/). The related files is named `.pre-commit-config.yaml`. This includes the following checks:
+
+1.  Lock project dependencies and export `requirements.txt`
+2.  Check common hooks (e.g., yaml, merge conflicts, case conflicts)
+3.  Sort imports with [isort](https://github.com/PyCQA/isort)
+4.  Format code with [black](https://github.com/psf/black) and [flake8](https://github.com/PyCQA/flake8)
+5.  Check typing with [mypy](https://github.com/python/mypy)
+6.  Format markdown and yaml files with [prettier](https://github.com/prettier/prettier)
+7.  Check for correct and new python styling with [pyupgrade](
+
+After committing, the GitHub actions CI/CD pipeline will be triggered. The related files can be found in the `.github/workflows` folder. This includes the following checks:
+
+1. Run tests with [pytest](https://github.com/pytest-dev/pytest)
+2. Calculates code coverage with [pytest-cov](https://github.com/pytest-dev/pytest-cov) and uploads it to [Codecov](https://codecov.io/gh/felixhoffmnn/aswe)
+3. Builds and deploys the [MkDocs](https://www.mkdocs.org/) documentation (see [here](https://felixhoffmnn.github.io/aswe/))
+4. Checks code quality and security with [CodeQL](https://github.com/github/codeql)
 
 ## :memo: License
 

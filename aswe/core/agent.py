@@ -61,8 +61,6 @@ class Agent:
             Speech to text class to handle speech-to-text conversion
         tts : TextToSpeech
             Text to speech class to handle text-to-speech conversion
-        user : User
-            User class to store the user information (eg., name, age)
         log_proactivity : LogProactivity
             Log proactivity class to handle the logging of proactivity
         uc_general : GeneralUseCase

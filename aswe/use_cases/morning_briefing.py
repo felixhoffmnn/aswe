@@ -181,20 +181,25 @@ class MorningBriefingUseCase(AbstractUseCase):
 
         logger.debug("Evaluate proactivity in morning briefing use case")
 
-        for stock in self.user.favorites.stocks:
-            price = get_stock_price(stock["symbol"])
-            if price is not None and self.last_stock_prices[stock["symbol"]] is not None:
-                change = (price - self.last_stock_prices[stock["symbol"]]) / self.last_stock_prices[stock["symbol"]]
-                if abs(change) >= 0.03:
-                    self.tts.convert_text(
-                        f"""I have breaking news about the {stock['name']} stock for you! The price has changed """
-                        f"""significantly, {round(change * 100, 2)} percent since the last time I told you the """
-                        f"""price. It is now trading at {round(price, 2)} {self.currency[0]} per share."""
-                    )
-                    self.last_stock_prices[stock["symbol"]] = price
-                    self.tts.convert_text("Do you want to hear more about this?")
-                    if self.stt.check_if_yes():
-                        self._news_sentiment_info(stock)
+        try:
+            for stock in self.user.favorites.stocks:
+                price = get_stock_price(stock["symbol"])
+                if price is not None and self.last_stock_prices[stock["symbol"]] is not None:
+                    change = (price - self.last_stock_prices[stock["symbol"]]) / self.last_stock_prices[stock["symbol"]]
+                    if abs(change) >= 0.03:
+                        self.tts.convert_text(
+                            f"""I have breaking news about the {stock['name']} stock for you! The price has changed """
+                            f"""significantly, {round(change * 100, 2)} percent since the last time I told you the """
+                            f"""price. It is now trading at {round(price, 2)} {self.currency[0]} per share."""
+                        )
+                        self.last_stock_prices[stock["symbol"]] = price
+                        self.tts.convert_text("Do you want to hear more about this?")
+                        if self.stt.check_if_yes():
+                            self._news_sentiment_info(stock)
+        except KeyError:
+            logger.error("Stock price not found in last briefing")
+            self.tts.convert_text("Unfortunately, an error occurred while checking for proactivity.")
+            self.tts.convert_text("This is probably due to a missing stock price from the last briefing.")
 
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for morning briefing

@@ -1,0 +1,45 @@
+# TODO: Correctly assign codeowners
+
+# Default Codeowners
+* @felixhoffmnn
+
+# Settings
+.github/* @felixhoffmnn
+.vscode/* @felixhoffmnn
+
+# ASWE
+/mkdocs.yaml @felixhoffmnn
+/docs/core.md @felixhoffmnn
+/docs/use_cases/general.md @felixhoffmnn
+/**/core/* @felixhoffmnn
+/aswe/use_cases/general.py @felixhoffmnn
+
+/docs/use_cases/navigation.md @steadl
+/docs/api/calendar.md @steadl
+/docs/api/navigation.md @steadl
+/aswe/use_cases/navigation.py @steadl
+/aswe/api/calendar.py @steadl
+/aswe/api/navigation.py @steadl
+/tests/use_cases/test_navigation.py @steadl
+/tests/api/test_calendar.py @steadl
+/tests/api/test_navigation.py @steadl
+
+/aswe/use_cases/morning_briefing.md @l7f19
+/**/morning_briefing.py @l7f19
+/**/finance/* @l7f19
+
+/aswe/use_cases/sport.md @mFritzsch
+
+/**/news/* @mFritzsch
+/**/sport/* @mFritzsch
+
+/aswe/use_cases/event.md @nbs2904
+/**/event/* @nbs2904
+/**/weather/* @nbs2904
+/aswe/use_cases/event.py @nbs2904
+
+# Data
+/data/vvs/* @felixhoffmnn
+/data/flowcharts @felixhoffmnn
+/data/quotes.json @felixhoffmnn
+/data/user.json @felixhoffmnn

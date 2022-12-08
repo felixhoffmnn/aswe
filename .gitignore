@@ -131,6 +131,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+calendar_credentials.json
+calendar_token.pickle
 
 # Spyder project settings
 .spyderproject
@@ -189,3 +191,5 @@ cython_debug/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
+
+tempCodeRunnerFile.py

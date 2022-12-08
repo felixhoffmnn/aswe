@@ -25,5 +25,4 @@ You may intentionally leave this section blank and remove the title.
 
 -   [ ] Connected regarding _GitHub issues_ and _discussions_
 -   [ ] Added _docstrings_ for all new functions
--   [ ] Checked _CI_ pipeline for any failures
--   [ ] Run _pytests_ locally to check for any failures
+-   [ ] Updated release tag in `pyproject.toml` (if applicable)

@@ -1,6 +1,6 @@
 # Metadata
-site_name: Marcell J'Arvis
-site_description: Dolore fugiat ullamco voluptate incididunt voluptate voluptate magna esse eiusmod velit deserunt cillum ut do.
+site_name: Advanced Software Engineering
+site_description: A speech bot for your daily needs build during advanced software engineering at DHBW Stuttgart.
 site_author: Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr
 repo_name: felixhoffmnn/aswe
 repo_url: https://github.com/felixhoffmnn/aswe
@@ -9,17 +9,25 @@ watch: ["aswe", "docs", "mkdocs.yaml", "pyproject.toml", "README.md"]
 # Navigation
 nav:
   - Overview:
-      Readme: index.md
-      License: license.md
-  - Documentation:
-      Core:
-        - Agent: core/agent.md
-        - User Interaction: core/user_interaction.md
-        - Use Cases: core/use_cases.md
-      API:
-        - Weather: api/weather.md
-        - Events: api/events.md
-      Utilities: utils/utils.md
+      - Readme: index.md
+      - License: license.md
+  - Code Reference:
+      - Core: core.md
+      - Use Cases:
+          - General: use_cases/general.md
+          - Event: use_cases/event.md
+          - Morning Briefing: use_cases/morning_briefing.md
+          - Sport: use_cases/sport.md
+          - Navigation: use_cases/navigation.md
+      - API:
+          - Calendar: api/calendar.md
+          - Event: api/event.md
+          - Finance: api/finance.md
+          - Navigation: api/navigation.md
+          - News: api/news.md
+          - Sport: api/sport.md
+          - Weather: api/weather.md
+      - Utilities: utils.md
 
 # Plugins
 plugins:
@@ -28,12 +36,7 @@ plugins:
       arguments:
         theme: |
           ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
-  - git-revision-date-localized:
-      fallback_to_build_date: true
   - autorefs
-  - mkdocs-jupyter:
-      include: ["*.ipynb"]
-      kernel_name: python3
   - mkdocstrings:
       handlers:
         python:
@@ -75,7 +78,7 @@ theme:
     - navigation.tabs
 
     # Will expand the navigation tree on the sidebar
-    - navigation.expand
+    # - navigation.expand
 
     # TODO: Add description
     - navigation.tracking
@@ -100,7 +103,10 @@ theme:
 
 # Markdown extensions
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - attr_list
+  - md_in_html
   - def_list
   - pymdownx.tasklist:
       custom_checkbox: true

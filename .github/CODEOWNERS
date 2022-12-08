@@ -30,8 +30,17 @@
 
 /aswe/use_cases/sport.md @mFritzsch
 
-/**/news/* @mFritzsch
-/**/sport/* @mFritzsch
+/aswe/api/news.py @mFritzsch
+/aswe/api/sport/handball.py @mFritzsch
+/aswe/api/sport/football.py @mFritzsch
+/aswe/api/sport/basketball.py @mFritzsch
+/aswe/api/sport/f1.py @mFritzsch
+/aswe/use_cases/sport.py @mFritzsch
+/tests/use_cases/test_sport.py @mFritzsch
+test/api/test_news.py @mFritzsch
+test/api/test_basketball.py @mFritzsch
+test/api/test_football.py @mFritzsch
+test/api/test_f1.py @mFritzsch
 
 /aswe/use_cases/event.md @nbs2904
 /**/event/* @nbs2904

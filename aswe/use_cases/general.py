@@ -15,7 +15,7 @@ class GeneralUseCase(AbstractUseCase):
     def check_proactivity(self) -> None:
         """Check if there is a proactivity to be triggered
 
-        * TODO: Implement proactivity
+        Currently the general use case does not have any proactivity.
         """
         raise NotImplementedError
 
@@ -25,8 +25,6 @@ class GeneralUseCase(AbstractUseCase):
         The general use case aims to answer general questions like the most popular
         ones asked Google assistant. This use case also includes the option to exit
         the assistant.
-
-        * TODO: Exit confirmation does not work
 
         Parameters
         ----------

@@ -29,9 +29,6 @@ class NavigationUseCase(AbstractUseCase):
     def trigger_assistant(self, best_match: BestMatch) -> None:
         """UseCase for navigation
 
-        * TODO: Implement `quotes_key`
-        * TODO: Refactor this function into smaller functions
-
         Parameters
         ----------
         best_match : BestMatch

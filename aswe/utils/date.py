@@ -48,8 +48,6 @@ def check_timedelta(last_trigger: datetime, delta: int) -> bool:
 def validate_date(date: str, include_time: bool | None = None) -> bool:
     """Validates Time format for either `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ss`
 
-    * TODO: Check if format is correct (`YYYY-MM-DDThh:mm:ss` or `YYYY-MM-DDThh:mm:ssZ`)
-
     Parameters
     ----------
     date : str

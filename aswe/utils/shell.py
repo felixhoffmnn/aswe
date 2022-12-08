@@ -69,5 +69,4 @@ def get_int(options: list[str | int], start: int = 1) -> int | None:
             logger.warning("Invalid input")
             choice = None
 
-    # TODO: Python has a problem with do while loops
     return choice  # type: ignore

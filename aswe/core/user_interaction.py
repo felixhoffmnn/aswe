@@ -19,17 +19,21 @@ class SpeechToText:
         """Initializes the speech to text class.
 
         * TODO: Think about a better way to handle the case that the `microphone_index` is not required
-        * TODO: Add Attributes section
-        * TODO: Add test method
 
         Parameters
         ----------
         get_mic : bool
             If the speech to text class should first get the microphone index.
+
+        Attributes
+        ----------
+        recognizer : sr.Recognizer
+            The speech recognition object.
+        microphone_index : int | None
+            The index of the microphone which should be used.
         """
         self.recognizer = sr.Recognizer()
-        self.recognizer.energy_threshold = 2500
-        self.recognizer.pause_threshold = 1
+        self.recognizer.energy_threshold = 800
 
         if get_mic:
             clear_shell()
@@ -47,6 +51,8 @@ class SpeechToText:
 
     def check_if_yes(self) -> bool:
         """First gets the user input and then checks if the user said yes.
+
+        * TODO: Fix that yes is not recognized well
 
         Returns
         -------
@@ -102,7 +108,7 @@ class SpeechToText:
 
         When the function does not detect any speech for `60` seconds it will timeout and return `None`.
 
-        * TODO: Check `adjust_for_ambient_noise`
+        * TODO: Maybe use `adjust_for_ambient_noise`
         * TODO: Add function to cancel the request without quitting the program
 
         Parameters
@@ -160,7 +166,11 @@ class TextToSpeech:
         """Initializes the text to speech class.
 
         * TODO: Add Attributes section
-        * TODO: Add test method
+
+        Attributes
+        ----------
+        engine : pyttsx3.Engine
+            The text to speech engine.
         """
         self.engine: pyttsx3.Engine = pyttsx3.init()
         self.engine.setProperty("rate", 175)

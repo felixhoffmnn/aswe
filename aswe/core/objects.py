@@ -127,8 +127,6 @@ class Favorites:
 class User:
     """Dataclass supposed to store the user data
 
-    * TODO: Add more attributes and evaluate the existing ones
-
     Attributes
     ----------
     name : str
@@ -137,6 +135,8 @@ class User:
         The age of the user.
     address : Address
         The address of the user.
+    possessions : Possessions
+        The possessions of the user.
     favorites : Favorites
     """
 

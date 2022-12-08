@@ -32,6 +32,15 @@
 </div>
 <br>
 
+<div align="center">
+    <a href="https://github.com/felixhoffmnn/aswe">GitHub</a>
+    ·
+    <a href="https://github.com/felixhoffmnn/aswe/actions">CI/CD</a>
+    ·
+    <a href="https://felixhoffmnn.github.io/aswe/">Dokumentation</a>
+</div>
+<br>
+
 <!-- TODO: Review paragraph -->
 
 This project was built by a team of 5 students during the advanced software engineering course at [DHBW Stuttgart](https://www.dhbw-stuttgart.de/). The goal was to create a bot that can interact using speech-to-text and text-to-speech with the user and perform tasks like a morning briefing, a helper for planning trips and events, and also to provide information about current sports events.
@@ -43,15 +52,26 @@ This project was built by a team of 5 students during the advanced software engi
 Following dependencies are listed which are required to either run or contribute to this project.
 
 1. Install `portaudio` for speech recognition:
-    - On Windows: Everything should be installed by default
-    - On macOS: `brew install portaudio`
-    - On Linux: `sudo apt install python3-pyaudio`
-2. Install [Poetry](https://python-poetry.org/docs/#installation)
-    - Poetry is a dependency manager for Python used in this project
-    - (Optional) Setup poetry to use the local `.venv` folder by running `poetry config virtualenvs.in-project true`
-3. Run `poetry install` to install all dependencies
-    - Afterwards, run `poetry shell` to activate the virtual environment
-4. Install the pre-commit hooks with `poetry run pre-commit install`
+    - On _Windows_: Everything should be installed by default
+    - On _macOS_: `brew install portaudio`
+    - On _Linux_: `sudo apt install python3-pyaudio`
+2. Install python dependencies:
+
+    - Using _Poetry_
+        1. Install [Poetry](https://python-poetry.org/docs/#installation)
+            - Poetry is a dependency manager for Python used in this project
+            - (Optional) Setup poetry to use the local `.venv` folder by running `poetry config virtualenvs.in-project true`
+        2. Run `poetry install` to install all dependencies
+            - Afterwards, run `poetry shell` to activate the virtual environment
+    - Using _Pip_ (not recommended)
+
+        ```bash
+        pip install -r requirements.txt -r requirements_dev.txt -r docs/requirements_docs.txt
+        ```
+
+3. Install the pre-commit hooks with `pre-commit install`
+
+> :warning: **Note:** If you are using _Poetry_ it is recommended to use `poetry run <command>` to run commands. When using _Pip_ it is possible that the `env` variables are not loading correctly.
 
 <br>
 
@@ -59,16 +79,16 @@ After the setup is complete, use the **following commands** to run the agent. No
 
 ```bash
 # If want to run the agent with the default settings
-poetry run python aswe/core/agent.py main
+python aswe/core/agent.py main
 
 # With this you can trigger a specific proactivity
-poetry run python aswe/core/agent.py main --test_proactivity 4
+python aswe/core/agent.py main --test_proactivity 4
 
 # If you want to get the microphone input
-poetry run python aswe/core/agent.py main -- --get_mic
+python aswe/core/agent.py main -- --get_mic
 
 # If you want to trigger a specific proactivity and get the microphone input
-poetry run python aswe/core/agent.py main --test_proactivity 3 --get_mic
+python aswe/core/agent.py main --test_proactivity 3 --get_mic
 ```
 
 ## :speech_balloon: Concept

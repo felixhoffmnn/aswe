@@ -33,7 +33,9 @@
 /**/news/* @mFritzsch
 /**/sport/* @mFritzsch
 
-/aswe/use_cases/event.md @nbs2904
+docs/use_cases/event.md @nbs2904
+docs/api/event.md @nbs2904
+docs/api/weather.md @nbs2904
 /**/event/* @nbs2904
 /**/weather/* @nbs2904
 /aswe/use_cases/event.py @nbs2904

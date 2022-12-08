@@ -1,0 +1,1821 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="A speech bot for your daily needs build during advanced software engineering at DHBW Stuttgart." name="description"/>
+<meta content="Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<title>Core - Advanced Software Engineering</title>
+<link href="../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="" data-md-color-primary="" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#core">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Advanced Software Engineering" class="md-header__button md-logo" data-md-component="logo" href=".." title="Advanced Software Engineering">
+<svg viewbox="0 0 89 89" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z"></path>
+<path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5"></path>
+<path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z"></path>
+<path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25"></path>
+</svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Advanced Software Engineering
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Core
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+</label>
+<input aria-label="Switch to system preference" class="md-option" data-md-color-accent="" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to system preference">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/felixhoffmnn/aswe" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</div>
+<div class="md-source__repository">
+    felixhoffmnn/aswe
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        Overview
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="./">
+        Code Reference
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Advanced Software Engineering" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Advanced Software Engineering">
+<svg viewbox="0 0 89 89" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z"></path>
+<path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5"></path>
+<path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z"></path>
+<path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25"></path>
+</svg>
+</a>
+    Advanced Software Engineering
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/felixhoffmnn/aswe" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</div>
+<div class="md-source__repository">
+    felixhoffmnn/aswe
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Overview" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+        Readme
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../license/">
+        License
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          Code Reference
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Code Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Core
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Core
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent">
+    Agent
+  </a>
+<nav aria-label="Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent">
+    Agent
+  </a>
+<nav aria-label="Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._check_proactivity">
+    _check_proactivity()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._evaluate_use_case">
+    _evaluate_use_case()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._get_best_match">
+    _get_best_match()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._greeting">
+    _greeting()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent.main">
+    main()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-interaction">
+    User Interaction
+  </a>
+<nav aria-label="User Interaction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText">
+    SpeechToText
+  </a>
+<nav aria-label="SpeechToText" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.check_if_yes">
+    check_if_yes()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.convert_audio_file">
+    convert_audio_file()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.convert_speech">
+    convert_speech()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech">
+    TextToSpeech
+  </a>
+<nav aria-label="TextToSpeech" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech.convert_text">
+    convert_text()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech.optimize_text">
+    optimize_text()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dataclasses">
+    Dataclasses
+  </a>
+<nav aria-label="Dataclasses" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Address">
+    Address
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.BestMatch">
+    BestMatch
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Favorites">
+    Favorites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.LogProactivity">
+    LogProactivity
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Possessions">
+    Possessions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.User">
+    User
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          Use Cases
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Use Cases" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Use Cases
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use_cases/general/">
+        General
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use_cases/event/">
+        Event
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use_cases/morning_briefing/">
+        Morning Briefing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use_cases/sport/">
+        Sport
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use_cases/navigation/">
+        Navigation
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="API" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/calendar/">
+        Calendar
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/event/">
+        Event
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/finance/">
+        Finance
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/navigation/">
+        Navigation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/news/">
+        News
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/sport/">
+        Sport
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/weather/">
+        Weather
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../utils/">
+        Utilities
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent">
+    Agent
+  </a>
+<nav aria-label="Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent">
+    Agent
+  </a>
+<nav aria-label="Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._check_proactivity">
+    _check_proactivity()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._evaluate_use_case">
+    _evaluate_use_case()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._get_best_match">
+    _get_best_match()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent._greeting">
+    _greeting()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.agent.Agent.main">
+    main()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-interaction">
+    User Interaction
+  </a>
+<nav aria-label="User Interaction" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText">
+    SpeechToText
+  </a>
+<nav aria-label="SpeechToText" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.check_if_yes">
+    check_if_yes()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.convert_audio_file">
+    convert_audio_file()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.SpeechToText.convert_speech">
+    convert_speech()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech">
+    TextToSpeech
+  </a>
+<nav aria-label="TextToSpeech" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech.convert_text">
+    convert_text()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.user_interaction.TextToSpeech.optimize_text">
+    optimize_text()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dataclasses">
+    Dataclasses
+  </a>
+<nav aria-label="Dataclasses" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Address">
+    Address
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.BestMatch">
+    BestMatch
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Favorites">
+    Favorites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.LogProactivity">
+    LogProactivity
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.Possessions">
+    Possessions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aswe.core.objects.User">
+    User
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/felixhoffmnn/aswe/edit/master/docs/core.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
+</a>
+<h1 id="core">Core</h1>
+<p>The core module contains the <strong>Agent</strong>, <strong>STT</strong>, <strong>TTS</strong>, as well as dataclasses related to the <strong>Agent</strong>. The Agent is responsible for the overall control flow of the application. It is the main entry point for the user and the main interface to the other modules. It also takes care of the proactivity of the application.</p>
+<h2 id="agent">Agent</h2>
+<pre class="mermaid"><code>graph LR;
+
+start_agent --&gt; greet_user;
+greet_user --&gt; check_for_proactivity;
+check_for_proactivity --&gt; trigger_proactivity;
+trigger_proactivity --&gt; get_user_input;
+check_for_proactivity --&gt; get_user_input;
+get_user_input --&gt; calculate_best_match;
+calculate_best_match --&gt; trigger_use_case;
+trigger_use_case --&gt; check_for_proactivity;</code></pre>
+<!-- prettier-ignore -->
+<div class="doc doc-object doc-module">
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.agent.Agent">
+<code class="highlight language-python"><span class="n">Agent</span><span class="p">(</span><span class="n">get_mic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+</h3>
+<div class="doc doc-contents">
+<p>Class to handle speech to handle main functionality of the assistant</p>
+<p>The core functionality of the assistant is to handle speech-to-text conversion (<em>stt</em>), text-to_speech (<em>tts</em>)
+conversion, calculate the best match for the parsed text, greet the user, trigger the right use case,
+and handle proactivity.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_mic</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>Boolean if the speech to text class should first ask for the microphone to use. <em>By default <code>False</code></em>.</p></td>
+<td>
+<code>False</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assistant_name</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The name of the assistant</p></td>
+</tr>
+<tr>
+<td><code>quotes</code></td>
+<td>
+<code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+</td>
+<td><p>DataFrame storing the use cases and functionality combinations</p></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.User" href="#aswe.core.objects.User">User</a></code>
+</td>
+<td><p>User class to store the user information (eg., name, age)</p></td>
+</tr>
+<tr>
+<td><code>stt</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.user_interaction.SpeechToText" href="#aswe.core.user_interaction.SpeechToText">SpeechToText</a></code>
+</td>
+<td><p>Speech to text class to handle speech-to-text conversion</p></td>
+</tr>
+<tr>
+<td><code>tts</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.user_interaction.TextToSpeech" href="#aswe.core.user_interaction.TextToSpeech">TextToSpeech</a></code>
+</td>
+<td><p>Text to speech class to handle text-to-speech conversion</p></td>
+</tr>
+<tr>
+<td><code>log_proactivity</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.LogProactivity" href="#aswe.core.objects.LogProactivity">LogProactivity</a></code>
+</td>
+<td><p>Log proactivity class to handle the logging of proactivity</p></td>
+</tr>
+<tr>
+<td><code>uc_general</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.use_cases.GeneralUseCase" href="../use_cases/general/#aswe.use_cases.general.GeneralUseCase">GeneralUseCase</a></code>
+</td>
+<td><p>General use case class to handle general use cases</p></td>
+</tr>
+<tr>
+<td><code>uc_navigation</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.use_cases.NavigationUseCase" href="../use_cases/navigation/#aswe.use_cases.navigation.NavigationUseCase">NavigationUseCase</a></code>
+</td>
+<td><p>Navigation use case class to handle navigation use cases</p></td>
+</tr>
+<tr>
+<td><code>uc_event</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.use_cases.EventUseCase" href="../use_cases/event/#aswe.use_cases.event.EventUseCase">EventUseCase</a></code>
+</td>
+<td><p>Event use case class to handle event use cases</p></td>
+</tr>
+<tr>
+<td><code>uc_sport</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.use_cases.SportUseCase" href="../use_cases/sport/#aswe.use_cases.sport.SportUseCase">SportUseCase</a></code>
+</td>
+<td><p>Sport use case class to handle sport use cases</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.agent.Agent._check_proactivity">
+<code class="highlight language-python"><span class="n">_check_proactivity</span><span class="p">(</span><span class="n">test_proactivity</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Checks if there are any updates which should be announced to the user</p>
+<p>Checks every <code>60</code> seconds if there are any updates which should be announced to the user.
+There is an additional option to set a separate interval for each use case.</p>
+<details class="note">
+<summary>Proactivity IDs</summary>
+<p>The following table shows the IDs for the proactivity.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Event</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Morning Briefing</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sport</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Navigation</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_proactivity</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | None, optional</code>
+</td>
+<td><p>A integer between <code>1</code> and <code>5</code> which triggers the proactivity for the corresponding use case.</p></td>
+<td>
+<code>None</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.agent.Agent._evaluate_use_case">
+<code class="highlight language-python"><span class="n">_evaluate_use_case</span><span class="p">(</span><span class="n">parsed_text</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Evaluates the parsed text to trigger the correct use case</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parsed_text</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The voice input of the user parsed to lower case string</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.agent.Agent._get_best_match">
+<code class="highlight language-python"><span class="n">_get_best_match</span><span class="p">(</span><span class="n">parsed_text</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Find the best match for the parsed text</p>
+<p>Function calculates the similarity between the parsed text and the use cases.</p>
+<ul>
+<li>TODO: Add tokenization and stop words</li>
+<li>TODO: Watch if the default threshold is too high</li>
+</ul>
+<details class="example">
+<summary><code>self.quotes</code> DataFrame</summary>
+<p>The <code>self.quotes</code> consists of three columns: <code>use_case</code>, <code>choice</code> and <code>phrase</code>.
+We use the <code>use_case</code> and <code>choice</code> column for the chain-of-responsibility pattern
+to map the best match to the final function. The <code>phrase</code> column contains multiple phrases
+which are going to be compared to the parsed text.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>use_case</th>
+<th>choice</th>
+<th>phrase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>morningBriefing</td>
+<td>newsSummary</td>
+<td>whats going on</td>
+</tr>
+<tr>
+<td>1</td>
+<td>morningBriefing</td>
+<td>newsSummary</td>
+<td>morning briefing</td>
+</tr>
+<tr>
+<td>2</td>
+<td>events</td>
+<td>eventSummary</td>
+<td>what is going on</td>
+</tr>
+<tr>
+<td>3</td>
+<td>navigation</td>
+<td>dhbw</td>
+<td>dhbw</td>
+</tr>
+<tr>
+<td>4</td>
+<td>navigation</td>
+<td>dhbw</td>
+<td>i need to get to the dhbw</td>
+</tr>
+<tr>
+<td>5</td>
+<td>navigation</td>
+<td>hpe</td>
+<td>i need to get to the hpe</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parsed_text</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The parsed text which should be matched to a use case.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a>, optional</code>
+</td>
+<td><p>The threshold which is used to determine if the similarity is high enough to be considered.
+The value needs to be between 0 and 1. <em>By default <code>0.7</code></em>.</p></td>
+<td>
+<code>0.7</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Raises:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#ValueError">ValueError</a></code>
+</td>
+<td><p>If the threshold is not between 0 and 1.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.BestMatch" href="#aswe.core.objects.BestMatch">BestMatch</a></code>
+</td>
+<td><p>Returns a object with the use case, the selected endpoint within the use case (choice),
+the similarity, and the parsed text.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.agent.Agent._greeting">
+<code class="highlight language-python"><span class="n">_greeting</span><span class="p">()</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Function to greet the user.</p>
+<p>Depending on the time of the day, the assistant greets the user with a different greeting.</p>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.agent.Agent.main">
+<code class="highlight language-python"><span class="n">main</span><span class="p">(</span><span class="n">test_proactivity</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Main function to interact with the user</p>
+<p>The agent function is the main function of the assistant. It first greets the user and
+then checks proactively if there are updates for the user. If thats not the case, it will start
+listening for user input in <code>60</code> second intervals. If the user input is not empty, it will
+execute the use case function for proactivity.</p>
+<p>The <code>threading</code> library seems to be not compatible with some python version
+(<a href="https://docs.python.org/3/library/threading.html">documentation</a>). Therefore it will be removed
+and the agent will be executed in a single thread.</p>
+<ul>
+<li>TODO: Add hotword detection</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_proactivity</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | None, optional</code>
+</td>
+<td><p>A integer between <code>1</code> and <code>5</code> which triggers the proactivity for the corresponding use case.</p></td>
+<td>
+<code>None</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><h2 id="user-interaction">User Interaction</h2>
+<!-- prettier-ignore -->
+<div class="doc doc-object doc-module">
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.user_interaction.SpeechToText">
+<code class="highlight language-python"><span class="n">SpeechToText</span><span class="p">(</span><span class="n">get_mic</span><span class="p">)</span></code>
+</h3>
+<div class="doc doc-contents">
+<p>Class to convert speech to text.</p>
+<p>Initializes the speech to text class.</p>
+<ul>
+<li>TODO: Think about a better way to handle the case that the <code>microphone_index</code> is not required</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_mic</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+</td>
+<td><p>If the speech to text class should first get the microphone index.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recognizer</code></td>
+<td>
+<code><span title="speech_recognition">sr</span>.<span title="speech_recognition.Recognizer">Recognizer</span></code>
+</td>
+<td><p>The speech recognition object.</p></td>
+</tr>
+<tr>
+<td><code>microphone_index</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | None</code>
+</td>
+<td><p>The index of the microphone which should be used.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.user_interaction.SpeechToText.check_if_yes">
+<code class="highlight language-python"><span class="n">check_if_yes</span><span class="p">()</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>First gets the user input and then checks if the user said yes.</p>
+<ul>
+<li>TODO: Fix that yes is not recognized well</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+</td>
+<td><p>Boolean if the user said yes.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.user_interaction.SpeechToText.convert_audio_file">
+<code class="highlight language-python"><span class="n">convert_audio_file</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Converts an audio file to text.</p>
+<ul>
+<li>TODO: For now this function is only for testing purposes</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>audio_file</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | <a class="autorefs autorefs-external" title="pathlib.Path" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path">Path</a></code>
+</td>
+<td><p>The path to the audio file which should be converted.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+</td>
+<td><p>The parsed text or <code>None</code> if the parsing failed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.user_interaction.SpeechToText.convert_speech">
+<code class="highlight language-python"><span class="n">convert_speech</span><span class="p">(</span><span class="n">line_above</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>First records an audio file an then pareses it to text.</p>
+<p>When the function does not detect any speech for <code>60</code> seconds it will timeout and return <code>None</code>.</p>
+<ul>
+<li>TODO: Maybe use <code>adjust_for_ambient_noise</code></li>
+<li>TODO: Add function to cancel the request without quitting the program</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>line_above</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If a new line should be printed before the user input. <em>By default <code>False</code>.</em></p></td>
+<td>
+<code>False</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+</td>
+<td><p>The parsed text or None if no text could be parsed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.user_interaction.TextToSpeech">
+<code class="highlight language-python"><span class="n">TextToSpeech</span><span class="p">()</span></code>
+</h3>
+<div class="doc doc-contents">
+<p>Class to convert text to speech.</p>
+<p>Initializes the text to speech class.</p>
+<ul>
+<li>TODO: Add Attributes section</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>engine</code></td>
+<td>
+<code>pyttsx3.<span title="pyttsx3.Engine">Engine</span></code>
+</td>
+<td><p>The text to speech engine.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.user_interaction.TextToSpeech.convert_text">
+<code class="highlight language-python"><span class="n">convert_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">optimize_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize_numbers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line_above</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Converts text to speech</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The Text which should be converted to speech.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>optimize_time</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If the time should be optimized for speech. Will replace <code>22:00</code> with <code>22 o'clock</code>
+and <code>22:30</code> with <code>22 30</code>. <em>By default <code>True</code>.</em></p></td>
+<td>
+<code>True</code>
+</td>
+</tr>
+<tr>
+<td><code>optimize_numbers</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If the numbers should be optimized for speech. Will replace <code>22.</code> with <code>22 .</code>. <em>By default <code>True</code>.</em></p></td>
+<td>
+<code>True</code>
+</td>
+</tr>
+<tr>
+<td><code>line_above</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If a new line should be printed before the bot input. <em>By default <code>False</code></em>.</p></td>
+<td>
+<code>False</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="aswe.core.user_interaction.TextToSpeech.optimize_text">
+<code class="highlight language-python"><span class="n">optimize_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">optimize_time</span><span class="p">,</span> <span class="n">optimize_numbers</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>Optimizes text with time indications (in HH:MM format) for speech.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The text which should be optimized.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>optimize_time</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If the time should be optimized for speech. Will replace <code>22:00</code> with <code>22 o'clock</code>
+and <code>22:30</code> with <code>22 30</code>. <em>By default <code>True</code>.</em></p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>optimize_numbers</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>, optional</code>
+</td>
+<td><p>If the numbers should be optimized for speech. Will replace <code>22.</code> with <code>22 .</code>. <em>By default <code>True</code>.</em></p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The optimized text.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><h2 id="dataclasses">Dataclasses</h2>
+<!-- prettier-ignore -->
+<div class="doc doc-object doc-module">
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.Address">
+<code>Address</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>Dataclass to store the address of a user.</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>street</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The street of the user.</p></td>
+</tr>
+<tr>
+<td><code>city</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The city of the user.</p></td>
+</tr>
+<tr>
+<td><code>zip_code</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>
+</td>
+<td><p>The zip code of the user.</p></td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The country of the user.</p></td>
+</tr>
+<tr>
+<td><code>vvs_id</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The VVS ID of the user.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.BestMatch">
+<code>BestMatch</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>Dataclass to store the best match for a given user input.</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>use_case</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The name of the use case.</p></td>
+</tr>
+<tr>
+<td><code>function_key</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The key of the function which should be called.</p></td>
+</tr>
+<tr>
+<td><code>similarity</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></code>
+</td>
+<td><p>The similarity between the user input and the best match.</p></td>
+</tr>
+<tr>
+<td><code>parsed_text</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The parsed text from the user input.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.Favorites">
+<code>Favorites</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>Dataclass to store the favorites of a user.</p>
+<p>For example the favorite stocks, sports teams, etc.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stocks</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+</td>
+<td><p>The favorite stocks of the user.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>league</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The favorite league of the user.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>team</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The favorite team of the user.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>news_country</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The country the user wants to receive news from.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>news_keywords</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+</td>
+<td><p>The favorite news keywords of the user.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr>
+<td><code>wakeup_time</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The wakeup time of the user.</p></td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.LogProactivity">
+<code>LogProactivity</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>A class to keep track of the last time proactivity was triggered</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>last_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time proactivity was triggered</p></td>
+</tr>
+<tr>
+<td><code>last_event_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time the event use case was triggered</p></td>
+</tr>
+<tr>
+<td><code>last_morning_briefing_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time the morning briefing was triggered</p></td>
+</tr>
+<tr>
+<td><code>last_wakeup_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time the wakeup in morning briefing was triggered</p></td>
+</tr>
+<tr>
+<td><code>last_sport_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time the sport use case was triggered</p></td>
+</tr>
+<tr>
+<td><code>last_navigation_check</code></td>
+<td>
+<code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></code>
+</td>
+<td><p>The last time the navigation use case was triggered</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.Possessions">
+<code>Possessions</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>Dataclass to store the possessions of a user.</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bike</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+</td>
+<td><p>Does the user own a bike?</p></td>
+</tr>
+<tr>
+<td><code>car</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+</td>
+<td><p>Does the user own a car?</p></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h3 class="doc doc-heading" id="aswe.core.objects.User">
+<code>User</code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+</span>
+</h3>
+<div class="doc doc-contents">
+<p>Dataclass supposed to store the user data</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+</td>
+<td><p>The name of the user.</p></td>
+</tr>
+<tr>
+<td><code>age</code></td>
+<td>
+<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>
+</td>
+<td><p>The age of the user.</p></td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.Address" href="#aswe.core.objects.Address">Address</a></code>
+</td>
+<td><p>The address of the user.</p></td>
+</tr>
+<tr>
+<td><code>possessions</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.Possessions" href="#aswe.core.objects.Possessions">Possessions</a></code>
+</td>
+<td><p>The possessions of the user.</p></td>
+</tr>
+<tr>
+<td><code>favorites</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="aswe.core.objects.Favorites" href="#aswe.core.objects.Favorites">Favorites</a></code>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+</div>
+<a class="md-top md-icon" data-md-component="top" hidden="" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"></path></svg>
+            Back to top
+          </a>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: License" class="md-footer__link md-footer__link--prev" href="../license/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              License
+            </div>
+</div>
+</a>
+<a aria-label="Next: General" class="md-footer__link md-footer__link--next" href="../use_cases/general/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              General
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+</body>
+</html>

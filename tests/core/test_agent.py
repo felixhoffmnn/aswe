@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from aswe.core.agent import Agent
-from aswe.core.objects import BestMatch, User
+from aswe.core.objects import User
 from aswe.core.user_interaction import SpeechToText, TextToSpeech
 
 

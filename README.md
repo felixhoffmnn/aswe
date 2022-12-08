@@ -30,7 +30,6 @@
         <img src="https://codecov.io/gh/felixhoffmnn/aswe/branch/main/graph/badge.svg?token=AO8OYDJNDN" alt="Code coverage"/>
     </a>
 </div>
-<br>
 
 <div align="center">
     <a href="https://github.com/felixhoffmnn/aswe">GitHub</a>
@@ -39,6 +38,7 @@
     ·
     <a href="https://felixhoffmnn.github.io/aswe/">Dokumentation</a>
 </div>
+
 <br>
 
 <!-- TODO: Review paragraph -->

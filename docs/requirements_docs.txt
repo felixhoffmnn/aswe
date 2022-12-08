@@ -101,18 +101,15 @@ mkdocstrings==0.19.0 ; python_version >= "3.10" and python_version < "4.0" \
 mkdocstrings[python]==0.19.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:3217d510d385c961f69385a670b2677e68e07b5fea4a504d86bf54c006c87c7d \
     --hash=sha256:efa34a67bad11229d532d89f6836a8a215937548623b64f3698a1df62e01cc3e
-packaging==21.3 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb \
-    --hash=sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522
+packaging==22.0 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:2198ec20bd4c017b8f9717e00f0c8714076fc2fd93816750ab48e2c41de2cfd3 \
+    --hash=sha256:957e2148ba0e1a3b282772e791ef1d8083648bc131c8ab0c1feba110ce1146c3
 pygments==2.13.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1 \
     --hash=sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42
 pymdown-extensions==9.9 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:0f8fb7b74a37a61cc34e90b2c91865458b713ec774894ffad64353a5fce85cfc \
     --hash=sha256:ac698c15265680db5eb13cd4342abfcde2079ac01e5486028f47a1b41547b859
-pyparsing==3.0.9 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb \
-    --hash=sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc
 python-dateutil==2.8.2 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86 \
     --hash=sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9

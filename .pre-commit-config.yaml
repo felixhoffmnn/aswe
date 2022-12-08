@@ -7,7 +7,7 @@ ci:
   autoupdate_branch: "main"
   autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
   autoupdate_schedule: quarterly
-  skip: [poetry-lock, poetry-export, pytest, pytest-cov]
+  skip: [poetry-lock, poetry-export]
 
 default_language_version:
   python: python3.10

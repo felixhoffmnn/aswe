@@ -177,8 +177,6 @@ class EventUseCase(AbstractUseCase):
     def _event_is_attendable(self, event: ReducedEvent, calendar_events: list[Event]) -> bool:
         """Checks whether a single event can be attended
 
-        * TODO: Fix typing for `calendar_events`, and `event`
-
         Parameters
         ----------
         event : ReducedEvent

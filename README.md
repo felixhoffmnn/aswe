@@ -134,10 +134,6 @@ After committing, the GitHub actions CI/CD pipeline will be triggered. The relat
 3. Builds and deploys the [MkDocs](https://www.mkdocs.org/) documentation (see [here](https://felixhoffmnn.github.io/aswe/))
 4. Checks code quality and security with [CodeQL](https://github.com/github/codeql)
 
-## :exclamation: Known Issues
-
-1. Lorem
-
 ## :memo: License
 
 This project is licensed under [MIT](https://github.com/felixhoffmnn/aswe/blob/main/LICENSE).

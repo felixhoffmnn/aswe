@@ -14,7 +14,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/python-poetry/poetry
-    rev: "1.2.2"
+    rev: "1.3.0"
     hooks:
       - id: poetry-check
         name: check poetry (poetry-check)
@@ -40,7 +40,7 @@ repos:
         files: "pyproject.toml|poetry.lock"
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: check-case-conflict
         name: check case conflict (check-case-conflict)
@@ -57,7 +57,7 @@ repos:
         types: [yaml]
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.11.4
     hooks:
       - id: isort
         name: sort imports (isort)
@@ -65,7 +65,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 22.12.0
     hooks:
       - id: black
         name: format python code (black)
@@ -73,7 +73,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
+    rev: 6.0.0
     hooks:
       - id: flake8
         name: check code style (flake8)
@@ -81,7 +81,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.982
+    rev: v0.991
     hooks:
       - id: mypy
         name: check types (mypy)
@@ -92,7 +92,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v2.7.1"
+    rev: "v3.0.0-alpha.4"
     hooks:
       - id: prettier
         name: format files (prettier)
@@ -100,7 +100,7 @@ repos:
         exclude_types: [python]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.0.0
+    rev: v3.3.1
     hooks:
       - id: pyupgrade
         name: upgrade pre-commit (pyupgrade)

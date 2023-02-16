@@ -1,12 +1,5 @@
 ci:
-  autofix_commit_msg: |
-    [pre-commit.ci] auto fixes from pre-commit.com hooks
-
-    for more information, see https://pre-commit.ci
-  autofix_prs: true
-  autoupdate_branch: "main"
-  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
-  autoupdate_schedule: quarterly
+  autofix_prs: false
   skip: [poetry-lock, poetry-export]
 
 default_language_version:
@@ -57,7 +50,7 @@ repos:
         types: [yaml]
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.12.0
     hooks:
       - id: isort
         name: sort imports (isort)

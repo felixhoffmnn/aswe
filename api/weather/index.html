@@ -1,0 +1,4196 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A speech bot for your daily needs build during advanced software engineering at DHBW Stuttgart.">
+      
+      
+        <meta name="author" content="Felix Hoffmann, Leopold Fuchs, Maxime Fritzsch, Nick Schroeder, and Stephan auf der Landwehr">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Weather - Advanced Software Engineering</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#weather" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Advanced Software Engineering" class="md-header__button md-logo" aria-label="Advanced Software Engineering" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advanced Software Engineering
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Weather
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixhoffmnn/aswe" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    felixhoffmnn/aswe
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        Overview
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../core/" class="md-tabs__link md-tabs__link--active">
+        Code Reference
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Advanced Software Engineering" class="md-nav__button md-logo" aria-label="Advanced Software Engineering" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    Advanced Software Engineering
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixhoffmnn/aswe" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    felixhoffmnn/aswe
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Overview" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Readme
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Code Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core/" class="md-nav__link">
+        Core
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Use Cases
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Use Cases" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Use Cases
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/general/" class="md-nav__link">
+        General
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/event/" class="md-nav__link">
+        Event
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/morning_briefing/" class="md-nav__link">
+        Morning Briefing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/sport/" class="md-nav__link">
+        Sport
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/navigation/" class="md-nav__link">
+        Navigation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calendar/" class="md-nav__link">
+        Calendar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event/" class="md-nav__link">
+        Event
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../finance/" class="md-nav__link">
+        Finance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation/" class="md-nav__link">
+        Navigation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../news/" class="md-nav__link">
+        News
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sport/" class="md-nav__link">
+        Sport
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Weather
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Weather
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#weather_1" class="md-nav__link">
+    Weather
+  </a>
+  
+    <nav class="md-nav" aria-label="Weather">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.UNIT_GROUP" class="md-nav__link">
+    UNIT_GROUP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather._append_api_params" class="md-nav__link">
+    _append_api_params()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.dynamic_range" class="md-nav__link">
+    dynamic_range()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.forecast" class="md-nav__link">
+    forecast()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.historic_day" class="md-nav__link">
+    historic_day()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.historic_range" class="md-nav__link">
+    historic_range()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums-dataclasses" class="md-nav__link">
+    Enums &amp; Dataclasses
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums &amp; Dataclasses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum" class="md-nav__link">
+    DynamicPeriodEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="DynamicPeriodEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_24_HOURS" class="md-nav__link">
+    LAST_24_HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_WEEKEND" class="md-nav__link">
+    LAST_WEEKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_YEAR" class="md-nav__link">
+    LAST_YEAR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.MONTH_TO_DATE" class="md-nav__link">
+    MONTH_TO_DATE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.NEXT_WEEKEND" class="md-nav__link">
+    NEXT_WEEKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.TODAY" class="md-nav__link">
+    TODAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.YEART_TO_DATE" class="md-nav__link">
+    YEART_TO_DATE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.YESTERDAY" class="md-nav__link">
+    YESTERDAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.last_weekday" class="md-nav__link">
+    last_weekday()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.last_x_days" class="md-nav__link">
+    last_x_days()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.next_weekday" class="md-nav__link">
+    next_weekday()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.next_x_days" class="md-nav__link">
+    next_x_days()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum" class="md-nav__link">
+    ElementsEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="ElementsEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CAPE" class="md-nav__link">
+    CAPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CIN" class="md-nav__link">
+    CIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CLOUDCOVER" class="md-nav__link">
+    CLOUDCOVER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CONDITIONS" class="md-nav__link">
+    CONDITIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DATETIME" class="md-nav__link">
+    DATETIME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DATETIME_EPOCH" class="md-nav__link">
+    DATETIME_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DEGREE_DAYS" class="md-nav__link">
+    DEGREE_DAYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DESCRIPTION" class="md-nav__link">
+    DESCRIPTION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DEW" class="md-nav__link">
+    DEW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE" class="md-nav__link">
+    FEELSLIKE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MAX" class="md-nav__link">
+    FEELSLIKE_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MIN" class="md-nav__link">
+    FEELSLIKE_MIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.HOURS" class="md-nav__link">
+    HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.HUMIDITY" class="md-nav__link">
+    HUMIDITY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.ICON" class="md-nav__link">
+    ICON
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONRISE" class="md-nav__link">
+    MOONRISE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONSET" class="md-nav__link">
+    MOONSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONSET_EPOCH" class="md-nav__link">
+    MOONSET_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOON_PHASE" class="md-nav__link">
+    MOON_PHASE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOORISE_EPOCH" class="md-nav__link">
+    MOORISE_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.NORMAL" class="md-nav__link">
+    NORMAL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.OFFSET_SECONDS" class="md-nav__link">
+    OFFSET_SECONDS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP" class="md-nav__link">
+    PRECIP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_COVER" class="md-nav__link">
+    PRECIP_COVER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_PROB" class="md-nav__link">
+    PRECIP_PROB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_TYPE" class="md-nav__link">
+    PRECIP_TYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRESSURE" class="md-nav__link">
+    PRESSURE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SEVERE_RISK" class="md-nav__link">
+    SEVERE_RISK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SNOW" class="md-nav__link">
+    SNOW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SNOW_DEPTH" class="md-nav__link">
+    SNOW_DEPTH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOLAR_ENERGY" class="md-nav__link">
+    SOLAR_ENERGY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOLAR_RADIATION" class="md-nav__link">
+    SOLAR_RADIATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOURCE" class="md-nav__link">
+    SOURCE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.STATIONS" class="md-nav__link">
+    STATIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNRISE" class="md-nav__link">
+    SUNRISE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNRISE_EPOCH" class="md-nav__link">
+    SUNRISE_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNSET" class="md-nav__link">
+    SUNSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNSET_EPOCH" class="md-nav__link">
+    SUNSET_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP" class="md-nav__link">
+    TEMP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP_MAX" class="md-nav__link">
+    TEMP_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP_MIN" class="md-nav__link">
+    TEMP_MIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TZOFFSET" class="md-nav__link">
+    TZOFFSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.UV_INDEX" class="md-nav__link">
+    UV_INDEX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.VISIBILITY" class="md-nav__link">
+    VISIBILITY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_DIR" class="md-nav__link">
+    WIND_DIR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_GUST" class="md-nav__link">
+    WIND_GUST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED" class="md-nav__link">
+    WIND_SPEED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MAX" class="md-nav__link">
+    WIND_SPEED_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MEAN" class="md-nav__link">
+    WIND_SPEED_MEAN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MIN" class="md-nav__link">
+    WIND_SPEED_MIN
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum" class="md-nav__link">
+    IncludeEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="IncludeEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.ALERTS" class="md-nav__link">
+    ALERTS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.CURRENT" class="md-nav__link">
+    CURRENT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.DAYS" class="md-nav__link">
+    DAYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.EVENTS" class="md-nav__link">
+    EVENTS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.FORECAST" class="md-nav__link">
+    FORECAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.HOURS" class="md-nav__link">
+    HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.OBS" class="md-nav__link">
+    OBS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.REMOTE" class="md-nav__link">
+    REMOTE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.STATS" class="md-nav__link">
+    STATS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.STATS_FORECAST" class="md-nav__link">
+    STATS_FORECAST
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/" class="md-nav__link">
+        Utilities
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#weather_1" class="md-nav__link">
+    Weather
+  </a>
+  
+    <nav class="md-nav" aria-label="Weather">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.UNIT_GROUP" class="md-nav__link">
+    UNIT_GROUP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather._append_api_params" class="md-nav__link">
+    _append_api_params()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.dynamic_range" class="md-nav__link">
+    dynamic_range()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.forecast" class="md-nav__link">
+    forecast()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.historic_day" class="md-nav__link">
+    historic_day()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather.historic_range" class="md-nav__link">
+    historic_range()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums-dataclasses" class="md-nav__link">
+    Enums &amp; Dataclasses
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums &amp; Dataclasses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum" class="md-nav__link">
+    DynamicPeriodEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="DynamicPeriodEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_24_HOURS" class="md-nav__link">
+    LAST_24_HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_WEEKEND" class="md-nav__link">
+    LAST_WEEKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_YEAR" class="md-nav__link">
+    LAST_YEAR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.MONTH_TO_DATE" class="md-nav__link">
+    MONTH_TO_DATE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.NEXT_WEEKEND" class="md-nav__link">
+    NEXT_WEEKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.TODAY" class="md-nav__link">
+    TODAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.YEART_TO_DATE" class="md-nav__link">
+    YEART_TO_DATE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.YESTERDAY" class="md-nav__link">
+    YESTERDAY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.last_weekday" class="md-nav__link">
+    last_weekday()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.last_x_days" class="md-nav__link">
+    last_x_days()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.next_weekday" class="md-nav__link">
+    next_weekday()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.DynamicPeriodEnum.next_x_days" class="md-nav__link">
+    next_x_days()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum" class="md-nav__link">
+    ElementsEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="ElementsEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CAPE" class="md-nav__link">
+    CAPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CIN" class="md-nav__link">
+    CIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CLOUDCOVER" class="md-nav__link">
+    CLOUDCOVER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.CONDITIONS" class="md-nav__link">
+    CONDITIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DATETIME" class="md-nav__link">
+    DATETIME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DATETIME_EPOCH" class="md-nav__link">
+    DATETIME_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DEGREE_DAYS" class="md-nav__link">
+    DEGREE_DAYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DESCRIPTION" class="md-nav__link">
+    DESCRIPTION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.DEW" class="md-nav__link">
+    DEW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE" class="md-nav__link">
+    FEELSLIKE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MAX" class="md-nav__link">
+    FEELSLIKE_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MIN" class="md-nav__link">
+    FEELSLIKE_MIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.HOURS" class="md-nav__link">
+    HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.HUMIDITY" class="md-nav__link">
+    HUMIDITY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.ICON" class="md-nav__link">
+    ICON
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONRISE" class="md-nav__link">
+    MOONRISE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONSET" class="md-nav__link">
+    MOONSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOONSET_EPOCH" class="md-nav__link">
+    MOONSET_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOON_PHASE" class="md-nav__link">
+    MOON_PHASE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.MOORISE_EPOCH" class="md-nav__link">
+    MOORISE_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.NORMAL" class="md-nav__link">
+    NORMAL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.OFFSET_SECONDS" class="md-nav__link">
+    OFFSET_SECONDS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP" class="md-nav__link">
+    PRECIP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_COVER" class="md-nav__link">
+    PRECIP_COVER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_PROB" class="md-nav__link">
+    PRECIP_PROB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRECIP_TYPE" class="md-nav__link">
+    PRECIP_TYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.PRESSURE" class="md-nav__link">
+    PRESSURE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SEVERE_RISK" class="md-nav__link">
+    SEVERE_RISK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SNOW" class="md-nav__link">
+    SNOW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SNOW_DEPTH" class="md-nav__link">
+    SNOW_DEPTH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOLAR_ENERGY" class="md-nav__link">
+    SOLAR_ENERGY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOLAR_RADIATION" class="md-nav__link">
+    SOLAR_RADIATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SOURCE" class="md-nav__link">
+    SOURCE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.STATIONS" class="md-nav__link">
+    STATIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNRISE" class="md-nav__link">
+    SUNRISE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNRISE_EPOCH" class="md-nav__link">
+    SUNRISE_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNSET" class="md-nav__link">
+    SUNSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.SUNSET_EPOCH" class="md-nav__link">
+    SUNSET_EPOCH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP" class="md-nav__link">
+    TEMP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP_MAX" class="md-nav__link">
+    TEMP_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TEMP_MIN" class="md-nav__link">
+    TEMP_MIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.TZOFFSET" class="md-nav__link">
+    TZOFFSET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.UV_INDEX" class="md-nav__link">
+    UV_INDEX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.VISIBILITY" class="md-nav__link">
+    VISIBILITY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_DIR" class="md-nav__link">
+    WIND_DIR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_GUST" class="md-nav__link">
+    WIND_GUST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED" class="md-nav__link">
+    WIND_SPEED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MAX" class="md-nav__link">
+    WIND_SPEED_MAX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MEAN" class="md-nav__link">
+    WIND_SPEED_MEAN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MIN" class="md-nav__link">
+    WIND_SPEED_MIN
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum" class="md-nav__link">
+    IncludeEnum
+  </a>
+  
+    <nav class="md-nav" aria-label="IncludeEnum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.ALERTS" class="md-nav__link">
+    ALERTS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.CURRENT" class="md-nav__link">
+    CURRENT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.DAYS" class="md-nav__link">
+    DAYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.EVENTS" class="md-nav__link">
+    EVENTS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.FORECAST" class="md-nav__link">
+    FORECAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.HOURS" class="md-nav__link">
+    HOURS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.OBS" class="md-nav__link">
+    OBS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.REMOTE" class="md-nav__link">
+    REMOTE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.STATS" class="md-nav__link">
+    STATS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aswe.api.weather.weather_params.IncludeEnum.STATS_FORECAST" class="md-nav__link">
+    STATS_FORECAST
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/felixhoffmnn/aswe/edit/master/docs/api/weather.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="weather">Weather</h1>
+<h2 id="weather_1">Weather</h2>
+<!-- prettier-ignore -->
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="aswe.api.weather.weather.UNIT_GROUP" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">UNIT_GROUP</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;metric&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Defines unit system data is converted to. "metric" or "us". Defaults to "metric"</p>
+  </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="aswe.api.weather.weather._append_api_params" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">_append_api_params</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Appends API params to URL</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>The URL to append the params to.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.IncludeEnum" href="#aswe.api.weather.weather_params.IncludeEnum">IncludeEnum</a>] | None, optional</code>
+          </td>
+          <td><p>The list of IncludeEnum values to append to the URL. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>elements</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.ElementsEnum" href="#aswe.api.weather.weather_params.ElementsEnum">ElementsEnum</a>] | None, optional</code>
+          </td>
+          <td><p>The list of ElementsEnum values to append to the URL. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>The URL with the appended params.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="aswe.api.weather.weather.dynamic_range" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dynamic_range</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">dynamic_period</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieves dynamic data relative to current date</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>location</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Location format: "city, country" Country needs to be in <a href="https://www.iban.com/country-codes">Alpha-2</a> Code.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dynamic_period</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.DynamicPeriodEnum" href="#aswe.api.weather.weather_params.DynamicPeriodEnum">DynamicPeriodEnum</a></code>
+          </td>
+          <td><p>Dynamic Period. Refer to <code>weather_params.py</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>elements</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.ElementsEnum" href="#aswe.api.weather.weather_params.ElementsEnum">ElementsEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible properties in a day or hourly data object that should be retrieved from the API.
+Refer to <code>weather_params.py</code>. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.IncludeEnum" href="#aswe.api.weather.weather_params.IncludeEnum">IncludeEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible information that should be retrieved from the API. Refer to <code>weather_params.py</code>.
+<em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="aswe.api.weather.weather.forecast" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">forecast</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieves weather forecast of given location.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>location</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Location format: "city, country" Country needs to be in <a href="https://www.iban.com/country-codes">Alpha-2</a> Code.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>start_date</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None, optional</code>
+          </td>
+          <td><p>Date format: <code>YYYY-MM-DD</code>, Optional: <code>YYYY-MM-DDThh:mm:ss</code>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>end_date</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None, optional</code>
+          </td>
+          <td><p>Date format: <code>YYYY-MM-DD</code>, Optional: <code>YYYY-MM-DDThh:mm:ss</code>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.IncludeEnum" href="#aswe.api.weather.weather_params.IncludeEnum">IncludeEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible information that should be retrieved from the API. Refer to <code>weather_params.py</code>.
+<em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>elements</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.ElementsEnum" href="#aswe.api.weather.weather_params.ElementsEnum">ElementsEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible properties in a day or hourly data object that should be retrieved from the API.
+Refer to <code>weather_params.py</code>. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="aswe.api.weather.weather.historic_day" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">historic_day</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieves historic data from a specific day.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>location</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Location format: "city, country" Country needs to be in <a href="https://www.iban.com/country-codes">Alpha-2</a> Code.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>date</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Date format: <code>YYYY-MM-DD</code>, Optional: <code>YYYY-MM-DDThh:mm:ss</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>elements</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.ElementsEnum" href="#aswe.api.weather.weather_params.ElementsEnum">ElementsEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible properties in a day or hourly data object that should be retrieved from the API.
+Refer to <code>weather_params.py</code>. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.IncludeEnum" href="#aswe.api.weather.weather_params.IncludeEnum">IncludeEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible information that should be retrieved from the API. Refer to <code>weather_params.py</code>.
+<em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="aswe.api.weather.weather.historic_range" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">historic_range</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieves historic data between two given dates.</p>
+<ul>
+<li>TODO: Check if format is correct (<code>YYYY-MM-DDThh:mm:ss</code> or <code>YYYY-MM-DDThh:mm:ssZ</code>)</li>
+</ul>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>location</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Location format: "city, country" Country needs to be in <a href="https://www.iban.com/country-codes">Alpha-2</a> Code.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>start_date</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Date format: <code>YYYY-MM-DD</code>, Optional: <code>YYYY-MM-DDThh:mm:ss</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>end_date</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Date format: <code>YYYY-MM-DD</code>, Optional: <code>YYYY-MM-DDThh:mm:ss</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>elements</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.ElementsEnum" href="#aswe.api.weather.weather_params.ElementsEnum">ElementsEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible properties in a day or hourly data object that should be retrieved from the API.
+Refer to <code>weather_params.py</code>. <em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-internal" title="aswe.api.weather.weather_params.IncludeEnum" href="#aswe.api.weather.weather_params.IncludeEnum">IncludeEnum</a>] | None, optional</code>
+          </td>
+          <td><p>List of possible information that should be retrieved from the API. Refer to <code>weather_params.py</code>.
+<em>By default <code>None</code></em>.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="enums-dataclasses">Enums &amp; Dataclasses</h2>
+<!-- prettier-ignore -->
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="aswe.api.weather.weather_params.DynamicPeriodEnum" class="doc doc-heading">
+        <code>DynamicPeriodEnum</code>
+
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, <code><a class="autorefs autorefs-external" title="enum.Enum" href="https://docs.python.org/3/library/enum.html#enum.Enum">Enum</a></code></p>
+
+  
+      <p>Enum of possible dynamic periods for weather API</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_24_HOURS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">LAST_24_HOURS</span> <span class="o">=</span> <span class="s1">&#39;last24hours&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the 24 hour period ending at the current time (rounded to the currenthour).</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_WEEKEND" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">LAST_WEEKEND</span> <span class="o">=</span> <span class="s1">&#39;lastweekend&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the last occurrence of the weekend before today's day.
+Weekend is defined as Saturday and Sunday.
+Please let us know if you would like additional weekend definitions added.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.LAST_YEAR" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">LAST_YEAR</span> <span class="o">=</span> <span class="s1">&#39;lastyear&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the one year period ending on yesterday's date.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.MONTH_TO_DATE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MONTH_TO_DATE</span> <span class="o">=</span> <span class="s1">&#39;monthtodate&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>from midnight on the 1st of the current month until the current date time.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.NEXT_WEEKEND" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">NEXT_WEEKEND</span> <span class="o">=</span> <span class="s1">&#39;nextweekend&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the next occurrence of the weekend after today's day.
+Weekend is defined as Saturday and Sunday.
+Please let us know if you would like additional weekend definitions added.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.TODAY" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TODAY</span> <span class="o">=</span> <span class="s1">&#39;today&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>from midnight to the current time at the requested location.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.YEART_TO_DATE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">YEART_TO_DATE</span> <span class="o">=</span> <span class="s1">&#39;yeartodate&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>from midnight of January 1st of the current year until the current date time.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.YESTERDAY" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">YESTERDAY</span> <span class="o">=</span> <span class="s1">&#39;yesterday&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>from midnight to midnight on yesterday's date.</p>
+  </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.last_weekday" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">last_weekday</span><span class="p">(</span><span class="n">weekday</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the last occurrence of the named day of week before today’s day. For example lastsaturday</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.last_x_days" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">last_x_days</span><span class="p">(</span><span class="n">days_count</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the period before today's date with a length on the number of days specified.
+For example last7days or last21days.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.next_weekday" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">next_weekday</span><span class="p">(</span><span class="n">weekday</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the next occurrence of the named day of week after today's day. For example nextsaturday</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="aswe.api.weather.weather_params.DynamicPeriodEnum.next_x_days" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">next_x_days</span><span class="p">(</span><span class="n">days_count</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the period including and after today's date with a length on the number of days specified.
+For example next7days or next21days.</p>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="aswe.api.weather.weather_params.ElementsEnum" class="doc doc-heading">
+        <code>ElementsEnum</code>
+
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, <code><a class="autorefs autorefs-external" title="enum.Enum" href="https://docs.python.org/3/library/enum.html#enum.Enum">Enum</a></code></p>
+
+  
+      <p>Enum of possible element parameters for weather API</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.CAPE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CAPE</span> <span class="o">=</span> <span class="s1">&#39;cape&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(forecast only) convective available potential energy. This is a numbering indicating amount of energy
+available to produce thunderstorms. A higher values indicates a more unstable atmosphere capable of creating
+stronger storms. Values lower than 1000 J/kg indicate generally low instability, between 1000-2500 J/kg medium
+instability and 2500-4000 J/kg high instability. Values greater than 4000 J/kg indicating an extremely unstable
+atmosphere.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.CIN" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CIN</span> <span class="o">=</span> <span class="s1">&#39;cin&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(forecast only) convective inhibition. A number representing the level of atmospheric tendency to
+prevent instability and therefore prevent thunderstorms.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.CLOUDCOVER" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CLOUDCOVER</span> <span class="o">=</span> <span class="s1">&#39;cloudcover&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>how much of the sky is covered in cloud ranging from 0-100%</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.CONDITIONS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CONDITIONS</span> <span class="o">=</span> <span class="s1">&#39;conditions&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>textual representation of the weather conditions. See Weather Data Conditions.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.DATETIME" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DATETIME</span> <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>ISO formatted date, time or datetime value indicating the date and time of the weather data in the local
+time zone of the requested location</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.DATETIME_EPOCH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DATETIME_EPOCH</span> <span class="o">=</span> <span class="s1">&#39;datetimeEpoch&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>number of seconds since 1st January 1970 in UTC time</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.DEGREE_DAYS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DEGREE_DAYS</span> <span class="o">=</span> <span class="s1">&#39;degreedays&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) optional elements indicating the number of degree days for this date. See the degree days API
+for more information on degree days. To turn degree days and degree day accumulation on, use the elements
+parameter. For example, elements=datetime,tempmax,tempmin,degreedays,accdegreedays.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.DESCRIPTION" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="s1">&#39;description&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>longer text descriptions suitable for displaying in weather displays. The descriptions combine the main
+features of the weather for the day such as precipitation or amount of cloud cover. Daily descriptions are
+provided for historical and forecast days. When the timeline request includes the model forecast period, a
+seven day outlook description is provided at the root response level.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.DEW" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DEW</span> <span class="o">=</span> <span class="s1">&#39;dew&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>dew point temperature</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FEELSLIKE</span> <span class="o">=</span> <span class="s1">&#39;feelslike&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>what the temperature feels like accounting for heat index or wind chill. Daily values are average values
+(mean) for the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MAX" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FEELSLIKE_MAX</span> <span class="o">=</span> <span class="s1">&#39;feelslikemax&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) maximum feels like temperature at the location.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.FEELSLIKE_MIN" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FEELSLIKE_MIN</span> <span class="o">=</span> <span class="s1">&#39;feelslikemin&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) minimum feels like temperature at the location.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.HOURS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">HOURS</span> <span class="o">=</span> <span class="s1">&#39;hours&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>array of hourly weather data objects. This is a child of each of the daily weather object when hours are selected.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.HUMIDITY" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">HUMIDITY</span> <span class="o">=</span> <span class="s1">&#39;humidity&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>relative humidity in %</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.ICON" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">ICON</span> <span class="o">=</span> <span class="s1">&#39;icon&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>a fixed, machine readable summary that can be used to display an icon</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.MOONRISE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MOONRISE</span> <span class="o">=</span> <span class="s1">&#39;moonrise&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only, optional) The formatted time of the moonrise (For example “2022-05-23T02:38:10”)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.MOONSET" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MOONSET</span> <span class="o">=</span> <span class="s1">&#39;moonset&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only, optional) The formatted time of the moonset (For example “2022-05-23T13:40:07”)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.MOONSET_EPOCH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MOONSET_EPOCH</span> <span class="o">=</span> <span class="s1">&#39;moonsetEpoch&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only, optional) moonset time specified as number of seconds since 1st January 1970 in UTC time</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.MOON_PHASE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MOON_PHASE</span> <span class="o">=</span> <span class="s1">&#39;moonphase&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>represents the fractional portion through the current moon lunation cycle ranging from 0 (the new moon) to 0.5
+(the full moon) and back to 1 (the next new moon)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.MOORISE_EPOCH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">MOORISE_EPOCH</span> <span class="o">=</span> <span class="s1">&#39;moonriseEpoch&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only, optional) moonrise time specified as number of seconds since 1st January 1970 in UTC time</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.NORMAL" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">NORMAL</span> <span class="o">=</span> <span class="s1">&#39;normal&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>array of normal weather data values - Each weather data normal is an array of three values representing,
+in order, the minimum value over the statistical period, the mean value, and the maximum value over the
+statistical period.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.OFFSET_SECONDS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">OFFSET_SECONDS</span> <span class="o">=</span> <span class="s1">&#39;offsetseconds&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(hourly only) time zone offset for this weather data object in seconds - This value may change for
+a location based on daylight saving time observation.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.PRECIP" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">PRECIP</span> <span class="o">=</span> <span class="s1">&#39;precip&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the amount of liquid precipitation that fell or is predicted to fall in the period. This includes
+the liquid-equivalent amount of any frozen precipitation such as a snow or ice.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.PRECIP_COVER" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">PRECIP_COVER</span> <span class="o">=</span> <span class="s1">&#39;precipcover&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(days only) the proportion of hours where there was non-zero precipitation</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.PRECIP_PROB" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">PRECIP_PROB</span> <span class="o">=</span> <span class="s1">&#39;precipprob&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(forecast only) the likelihood of measurable precipitation ranging from 0% to 100%</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.PRECIP_TYPE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">PRECIP_TYPE</span> <span class="o">=</span> <span class="s1">&#39;preciptype&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>an array indicating the type(s) of precipitation expected or that occurred. Possible values include rain, snow,
+freezingrain and ice.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.PRESSURE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">PRESSURE</span> <span class="o">=</span> <span class="s1">&#39;pressure&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the sea level atmospheric or barometric pressure in millibars (or hectopascals)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SEVERE_RISK" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SEVERE_RISK</span> <span class="o">=</span> <span class="s1">&#39;severerisk&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(forecast only) a value between 0 and 100 representing the risk of convective storms
+(eg thunderstorms, hail and tornadoes). It is a scaled measure that combines a variety of other fields
+such as the convective available potential energy (CAPE) and convective inhibition (CIN), predicted rain and
+wind. Typically a value less than 30 indicates a low risk, between 30 and 70 a moderate risk and above 70 a
+high risk.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SNOW" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SNOW</span> <span class="o">=</span> <span class="s1">&#39;snow&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the amount of snow that fell or is predicted to fall</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SNOW_DEPTH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SNOW_DEPTH</span> <span class="o">=</span> <span class="s1">&#39;snowdepth&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the depth of snow on the ground</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SOLAR_ENERGY" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SOLAR_ENERGY</span> <span class="o">=</span> <span class="s1">&#39;solarenergy&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(MJ /m2 ) indicates the total energy from the sun that builds up over an hour or day. See the full solar
+radiation data documentation and Wind and Solar Energy pages .</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SOLAR_RADIATION" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SOLAR_RADIATION</span> <span class="o">=</span> <span class="s1">&#39;solarradiation&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(W/m2) the solar radiation power at the instantaneous moment of the observation (or forecast prediction).
+See the full solar radiation data documentation and Wind and Solar Energy pages .</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SOURCE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SOURCE</span> <span class="o">=</span> <span class="s1">&#39;source&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the type of weather data used for this weather object. - Values include historical observation (“obs”), forecast
+(“fcst”), historical forecast (“histfcst”) or statistical forecast (“stats”). If multiple types are used in the
+same day, “comb” is used. Today a combination of historical observations and forecast data.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.STATIONS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">STATIONS</span> <span class="o">=</span> <span class="s1">&#39;stations&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(historical only) the weather stations used when collecting an historical observation record</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SUNRISE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SUNRISE</span> <span class="o">=</span> <span class="s1">&#39;sunrise&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) The formatted time of the sunrise (For example “2022-05-23T05:50:40”)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SUNRISE_EPOCH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SUNRISE_EPOCH</span> <span class="o">=</span> <span class="s1">&#39;sunriseEpoch&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>sunrise time specified as number of seconds since 1st January 1970 in UTC time</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SUNSET" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SUNSET</span> <span class="o">=</span> <span class="s1">&#39;sunset&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The formatted time of the sunset (For example “2022-05-23T20:22:29”)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.SUNSET_EPOCH" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SUNSET_EPOCH</span> <span class="o">=</span> <span class="s1">&#39;sunsetEpoch&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>sunset time specified as number of seconds since 1st January 1970 in UTC time</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.TEMP" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TEMP</span> <span class="o">=</span> <span class="s1">&#39;temp&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>temperature at the location. Daily values are average values (mean) for the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.TEMP_MAX" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TEMP_MAX</span> <span class="o">=</span> <span class="s1">&#39;tempmax&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) maximum temperature at the location.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.TEMP_MIN" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TEMP_MIN</span> <span class="o">=</span> <span class="s1">&#39;tempmin&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only) minimum temperature at the location.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.TZOFFSET" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TZOFFSET</span> <span class="o">=</span> <span class="s1">&#39;tzoffset&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the time zone offset in hours. This will only occur in the data object if it is different from the global
+time zone offset.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.UV_INDEX" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">UV_INDEX</span> <span class="o">=</span> <span class="s1">&#39;uvindex&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>a value between 0 and 10 indicating the level of ultra violet (UV) exposure for that hour or day. 10 represents
+high level of exposure, and 0 represents no exposure. The UV index is calculated based on amount of short wave
+solar radiation which in turn is a level the cloudiness, type of cloud, time of day, time of year and location
+altitude. Daily values represent the maximum value of the hourly values.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.VISIBILITY" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">VISIBILITY</span> <span class="o">=</span> <span class="s1">&#39;visibility&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>distance at which distant objects are visible</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_DIR" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_DIR</span> <span class="o">=</span> <span class="s1">&#39;winddir&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>direction from which the wind is blowing</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_GUST" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_GUST</span> <span class="o">=</span> <span class="s1">&#39;windgust&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>instantaneous wind speed at a location - May be empty if it is not significantly higher than the wind speed.
+Daily values are the maximum hourly value for the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_SPEED</span> <span class="o">=</span> <span class="s1">&#39;windspeed&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>the sustained wind speed measured as the average windspeed that occurs during the preceding one to two minutes.
+Daily values are the maximum hourly value for the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MAX" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_SPEED_MAX</span> <span class="o">=</span> <span class="s1">&#39;windspeedmax&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only, optional) maximum wind speed over the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MEAN" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_SPEED_MEAN</span> <span class="o">=</span> <span class="s1">&#39;windspeedmean&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only , optional ) average (mean) wind speed over the day.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.ElementsEnum.WIND_SPEED_MIN" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">WIND_SPEED_MIN</span> <span class="o">=</span> <span class="s1">&#39;windspeedmin&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>(day only , optional ) minimum wind speed over the day.</p>
+  </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="aswe.api.weather.weather_params.IncludeEnum" class="doc doc-heading">
+        <code>IncludeEnum</code>
+
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, <code><a class="autorefs autorefs-external" title="enum.Enum" href="https://docs.python.org/3/library/enum.html#enum.Enum">Enum</a></code></p>
+
+  
+      <p>Enum of possible include parameters for weather API</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.ALERTS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">ALERTS</span> <span class="o">=</span> <span class="s1">&#39;alerts&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>weather alerts</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.CURRENT" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CURRENT</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>current conditions or conditions at requested time.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.DAYS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DAYS</span> <span class="o">=</span> <span class="s1">&#39;days&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>daily data</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.EVENTS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">EVENTS</span> <span class="o">=</span> <span class="s1">&#39;events&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>historical events such as a hail, tornadoes, wind damage and earthquakes (not enabled by default)</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.FORECAST" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FORECAST</span> <span class="o">=</span> <span class="s1">&#39;fcst&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>forecast based on 16 day models.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.HOURS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">HOURS</span> <span class="o">=</span> <span class="s1">&#39;hours&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>hourly data</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.OBS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">OBS</span> <span class="o">=</span> <span class="s1">&#39;obs&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>historical observations from weather stations</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.REMOTE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">REMOTE</span> <span class="o">=</span> <span class="s1">&#39;remote&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>historical observations from remote source such as satellite or radar</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.STATS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">STATS</span> <span class="o">=</span> <span class="s1">&#39;stats&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>historical statistical normals and daily statistical forecast</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="aswe.api.weather.weather_params.IncludeEnum.STATS_FORECAST" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">STATS_FORECAST</span> <span class="o">=</span> <span class="s1">&#39;statsfcst&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>use the full statistical forecast information for dates in the future beyond the current model forecast.
+Permits hourly statistical forecast.</p>
+  </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../sport/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sport" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Sport
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../utils/" class="md-footer__link md-footer__link--next" aria-label="Next: Utilities" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Utilities
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

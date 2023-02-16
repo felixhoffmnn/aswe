@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Advanced Software Engineering"
-version = "0.2.1"
+version = "0.2.2"
 description = "A speech bot for your daily needs build during advanced software engineering at DHBW Stuttgart."
 authors = [
   "Felix Hoffmann <felix.emmanuel.hoffmann@gmail.com>",
